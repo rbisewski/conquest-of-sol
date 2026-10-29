@@ -3,8 +3,9 @@
 // the disc is a point on a sphere: its colour comes from the body's style (bands, spots, ice
 // caps, value noise) and its brightness from the Sun's direction in view space, in a few
 // steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map;
-// Mercury, Luna, Mars and Ceres pixel-art maps made from spacecraft mosaics, and Venus one of its
-// cloud tops (tools/data/build_body_maps.py).
+// Mercury, Luna, Mars, Ceres, Jupiter and the great moons of Jupiter and Saturn pixel-art maps
+// made from spacecraft mosaics, and Venus and Saturn made-up ones of their cloud tops
+// (tools/data/build_body_maps.py).
 
 /** Light direction in view space: x right, y up, z towards the viewer. */
 export interface Light {
@@ -30,6 +31,19 @@ const MAP_FILES: Record<string, string> = {
   Luna: "luna.png",
   Mars: "mars.png",
   Ceres: "ceres.png",
+  Jupiter: "jupiter.png",
+  Io: "io.png",
+  Europa: "europa.png",
+  Ganymede: "ganymede.png",
+  Callisto: "callisto.png",
+  Saturn: "saturn.png",
+  Mimas: "mimas.png",
+  Enceladus: "enceladus.png",
+  Tethys: "tethys.png",
+  Dione: "dione.png",
+  Rhea: "rhea.png",
+  Titan: "titan.png",
+  Iapetus: "iapetus.png",
 };
 const mapLoads = new Map<string, Promise<MapImage>>();
 
@@ -75,10 +89,31 @@ interface Style {
   storm?: { color: string; lat: number; lon: number; dLat: number; dLon: number };
   /** One hemisphere (longitude < 0) this colour instead (Iapetus). */
   twoTone?: string;
-  ring?: { color: string; gap: string; inner: number; outer: number };
+  /** Rings: bands outwards from the centre, in the body's radii, each a colour and how opaque. */
+  ring?: RingBand[];
   /** A glowing atmosphere just past the limb, this far out in radii (at least two pixels), brighter on the sunward side. */
   glow?: { color: string; reach: number };
 }
+
+interface RingBand {
+  from: number;
+  to: number;
+  color: string;
+  alpha: number;
+}
+
+/**
+ * Saturn's main rings at their real radii (Saturn's equatorial radius is 60,268 km): the faint C
+ * ring, the bright B ring, the Cassini Division, and the A ring with the Encke Gap.
+ */
+const SATURN_RINGS: RingBand[] = [
+  { from: 1.239, to: 1.527, color: "#9c9282", alpha: 0.3 },
+  { from: 1.527, to: 1.75, color: "#d3bf98", alpha: 0.8 },
+  { from: 1.75, to: 1.951, color: "#e2d0aa", alpha: 0.95 },
+  { from: 1.951, to: 2.027, color: "#5e574c", alpha: 0.12 },
+  { from: 2.027, to: 2.211, color: "#c8b892", alpha: 0.65 },
+  { from: 2.217, to: 2.269, color: "#c2b28c", alpha: 0.55 },
+];
 
 const STYLES: Record<string, Style> = {
   Mercury: { base: "#9a948e", spots: [{ color: "#76716c", scale: 5, threshold: 0.62 }, { color: "#b8b2aa", scale: 9, threshold: 0.7 }] },
@@ -94,7 +129,7 @@ const STYLES: Record<string, Style> = {
   Saturn: {
     base: "#e3cf9a",
     bands: { colors: ["#ead9a8", "#cdb27a", "#e3cf9a", "#d6bf88"], count: 7, wobble: 0.4 },
-    ring: { color: "#d8c79a", gap: "#8f8466", inner: 1.3, outer: 2.2 },
+    ring: SATURN_RINGS,
   },
   Uranus: { base: "#9fd8de", bands: { colors: ["#9fd8de", "#a9e0e4", "#93cdd5"], count: 3, wobble: 0.3 } },
   Neptune: {
@@ -106,7 +141,7 @@ const STYLES: Record<string, Style> = {
   Europa: { base: "#ddd0b6", spots: [{ color: "#a77d55", scale: 8, threshold: 0.7 }] },
   Ganymede: { base: "#8f877c", spots: [{ color: "#b9b2a6", scale: 4, threshold: 0.58 }] },
   Callisto: { base: "#5e5550", spots: [{ color: "#a59b92", scale: 12, threshold: 0.74 }] },
-  Titan: { base: "#d39a4a", bands: { colors: ["#d39a4a", "#c98f40", "#dca659"], count: 3, wobble: 0.3 } },
+  Titan: { base: "#d39a4a", bands: { colors: ["#d39a4a", "#c98f40", "#dca659"], count: 3, wobble: 0.3 }, glow: { color: "#e6c78e", reach: 0.06 } },
   Enceladus: { base: "#eef2f4", spots: [{ color: "#cfdbe2", scale: 6, threshold: 0.7 }] },
   Iapetus: { base: "#d9d4ca", twoTone: "#3d342c" },
   Triton: { base: "#c9b3a6", spots: [{ color: "#e2d6cf", scale: 5, threshold: 0.6 }], caps: { color: "#e9dfd9", from: 40 } },
@@ -211,35 +246,53 @@ function glowReach(style: Style, r: number): number {
   return style.glow ? Math.max(2, Math.ceil(r * style.glow.reach)) : 0;
 }
 
+/** How far a body's drawing reaches, in its radii: its rings' outer edge, or 1. */
+export function bodyReach(id: string): number {
+  const ring = (STYLES[id] ?? MOON_STYLE).ring;
+  return ring ? ring[ring.length - 1]!.to : 1;
+}
+
 /** Canvas size for a body of art radius r (pixels), leaving room for Saturn's rings or an atmosphere's glow. */
 export function canvasSize(id: string, r: number): number {
   const style = STYLES[id] ?? MOON_STYLE;
-  return 2 * Math.ceil(r * (style.ring ? style.ring.outer : 1)) + 2 + 2 * glowReach(style, r);
+  return 2 * Math.ceil(r * bodyReach(id)) + 2 + 2 * glowReach(style, r);
 }
 
-/** Draws a lit body of art radius r into a canvas of canvasSize(id, r), from its surface map when given (the body's own; orient turns view space into the map's frame). */
-export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, map: MapImage | null = null, orient: Orient | null = null): void {
+/** The ring band at a distance from the centre (in radii), if any. */
+function ringBand(ring: RingBand[], d: number): RingBand | null {
+  for (const band of ring) if (d >= band.from && d < band.to) return band;
+  return null;
+}
+
+/** Where a pole points in view space when none is given (the panel's portrait): tilted 27° towards the viewer, so rings are seen from a little above. */
+const DEFAULT_POLE: [number, number, number] = [0, Math.cos((27 * Math.PI) / 180), Math.sin((27 * Math.PI) / 180)];
+
+/**
+ * Draws a lit body of art radius r into a canvas of canvasSize(id, r), from its surface map when
+ * given (the body's own; orient turns view space into the map's frame). Rings lie in the plane
+ * square to the pole (view space): each pixel's ray meets that plane, and the ring there shows
+ * where it is in front of the planet or clear of it, lit on whichever face the Sun is, darkened
+ * in the planet's shadow; the rings shadow the planet in turn.
+ */
+export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, map: MapImage | null = null, orient: Orient | null = null, pole: [number, number, number] = DEFAULT_POLE): void {
   const style = STYLES[id] ?? MOON_STYLE;
   const size = ctx.canvas.width;
   const c = size / 2;
   const image = ctx.createImageData(size, size);
-  const put = (x: number, y: number, [cr, cg, cb]: RGB, k: number) => {
+  const put = (x: number, y: number, [cr, cg, cb]: RGB, k: number, alpha = 1) => {
     const o = (y * size + x) * 4;
     image.data[o] = Math.round(cr * k);
     image.data[o + 1] = Math.round(cg * k);
     image.data[o + 2] = Math.round(cb * k);
-    image.data[o + 3] = 255;
+    image.data[o + 3] = Math.round(alpha * 255);
   };
   const ring = style.ring;
-  // The rings, seen from a little above: an ellipse a third as tall as it is wide.
-  const ringAt = (dx: number, dy: number) => {
-    if (!ring) return null;
-    const d = Math.hypot(dx, dy / 0.34);
-    if (d < ring.inner || d > ring.outer) return null;
-    return d > ring.inner + (ring.outer - ring.inner) * 0.62 && d < ring.inner + (ring.outer - ring.inner) * 0.7 ? rgb(ring.gap) : rgb(ring.color);
-  };
-  // Rings catch the light from either side; dimmer when we look at their unlit face.
-  const ringLight = light.z > -0.2 ? 0.95 : 0.6;
+  const [nx, ny] = pole;
+  // Edge-on, the rings would vanish; keep them a hair open.
+  const nz = Math.abs(pole[2]) < 0.03 ? (pole[2] < 0 ? -0.03 : 0.03) : pole[2];
+  const sunOnRing = light.x * nx + light.y * ny + light.z * nz;
+  // Lit from the face we see, or glowing through from behind (dimmer).
+  const ringFace = sunOnRing * nz > 0 ? 1 : 0.55;
   const glow = style.glow ? rgb(style.glow.color) : null;
   const glowPixels = glowReach(style, r);
   for (let y = 0; y < size; y++) {
@@ -247,13 +300,24 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
       const dx = (x + 0.5 - c) / r;
       const dy = -(y + 0.5 - c) / r;
       const d2 = dx * dx + dy * dy;
-      const ringColor = ringAt(dx, dy);
-      // The far half of the ring is behind the planet, the near half in front.
-      if (ringColor && (dy < 0 || d2 > 1)) {
-        put(x, y, ringColor, ringLight);
-        continue;
+      const sphereZ = d2 <= 1 ? Math.sqrt(1 - d2) : -Infinity;
+      // The ring where this pixel's ray crosses the ring plane, if it is in front of the planet.
+      let band: RingBand | null = null;
+      let ringShade = ringFace;
+      if (ring) {
+        const rz = -(dx * nx + dy * ny) / nz;
+        if (rz > sphereZ) {
+          band = ringBand(ring, Math.sqrt(d2 + rz * rz));
+          // In the planet's shadow: the point lies behind the planet as seen from the Sun.
+          const towardSun = dx * light.x + dy * light.y + rz * light.z;
+          if (band && towardSun < 0 && d2 + rz * rz - towardSun * towardSun < 1) ringShade *= 0.22;
+        }
       }
       if (d2 > 1) {
+        if (band) {
+          put(x, y, rgb(band.color), ringShade, band.alpha);
+          continue;
+        }
         if (!glow) continue;
         // The atmosphere: fading outwards in steps, lit where the limb faces the Sun.
         const d = Math.sqrt(d2);
@@ -269,11 +333,29 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
         image.data[o + 3] = Math.round(alpha * sunward * 150);
         continue;
       }
-      const z = Math.sqrt(1 - d2);
+      const z = sphereZ;
       const lambert = dx * light.x + dy * light.y + z * light.z;
       // A slightly darker limb rounds the disc off (not under an atmosphere's soft haze).
       const limb = z < 0.35 && !glow ? 0.88 : 1;
-      put(x, y, surface(style, id, [dx, dy, z], map, orient), (glow ? hazeShade(lambert) : shade(lambert)) * limb);
+      let k = (glow ? hazeShade(lambert) : shade(lambert)) * limb;
+      if (ring && lambert > 0 && sunOnRing !== 0) {
+        // The rings' shadow: follow the light from this point to the ring plane.
+        const t = -(dx * nx + dy * ny + z * nz) / sunOnRing;
+        if (t > 0) {
+          const sx = dx + t * light.x;
+          const sy = dy + t * light.y;
+          const sz = z + t * light.z;
+          const shadow = ringBand(ring, Math.sqrt(sx * sx + sy * sy + sz * sz));
+          if (shadow) k *= 1 - 0.65 * shadow.alpha;
+        }
+      }
+      const ground = surface(style, id, [dx, dy, z], map, orient);
+      if (band) {
+        // The ring in front, over the planet.
+        const bc = rgb(band.color);
+        const a = band.alpha;
+        put(x, y, [0, 1, 2].map((i) => ground[i]! * k * (1 - a) + bc[i]! * ringShade * a) as RGB, 1);
+      } else put(x, y, ground, k);
     }
   }
   ctx.putImageData(image, 0, 0);

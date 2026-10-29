@@ -10,7 +10,7 @@
   import { baseContent } from "../../content/index";
   import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { bodyMap, drawBody, drawComet, drawRock, drawSun, SUN_REACH, type MapImage } from "../solar/bodyArt";
+  import { bodyMap, bodyReach, drawBody, drawComet, drawRock, drawSun, SUN_REACH, type MapImage } from "../solar/bodyArt";
   import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
   import { scientific } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
@@ -69,7 +69,8 @@
       return () => clearInterval(timer);
     }
     if (body.type !== "star") {
-      drawBody(ctx, body.id, PORTRAIT_RADIUS, LIGHT, maps[body.id] ?? null);
+      // A ringed planet is drawn smaller, so its rings fit the frame.
+      drawBody(ctx, body.id, Math.floor(PORTRAIT_RADIUS / bodyReach(body.id)), LIGHT, maps[body.id] ?? null);
       return;
     }
     // The Sun's portrait burns on, its flames reaching to the frame.

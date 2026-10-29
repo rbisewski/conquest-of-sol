@@ -4,9 +4,10 @@
 // equator's ascending node on the celestial (ICRF) equator. A frame's columns are the scene
 // directions of longitude 0°, the north pole and longitude 90° west, the globe's convention
 // ((cos lat cos lon, sin lat, −cos lat sin lon)) that bodyArt.ts samples maps in. The Earth's
-// frame comes from the globe instead (earthFrame.ts). The Moon keeps its near side (longitude
-// 0°) towards the Earth as it goes round, which the IAU's mean rotation only does on average,
-// so its meridian is set from where the Earth is. Display only.
+// frame comes from the globe instead (earthFrame.ts). The Moon and the great moons of Jupiter and
+// Saturn keep their near sides (longitude 0°) towards their planets as they go round, which the
+// IAU's mean rotations only do on average, so their meridians are set from where the planet is.
+// Display only.
 
 import * as THREE from "three";
 
@@ -25,7 +26,10 @@ interface Rotation {
  * Mercury: MESSENGER's pole and spin (the small librations are left out). Venus: its pole, but
  * the cloud tops' turn, not the surface's: they race round westward in about four days. Luna:
  * its mean pole, facing the Earth. Mars: the 2009 elements (the small periodic terms left out).
- * Ceres: Dawn's.
+ * Ceres: Dawn's. Jupiter: System III, the turn of its magnetic field (its clouds have no fixed
+ * longitudes). Io, Europa, Ganymede, Callisto: their mean poles (the small periodic terms left
+ * out), facing Jupiter. Saturn: System III, as Jupiter (its pole also sets the rings' plane).
+ * Mimas, Enceladus, Tethys, Dione, Rhea, Titan, Iapetus: their mean poles, facing Saturn.
  */
 const ROTATIONS: Record<string, Rotation> = {
   Mercury: { ra: [281.0103, -0.0328], dec: [61.4155, -0.0049], w: [329.5988, 6.1385108] },
@@ -33,6 +37,19 @@ const ROTATIONS: Record<string, Rotation> = {
   Luna: { ra: [269.9949, 0.0031], dec: [66.5392, 0.013] },
   Mars: { ra: [317.68143, -0.1061], dec: [52.8865, -0.0609], w: [176.63, 350.89198226] },
   Ceres: { ra: [291.418, 0], dec: [66.764, 0], w: [170.65, 952.1532] },
+  Jupiter: { ra: [268.056595, -0.006499], dec: [64.495303, 0.002413], w: [284.95, 870.536] },
+  Io: { ra: [268.05, -0.009], dec: [64.5, 0.003] },
+  Europa: { ra: [268.08, -0.009], dec: [64.51, 0.003] },
+  Ganymede: { ra: [268.2, -0.009], dec: [64.57, 0.003] },
+  Callisto: { ra: [268.72, -0.009], dec: [64.83, 0.003] },
+  Saturn: { ra: [40.589, -0.036], dec: [83.537, -0.004], w: [38.9, 810.7939024] },
+  Mimas: { ra: [40.66, -0.036], dec: [83.52, -0.004] },
+  Enceladus: { ra: [40.66, -0.036], dec: [83.52, -0.004] },
+  Tethys: { ra: [40.66, -0.036], dec: [83.52, -0.004] },
+  Dione: { ra: [40.66, -0.036], dec: [83.52, -0.004] },
+  Rhea: { ra: [40.38, -0.036], dec: [83.55, -0.004] },
+  Titan: { ra: [39.4827, 0], dec: [83.4279, 0] },
+  Iapetus: { ra: [318.16, -3.949], dec: [75.03, -1.143] },
 };
 
 /** ICRF (equatorial) to the scene: equatorial to ecliptic, then the scene's y up (x, z, −y). */

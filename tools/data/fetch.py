@@ -11,6 +11,10 @@ Sources (all free to use):
     about 800 MB) and Dawn's DLR mosaic of Ceres (20 px/degree), for build_body_maps.py.
   NASA SVS CGI Moon Kit (public domain): the LRO LROC WAC colour map and LOLA heights, for build_body_maps.py.
   NASA PDS Geosciences (public domain): MGS MOLA MEGDR heights of Mars (16 px/degree), for build_body_maps.py.
+  USGS Astrogeology (public domain): Voyager and Galileo SSI global mosaics of Io (colour), Europa,
+    Ganymede (colour) and Callisto, and NASA/JPL's Cassini colour map of Jupiter (PIA07782); the
+    Cassini (and Voyager) global mosaics of Mimas (DLR), Enceladus, Tethys, Dione, Rhea, Titan
+    (ISS near-infrared, the surface through the haze) and Iapetus; all for build_body_maps.py.
 
 Run: python3 tools/data/fetch.py
 """
@@ -39,6 +43,18 @@ FILES = {
     "Mars_Viking_ClrMosaic_global_925m.tif": "https://planetarymaps.usgs.gov/mosaic/Mars_Viking_ClrMosaic_global_925m.tif",
     "megt90n000eb.img": "https://pds-geosciences.wustl.edu/mgs/mgs-m-mola-5-megdr-l3-v1/mgsl_300x/meg016/megt90n000eb.img",
     "Ceres_Dawn_FC_DLR_global_20ppd_Oct2015.tif": "https://planetarymaps.usgs.gov/mosaic/Ceres_Dawn_FC_DLR_global_20ppd_Oct2015.tif",
+    "PIA07782.tif": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia07/pia07782/PIA07782.tif",
+    "Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.tif": "https://planetarymaps.usgs.gov/mosaic/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.tif",
+    "Europa_Voyager_GalileoSSI_global_mosaic_500m.tif": "https://planetarymaps.usgs.gov/mosaic/Europa_Voyager_GalileoSSI_global_mosaic_500m.tif",
+    "Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.tif": "https://planetarymaps.usgs.gov/mosaic/Ganymede_Voyager_GalileoSSI_Global_ClrMosaic_1435m.tif",
+    "Callisto_Voyager_GalileoSSI_global_mosaic_1km.tif": "https://planetarymaps.usgs.gov/mosaic/Callisto_Voyager_GalileoSSI_global_mosaic_1km.tif",
+    "Cassini_DLR_Mimas.zip": "https://planetarymaps.usgs.gov/mosaic/Mimas/Cassini_DLR_Mimas.zip",
+    "Enceladus_Cassini_mosaic_global_110m.tif": "https://planetarymaps.usgs.gov/mosaic/Enceladus_Cassini_mosaic_global_110m.tif",
+    "Tethys_Cassini_mosaic_global_293m.tif": "https://planetarymaps.usgs.gov/mosaic/Tethys_Cassini_mosaic_global_293m.tif",
+    "Dione_Cassini_Voyager_mosaic_global_154m.tif": "https://planetarymaps.usgs.gov/mosaic/Dione_Cassini_Voyager_mosaic_global_154m.tif",
+    "Rhea_Cassini_Voyager_mosaic_global_417m.tif": "https://planetarymaps.usgs.gov/mosaic/Rhea_Cassini_Voyager_mosaic_global_417m.tif",
+    "Titan_ISS_P19658_Mosaic_Global_4km.tif": "https://planetarymaps.usgs.gov/mosaic/Titan_ISS_P19658_Mosaic_Global_4km.tif",
+    "Iapetus_Cassini_Voyager_mosaic_global_783m.tif": "https://planetarymaps.usgs.gov/mosaic/Iapetus_Cassini_Voyager_mosaic_global_783m.tif",
 }
 
 # indicator -> (date range, extra query)

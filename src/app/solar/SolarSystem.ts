@@ -59,9 +59,15 @@ const MOON_RADIUS = 2;
 const MAX_ART_RADIUS = 80;
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
- * of the map's width, so the middle of the disc shows each map pixel as one art pixel.
+ * of the map's width, so the middle of the disc shows each map pixel as one art pixel. Saturn's
+ * is smaller, as its rings make its canvas more than twice as wide.
  */
-const CLOSE_ART_RADIUS: Record<string, number> = { Mercury: 256, Venus: 256, Luna: 256, Mars: 256, Ceres: 256 };
+const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
+  ["Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus"].map((id) => [
+    id,
+    id === "Saturn" ? 160 : 256,
+  ]),
+);
 /** How close the camera can come to such a body, in its radii (as the globe does the Earth). */
 const CLOSE_RADII = 1.35;
 
@@ -546,6 +552,7 @@ export class SolarSystem {
     const map = this.maps.get(b.def.id) ?? null;
     let key = `${b.r}:${Math.round(light.x * steps)},${Math.round(light.y * steps)},${Math.round(light.z * steps)}${map ? "m" : ""}`;
     let orient: Orient | null = null;
+    let pole: [number, number, number] | undefined;
     const toParent = b.def.parent ? this.positions.get(b.def.parent)!.clone().sub(at) : new THREE.Vector3(1, 0, 0);
     const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years, toParent) : null;
     if (frame) {
@@ -556,10 +563,12 @@ export class SolarSystem {
       const turnSteps = b.r > MAX_ART_RADIUS ? 1200 : 60;
       key += `|${[0, 1, 2, 4, 5, 6].map((i) => Math.round(e[i]! * turnSteps)).join(",")}`;
       orient = ([x, y, z]) => [e[0]! * x + e[4]! * y + e[8]! * z, e[1]! * x + e[5]! * y + e[9]! * z, e[2]! * x + e[6]! * y + e[10]! * z];
+      // The body's north pole in view space (for its rings).
+      pole = [e[1]!, e[5]!, e[9]!];
     }
     if (key === b.lightKey) return;
     b.lightKey = key;
-    drawBody(b.canvas.getContext("2d")!, b.def.id, b.r, light, map, orient);
+    drawBody(b.canvas.getContext("2d")!, b.def.id, b.r, light, map, orient, pole);
     b.texture.needsUpdate = true;
   }
 
