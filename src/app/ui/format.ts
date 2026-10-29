@@ -12,6 +12,16 @@ export function signed(n: number, digits = 1): string {
   return `${n >= 0 ? "+" : ""}${compact(n, digits)}`;
 }
 
+const SUPERSCRIPT = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+
+/** Scientific notation with a superscript exponent: 3.37 × 10¹⁸. */
+export function scientific(n: number, digits = 3): string {
+  if (n === 0) return "0";
+  const [mantissa, exponent] = n.toExponential(digits - 1).split("e") as [string, string];
+  const power = [...String(Number(exponent))].map((c) => (c === "-" ? "⁻" : SUPERSCRIPT[Number(c)])).join("");
+  return `${mantissa} × 10${power}`;
+}
+
 export function grouped(n: number): string {
   return Math.round(n).toLocaleString("en-US");
 }

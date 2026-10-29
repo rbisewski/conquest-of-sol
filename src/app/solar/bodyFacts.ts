@@ -22,6 +22,8 @@ export function bodyClass(body: SpaceBodyDef): string {
       return GAS_GIANTS.has(body.id) ? "Gas Giant" : ICE_GIANTS.has(body.id) ? "Ice Giant" : "Terrestrial Planet";
     case "moon":
       return "Planetary Moon";
+    case "asteroidalMoon":
+      return "Asteroidal Moon";
     case "dwarf":
       return "Dwarf Planet";
     case "asteroid":
@@ -92,7 +94,7 @@ export function launchWindow(content: Content, id: string, years: number): { inY
   return { inYears: ((wait % synodic) + synodic) % synodic, transferYears };
 }
 
-/** The bodies orbiting this one directly, among those drawn as discs (moons of a planet). */
+/** The moons orbiting this body, planetary and asteroidal, innermost first. */
 export function moonsOf(content: Content, id: string): SpaceBodyDef[] {
-  return content.solarSystem.filter((b) => b.parent === id && b.type === "moon");
+  return content.solarSystem.filter((b) => b.parent === id && b.orbit).sort((a, b) => a.orbit!.a - b.orbit!.a);
 }

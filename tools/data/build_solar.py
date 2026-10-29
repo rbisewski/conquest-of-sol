@@ -5,9 +5,15 @@ https://github.com/Pzixel/terra-invicta-techtree-update (public/gamefiles/stable
 
     python3 -I tools/data/build_solar.py "<Terra Invicta>/TerraInvicta_Data/StreamingAssets/Templates" src/content
 
-Kept: the Sun, the planets, their moons, the dwarf planets, asteroids and comets that have a
-full set of orbital elements. Left out: the moons of asteroids and dwarf planets, Terra
-Invicta's hypothetical Planet Nine, and bodies whose elements are incomplete.
+Kept: every body with a full set of orbital elements: the Sun, the planets, their moons (large
+and asteroidal), the dwarf planets and their moons, asteroids and comets. Bodies whose elements
+are incomplete in the game are filled in from published orbits in solar_overrides.json (each
+entry names its source); the rest are left out (most moons of asteroids and dwarf planets),
+as is Terra Invicta's hypothetical Planet Nine.
+
+A body's composition is Terra Invicta's "Type": the mining profile most of its hab sites have
+(TIHabSiteTemplate; ties go to the first listed), by its display name in
+Localization/en/TIMiningProfileTemplate.en beside Templates/. Bodies without sites have none.
 
 Orbits are Keplerian elements at an epoch: semi-major axis (in AU, converted from km for
 moons), eccentricity, inclination, longitude of the ascending node, argument of periapsis and
@@ -15,16 +21,19 @@ mean anomaly. Where the game gives the longitude of periapsis and the mean longi
 (Jupiter's moons), the argument of periapsis and mean anomaly are worked out from them.
 """
 
+import collections
 import json
 import os
 import sys
 
 AU_KM = 149597870.7
+J2000_JD = 2451545.0
 
 TYPES = {
     "Star": "star",
     "Planet": "planet",
     "PlanetaryMoon": "moon",
+    "AsteroidalMoon": "asteroidalMoon",
     "DwarfPlanet": "dwarf",
     "Asteroid": "asteroid",
     "Comet": "comet",
@@ -61,9 +70,34 @@ def elements(body):
     return a, e, i, node % 360, peri % 360, mean % 360, epoch
 
 
+def compositions(templates):
+    """Each body's most common hab-site mining profile, by display name."""
+    with open(os.path.join(templates, "TIHabSiteTemplate.json"), encoding="utf-8-sig") as f:
+        sites = json.load(f)
+    names = {}
+    with open(os.path.join(templates, "..", "Localization", "en", "TIMiningProfileTemplate.en"), encoding="utf-8-sig") as f:
+        for line in f:
+            key, _, value = line.strip().partition("=")
+            if key.startswith("TIMiningProfileTemplate.displayName."):
+                names[key.rsplit(".", 1)[1]] = value
+    profiles = collections.defaultdict(collections.Counter)
+    for site in sites:
+        profiles[site["parentBodyName"]][site["miningProfileName"]] += 1
+    return {body: names[counts.most_common(1)[0][0]] for body, counts in profiles.items()}
+
+
 def main(templates, out_dir):
     with open(os.path.join(templates, "TISpaceBodyTemplate.json"), encoding="utf-8-sig") as f:
         bodies = json.load(f)
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "solar_overrides.json"), encoding="utf-8") as f:
+        overrides = json.load(f)
+    for body in bodies:
+        fix = overrides.get(body["dataName"])
+        if fix:
+            body.update({k: v for k, v in fix.items() if not k.startswith("_") and k != "epochJD"})
+            if "epochJD" in fix:
+                body["epoch_floatJYears"] = round(2000 + (fix["epochJD"] - J2000_JD) / 365.25, 6)
+    composition = compositions(templates)
     out = []
     for body in bodies:
         kind = TYPES.get(body["objectType"])
@@ -77,6 +111,8 @@ def main(templates, out_dir):
             "radiusKm": round(radius_km(body), 3),
             "massKg": body.get("mass_kg", 0),
         }
+        if body["dataName"] in composition:
+            entry["composition"] = composition[body["dataName"]]
         if kind != "star":
             orbit = elements(body)
             if orbit is None:
@@ -93,7 +129,7 @@ def main(templates, out_dir):
             }
         out.append(entry)
     # Parents before their moons, so a body's parent is always known when it is placed.
-    order = {"star": 0, "planet": 1, "dwarf": 2, "moon": 3, "asteroid": 4, "comet": 5}
+    order = {"star": 0, "planet": 1, "dwarf": 2, "moon": 3, "asteroidalMoon": 4, "asteroid": 5, "comet": 6}
     out.sort(key=lambda b: order[b["type"]])
     with open(os.path.join(out_dir, "solarSystem.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)

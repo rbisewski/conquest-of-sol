@@ -22,14 +22,14 @@ import { orbitPath, solarPositions, type Vec3 } from "../../sim/orbits";
 import { GLOBE_FADE_FROM, GLOBE_FARTHEST } from "../globe/Globe";
 import { canvasSize, drawBody, drawSun, earthMap, hasStyle, sunCanvasSize, type Light, type MapImage, type Orient } from "./bodyArt";
 import { EARTH_POLE, globeToScene } from "./earthFrame";
-import { disposeSmallBodies, makeSmallBodies, setSmallBodiesSun } from "./smallBodies";
+import { disposeSmallBodies, makeSmallBodies, setSmallBodiesSun, setSmallBodyShown } from "./smallBodies";
 
 /** Ecliptic coordinates (z north) to the scene's (y up). */
 const toScene = (p: Vec3, out = new THREE.Vector3()) => out.set(p.x, p.z, -p.y);
 
 /** CSS pixels per art pixel. */
 const PIXEL = 2;
-/** Art radius in pixels of the bodies drawn as discs; other dwarf planets, asteroids and comets are small sprites (smallBodies.ts). */
+/** Art radius in pixels of the bodies drawn as discs; other dwarf planets, asteroidal moons, asteroids and comets are small sprites (smallBodies.ts). */
 const ART_RADIUS: Record<string, number> = {
   Sol: 12,
   Jupiter: 8,
@@ -62,7 +62,7 @@ const EARTH_RADIUS_AU = 6378.137 / AU_KM;
 /** Where the globe and this view meet, in AU from the Earth's centre. */
 const HANDOFF = GLOBE_FARTHEST * EARTH_RADIUS_AU;
 const MAX_DISTANCE = 160;
-/** A moon shows once its orbit's radius spans this many CSS pixels; a planet or dwarf planet once
+/** A moon (asteroidal moons too) shows once its orbit's radius spans this many CSS pixels; a planet or dwarf planet once
  * it is this far from the Sun on screen, and its name once it is LABEL_MIN_PIXELS away (the
  * focused body always shows), so the inner planets don't pile up on the Sun when zoomed out. */
 const MOON_MIN_PIXELS = 16;
@@ -124,6 +124,8 @@ export class SolarSystem {
   /** Bodies drawn as small sprites, and their points. */
   private readonly dots: SpaceBodyDef[] = [];
   private readonly dotPoints: THREE.Points;
+  /** Whether each dot is drawn: asteroidal moons only once their orbits are wide enough on screen. */
+  private readonly dotShown: boolean[] = [];
   /** Scene positions of every body, by id. */
   private readonly positions = new Map<string, THREE.Vector3>();
   private years = Number.NaN;
@@ -185,6 +187,7 @@ export class SolarSystem {
       this.addBody(def, r);
     }
     this.dotPoints = makeSmallBodies(this.dots, PIXEL * Math.min(window.devicePixelRatio, 2));
+    this.dotShown.push(...this.dots.map(() => true));
     this.scene.add(this.dotPoints);
 
     void earthMap().then((map) => {
@@ -455,6 +458,14 @@ export class SolarSystem {
         b.label.classList.toggle("focused", focused);
       }
     }
+    // Asteroidal moons, like the moons, show when their orbits are wide enough on screen.
+    this.dots.forEach((d, i) => {
+      if (d.type !== "asteroidalMoon") return;
+      const shown = d.id === this.focusId || d.orbit!.a * this.pixelsPerUnit(this.positions.get(d.parent!)!) > MOON_MIN_PIXELS;
+      if (shown === this.dotShown[i]) return;
+      this.dotShown[i] = shown;
+      setSmallBodyShown(this.dotPoints, i, shown);
+    });
     // The Sun's name gives way to the focused body's when they crowd together on screen.
     const sol = this.byId.get("Sol");
     if (sol && this.focusId !== "Sol") {
@@ -525,7 +536,7 @@ export class SolarSystem {
       if (d <= reach && d < bestDistance) [best, bestDistance] = [id, d];
     };
     for (const b of this.bodies) if (b.shown) consider(b.def.id, Math.max(8, (b.sprite.scale.y / 2) * (rect.height * this.camera.projectionMatrix.elements[5]! / 2) * 0.85));
-    for (const d of this.dots) consider(d.id, 6);
+    this.dots.forEach((d, i) => this.dotShown[i] && consider(d.id, 6));
     return best;
   }
 

@@ -3,7 +3,7 @@
   // while the globe has the camera it draws from the globe's (handoff.ts), and zooming out past
   // the globe it takes over from there, so the zoom carries on with no change of view. Scrolling
   // all the way back in on the Earth hands back; double-clicking it or the button flies home
-  // first. Clicking a body opens its Celestial Body panel.
+  // first. Clicking a body opens its Celestial Body panel, and choosing one there swings to it.
   import { untrack } from "svelte";
   import * as THREE from "three";
   import { baseContent } from "../../content/index";
@@ -56,6 +56,14 @@
     if (!shown || !solar) return;
     const view = solar;
     untrack(() => view.enterFromGlobe(handoff.direction, handoff.distance));
+  });
+
+  // A body chosen in the Celestial Body panel (a moon in its list): the camera swings to it.
+  $effect(() => {
+    const id = game.selectedBodyId;
+    untrack(() => {
+      if (id && shown) solar?.focus(id);
+    });
   });
 
   // The bodies move with the game clock.

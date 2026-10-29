@@ -14,6 +14,7 @@
   "parent": "Sol",
   "radiusKm": 2493.7,
   "massKg": 3.3011e+23,
+  "composition": "Mercury Polar",
   "orbit": {
    "a": 0.387099,
    "e": 0.20563,
@@ -65,6 +66,7 @@
   "parent": "Sol",
   "radiusKm": 3396.2,
   "massKg": 6.4171e+23,
+  "composition": "Martian",
   "orbit": {
    "a": 1.523679,
    "e": 0.093412,
@@ -150,6 +152,7 @@
   "parent": "Sol",
   "radiusKm": 482.6,
   "massKg": 939300000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 2.7675,
    "e": 0.075823,
@@ -167,6 +170,7 @@
   "parent": "Sol",
   "radiusKm": 300,
   "massKg": 124407000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 45.796,
    "e": 0.10567,
@@ -184,6 +188,7 @@
   "parent": "Sol",
   "radiusKm": 334,
   "massKg": 370000000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 43.123,
    "e": 0.050464,
@@ -201,6 +206,7 @@
   "parent": "Sol",
   "radiusKm": 308.5,
   "massKg": 129135000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 39.664,
    "e": 0.2418,
@@ -218,6 +224,7 @@
   "parent": "Sol",
   "radiusKm": 555,
   "massKg": 1.39947e+21,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 43.405,
    "e": 0.034704,
@@ -235,6 +242,7 @@
   "parent": "Sol",
   "radiusKm": 384,
   "massKg": 260901000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 47.526,
    "e": 0.13139,
@@ -252,6 +260,7 @@
   "parent": "Sol",
   "radiusKm": 332.5,
   "massKg": 102500000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 42.488,
    "e": 0.1413,
@@ -269,6 +278,7 @@
   "parent": "Sol",
   "radiusKm": 282.5,
   "massKg": 94437400000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 37.6,
    "e": 0.253,
@@ -286,6 +296,7 @@
   "parent": "Sol",
   "radiusKm": 458.5,
   "massKg": 547000000000000000000,
+  "composition": "Diverse Icy Planetoid",
   "orbit": {
    "a": 39.17,
    "e": 0.22008,
@@ -303,6 +314,7 @@
   "parent": "Sol",
   "radiusKm": 340,
   "massKg": 205795000000000000000,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 42.173,
    "e": 0.081681,
@@ -320,6 +332,7 @@
   "parent": "Sol",
   "radiusKm": 427,
   "massKg": 419400000000000000000,
+  "composition": "Diverse Icy Planetoid",
   "orbit": {
    "a": 41.874,
    "e": 0.1099,
@@ -337,6 +350,7 @@
   "parent": "Sol",
   "radiusKm": 1189.9,
   "massKg": 1.303e+22,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 39.48,
    "e": 0.2488,
@@ -354,6 +368,7 @@
   "parent": "Sol",
   "radiusKm": 960.0,
   "massKg": 4.01e+21,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 43.218,
    "e": 0.19126,
@@ -371,6 +386,7 @@
   "parent": "Sol",
   "radiusKm": 1163,
   "massKg": 1.638e+22,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 67.684,
    "e": 0.43607,
@@ -388,6 +404,7 @@
   "parent": "Sol",
   "radiusKm": 715,
   "massKg": 3.21533e+21,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 45.43,
    "e": 0.16126,
@@ -405,6 +422,7 @@
   "parent": "Sol",
   "radiusKm": 339.5,
   "massKg": 196693000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 41.80481341,
    "e": 0.02943059806,
@@ -422,6 +440,7 @@
   "parent": "Sol",
   "radiusKm": 358,
   "massKg": 266400000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 45.805,
    "e": 0.13986,
@@ -439,6 +458,7 @@
   "parent": "Sol",
   "radiusKm": 249,
   "massKg": 77601100000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 43.201,
    "e": 0.15018,
@@ -456,6 +476,7 @@
   "parent": "Sol",
   "radiusKm": 470.0,
   "massKg": 160982000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 39.362,
    "e": 0.183,
@@ -473,6 +494,7 @@
   "parent": "Sol",
   "radiusKm": 615,
   "massKg": 1.75e+21,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 67.485,
    "e": 0.49943,
@@ -490,6 +512,7 @@
   "parent": "Sol",
   "radiusKm": 305.0,
   "massKg": 142616000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 47.82948455,
    "e": 0.1576714092,
@@ -507,6 +530,7 @@
   "parent": "Sol",
   "radiusKm": 411.5,
   "massKg": 160982000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 41.717,
    "e": 0.14439,
@@ -524,6 +548,7 @@
   "parent": "Sol",
   "radiusKm": 241.26,
   "massKg": 73528300000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 43.426,
    "e": 0.1517,
@@ -541,6 +566,7 @@
   "parent": "Sol",
   "radiusKm": 280.5,
   "massKg": 356400000000000000000,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 39.104,
    "e": 0.22667,
@@ -558,6 +584,7 @@
   "parent": "Sol",
   "radiusKm": 264.5,
   "massKg": 93013700000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 39.589,
    "e": 0.0247,
@@ -575,6 +602,7 @@
   "parent": "Sol",
   "radiusKm": 262,
   "massKg": 90401100000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 46.18198813,
    "e": 0.06760867784,
@@ -592,6 +620,7 @@
   "parent": "Sol",
   "radiusKm": 239,
   "massKg": 62903500000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 42.897,
    "e": 0.157,
@@ -609,6 +638,7 @@
   "parent": "Sol",
   "radiusKm": 244.5,
   "massKg": 67346900000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 42.31898249,
    "e": 0.2257468368,
@@ -626,6 +656,7 @@
   "parent": "Sol",
   "radiusKm": 260,
   "massKg": 95708800000000000000,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 43.113,
    "e": 0.11204,
@@ -643,6 +674,7 @@
   "parent": "Sol",
   "radiusKm": 252.0,
   "massKg": 73736600000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 45.56666891,
    "e": 0.1431230283,
@@ -660,6 +692,7 @@
   "parent": "Sol",
   "radiusKm": 259,
   "massKg": 93153200000000000000,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 41.64978063,
    "e": 0.1159771834,
@@ -677,6 +710,7 @@
   "parent": "Sol",
   "radiusKm": 261.0,
   "massKg": 96817400000000000000,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 46.74103453,
    "e": 0.1877377127,
@@ -694,6 +728,7 @@
   "parent": "Sol",
   "radiusKm": 274.6,
   "massKg": 170000000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 39.416,
    "e": 0.12713,
@@ -711,6 +746,7 @@
   "parent": "Sol",
   "radiusKm": 289.0,
   "massKg": 222436000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 46.56215266,
    "e": 0.06048982207,
@@ -728,6 +764,7 @@
   "parent": "Sol",
   "radiusKm": 333.02,
   "massKg": 201114000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 45.395,
    "e": 0.0535,
@@ -745,6 +782,7 @@
   "parent": "Sol",
   "radiusKm": 304.0,
   "massKg": 129450000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 45.08726011,
    "e": 0.09316613423,
@@ -762,6 +800,7 @@
   "parent": "Sol",
   "radiusKm": 290.0,
   "massKg": 112376000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 46.1656407,
    "e": 0.1667298511,
@@ -779,6 +818,7 @@
   "parent": "Sol",
   "radiusKm": 266.5,
   "massKg": 146674000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 39.631,
    "e": 0.2072,
@@ -807,6 +847,125 @@
   }
  },
  {
+  "id": "Glkunllhomdima",
+  "name": "Gǃkúnǁʼhòmdímà",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 319.0,
+  "massKg": 1.361e+20,
+  "orbit": {
+   "a": 74.5081904929,
+   "e": 0.4957816282699332,
+   "i": 23.32953536634301,
+   "node": 131.25059,
+   "peri": 346.057627,
+   "meanAnomaly": 348.999224,
+   "epoch": 2026.435318
+  }
+ },
+ {
+  "id": "15874TNO",
+  "name": "1996 TL66",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 169.5,
+  "massKg": 2e+19,
+  "orbit": {
+   "a": 84.7160141733,
+   "e": 0.5856282476985989,
+   "i": 23.96488441448197,
+   "node": 217.730767,
+   "peri": 185.137383,
+   "meanAnomaly": 11.427587,
+   "epoch": 2026.435318
+  }
+ },
+ {
+  "id": "2018VG18TNO",
+  "name": "Farout",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 328.0,
+  "massKg": 1.48e+20,
+  "orbit": {
+   "a": 81.9072079765,
+   "e": 0.5244822275778944,
+   "i": 24.17146148892078,
+   "node": 245.272981,
+   "peri": 16.86248,
+   "meanAnomaly": 161.32941,
+   "epoch": 2026.435318
+  }
+ },
+ {
+  "id": "2014UZ224TNO",
+  "name": "DeeDee",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 317.5,
+  "massKg": 1.34e+20,
+  "orbit": {
+   "a": 109.7301149751,
+   "e": 0.6490787444282012,
+   "i": 26.77642992471508,
+   "node": 131.210283,
+   "peri": 28.733772,
+   "meanAnomaly": 323.736151,
+   "epoch": 2026.435318
+  }
+ },
+ {
+  "id": "2012VP113TNO",
+  "name": "Biden",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 225.0,
+  "massKg": 4.8e+19,
+  "orbit": {
+   "a": 267.5209861941,
+   "e": 0.6985589359876868,
+   "i": 24.00179208811373,
+   "node": 90.89262,
+   "peri": 294.28523,
+   "meanAnomaly": 3.834281,
+   "epoch": 2026.435318
+  }
+ },
+ {
+  "id": "512381TNO",
+  "name": "2008 ST291",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 292.0,
+  "massKg": 1.04e+20,
+  "orbit": {
+   "a": 99.4123753377,
+   "e": 0.5714568215271709,
+   "i": 20.81037603629629,
+   "node": 331.155275,
+   "peri": 324.953536,
+   "meanAnomaly": 26.126963,
+   "epoch": 2026.435318
+  }
+ },
+ {
+  "id": "523794TNO",
+  "name": "2015 RR245",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 315.0,
+  "massKg": 1.3e+20,
+  "orbit": {
+   "a": 82.479064182,
+   "e": 0.5892596593956771,
+   "i": 7.542120117674791,
+   "node": 211.790233,
+   "peri": 260.618582,
+   "meanAnomaly": 328.233985,
+   "epoch": 2026.435318
+  }
+ },
+ {
   "id": "532037TNO",
   "name": "Chiminigagua",
   "type": "dwarf",
@@ -830,6 +989,7 @@
   "parent": "Earth",
   "radiusKm": 1738.1,
   "massKg": 7.34767e+22,
+  "composition": "Lunar",
   "orbit": {
    "a": 0.0025695486,
    "e": 0.09548768,
@@ -847,6 +1007,7 @@
   "parent": "Jupiter",
   "radiusKm": 1830,
   "massKg": 8.9319e+22,
+  "composition": "Sulfurous Planetoid",
   "orbit": {
    "a": 0.0028188904,
    "e": 0.0041,
@@ -864,6 +1025,7 @@
   "parent": "Jupiter",
   "radiusKm": 1560.8,
   "massKg": 4.8e+22,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0044855852,
    "e": 0.0094,
@@ -881,6 +1043,7 @@
   "parent": "Jupiter",
   "radiusKm": 2631.2,
   "massKg": 1.4819e+23,
+  "composition": "Diverse Icy Planetoid",
   "orbit": {
    "a": 0.0071552623,
    "e": 0.0013,
@@ -898,6 +1061,7 @@
   "parent": "Jupiter",
   "radiusKm": 2410.3,
   "massKg": 1.0759e+23,
+  "composition": "Diverse Icy Planetoid",
   "orbit": {
    "a": 0.0125851323,
    "e": 0.0074,
@@ -915,6 +1079,7 @@
   "parent": "Saturn",
   "radiusKm": 208,
   "massKg": 37493000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0012393492,
    "e": 0.0196,
@@ -932,6 +1097,7 @@
   "parent": "Saturn",
   "radiusKm": 256.5,
   "massKg": 108000000000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 0.0015905975,
    "e": 0.0047,
@@ -949,6 +1115,7 @@
   "parent": "Saturn",
   "radiusKm": 538.5,
   "massKg": 617449000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0019697473,
    "e": 0.0001,
@@ -966,6 +1133,7 @@
   "parent": "Saturn",
   "radiusKm": 564,
   "massKg": 1.09545e+21,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0025227632,
    "e": 0.0022,
@@ -983,6 +1151,7 @@
   "parent": "Saturn",
   "radiusKm": 765,
   "massKg": 2.30652e+21,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0035230448,
    "e": 0.001,
@@ -1000,6 +1169,7 @@
   "parent": "Saturn",
   "radiusKm": 2574.5,
   "massKg": 1.3452e+23,
+  "composition": "Hydrocarbon-Rich Planetoid",
   "orbit": {
    "a": 0.0081680975,
    "e": 0.0288,
@@ -1017,6 +1187,7 @@
   "parent": "Saturn",
   "radiusKm": 745.5,
   "massKg": 1.805e+21,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 0.0238026115,
    "e": 0.0293,
@@ -1034,6 +1205,7 @@
   "parent": "Uranus",
   "radiusKm": 240.5,
   "massKg": 65900000000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0008649187,
    "e": 0.0013,
@@ -1051,6 +1223,7 @@
   "parent": "Uranus",
   "radiusKm": 581,
   "massKg": 1.353e+21,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0012768898,
    "e": 0.0012,
@@ -1068,6 +1241,7 @@
   "parent": "Uranus",
   "radiusKm": 584.7,
   "massKg": 1.172e+21,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0017801056,
    "e": 0.0039,
@@ -1085,6 +1259,7 @@
   "parent": "Uranus",
   "radiusKm": 788.4,
   "massKg": 3.527e+21,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 0.0029138784,
    "e": 0.0011,
@@ -1102,6 +1277,7 @@
   "parent": "Uranus",
   "radiusKm": 761.4,
   "massKg": 3.014e+21,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 0.0039005903,
    "e": 0.0014,
@@ -1119,6 +1295,7 @@
   "parent": "Neptune",
   "radiusKm": 1354.5,
   "massKg": 2.1408e+22,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 0.0023714174,
    "e": 0,
@@ -1136,6 +1313,7 @@
   "parent": "Pluto",
   "radiusKm": 606,
   "massKg": 1.586e+21,
+  "composition": "Diverse Icy Planetoid",
   "orbit": {
    "a": 0.0001309912,
    "e": 0.0022,
@@ -1147,12 +1325,2256 @@
   }
  },
  {
+  "id": "Phobos",
+  "name": "Phobos",
+  "type": "asteroidalMoon",
+  "parent": "Mars",
+  "radiusKm": 13.4,
+  "massKg": 10638000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 6.26747e-05,
+   "e": 0.0151,
+   "i": 1.093,
+   "node": 164.931,
+   "peri": 150.247,
+   "meanAnomaly": 92.474,
+   "epoch": 1950
+  }
+ },
+ {
+  "id": "Deimos",
+  "name": "Deimos",
+  "type": "asteroidalMoon",
+  "parent": "Mars",
+  "radiusKm": 8.04,
+  "massKg": 1510000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0001568418,
+   "e": 0.0005,
+   "i": 0.93,
+   "node": 339.6,
+   "peri": 290.496,
+   "meanAnomaly": 296.23,
+   "epoch": 1950
+  }
+ },
+ {
+  "id": "Metis",
+  "name": "Metis",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 30.0,
+  "massKg": 36000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0008535549,
+   "e": 0.0002,
+   "i": 0.06,
+   "node": 146.912,
+   "peri": 297.177,
+   "meanAnomaly": 276.047,
+   "epoch": 1997.044
+  }
+ },
+ {
+  "id": "Adrastea",
+  "name": "Adrastea",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 10.0,
+  "massKg": 2000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0008602395,
+   "e": 0.0015,
+   "i": 0.03,
+   "node": 228.378,
+   "peri": 328.047,
+   "meanAnomaly": 135.673,
+   "epoch": 1997.044
+  }
+ },
+ {
+  "id": "Amalthea",
+  "name": "Amalthea",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 125.0,
+  "massKg": 2080000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0012123568,
+   "e": 0.004505,
+   "i": 0.384285,
+   "node": 220.289,
+   "peri": 301.6228,
+   "meanAnomaly": 315.3521,
+   "epoch": 2002.846
+  }
+ },
+ {
+  "id": "Thebe",
+  "name": "Thebe",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 58.0,
+  "massKg": 430000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0014832364,
+   "e": 0.018,
+   "i": 0.8,
+   "node": 235.694,
+   "peri": 234.269,
+   "meanAnomaly": 135.956,
+   "epoch": 1997.044
+  }
+ },
+ {
+  "id": "Themisto",
+  "name": "Themisto",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 4.5,
+  "massKg": 336582000000000,
+  "composition": "Carbonaceous-Metallic",
+  "orbit": {
+   "a": 0.0494458909,
+   "e": 0.257,
+   "i": 44.3,
+   "node": 202.7,
+   "peri": 236.3,
+   "meanAnomaly": 289.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Leda",
+  "name": "Leda",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 8.0,
+  "massKg": 3495800000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0745999923,
+   "e": 0.164,
+   "i": 27.47,
+   "node": 217.137,
+   "peri": 272.349,
+   "meanAnomaly": 228.076,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Himalia",
+  "name": "Himalia",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 102.8,
+  "massKg": 3217320000000000000,
+  "composition": "Carbonaceous-Metallic",
+  "orbit": {
+   "a": 0.0766053684,
+   "e": 0.162,
+   "i": 27.63,
+   "node": 57.245,
+   "peri": 331.995,
+   "meanAnomaly": 68.721,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Lysithea",
+  "name": "Lysithea",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 18.0,
+  "massKg": 39819300000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0783433611,
+   "e": 0.112,
+   "i": 27.35,
+   "node": 5.528,
+   "peri": 49.486,
+   "meanAnomaly": 329.121,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Elara",
+  "name": "Elara",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 43.0,
+  "massKg": 542852000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0784770528,
+   "e": 0.217,
+   "i": 24.77,
+   "node": 109.373,
+   "peri": 143.591,
+   "meanAnomaly": 332.962,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Praxidike",
+  "name": "Praxidike",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 3.5,
+  "massKg": 233473000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1413589639,
+   "e": 0.23,
+   "i": 149,
+   "node": 285.2,
+   "peri": 209.7,
+   "meanAnomaly": 21.8,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Ananke",
+  "name": "Ananke",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 14.55,
+  "massKg": 16773400000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.140660224,
+   "e": 0.1747248,
+   "i": 148.67482,
+   "node": 86.44368,
+   "peri": 135.63033,
+   "meanAnomaly": 339.61045,
+   "epoch": 2020.961749
+  }
+ },
+ {
+  "id": "Iocaste",
+  "name": "Iocaste",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 2.6,
+  "massKg": 95708800000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1432617316,
+   "e": 0.324908,
+   "i": 149.42446,
+   "node": 343.53045,
+   "peri": 110.27239,
+   "meanAnomaly": 289.50565,
+   "epoch": 2020.961749
+  }
+ },
+ {
+  "id": "Taygete",
+  "name": "Taygete",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 2.5,
+  "massKg": 106683000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1507123056,
+   "e": 0.2487538,
+   "i": 165.95236,
+   "node": 14.91608,
+   "peri": 283.34358,
+   "meanAnomaly": 150.90619,
+   "epoch": 2018.224658
+  }
+ },
+ {
+  "id": "Carme",
+  "name": "Carme",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 23.35,
+  "massKg": 86923400000000000,
+  "composition": "Stony",
+  "orbit": {
+   "a": 0.1564193387,
+   "e": 0.253,
+   "i": 164.9,
+   "node": 113.738,
+   "peri": 28.199,
+   "meanAnomaly": 234.027,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Kalyke",
+  "name": "Kalyke",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 3.45,
+  "massKg": 280371000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.1614178724,
+   "e": 0.3028225,
+   "i": 165.9373,
+   "node": 132.43876,
+   "peri": 323.78885,
+   "meanAnomaly": 63.16063,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "Pasiphae",
+  "name": "Pasiphae",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 28.9,
+  "massKg": 171882000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1578899478,
+   "e": 0.409,
+   "i": 151.4,
+   "node": 312.99,
+   "peri": 170.45,
+   "meanAnomaly": 280.193,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Megaclite",
+  "name": "Megaclite",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 3.0,
+  "massKg": 192265000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.15866663,
+   "e": 0.410217,
+   "i": 143.20224,
+   "node": 356.52408,
+   "peri": 8.71854,
+   "meanAnomaly": 269.64681,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "Sinope",
+  "name": "Sinope",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 19.0,
+  "massKg": 48842600000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1600290157,
+   "e": 0.25,
+   "i": 158.1,
+   "node": 303.081,
+   "peri": 346.394,
+   "meanAnomaly": 168.397,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Callirrhoe",
+  "name": "Callirrhoe",
+  "type": "asteroidalMoon",
+  "parent": "Jupiter",
+  "radiusKm": 4.8,
+  "massKg": 787519000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1643278068,
+   "e": 0.3095704,
+   "i": 14899790,
+   "node": 352.7548,
+   "peri": 68.21981,
+   "meanAnomaly": 240.90203,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "Pan",
+  "name": "Pan",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 17.0,
+  "massKg": 4950000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.000892887,
+   "e": 3.5e-05,
+   "i": 0.001,
+   "node": 40.557,
+   "peri": 139.318,
+   "meanAnomaly": 246.065,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Daphnis",
+  "name": "Daphnis",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 4.9,
+  "massKg": 68000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0009124796,
+   "e": 3.31e-05,
+   "i": 0.0036,
+   "node": 0,
+   "peri": 0,
+   "meanAnomaly": 153.6,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Atlas",
+  "name": "Atlas",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 20.5,
+  "massKg": 6600000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0009202671,
+   "e": 0.0012,
+   "i": 0.003,
+   "node": 0.5,
+   "peri": 331.521,
+   "meanAnomaly": 157.738,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Prometheus",
+  "name": "Prometheus",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 68.0,
+  "massKg": 159500000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0009316978,
+   "e": 0.0022,
+   "i": 0.008,
+   "node": 259.504,
+   "peri": 164.389,
+   "meanAnomaly": 242.224,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Pandora",
+  "name": "Pandora",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 52.0,
+  "massKg": 137100000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0009473397,
+   "e": 0.0042,
+   "i": 0.05,
+   "node": 327.215,
+   "peri": 83.461,
+   "meanAnomaly": 202.697,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Epimetheus",
+  "name": "Epimetheus",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 65.0,
+  "massKg": 526000000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0010121936,
+   "e": 0.0098,
+   "i": 0.335,
+   "node": 85.244,
+   "peri": 312.63,
+   "meanAnomaly": 308.322,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Janus",
+  "name": "Janus",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 101.5,
+  "massKg": 1897500000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0010125278,
+   "e": 0.0068,
+   "i": 0.163,
+   "node": 46.899,
+   "peri": 241.778,
+   "meanAnomaly": 242.754,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Pallene",
+  "name": "Pallene",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 12516100000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0014191378,
+   "e": 0.004,
+   "i": 0.2,
+   "node": 304.3,
+   "peri": 194.9,
+   "meanAnomaly": 2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Telesto",
+  "name": "Telesto",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 16.3,
+  "massKg": 9410000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0019700147,
+   "e": 0.0002,
+   "i": 1.18,
+   "node": 300.256,
+   "peri": 341.795,
+   "meanAnomaly": 240.143,
+   "epoch": 2007.4107
+  }
+ },
+ {
+  "id": "Calypso",
+  "name": "Calypso",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 15.1,
+  "massKg": 6300000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0019700147,
+   "e": 0.0005,
+   "i": 1.499,
+   "node": 25.327,
+   "peri": 234.788,
+   "meanAnomaly": 141.961,
+   "epoch": 2007.4107
+  }
+ },
+ {
+  "id": "Helene",
+  "name": "Helene",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 21.7,
+  "massKg": 24460000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0025227632,
+   "e": 0.0071,
+   "i": 0.213,
+   "node": 40.039,
+   "peri": 292.056,
+   "meanAnomaly": 134.07,
+   "epoch": 2004
+  }
+ },
+ {
+  "id": "Hyperion",
+  "name": "Hyperion",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 180.0,
+  "massKg": 5619900000000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.009900542,
+   "e": 0.0232,
+   "i": 0.615,
+   "node": 263.882,
+   "peri": 303.162,
+   "meanAnomaly": 86.338,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2019S1",
+  "name": "Akna",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 150535000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.075170856,
+   "e": 0.384,
+   "i": 49.5,
+   "node": 178.1,
+   "peri": 94.6,
+   "meanAnomaly": 34.9,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Kiviuq",
+  "name": "Kiviuq",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 19.21,
+  "massKg": 68296500000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0755859689,
+   "e": 0.275,
+   "i": 48,
+   "node": 352.7,
+   "peri": 91.8,
+   "meanAnomaly": 168.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2005S4",
+  "name": "Pinga",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 150535000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0756996069,
+   "e": 0.315,
+   "i": 48,
+   "node": 174.1,
+   "peri": 99.2,
+   "meanAnomaly": 252.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Ijiraq",
+  "name": "Ijiraq",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 6.5,
+  "massKg": 2645800000000000,
+  "composition": "Dry Carbonaceous",
+  "orbit": {
+   "a": 0.0758339671,
+   "e": 0.293,
+   "i": 49.2,
+   "node": 152.5,
+   "peri": 68.6,
+   "meanAnomaly": 27.9,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Phoebe",
+  "name": "Phoebe",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 109.5,
+  "massKg": 8292000000000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.0864277007,
+   "e": 0.164,
+   "i": 175.2,
+   "node": 192.7,
+   "peri": 240.3,
+   "meanAnomaly": 308,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2006S20",
+  "name": "Ulfrun",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 107338000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.0881944371,
+   "e": 0.206,
+   "i": 173.1,
+   "node": 70.2,
+   "peri": 80.7,
+   "meanAnomaly": 19.4,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Paaliaq",
+  "name": "Paaliaq",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 11.0,
+  "massKg": 7250000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1002547692,
+   "e": 0.378,
+   "i": 48.5,
+   "node": 353.2,
+   "peri": 237.6,
+   "meanAnomaly": 304.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Skathi",
+  "name": "Skathi",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 4.0,
+  "massKg": 369954000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1041151183,
+   "e": 0.281,
+   "i": 151.6,
+   "node": 284.1,
+   "peri": 202.2,
+   "meanAnomaly": 117.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2007S2",
+  "name": "Vali",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 107338000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1065463026,
+   "e": 0.232,
+   "i": 174,
+   "node": 115.1,
+   "peri": 56.5,
+   "meanAnomaly": 136.7,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Albiorix",
+  "name": "Albiorix",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 16.0,
+  "massKg": 22300000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1091532916,
+   "e": 0.482,
+   "i": 36.8,
+   "node": 111.1,
+   "peri": 62.8,
+   "meanAnomaly": 17,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Bebhionn",
+  "name": "Bebhionn",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 209230000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1138198018,
+   "e": 0.459,
+   "i": 38.5,
+   "node": 199.8,
+   "peri": 358.1,
+   "meanAnomaly": 167.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Erriapus",
+  "name": "Erriapus",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 8.15,
+  "massKg": 1247550000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1170270667,
+   "e": 0.476,
+   "i": 37.1,
+   "node": 146.2,
+   "peri": 279.8,
+   "meanAnomaly": 306.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Skoll",
+  "name": "Skoll",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 85084800000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.1178071581,
+   "e": 0.463,
+   "i": 159.4,
+   "node": 297.1,
+   "peri": 193.2,
+   "meanAnomaly": 169.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Tarqeq",
+  "name": "Tarqeq",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.5,
+  "massKg": 101470000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.118658106,
+   "e": 0.143,
+   "i": 48.7,
+   "node": 89.6,
+   "peri": 32.8,
+   "meanAnomaly": 159.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Siarnaq",
+  "name": "Siarnaq",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 19.65,
+  "massKg": 29239100000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1195277708,
+   "e": 0.309,
+   "i": 47.8,
+   "node": 64,
+   "peri": 68.4,
+   "meanAnomaly": 190.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Tarvos",
+  "name": "Tarvos",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 7.5,
+  "massKg": 3269220000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1217637652,
+   "e": 0.522,
+   "i": 37.8,
+   "node": 95.7,
+   "peri": 282.9,
+   "meanAnomaly": 255.7,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Hyrrokkin",
+  "name": "Hyrrokkin",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 4.0,
+  "massKg": 369954000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1226020124,
+   "e": 0.336,
+   "i": 149.9,
+   "node": 44.1,
+   "peri": 272.7,
+   "meanAnomaly": 202.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Greip",
+  "name": "Greip",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 107338000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1228613744,
+   "e": 0.317,
+   "i": 174.2,
+   "node": 335.8,
+   "peri": 146.2,
+   "meanAnomaly": 307.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Mundilfari",
+  "name": "Mundilfari",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.5,
+  "massKg": 363530000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.1242537739,
+   "e": 0.212,
+   "i": 167.1,
+   "node": 79.2,
+   "peri": 305.4,
+   "meanAnomaly": 97.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2006S1",
+  "name": "Kolga",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 143990000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.1253106071,
+   "e": 0.105,
+   "i": 156,
+   "node": 336.6,
+   "peri": 161,
+   "meanAnomaly": 134.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Bergelmir",
+  "name": "Bergelmir",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.75,
+  "massKg": 113248000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1288012985,
+   "e": 0.145,
+   "i": 158.8,
+   "node": 203.4,
+   "peri": 135.7,
+   "meanAnomaly": 258.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Jarnsaxa",
+  "name": "Jarnsaxa",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 69177100000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1288333845,
+   "e": 0.218,
+   "i": 163,
+   "node": 21.1,
+   "peri": 236,
+   "meanAnomaly": 156.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Narvi",
+  "name": "Narvi",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.5,
+  "massKg": 99657300000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1289162734,
+   "e": 0.441,
+   "i": 142.2,
+   "node": 179,
+   "peri": 177.9,
+   "meanAnomaly": 109.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Suttungr",
+  "name": "Suttungr",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.5,
+  "massKg": 156252000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1296275135,
+   "e": 0.116,
+   "i": 175.7,
+   "node": 253.2,
+   "peri": 65.1,
+   "meanAnomaly": 317.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2007S3",
+  "name": "Fenja",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 107338000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1311114918,
+   "e": 0.15,
+   "i": 173.8,
+   "node": 106.9,
+   "peri": 338.1,
+   "meanAnomaly": 83.6,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Hati",
+  "name": "Hati",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 85084800000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1316556172,
+   "e": 0.372,
+   "i": 165.4,
+   "node": 323.6,
+   "peri": 20.2,
+   "meanAnomaly": 248.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Eggther",
+  "name": "Eggther",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 147027000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1326482784,
+   "e": 0.157,
+   "i": 165,
+   "node": 87,
+   "peri": 144.2,
+   "meanAnomaly": 94.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Farbauti",
+  "name": "Farbauti",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 123858000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.135633615,
+   "e": 0.249,
+   "i": 156.2,
+   "node": 135.6,
+   "peri": 343.5,
+   "meanAnomaly": 10.4,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Thrymr",
+  "name": "Thrymr",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 4.0,
+  "massKg": 625994000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1359036723,
+   "e": 0.467,
+   "i": 175,
+   "node": 247.3,
+   "peri": 92.2,
+   "meanAnomaly": 350.7,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Bestla",
+  "name": "Bestla",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.5,
+  "massKg": 622122000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.1359531383,
+   "e": 0.486,
+   "i": 138.3,
+   "node": 284.4,
+   "peri": 78.5,
+   "meanAnomaly": 41.6,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Aegir",
+  "name": "Aegir",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 56548700000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.1381349875,
+   "e": 0.255,
+   "i": 166.1,
+   "node": 179.1,
+   "peri": 242.7,
+   "meanAnomaly": 27.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2004S7",
+  "name": "Hefring",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 147027000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1425702111,
+   "e": 0.511,
+   "i": 164.9,
+   "node": 323.8,
+   "peri": 54.9,
+   "meanAnomaly": 116.8,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2006S3",
+  "name": "Thiazi",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 143990000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.1427379942,
+   "e": 0.432,
+   "i": 156.1,
+   "node": 208.5,
+   "peri": 179.8,
+   "meanAnomaly": 74.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Alvaldi",
+  "name": "Alvaldi",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.5,
+  "massKg": 107338000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1470221461,
+   "e": 0.238,
+   "i": 177.4,
+   "node": 306.8,
+   "peri": 178.4,
+   "meanAnomaly": 64.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Kari",
+  "name": "Kari",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.25,
+  "massKg": 248814000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.1472801711,
+   "e": 0.469,
+   "i": 153,
+   "node": 279.4,
+   "peri": 162,
+   "meanAnomaly": 87.9,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Surtur",
+  "name": "Surtur",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 95708800000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1520456133,
+   "e": 0.448,
+   "i": 168.4,
+   "node": 234.3,
+   "peri": 301.3,
+   "meanAnomaly": 33.8,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Loge",
+  "name": "Loge",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 85084800000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1532053892,
+   "e": 0.191,
+   "i": 168.1,
+   "node": 342.6,
+   "peri": 31.7,
+   "meanAnomaly": 12.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Ymir",
+  "name": "Ymir",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 9.5,
+  "massKg": 7579730000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1534413551,
+   "e": 0.338,
+   "i": 172.3,
+   "node": 204.5,
+   "peri": 45.3,
+   "meanAnomaly": 216.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Fornjot",
+  "name": "Fornjot",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 3.0,
+  "massKg": 156074000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1666915437,
+   "e": 0.213,
+   "i": 170,
+   "node": 256,
+   "peri": 320.7,
+   "meanAnomaly": 62.4,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Cordelia",
+  "name": "Cordelia",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 25.0,
+  "massKg": 44000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0003325916,
+   "e": 0,
+   "i": 0.2,
+   "node": 1.1,
+   "peri": 0,
+   "meanAnomaly": 287.4,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Ophelia",
+  "name": "Ophelia",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 27.0,
+  "massKg": 53000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0003593968,
+   "e": 0.011,
+   "i": 0.2,
+   "node": 151.6,
+   "peri": 19.3,
+   "meanAnomaly": 213.4,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "S2025U1",
+  "name": "Beatrice",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 5.0,
+  "massKg": 450295000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.0003866633,
+   "e": 0.039,
+   "i": 4,
+   "node": 70.8,
+   "peri": 313.9,
+   "meanAnomaly": 275.6,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Bianca",
+  "name": "Bianca",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 32.0,
+  "massKg": 92000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.000395527,
+   "e": 0.006,
+   "i": 2.3,
+   "node": 272.5,
+   "peri": 328,
+   "meanAnomaly": 109.1,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Cressida",
+  "name": "Cressida",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 46.0,
+  "massKg": 250000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004129069,
+   "e": 0.004,
+   "i": 1.8,
+   "node": 308.2,
+   "peri": 87.9,
+   "meanAnomaly": 0.5,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Desdemona",
+  "name": "Desdemona",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 45.0,
+  "massKg": 180000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004188763,
+   "e": 0.007,
+   "i": 3.1,
+   "node": 283.9,
+   "peri": 137,
+   "meanAnomaly": 230,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Juliet",
+  "name": "Juliet",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 75.0,
+  "massKg": 560000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004302334,
+   "e": 0.006,
+   "i": 3,
+   "node": 141,
+   "peri": 274.9,
+   "meanAnomaly": 319.8,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Portia",
+  "name": "Portia",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 78.0,
+  "massKg": 1700000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004418579,
+   "e": 0.004,
+   "i": 2.7,
+   "node": 146.7,
+   "peri": 31.6,
+   "meanAnomaly": 310.1,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Rosalind",
+  "name": "Rosalind",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 36.0,
+  "massKg": 250000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004674532,
+   "e": 0.003,
+   "i": 1.7,
+   "node": 330,
+   "peri": 231.8,
+   "meanAnomaly": 287.7,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Cupid",
+  "name": "Cupid",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 9.0,
+  "massKg": 3800000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004973065,
+   "e": 0.007,
+   "i": 2,
+   "node": 31.1,
+   "peri": 168,
+   "meanAnomaly": 3.3,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Belinda",
+  "name": "Belinda",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 64.0,
+  "massKg": 490000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0005030687,
+   "e": 0.002,
+   "i": 1.4,
+   "node": 96.2,
+   "peri": 58.6,
+   "meanAnomaly": 226.4,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Perdita",
+  "name": "Perdita",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 15.0,
+  "massKg": 18000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0005108228,
+   "e": 0.005,
+   "i": 1.6,
+   "node": 270.4,
+   "peri": 296.9,
+   "meanAnomaly": 168,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Puck",
+  "name": "Puck",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 81.0,
+  "massKg": 2900000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0005749213,
+   "e": 0.009,
+   "i": 1.1,
+   "node": 111.2,
+   "peri": 337,
+   "meanAnomaly": 264.1,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Mab",
+  "name": "Mab",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 12.5,
+  "massKg": 1000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0006533315,
+   "e": 0.006,
+   "i": 1.8,
+   "node": 307.8,
+   "peri": 318.6,
+   "meanAnomaly": 250.8,
+   "epoch": 2025
+  }
+ },
+ {
+  "id": "Francisco",
+  "name": "Francisco",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 11.0,
+  "massKg": 7200000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0285832945,
+   "e": 0.1324,
+   "i": 147.25,
+   "node": 100.738,
+   "peri": 137.6,
+   "meanAnomaly": 288.4,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Caliban",
+  "name": "Caliban",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 36.0,
+  "massKg": 250000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0483295649,
+   "e": 0.1812,
+   "i": 141.529,
+   "node": 171.189,
+   "peri": 349.7,
+   "meanAnomaly": 241.2,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2023U1",
+  "name": "Hero",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 5.0,
+  "massKg": 680678000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.0533295024,
+   "e": 0.1866847,
+   "i": 141.89388,
+   "node": 265.84108,
+   "peri": 158.7,
+   "meanAnomaly": 101.8,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Stephano",
+  "name": "Stephano",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 16.0,
+  "massKg": 22000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0534900662,
+   "e": 0.2248,
+   "i": 143.819,
+   "node": 191.411,
+   "peri": 17.1,
+   "meanAnomaly": 164.4,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Trinculo",
+  "name": "Trinculo",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 9.0,
+  "massKg": 3900000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0572935962,
+   "e": 0.2194,
+   "i": 166.971,
+   "node": 193.755,
+   "peri": 162.2,
+   "meanAnomaly": 55.6,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Sycorax",
+  "name": "Sycorax",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 82.5,
+  "massKg": 2300000000000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.0814115866,
+   "e": 0.5219,
+   "i": 159.42,
+   "node": 263.034,
+   "peri": 25.4,
+   "meanAnomaly": 332.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Margaret",
+  "name": "Margaret",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 10.0,
+  "massKg": 5400000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.0958904023,
+   "e": 0.6772,
+   "i": 57.367,
+   "node": 7.067,
+   "peri": 90.7,
+   "meanAnomaly": 115.9,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Prospero",
+  "name": "Prospero",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 25.0,
+  "massKg": 85000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1097475514,
+   "e": 0.4445,
+   "i": 151.83,
+   "node": 319.003,
+   "peri": 180.4,
+   "meanAnomaly": 197.6,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Setebos",
+  "name": "Setebos",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 24.0,
+  "massKg": 75000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1167062066,
+   "e": 0.5908,
+   "i": 158.235,
+   "node": 250.235,
+   "peri": 356.1,
+   "meanAnomaly": 148,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Ferdinand",
+  "name": "Ferdinand",
+  "type": "asteroidalMoon",
+  "parent": "Uranus",
+  "radiusKm": 10.0,
+  "massKg": 5400000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1397078709,
+   "e": 0.3993,
+   "i": 169.793,
+   "node": 217.35,
+   "peri": 166.9,
+   "meanAnomaly": 172.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Naiad",
+  "name": "Naiad",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 48.0,
+  "massKg": 190000000000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.0003223776,
+   "e": 0.0003,
+   "i": 4.691,
+   "node": 42.279,
+   "peri": 2.045,
+   "meanAnomaly": 30.035,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Thalassa",
+  "name": "Thalassa",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 54.0,
+  "massKg": 350000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.000334724,
+   "e": 0.0002,
+   "i": 0.135,
+   "node": 145.98,
+   "peri": 237.065,
+   "meanAnomaly": 262.923,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Despina",
+  "name": "Despina",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 90.0,
+  "massKg": 2100000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0003511146,
+   "e": 0.0002,
+   "i": 0.068,
+   "node": 77.06,
+   "peri": 176.857,
+   "meanAnomaly": 230.812,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Galatea",
+  "name": "Galatea",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 102.0,
+  "massKg": 3750000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0004141302,
+   "e": 0.0001,
+   "i": 0.034,
+   "node": 37.247,
+   "peri": 343.011,
+   "meanAnomaly": 65.999,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Larissa",
+  "name": "Larissa",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 108.0,
+  "massKg": 4950000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.000491638,
+   "e": 0.0014,
+   "i": 0.205,
+   "node": 308.127,
+   "peri": 249.891,
+   "meanAnomaly": 166.246,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Hippocamp",
+  "name": "Hippocamp",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 8.7,
+  "massKg": 5000000000000000,
+  "composition": "Wet Carbonaceous",
+  "orbit": {
+   "a": 0.0007037734,
+   "e": 0.00084,
+   "i": 0.0019,
+   "node": 11.467,
+   "peri": 305.446,
+   "meanAnomaly": 329.901,
+   "epoch": 2020
+  }
+ },
+ {
+  "id": "Proteus",
+  "name": "Proteus",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 218.0,
+  "massKg": 50350000000000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.0007864149,
+   "e": 0.0005,
+   "i": 0.075,
+   "node": 315.131,
+   "peri": 67.968,
+   "meanAnomaly": 250.938,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Nereid",
+  "name": "Nereid",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 170.0,
+  "massKg": 27000000000000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.0368575968,
+   "e": 0.7507,
+   "i": 7.09,
+   "node": 335.57,
+   "peri": 281.117,
+   "meanAnomaly": 216.692,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Halimede",
+  "name": "Halimede",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 31.0,
+  "massKg": 160000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1110376767,
+   "e": 0.2646,
+   "i": 112.898,
+   "node": 217.477,
+   "peri": 157.509,
+   "meanAnomaly": 109.896,
+   "epoch": 2003.441
+  }
+ },
+ {
+  "id": "Sao",
+  "name": "Sao",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 22.0,
+  "massKg": 60000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1485850026,
+   "e": 0.1365,
+   "i": 49.907,
+   "node": 61.428,
+   "peri": 62.621,
+   "meanAnomaly": 170.128,
+   "epoch": 2003.441
+  }
+ },
+ {
+  "id": "S2002N5",
+  "name": "Ione",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 15.5,
+  "massKg": 23397800000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.1561869824,
+   "e": 0.5476863,
+   "i": 42.13349,
+   "node": 274.15082,
+   "peri": 62.72961,
+   "meanAnomaly": 105.52205,
+   "epoch": 2024.248634
+  }
+ },
+ {
+  "id": "Laomedeia",
+  "name": "Laomedeia",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 21.0,
+  "massKg": 50000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.1575356647,
+   "e": 0.3969,
+   "i": 34.049,
+   "node": 53.235,
+   "peri": 137.898,
+   "meanAnomaly": 292.502,
+   "epoch": 2003.441
+  }
+ },
+ {
+  "id": "Psamathe",
+  "name": "Psamathe",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 20.0,
+  "massKg": 40000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.3215019022,
+   "e": 0.3809,
+   "i": 137.679,
+   "node": 317.172,
+   "peri": 149.685,
+   "meanAnomaly": 200.132,
+   "epoch": 2003.441
+  }
+ },
+ {
+  "id": "Neso",
+  "name": "Neso",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 30.0,
+  "massKg": 150000000000000000,
+  "composition": "Common Carbonaceous",
+  "orbit": {
+   "a": 0.3294498763,
+   "e": 0.5714,
+   "i": 131.265,
+   "node": 51.325,
+   "peri": 87.229,
+   "meanAnomaly": 259.701,
+   "epoch": 2003.441
+  }
+ },
+ {
+  "id": "S2023N1",
+  "name": "Protho",
+  "type": "asteroidalMoon",
+  "parent": "Neptune",
+  "radiusKm": 10.5,
+  "massKg": 7273570000000000,
+  "composition": "Icy-Carbonaceous",
+  "orbit": {
+   "a": 0.3383977978,
+   "e": 0.4408718,
+   "i": 134.45902,
+   "node": 264.05033,
+   "peri": 100.79672,
+   "meanAnomaly": 86.36403,
+   "epoch": 2024.248634
+  }
+ },
+ {
+  "id": "Weywot",
+  "name": "Weywot",
+  "type": "asteroidalMoon",
+  "parent": "Quaoar",
+  "radiusKm": 40.0,
+  "massKg": 533484000000000000,
+  "composition": "Stony",
+  "orbit": {
+   "a": 8.90989e-05,
+   "e": 0.01111,
+   "i": 13.62,
+   "node": 353.3,
+   "peri": 97,
+   "meanAnomaly": 79,
+   "epoch": 2006.721424
+  }
+ },
+ {
+  "id": "Styx",
+  "name": "Styx",
+  "type": "asteroidalMoon",
+  "parent": "Pluto",
+  "radiusKm": 8.0,
+  "massKg": 7500000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0002887742,
+   "e": 0.025,
+   "i": 0.0,
+   "node": 0.0,
+   "peri": 322.5,
+   "meanAnomaly": 358.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Nix",
+  "name": "Nix",
+  "type": "asteroidalMoon",
+  "parent": "Pluto",
+  "radiusKm": 25.0,
+  "massKg": 45000000000000000,
+  "composition": "Carbonaceous-Stony",
+  "orbit": {
+   "a": 0.0003254725,
+   "e": 0.003,
+   "i": 0.195,
+   "node": 273.44,
+   "peri": 270.877,
+   "meanAnomaly": 260.688,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Kerberos",
+  "name": "Kerberos",
+  "type": "asteroidalMoon",
+  "parent": "Pluto",
+  "radiusKm": 9.5,
+  "massKg": 16500000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0003897114,
+   "e": 0.01,
+   "i": 0.4,
+   "node": 314.3,
+   "peri": 32.1,
+   "meanAnomaly": 276.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Hydra",
+  "name": "Hydra",
+  "type": "asteroidalMoon",
+  "parent": "Pluto",
+  "radiusKm": 32.5,
+  "massKg": 48000000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0004326265,
+   "e": 0.0051,
+   "i": 0.212,
+   "node": 102.469,
+   "peri": 149.649,
+   "meanAnomaly": 336.76,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Namaka",
+  "name": "Namaka",
+  "type": "asteroidalMoon",
+  "parent": "Haumea",
+  "radiusKm": 85.0,
+  "massKg": 1790000000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0001715065,
+   "e": 0.249,
+   "i": 113.013,
+   "node": 205.016,
+   "peri": 178.9,
+   "meanAnomaly": 178.5,
+   "epoch": 2008.402
+  }
+ },
+ {
+  "id": "Hiʻiaka",
+  "name": "Hiʻiaka",
+  "type": "asteroidalMoon",
+  "parent": "Haumea",
+  "radiusKm": 155.0,
+  "massKg": 17900000000000000000,
+  "composition": "Icy",
+  "orbit": {
+   "a": 0.0003334272,
+   "e": 0.0513,
+   "i": 126.356,
+   "node": 206.766,
+   "peri": 154.1,
+   "meanAnomaly": 152.8,
+   "epoch": 2008.405202
+  }
+ },
+ {
+  "id": "S2004S31",
+  "name": "Amarok",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.0,
+  "massKg": 0,
+  "orbit": {
+   "a": 0.1169615578,
+   "e": 0.159,
+   "i": 48.1,
+   "node": 75.3,
+   "peri": 262,
+   "meanAnomaly": 254.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Gridr",
+  "name": "Gridr",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.0,
+  "massKg": 77073700000000,
+  "orbit": {
+   "a": 0.1286843182,
+   "e": 0.187,
+   "i": 163.9,
+   "node": 334.9,
+   "peri": 285.5,
+   "meanAnomaly": 176.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Skrymir",
+  "name": "Skrymir",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.0,
+  "massKg": 0,
+  "orbit": {
+   "a": 0.1433683508,
+   "e": 0.437,
+   "i": 175.6,
+   "node": 157,
+   "peri": 56,
+   "meanAnomaly": 100.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2004S28",
+  "name": "Grendel",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.0,
+  "massKg": 0,
+  "orbit": {
+   "a": 0.1461645136,
+   "e": 0.159,
+   "i": 167.9,
+   "node": 127.8,
+   "peri": 194.9,
+   "meanAnomaly": 196.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Beli",
+  "name": "Beli",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 1.5,
+  "massKg": 0,
+  "orbit": {
+   "a": 0.1383963549,
+   "e": 0.087,
+   "i": 158.9,
+   "node": 253.4,
+   "peri": 256.8,
+   "meanAnomaly": 203.3,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Gunnlod",
+  "name": "Gunnlod",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 2.0,
+  "massKg": 0,
+  "orbit": {
+   "a": 0.1413195248,
+   "e": 0.251,
+   "i": 160.3,
+   "node": 295.4,
+   "peri": 34.5,
+   "meanAnomaly": 293.4,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "S2004S44",
+  "name": "Menja",
+  "type": "asteroidalMoon",
+  "parent": "Saturn",
+  "radiusKm": 1.5,
+  "massKg": 0,
+  "orbit": {
+   "a": 0.1304523915,
+   "e": 0.129,
+   "i": 167.7,
+   "node": 49.9,
+   "peri": 176.8,
+   "meanAnomaly": 202.6,
+   "epoch": 2000
+  }
+ },
+ {
   "id": "2Pallas",
   "name": "2 Pallas",
   "type": "asteroid",
   "parent": "Sol",
   "radiusKm": 284.0,
   "massKg": 204000000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.771668,
    "e": 0.22997227,
@@ -1170,6 +3592,7 @@
   "parent": "Sol",
   "radiusKm": 160.0,
   "massKg": 30039200000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.6669,
    "e": 0.2589,
@@ -1187,6 +3610,7 @@
   "parent": "Sol",
   "radiusKm": 286.3,
   "massKg": 259076000000000000000,
+  "composition": "Vestoid",
   "orbit": {
    "a": 2.36179,
    "e": 0.08874,
@@ -1204,6 +3628,7 @@
   "parent": "Sol",
   "radiusKm": 83.5,
   "massKg": 2902390000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.577103,
    "e": 0.190418,
@@ -1221,6 +3646,7 @@
   "parent": "Sol",
   "radiusKm": 102.5,
   "massKg": 12780100000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.425641,
    "e": 0.202619,
@@ -1238,6 +3664,7 @@
   "parent": "Sol",
   "radiusKm": 120.0,
   "massKg": 13616200000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.385,
    "e": 0.231,
@@ -1255,6 +3682,7 @@
   "parent": "Sol",
   "radiusKm": 68.0,
   "massKg": 848024000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.202,
    "e": 0.1561,
@@ -1272,6 +3700,7 @@
   "parent": "Sol",
   "radiusKm": 111.0,
   "massKg": 11287100000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.387,
    "e": 0.122,
@@ -1289,6 +3718,7 @@
   "parent": "Sol",
   "radiusKm": 225.0,
   "massKg": 87400000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.1415,
    "e": 0.1125,
@@ -1306,6 +3736,7 @@
   "parent": "Sol",
   "radiusKm": 76.65,
   "massKg": 6151160000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.453,
    "e": 0.1,
@@ -1323,6 +3754,7 @@
   "parent": "Sol",
   "radiusKm": 56.4,
   "massKg": 1498970000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.334,
    "e": 0.221,
@@ -1340,6 +3772,7 @@
   "parent": "Sol",
   "radiusKm": 108.5,
   "massKg": 16303600000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 2.576,
    "e": 0.0085,
@@ -1357,6 +3790,7 @@
   "parent": "Sol",
   "radiusKm": 83.5,
   "massKg": 8181640000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.585,
    "e": 0.168,
@@ -1374,6 +3808,7 @@
   "parent": "Sol",
   "radiusKm": 178.5,
   "massKg": 31233600000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.643,
    "e": 0.187,
@@ -1391,6 +3826,7 @@
   "parent": "Sol",
   "radiusKm": 139.5,
   "massKg": 22925200000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 2.921,
    "e": 0.14,
@@ -1408,6 +3844,7 @@
   "parent": "Sol",
   "radiusKm": 45.0,
   "massKg": 1200370000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.47,
    "e": 0.134,
@@ -1425,6 +3862,7 @@
   "parent": "Sol",
   "radiusKm": 85.0,
   "massKg": 3003920000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.296,
    "e": 0.218,
@@ -1442,6 +3880,7 @@
   "parent": "Sol",
   "radiusKm": 112.5,
   "massKg": 12720400000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.441,
    "e": 0.159,
@@ -1459,6 +3898,7 @@
   "parent": "Sol",
   "radiusKm": 80.0,
   "massKg": 5673400000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.408,
    "e": 0.143,
@@ -1476,6 +3916,7 @@
   "parent": "Sol",
   "radiusKm": 61.0,
   "massKg": 1702020000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.435,
    "e": 0.164,
@@ -1493,6 +3934,7 @@
   "parent": "Sol",
   "radiusKm": 117.5,
   "massKg": 8181640000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.9112,
    "e": 0.10213,
@@ -1510,6 +3952,7 @@
   "parent": "Sol",
   "radiusKm": 53.75,
   "massKg": 1301900000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.628,
    "e": 0.233,
@@ -1527,6 +3970,7 @@
   "parent": "Sol",
   "radiusKm": 99.0,
   "massKg": 11287100000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 3.129,
    "e": 0.131,
@@ -1544,6 +3988,7 @@
   "parent": "Sol",
   "radiusKm": 41.605,
   "massKg": 440136000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.4,
    "e": 0.255,
@@ -1561,6 +4006,7 @@
   "parent": "Sol",
   "radiusKm": 47.4,
   "massKg": 748000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.656,
    "e": 0.091,
@@ -1578,6 +4024,7 @@
   "parent": "Sol",
   "radiusKm": 62.0,
   "massKg": 1670000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.348,
    "e": 0.172,
@@ -1595,6 +4042,7 @@
   "parent": "Sol",
   "radiusKm": 60.0,
   "massKg": 2620000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.77551,
    "e": 0.15023,
@@ -1612,6 +4060,7 @@
   "parent": "Sol",
   "radiusKm": 58.25,
   "massKg": 11800000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.554,
    "e": 0.073,
@@ -1629,6 +4078,7 @@
   "parent": "Sol",
   "radiusKm": 55.5,
   "massKg": 1740000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.367,
    "e": 0.0126,
@@ -1646,6 +4096,7 @@
   "parent": "Sol",
   "radiusKm": 127.5,
   "massKg": 58100000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.15,
    "e": 0.226,
@@ -1663,6 +4114,7 @@
   "parent": "Sol",
   "radiusKm": 56.51,
   "massKg": 3660000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.686984,
    "e": 0.1045,
@@ -1680,6 +4132,7 @@
   "parent": "Sol",
   "radiusKm": 51.55,
   "massKg": 1979670000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.99,
    "e": 0.228,
@@ -1697,6 +4150,7 @@
   "parent": "Sol",
   "radiusKm": 52.8,
   "massKg": 4320000000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.747,
    "e": 0.303,
@@ -1714,6 +4168,7 @@
   "parent": "Sol",
   "radiusKm": 54.175,
   "massKg": 1300000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.651,
    "e": 0.177,
@@ -1731,6 +4186,7 @@
   "parent": "Sol",
   "radiusKm": 57.705,
   "massKg": 5710000000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.743,
    "e": 0.152,
@@ -1748,6 +4204,7 @@
   "parent": "Sol",
   "radiusKm": 109.5,
   "massKg": 4720000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.769,
    "e": 0.114,
@@ -1765,6 +4222,7 @@
   "parent": "Sol",
   "radiusKm": 53.8,
   "massKg": 1300000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.268,
    "e": 0.046,
@@ -1782,6 +4240,7 @@
   "parent": "Sol",
   "radiusKm": 119.5,
   "massKg": 6800000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.765,
    "e": 0.272,
@@ -1799,6 +4258,7 @@
   "parent": "Sol",
   "radiusKm": 51.365,
   "massKg": 1580000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.442,
    "e": 0.223,
@@ -1816,6 +4276,7 @@
   "parent": "Sol",
   "radiusKm": 47.5,
   "massKg": 1210000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.204,
    "e": 0.168,
@@ -1833,6 +4294,7 @@
   "parent": "Sol",
   "radiusKm": 56.5,
   "massKg": 370000000000000000,
+  "composition": "Metallic-Stony",
   "orbit": {
    "a": 2.423805,
    "e": 0.148159,
@@ -1850,6 +4312,7 @@
   "parent": "Sol",
   "radiusKm": 116.0,
   "massKg": 5690000000000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.72,
    "e": 0.082,
@@ -1867,6 +4330,7 @@
   "parent": "Sol",
   "radiusKm": 62.05,
   "massKg": 3500000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.526,
    "e": 0.172,
@@ -1884,6 +4348,7 @@
   "parent": "Sol",
   "radiusKm": 70.95,
   "massKg": 3250000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.878,
    "e": 0.135,
@@ -1901,6 +4366,7 @@
   "parent": "Sol",
   "radiusKm": 139.0,
   "massKg": 17000000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.11,
    "e": 0.075,
@@ -1918,6 +4384,7 @@
   "parent": "Sol",
   "radiusKm": 74.9,
   "massKg": 2690000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.09392,
    "e": 0.230323,
@@ -1935,6 +4402,7 @@
   "parent": "Sol",
   "radiusKm": 85.0,
   "massKg": 2460000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.365,
    "e": 0.066,
@@ -1952,6 +4420,7 @@
   "parent": "Sol",
   "radiusKm": 190.0,
   "massKg": 32700000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.101,
    "e": 0.102,
@@ -1969,6 +4438,7 @@
   "parent": "Sol",
   "radiusKm": 80.0,
   "massKg": 6160000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.758,
    "e": 0.145,
@@ -1986,6 +4456,7 @@
   "parent": "Sol",
   "radiusKm": 33.35,
   "massKg": 310000000000000000,
+  "composition": "Metallic-Stony",
   "orbit": {
    "a": 2.76,
    "e": 0.142,
@@ -2003,6 +4474,7 @@
   "parent": "Sol",
   "radiusKm": 56.6,
   "massKg": 4610000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 2.595,
    "e": 0.238,
@@ -2020,6 +4492,7 @@
   "parent": "Sol",
   "radiusKm": 56.505,
   "massKg": 4320000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 3.149,
    "e": 0.118,
@@ -2037,6 +4510,7 @@
   "parent": "Sol",
   "radiusKm": 82.4,
   "massKg": 3000000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.715,
    "e": 0.117,
@@ -2054,6 +4528,7 @@
   "parent": "Sol",
   "radiusKm": 47.7,
   "massKg": 9100000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.122,
    "e": 0.178,
@@ -2071,6 +4546,7 @@
   "parent": "Sol",
   "radiusKm": 58.022,
   "massKg": 1530000000000000000,
+  "composition": "Vestoid",
   "orbit": {
    "a": 2.3951,
    "e": 0.127,
@@ -2088,6 +4564,7 @@
   "parent": "Sol",
   "radiusKm": 151.0,
   "massKg": 17800000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.433,
    "e": 0.105,
@@ -2105,6 +4582,7 @@
   "parent": "Sol",
   "radiusKm": 61.285,
   "massKg": 3280000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.783,
    "e": 0.185,
@@ -2122,6 +4600,7 @@
   "parent": "Sol",
   "radiusKm": 67.5,
   "massKg": 5860000000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 2.98,
    "e": 0.170609,
@@ -2139,6 +4618,7 @@
   "parent": "Sol",
   "radiusKm": 91.85,
   "massKg": 1970000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.418,
    "e": 0.163,
@@ -2156,6 +4636,7 @@
   "parent": "Sol",
   "radiusKm": 90.0,
   "massKg": 3400000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.652,
    "e": 0.193,
@@ -2173,6 +4654,7 @@
   "parent": "Sol",
   "radiusKm": 192.0,
   "massKg": 14780000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.49,
    "e": 0.08,
@@ -2190,6 +4672,7 @@
   "parent": "Sol",
   "radiusKm": 127.5,
   "massKg": 18300000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.768,
    "e": 0.165,
@@ -2207,6 +4690,7 @@
   "parent": "Sol",
   "radiusKm": 75.5,
   "massKg": 6710000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.55016,
    "e": 0.1843,
@@ -2224,6 +4708,7 @@
   "parent": "Sol",
   "radiusKm": 63.21,
   "massKg": 4430000000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 3.188,
    "e": 0.10397,
@@ -2241,6 +4726,7 @@
   "parent": "Sol",
   "radiusKm": 78.0,
   "massKg": 3700000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.757,
    "e": 0.13998,
@@ -2258,6 +4744,7 @@
   "parent": "Sol",
   "radiusKm": 112.5,
   "massKg": 6230000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.16,
    "e": 0.087,
@@ -2275,6 +4762,7 @@
   "parent": "Sol",
   "radiusKm": 68.02,
   "massKg": 2600000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.06457,
    "e": 0.15245,
@@ -2292,6 +4780,7 @@
   "parent": "Sol",
   "radiusKm": 83.96,
   "massKg": 6480000000000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 3.057,
    "e": 0.132,
@@ -2309,6 +4798,7 @@
   "parent": "Sol",
   "radiusKm": 50.358,
   "massKg": 2225360000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.667322,
    "e": 0.2579554,
@@ -2326,6 +4816,7 @@
   "parent": "Sol",
   "radiusKm": 81.5,
   "massKg": 2000000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.15256,
    "e": 0.15775,
@@ -2343,6 +4834,7 @@
   "parent": "Sol",
   "radiusKm": 84.36,
   "massKg": 3060000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.17451,
    "e": 0.16653,
@@ -2360,6 +4852,7 @@
   "parent": "Sol",
   "radiusKm": 172.0,
   "massKg": 11200000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.477,
    "e": 0.078,
@@ -2377,6 +4870,7 @@
   "parent": "Sol",
   "radiusKm": 43.045,
   "massKg": 670000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 2.7325,
    "e": 0.081021,
@@ -2394,6 +4888,7 @@
   "parent": "Sol",
   "radiusKm": 49.825,
   "massKg": 1000000000000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.67825,
    "e": 0.13533,
@@ -2411,6 +4906,7 @@
   "parent": "Sol",
   "radiusKm": 74.355,
   "massKg": 6000000000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.9081,
    "e": 0.0028045,
@@ -2428,6 +4924,7 @@
   "parent": "Sol",
   "radiusKm": 92.0,
   "massKg": 5500000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.11767,
    "e": 0.052528,
@@ -2445,6 +4942,7 @@
   "parent": "Sol",
   "radiusKm": 134.0,
   "massKg": 5380000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.46,
    "e": 0.138,
@@ -2462,6 +4960,7 @@
   "parent": "Sol",
   "radiusKm": 61.0,
   "massKg": 3080000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.75615,
    "e": 0.067041,
@@ -2479,6 +4978,7 @@
   "parent": "Sol",
   "radiusKm": 94.08,
   "massKg": 5970000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.74946,
    "e": 0.12685,
@@ -2496,6 +4996,7 @@
   "parent": "Sol",
   "radiusKm": 59.72,
   "massKg": 2650000000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 2.87038,
    "e": 0.21145,
@@ -2513,6 +5014,7 @@
   "parent": "Sol",
   "radiusKm": 107.5,
   "massKg": 6600000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.12892,
    "e": 0.20799,
@@ -2530,6 +5032,7 @@
   "parent": "Sol",
   "radiusKm": 21.435,
   "massKg": 410000000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 2.6073,
    "e": 0.39036,
@@ -2547,6 +5050,7 @@
   "parent": "Sol",
   "radiusKm": 39.62,
   "massKg": 1210000000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 2.429469,
    "e": 0.205761,
@@ -2564,6 +5068,7 @@
   "parent": "Sol",
   "radiusKm": 72.71,
   "massKg": 7270000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.12402,
    "e": 0.21465,
@@ -2581,6 +5086,7 @@
   "parent": "Sol",
   "radiusKm": 86.0,
   "massKg": 5540000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 2.78073,
    "e": 0.17553,
@@ -2598,6 +5104,7 @@
   "parent": "Sol",
   "radiusKm": 66.105,
   "massKg": 2400000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.71793,
    "e": 0.066786,
@@ -2615,6 +5122,7 @@
   "parent": "Sol",
   "radiusKm": 85.315,
   "massKg": 5200000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.97,
    "e": 0.138211,
@@ -2632,6 +5140,7 @@
   "parent": "Sol",
   "radiusKm": 92.465,
   "massKg": 9190000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.19694,
    "e": 0.077261,
@@ -2649,6 +5158,7 @@
   "parent": "Sol",
   "radiusKm": 82.46,
   "massKg": 14500000000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 3.1251,
    "e": 0.084887,
@@ -2666,6 +5176,7 @@
   "parent": "Sol",
   "radiusKm": 74.195,
   "massKg": 3920000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.3816,
    "e": 0.070943,
@@ -2683,6 +5194,7 @@
   "parent": "Sol",
   "radiusKm": 78.755,
   "massKg": 3560000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.7383,
    "e": 0.1293,
@@ -2700,6 +5212,7 @@
   "parent": "Sol",
   "radiusKm": 65.2,
   "massKg": 1800000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.7276,
    "e": 0.24126,
@@ -2717,6 +5230,7 @@
   "parent": "Sol",
   "radiusKm": 90.0,
   "massKg": 7634070000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.9864,
    "e": 0.16597,
@@ -2734,6 +5248,7 @@
   "parent": "Sol",
   "radiusKm": 51.6,
   "massKg": 1790000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.4028,
    "e": 0.24582,
@@ -2751,6 +5266,7 @@
   "parent": "Sol",
   "radiusKm": 84.21,
   "massKg": 2680000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.6158,
    "e": 0.2381,
@@ -2768,6 +5284,7 @@
   "parent": "Sol",
   "radiusKm": 68.195,
   "massKg": 4000000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 3.1177,
    "e": 0.01753,
@@ -2785,6 +5302,7 @@
   "parent": "Sol",
   "radiusKm": 79.97,
   "massKg": 4590000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.14974,
    "e": 0.057565,
@@ -2802,6 +5320,7 @@
   "parent": "Sol",
   "radiusKm": 138.0,
   "massKg": 3000000000000000000,
+  "composition": "Metallic-Stony",
   "orbit": {
    "a": 2.7933,
    "e": 0.2507,
@@ -2819,6 +5338,7 @@
   "parent": "Sol",
   "radiusKm": 51.935,
   "massKg": 4050000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 3.01044,
    "e": 0.10447,
@@ -2836,6 +5356,7 @@
   "parent": "Sol",
   "radiusKm": 54.495,
   "massKg": 1890000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.38229,
    "e": 0.061238,
@@ -2853,6 +5374,7 @@
   "parent": "Sol",
   "radiusKm": 54.78,
   "massKg": 682191000000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.6599,
    "e": 0.1044,
@@ -2870,6 +5392,7 @@
   "parent": "Sol",
   "radiusKm": 74.245,
   "massKg": 4900000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.903,
    "e": 0.088335,
@@ -2887,6 +5410,7 @@
   "parent": "Sol",
   "radiusKm": 84.45,
   "massKg": 860000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.04857,
    "e": 0.10213,
@@ -2904,6 +5428,7 @@
   "parent": "Sol",
   "radiusKm": 30.05,
   "massKg": 306892000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.69355,
    "e": 0.10984,
@@ -2921,6 +5446,7 @@
   "parent": "Sol",
   "radiusKm": 60.498,
   "massKg": 4173620000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 3.14445,
    "e": 0.136081,
@@ -2938,6 +5464,7 @@
   "parent": "Sol",
   "radiusKm": 33.0,
   "massKg": 103000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.6484,
    "e": 0.26492652,
@@ -2955,6 +5482,7 @@
   "parent": "Sol",
   "radiusKm": 95.025,
   "massKg": 7790000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.135,
    "e": 0.1276,
@@ -2972,6 +5500,7 @@
   "parent": "Sol",
   "radiusKm": 63.295,
   "massKg": 1380830000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 4.349,
    "e": 0.0259,
@@ -2989,6 +5518,7 @@
   "parent": "Sol",
   "radiusKm": 70.345,
   "massKg": 1895530000000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.749,
    "e": 0.040003,
@@ -3006,6 +5536,7 @@
   "parent": "Sol",
   "radiusKm": 18.645,
   "massKg": 35295500000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.382,
    "e": 0.3005,
@@ -3023,6 +5554,7 @@
   "parent": "Sol",
   "radiusKm": 127.5,
   "massKg": 11000000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 2.682,
    "e": 0.34004,
@@ -3040,6 +5572,7 @@
   "parent": "Sol",
   "radiusKm": 37.86,
   "massKg": 795607000000000000,
+  "composition": "Metallic-Stony",
   "orbit": {
    "a": 3.21115,
    "e": 0.15919,
@@ -3057,6 +5590,7 @@
   "parent": "Sol",
   "radiusKm": 61.46,
   "massKg": 3160000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 3.11062,
    "e": 0.10588,
@@ -3074,6 +5608,7 @@
   "parent": "Sol",
   "radiusKm": 99.385,
   "massKg": 5060000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.89507,
    "e": 0.022319,
@@ -3091,6 +5626,7 @@
   "parent": "Sol",
   "radiusKm": 34.5,
   "massKg": 280371000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 2.2517,
    "e": 0.095224,
@@ -3108,6 +5644,7 @@
   "parent": "Sol",
   "radiusKm": 69.885,
   "massKg": 3580000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.92379,
    "e": 0.091473,
@@ -3125,6 +5662,7 @@
   "parent": "Sol",
   "radiusKm": 77.585,
   "massKg": 71800000000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.79777,
    "e": 0.11474,
@@ -3142,6 +5680,7 @@
   "parent": "Sol",
   "radiusKm": 65.63,
   "massKg": 7830000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.75806,
    "e": 0.23721,
@@ -3159,6 +5698,7 @@
   "parent": "Sol",
   "radiusKm": 70.86,
   "massKg": 1862950000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 3.96,
    "e": 0.21394,
@@ -3176,6 +5716,7 @@
   "parent": "Sol",
   "radiusKm": 94.31,
   "massKg": 5150000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.15125,
    "e": 0.25958,
@@ -3193,6 +5734,7 @@
   "parent": "Sol",
   "radiusKm": 108.05,
   "massKg": 8450000000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 3.12364,
    "e": 0.1059,
@@ -3210,6 +5752,7 @@
   "parent": "Sol",
   "radiusKm": 82.505,
   "massKg": 8140000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.89571,
    "e": 0.17064,
@@ -3227,6 +5770,7 @@
   "parent": "Sol",
   "radiusKm": 9.815,
   "massKg": 8471620000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.3203,
    "e": 0.0352,
@@ -3244,6 +5788,7 @@
   "parent": "Sol",
   "radiusKm": 88.165,
   "massKg": 11769600000000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.5752,
    "e": 0.073284,
@@ -3261,6 +5806,7 @@
   "parent": "Sol",
   "radiusKm": 64.505,
   "massKg": 1911250000000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.59798,
    "e": 0.25091,
@@ -3278,6 +5824,7 @@
   "parent": "Sol",
   "radiusKm": 104.4,
   "massKg": 3742280000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.06774,
    "e": 0.038297,
@@ -3295,6 +5842,7 @@
   "parent": "Sol",
   "radiusKm": 17.0,
   "massKg": 9289310000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 1.4579,
    "e": 0.2226,
@@ -3312,6 +5860,7 @@
   "parent": "Sol",
   "radiusKm": 5.5,
   "massKg": 1393820000000000,
+  "composition": "Metallic-Stony",
   "orbit": {
    "a": 1.9444,
    "e": 0.073725,
@@ -3329,6 +5878,7 @@
   "parent": "Sol",
   "radiusKm": 89.5,
   "massKg": 10302800000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.77005,
    "e": 0.17569,
@@ -3346,6 +5896,7 @@
   "parent": "Sol",
   "radiusKm": 117.21,
   "massKg": 9944220000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.0616,
    "e": 0.075545,
@@ -3363,6 +5914,7 @@
   "parent": "Sol",
   "radiusKm": 12.5,
   "massKg": 6039650000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.59436,
    "e": 0.38073,
@@ -3380,6 +5932,7 @@
   "parent": "Sol",
   "radiusKm": 81.0,
   "massKg": 2117240000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.16916,
    "e": 0.15906084,
@@ -3397,6 +5950,7 @@
   "parent": "Sol",
   "radiusKm": 57.775,
   "massKg": 5990000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.1717,
    "e": 0.094527,
@@ -3414,6 +5968,7 @@
   "parent": "Sol",
   "radiusKm": 178.5,
   "massKg": 39518200000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.167,
    "e": 0.185,
@@ -3431,6 +5986,7 @@
   "parent": "Sol",
   "radiusKm": 11.545,
   "massKg": 12166000000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.1895,
    "e": 0.2545,
@@ -3448,6 +6004,7 @@
   "parent": "Sol",
   "radiusKm": 112.5,
   "massKg": 18131600000000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.7732,
    "e": 0.1757,
@@ -3465,6 +6022,7 @@
   "parent": "Sol",
   "radiusKm": 76.7,
   "massKg": 10600000000000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 3.4984,
    "e": 0.085546,
@@ -3482,6 +6040,7 @@
   "parent": "Sol",
   "radiusKm": 84.0,
   "massKg": 2979260000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.3856,
    "e": 0.11662,
@@ -3499,6 +6058,7 @@
   "parent": "Sol",
   "radiusKm": 67.735,
   "massKg": 1562100000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.19,
    "e": 0.147,
@@ -3516,6 +6076,7 @@
   "parent": "Sol",
   "radiusKm": 79.863,
   "massKg": 3035020000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 2.928571328,
    "e": 0.16263957,
@@ -3533,6 +6094,7 @@
   "parent": "Sol",
   "radiusKm": 56.5,
   "massKg": 816000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 5.22,
    "e": 0.14,
@@ -3550,6 +6112,7 @@
   "parent": "Sol",
   "radiusKm": 201.5,
   "massKg": 16123600000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.222,
    "e": 0.024,
@@ -3567,6 +6130,7 @@
   "parent": "Sol",
   "radiusKm": 80.368,
   "massKg": 1350000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.297,
    "e": 0.2315,
@@ -3584,6 +6148,7 @@
   "parent": "Sol",
   "radiusKm": 13.5,
   "massKg": 10102500000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.6123,
    "e": 0.40995,
@@ -3601,6 +6166,7 @@
   "parent": "Sol",
   "radiusKm": 101.0,
   "massKg": 6057000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.1954,
    "e": 0.018936,
@@ -3618,6 +6184,7 @@
   "parent": "Sol",
   "radiusKm": 175.15,
   "massKg": 38984000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.062,
    "e": 0.1503,
@@ -3635,6 +6202,7 @@
   "parent": "Sol",
   "radiusKm": 85.855,
   "massKg": 3810000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.0011,
    "e": 0.34019,
@@ -3652,6 +6220,7 @@
   "parent": "Sol",
   "radiusKm": 68.54,
   "massKg": 1400000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 3.1546,
    "e": 0.10319,
@@ -3669,6 +6238,7 @@
   "parent": "Sol",
   "radiusKm": 75.856,
   "massKg": 2200000000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.9304,
    "e": 0.16471,
@@ -3686,6 +6256,7 @@
   "parent": "Sol",
   "radiusKm": 85.185,
   "massKg": 4580000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.4117,
    "e": 0.1513,
@@ -3703,6 +6274,7 @@
   "parent": "Sol",
   "radiusKm": 83.33,
   "massKg": 3635670000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.2745,
    "e": 0.065792,
@@ -3720,6 +6292,7 @@
   "parent": "Sol",
   "radiusKm": 19.0,
   "massKg": 34477100000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.745,
    "e": 0.66,
@@ -3737,6 +6310,7 @@
   "parent": "Sol",
   "radiusKm": 17.14,
   "massKg": 52730400000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.6629,
    "e": 0.537,
@@ -3754,6 +6328,7 @@
   "parent": "Sol",
   "radiusKm": 63.0,
   "massKg": 1571090000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.2489,
    "e": 0.089748,
@@ -3771,6 +6346,7 @@
   "parent": "Sol",
   "radiusKm": 6.065,
   "massKg": 1599240000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.3268,
    "e": 0.2998,
@@ -3788,6 +6364,7 @@
   "parent": "Sol",
   "radiusKm": 71.5,
   "massKg": 2296670000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.199742,
    "e": 0.105594,
@@ -3805,6 +6382,7 @@
   "parent": "Sol",
   "radiusKm": 63.135,
   "massKg": 1581210000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 5.309621,
    "e": 0.138685,
@@ -3822,6 +6400,7 @@
   "parent": "Sol",
   "radiusKm": 142.0,
   "massKg": 3117500000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.1946,
    "e": 0.044112,
@@ -3839,6 +6418,7 @@
   "parent": "Sol",
   "radiusKm": 4.275,
   "massKg": 197765000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.195,
    "e": 0.4876,
@@ -3856,6 +6436,7 @@
   "parent": "Sol",
   "radiusKm": 5.1,
   "massKg": 1115770000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 1.8628,
    "e": 0.3966,
@@ -3873,6 +6454,7 @@
   "parent": "Sol",
   "radiusKm": 4.45,
   "massKg": 598381000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 1.8934,
    "e": 0.5386,
@@ -3890,6 +6472,7 @@
   "parent": "Sol",
   "radiusKm": 59.11,
   "massKg": 1297670000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 5.135166015,
    "e": 0.0460119535,
@@ -3907,6 +6490,7 @@
   "parent": "Sol",
   "radiusKm": 23.825,
   "massKg": 90631700000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.2464,
    "e": 0.0321,
@@ -3924,6 +6508,7 @@
   "parent": "Sol",
   "radiusKm": 33.738,
   "massKg": 160859000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 3.9762,
    "e": 0.1697,
@@ -3941,6 +6526,7 @@
   "parent": "Sol",
   "radiusKm": 2.85,
   "massKg": 290900000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.149,
    "e": 0.5056,
@@ -3958,6 +6544,7 @@
   "parent": "Sol",
   "radiusKm": 2.8,
   "massKg": 318155000000000,
+  "composition": "Vestoid",
   "orbit": {
    "a": 1.3904,
    "e": 0.0616,
@@ -3975,6 +6562,7 @@
   "parent": "Sol",
   "radiusKm": 109.0,
   "massKg": 6509530000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 13.708,
    "e": 0.37911,
@@ -3992,6 +6580,7 @@
   "parent": "Sol",
   "radiusKm": 6.8,
   "massKg": 1107980000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.1783,
    "e": 0.3298,
@@ -4009,6 +6598,7 @@
   "parent": "Sol",
   "radiusKm": 2.59,
   "massKg": 123719000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.304251356,
    "e": 0.3603684591,
@@ -4026,6 +6616,7 @@
   "parent": "Sol",
   "radiusKm": 13.56,
   "massKg": 15375500000000000,
+  "composition": "Carbonaceous-Metallic",
   "orbit": {
    "a": 2.5894,
    "e": 0.4071,
@@ -4043,6 +6634,7 @@
   "parent": "Sol",
   "radiusKm": 3.0,
   "massKg": 187975000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 2.161294387,
    "e": 0.8373866877,
@@ -4060,6 +6652,7 @@
   "parent": "Sol",
   "radiusKm": 3.183,
   "massKg": 405438000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.123507038,
    "e": 0.3604639923,
@@ -4077,6 +6670,7 @@
   "parent": "Sol",
   "radiusKm": 3.05,
   "massKg": 247344000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 1.2714,
    "e": 0.8899,
@@ -4094,6 +6688,7 @@
   "parent": "Sol",
   "radiusKm": 59.395,
   "massKg": 58512300000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 5.22758,
    "e": 0.12896,
@@ -4111,6 +6706,7 @@
   "parent": "Sol",
   "radiusKm": 5.264,
   "massKg": 917816000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 1.86307,
    "e": 0.08484,
@@ -4128,6 +6724,7 @@
   "parent": "Sol",
   "radiusKm": 4.426,
   "massKg": 617407000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.393063085,
    "e": 0.3075130657,
@@ -4145,6 +6742,7 @@
   "parent": "Sol",
   "radiusKm": 63.144,
   "massKg": 66400300000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 5.172865,
    "e": 0.07489217,
@@ -4162,6 +6760,7 @@
   "parent": "Sol",
   "radiusKm": 9.2,
   "massKg": 3914110000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 4.2367,
    "e": 0.7089,
@@ -4179,6 +6778,7 @@
   "parent": "Sol",
   "radiusKm": 4.534,
   "massKg": 1171260000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.360829615,
    "e": 0.3754667294,
@@ -4196,6 +6796,7 @@
   "parent": "Sol",
   "radiusKm": 3.484,
   "massKg": 531428000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.406624205,
    "e": 0.3965654254,
@@ -4213,6 +6814,7 @@
   "parent": "Sol",
   "radiusKm": 2.5,
   "massKg": 130900000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 0.99774,
    "e": 0.51485,
@@ -4230,6 +6832,7 @@
   "parent": "Sol",
   "radiusKm": 4.818,
   "massKg": 1405430000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.366769105,
    "e": 0.2963229847,
@@ -4247,6 +6850,7 @@
   "parent": "Sol",
   "radiusKm": 3.663,
   "massKg": 617619000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.197607603,
    "e": 0.36285583,
@@ -4264,6 +6868,7 @@
   "parent": "Sol",
   "radiusKm": 5.4,
   "massKg": 450177000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.0016,
    "e": 0.44848,
@@ -4281,6 +6886,7 @@
   "parent": "Sol",
   "radiusKm": 95.0,
   "massKg": 4309640000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 20.378,
    "e": 0.5722,
@@ -4298,6 +6904,7 @@
   "parent": "Sol",
   "radiusKm": 2.841,
   "massKg": 288001000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.398040116,
    "e": 0.3752137061,
@@ -4315,6 +6922,7 @@
   "parent": "Sol",
   "radiusKm": 2.615,
   "massKg": 104925000000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.266313513,
    "e": 0.6518967474,
@@ -4332,6 +6940,7 @@
   "parent": "Sol",
   "radiusKm": 4.744,
   "massKg": 1028280000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 2.754465577,
    "e": 0.41784478,
@@ -4349,6 +6958,7 @@
   "parent": "Sol",
   "radiusKm": 30.0,
   "massKg": 135717000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 24.525,
    "e": 0.5203,
@@ -4366,6 +6976,7 @@
   "parent": "Sol",
   "radiusKm": 3.15,
   "massKg": 93474600000000,
+  "composition": "Dry Stony",
   "orbit": {
    "a": 2.545511675,
    "e": 0.6937552106,
@@ -4383,6 +6994,7 @@
   "parent": "Sol",
   "radiusKm": 2.795,
   "massKg": 155483000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.775841979,
    "e": 0.5030439282,
@@ -4400,6 +7012,7 @@
   "parent": "Sol",
   "radiusKm": 4.535,
   "massKg": 1328310000000000,
+  "composition": "Metallic-Stony",
   "orbit": {
    "a": 2.638078486,
    "e": 0.3806818908,
@@ -4417,6 +7030,7 @@
   "parent": "Sol",
   "radiusKm": 2.874,
   "massKg": 298312000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 3.277739211,
    "e": 0.5555326783,
@@ -4434,6 +7048,7 @@
   "parent": "Sol",
   "radiusKm": 39.0,
   "massKg": 273322000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 17.976,
    "e": 0.6203,
@@ -4451,6 +7066,7 @@
   "parent": "Sol",
   "radiusKm": 167.0,
   "massKg": 9814750000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 15.801,
    "e": 0.17244,
@@ -4468,6 +7084,7 @@
   "parent": "Sol",
   "radiusKm": 37.0,
   "massKg": 233392000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 25.105,
    "e": 0.2483,
@@ -4485,6 +7102,7 @@
   "parent": "Sol",
   "radiusKm": 3.35,
   "massKg": 266279000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 3.099418891,
    "e": 0.5442337747,
@@ -4502,6 +7120,7 @@
   "parent": "Sol",
   "radiusKm": 83.5,
   "massKg": 1223840000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 43.779,
    "e": 0.0679,
@@ -4519,6 +7138,7 @@
   "parent": "Sol",
   "radiusKm": 164.0,
   "massKg": 24019500000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 39.4,
    "e": 0.18372,
@@ -4536,6 +7156,7 @@
   "parent": "Sol",
   "radiusKm": 66.5,
   "massKg": 1355020000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 39.40494457,
    "e": 0.1159304981,
@@ -4553,6 +7174,7 @@
   "parent": "Sol",
   "radiusKm": 2.841,
   "massKg": 288305000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.557713939,
    "e": 0.4997811952,
@@ -4570,6 +7192,7 @@
   "parent": "Sol",
   "radiusKm": 2.705,
   "massKg": 140162000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.854,
    "e": 0.5571,
@@ -4587,6 +7210,7 @@
   "parent": "Sol",
   "radiusKm": 28.5,
   "massKg": 126057000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 11.75224958,
    "e": 0.3855807723,
@@ -4604,6 +7228,7 @@
   "parent": "Sol",
   "radiusKm": 43.25,
   "massKg": 440545000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 10.65,
    "e": 0.1978514,
@@ -4621,6 +7246,7 @@
   "parent": "Sol",
   "radiusKm": 230,
   "massKg": 45868500000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 37.821,
    "e": 0.04,
@@ -4638,6 +7264,7 @@
   "parent": "Sol",
   "radiusKm": 217.5,
   "massKg": 30307500000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 39.628,
    "e": 0.27997,
@@ -4655,6 +7282,7 @@
   "parent": "Sol",
   "radiusKm": 55.0,
   "massKg": 905983000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 19.911,
    "e": 0.13727,
@@ -4672,6 +7300,7 @@
   "parent": "Sol",
   "radiusKm": 3.371,
   "massKg": 302488000000000,
+  "composition": "Stony",
   "orbit": {
    "a": 2.416617448,
    "e": 0.6529200605,
@@ -4689,6 +7318,7 @@
   "parent": "Sol",
   "radiusKm": 24.5,
   "massKg": 37790600000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 8.354,
    "e": 0.305576,
@@ -4706,6 +7336,7 @@
   "parent": "Sol",
   "radiusKm": 35.0,
   "massKg": 197554000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 26.113,
    "e": 0.3775,
@@ -4723,6 +7354,7 @@
   "parent": "Sol",
   "radiusKm": 105.5,
   "massKg": 5410520000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 44.289,
    "e": 0.062384,
@@ -4740,6 +7372,7 @@
   "parent": "Sol",
   "radiusKm": 3.5,
   "massKg": 106309000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 2.723309421,
    "e": 0.6414631158,
@@ -4757,6 +7390,7 @@
   "parent": "Sol",
   "radiusKm": 103.5,
   "massKg": 3440700000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 15.505,
    "e": 0.22039,
@@ -4774,6 +7408,7 @@
   "parent": "Sol",
   "radiusKm": 50.45,
   "massKg": 313676000000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 25.098,
    "e": 0.39526,
@@ -4791,6 +7426,7 @@
   "parent": "Sol",
   "radiusKm": 29.5,
   "massKg": 74054200000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 10.68,
    "e": 0.45566689,
@@ -4808,6 +7444,7 @@
   "parent": "Sol",
   "radiusKm": 30.0,
   "massKg": 107442000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 19.44978619,
    "e": 0.273531695,
@@ -4825,6 +7462,7 @@
   "parent": "Sol",
   "radiusKm": 224.25,
   "massKg": 47237400000000000000,
+  "composition": "Rocky Planetoid",
   "orbit": {
    "a": 39.325,
    "e": 0.26257,
@@ -4842,6 +7480,7 @@
   "parent": "Sol",
   "radiusKm": 313.5,
   "massKg": 87430900000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 39.435,
    "e": 0.075539,
@@ -4859,6 +7498,7 @@
   "parent": "Sol",
   "radiusKm": 2.874,
   "massKg": 169043000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.096723014,
    "e": 0.4325588341,
@@ -4876,6 +7516,7 @@
   "parent": "Sol",
   "radiusKm": 2.534,
   "massKg": 115798000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.077654192,
    "e": 0.5070022515,
@@ -4893,6 +7534,7 @@
   "parent": "Sol",
   "radiusKm": 115.25,
   "massKg": 7053490000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 23.2182,
    "e": 0.22416,
@@ -4910,6 +7552,7 @@
   "parent": "Sol",
   "radiusKm": 4.494,
   "massKg": 646088000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.017,
    "e": 0.2721,
@@ -4927,6 +7570,7 @@
   "parent": "Sol",
   "radiusKm": 4.06,
   "massKg": 476558000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.385120204,
    "e": 0.3440536328,
@@ -4944,6 +7588,7 @@
   "parent": "Sol",
   "radiusKm": 6.425,
   "massKg": 1888670000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.766,
    "e": 0.5174,
@@ -4961,6 +7606,7 @@
   "parent": "Sol",
   "radiusKm": 227.5,
   "massKg": 59185300000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 38.867,
    "e": 0.041762,
@@ -4978,6 +7624,7 @@
   "parent": "Sol",
   "radiusKm": 41.0,
   "massKg": 282922000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 20.832,
    "e": 0.475086,
@@ -4995,6 +7642,7 @@
   "parent": "Sol",
   "radiusKm": 256.0,
   "massKg": 80817700000000000000,
+  "composition": "Icy Planetoid",
   "orbit": {
    "a": 38.78,
    "e": 0.06714,
@@ -5012,6 +7660,7 @@
   "parent": "Sol",
   "radiusKm": 59.0,
   "massKg": 946318000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 20.136,
    "e": 0.256919,
@@ -5029,6 +7678,7 @@
   "parent": "Sol",
   "radiusKm": 199.0,
   "massKg": 30000000000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 38.865,
    "e": 0.041,
@@ -5046,6 +7696,7 @@
   "parent": "Sol",
   "radiusKm": 126.0,
   "massKg": 10055000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 43.163,
    "e": 0.013639,
@@ -5063,6 +7714,7 @@
   "parent": "Sol",
   "radiusKm": 203.0,
   "massKg": 38545100000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 38.828,
    "e": 0.071207,
@@ -5080,6 +7732,7 @@
   "parent": "Sol",
   "radiusKm": 37.5,
   "massKg": 2000000000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 22.027,
    "e": 0.4572,
@@ -5097,6 +7750,7 @@
   "parent": "Sol",
   "radiusKm": 29.0,
   "massKg": 102160000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 14.67,
    "e": 0.30652,
@@ -5114,6 +7768,7 @@
   "parent": "Sol",
   "radiusKm": 4.489,
   "massKg": 643934000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.787205526,
    "e": 0.4044517052,
@@ -5131,6 +7786,7 @@
   "parent": "Sol",
   "radiusKm": 5.4,
   "massKg": 1121290000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 4.617269191,
    "e": 0.7055370752,
@@ -5148,6 +7804,7 @@
   "parent": "Sol",
   "radiusKm": 123.5,
   "massKg": 7890230000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 30.16,
    "e": 0.29987,
@@ -5165,6 +7822,7 @@
   "parent": "Sol",
   "radiusKm": 55.03,
   "massKg": 698051000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 29.74228708,
    "e": 0.5640264736,
@@ -5182,6 +7840,7 @@
   "parent": "Sol",
   "radiusKm": 15.5,
   "massKg": 15598500000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 8.4087,
    "e": 0.35149,
@@ -5199,6 +7858,7 @@
   "parent": "Sol",
   "radiusKm": 100.0,
   "massKg": 4188790000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 30.851,
    "e": 0.3146,
@@ -5216,6 +7876,7 @@
   "parent": "Sol",
   "radiusKm": 33.55,
   "massKg": 158185000000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 11.616,
    "e": 0.4404,
@@ -5233,6 +7894,7 @@
   "parent": "Sol",
   "radiusKm": 51.5,
   "massKg": 572151000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 30.063,
    "e": 0.02474,
@@ -5250,6 +7912,7 @@
   "parent": "Sol",
   "radiusKm": 2.8,
   "massKg": 349419000000000,
+  "composition": "Metallic",
   "orbit": {
    "a": 3.573299526,
    "e": 0.6006,
@@ -5267,6 +7930,7 @@
   "parent": "Sol",
   "radiusKm": 97.0,
   "massKg": 4205300000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 28.91960208,
    "e": 0.5199923777,
@@ -5284,6 +7948,7 @@
   "parent": "Sol",
   "radiusKm": 220,
   "massKg": 53522700000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 43.775,
    "e": 0.1454,
@@ -5301,6 +7966,7 @@
   "parent": "Sol",
   "radiusKm": 204.1,
   "massKg": 53420600000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 39.241,
    "e": 0.11429,
@@ -5318,6 +7984,7 @@
   "parent": "Sol",
   "radiusKm": 223,
   "massKg": 51097100000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 43.953,
    "e": 0.0301,
@@ -5335,6 +8002,7 @@
   "parent": "Sol",
   "radiusKm": 51.0,
   "massKg": 500082000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 19.03971398,
    "e": 0.3218061209,
@@ -5352,6 +8020,7 @@
   "parent": "Sol",
   "radiusKm": 235.5,
   "massKg": 60180300000000000000,
+  "composition": "Volatile-Rich Planetoid",
   "orbit": {
    "a": 42.43195274,
    "e": 0.1298663351,
@@ -5369,6 +8038,7 @@
   "parent": "Sol",
   "radiusKm": 2.636,
   "massKg": 130429000000000,
+  "composition": "Dry Carbonaceous",
   "orbit": {
    "a": 2.900702852,
    "e": 0.5986276901,
@@ -5386,6 +8056,7 @@
   "parent": "Sol",
   "radiusKm": 160.5,
   "massKg": 19050500000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 39.40414375,
    "e": 0.462764693,
@@ -5403,6 +8074,7 @@
   "parent": "Sol",
   "radiusKm": 139.5,
   "massKg": 13645600000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 33.29017643,
    "e": 0.1000518022,
@@ -5420,6 +8092,7 @@
   "parent": "Sol",
   "radiusKm": 137.5,
   "massKg": 8820560000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 23.28202931,
    "e": 0.5201586898,
@@ -5437,6 +8110,7 @@
   "parent": "Sol",
   "radiusKm": 227.0,
   "massKg": 53896300000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 39.45706316,
    "e": 0.09425032009,
@@ -5454,6 +8128,7 @@
   "parent": "Sol",
   "radiusKm": 182.0,
   "massKg": 27777600000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 46.40465699,
    "e": 0.114339951,
@@ -5471,6 +8146,7 @@
   "parent": "Sol",
   "radiusKm": 113.0,
   "massKg": 7252790000000000000,
+  "composition": "Common Carbonaceous",
   "orbit": {
    "a": 27.80842523,
    "e": 0.3756924684,
@@ -5488,6 +8164,7 @@
   "parent": "Sol",
   "radiusKm": 223.5,
   "massKg": 56118000000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 39.56444826,
    "e": 0.07367758884,
@@ -5505,6 +8182,7 @@
   "parent": "Sol",
   "radiusKm": 62.5,
   "massKg": 971521000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 30.44667002,
    "e": 0.02947387522,
@@ -5522,6 +8200,7 @@
   "parent": "Sol",
   "radiusKm": 82.0,
   "massKg": 2771480000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 30.23563569,
    "e": 0.02938156359,
@@ -5539,6 +8218,7 @@
   "parent": "Sol",
   "radiusKm": 38.5,
   "massKg": 262944000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 19.11349798,
    "e": 0.2799363278,
@@ -5556,6 +8236,7 @@
   "parent": "Sol",
   "radiusKm": 50.0,
   "massKg": 628319000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 29.969,
    "e": 0.08304,
@@ -5573,6 +8254,7 @@
   "parent": "Sol",
   "radiusKm": 34.95,
   "massKg": 214591000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 18.494,
    "e": 0.3223,
@@ -5590,6 +8272,7 @@
   "parent": "Sol",
   "radiusKm": 80.5,
   "massKg": 2403640000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 15.75481386,
    "e": 0.4001253142,
@@ -5607,6 +8290,7 @@
   "parent": "Sol",
   "radiusKm": 72.5,
   "massKg": 1755880000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 30.115,
    "e": 0.082112,
@@ -5624,6 +8308,7 @@
   "parent": "Sol",
   "radiusKm": 31.85,
   "massKg": 148871000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 21.119132,
    "e": 0.47292,
@@ -5641,6 +8326,7 @@
   "parent": "Sol",
   "radiusKm": 30.0,
   "massKg": 124407000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 19.081,
    "e": 0.17846,
@@ -5658,6 +8344,7 @@
   "parent": "Sol",
   "radiusKm": 100.0,
   "massKg": 4607670000000000000,
+  "composition": "Carbonaceous-Stony",
   "orbit": {
    "a": 30.3027,
    "e": 0.1209,
@@ -5675,6 +8362,7 @@
   "parent": "Sol",
   "radiusKm": 167.0,
   "massKg": 23411000000000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 37.69928502,
    "e": 0.4058068055,
@@ -5692,6 +8380,7 @@
   "parent": "Sol",
   "radiusKm": 184.0,
   "massKg": 33922300000000000000,
+  "composition": "Wet Carbonaceous",
   "orbit": {
    "a": 47.61460359,
    "e": 0.03449885275,
@@ -5703,12 +8392,30 @@
   }
  },
  {
+  "id": "Leleakuhonua",
+  "name": "541132 Leleākūhonua",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 110.0,
+  "massKg": 5.6e+18,
+  "orbit": {
+   "a": 1344.9053870062,
+   "e": 0.951905319172072,
+   "i": 11.67887107280718,
+   "node": 301.134432,
+   "peri": 118.22936,
+   "meanAnomaly": 359.618568,
+   "epoch": 2026.435318
+  }
+ },
+ {
   "id": "SwiftTuttle",
   "name": "Swift-Tuttle",
   "type": "comet",
   "parent": "Sol",
   "radiusKm": 13.0,
   "massKg": 5521660000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 26.092,
    "e": 0.9632,
@@ -5726,6 +8433,7 @@
   "parent": "Sol",
   "radiusKm": 10.7,
   "massKg": 3078870000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 6.911,
    "e": 0.7755,
@@ -5743,6 +8451,7 @@
   "parent": "Sol",
   "radiusKm": 6.8,
   "massKg": 790254000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 13.30009309,
    "e": 0.9252600806,
@@ -5760,6 +8469,7 @@
   "parent": "Sol",
   "radiusKm": 5.8,
   "massKg": 490370000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 13.81307682,
    "e": 0.9288584031,
@@ -5777,6 +8487,7 @@
   "parent": "Sol",
   "radiusKm": 7.5,
   "massKg": 220000000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 17.92781774,
    "e": 0.9679427911,
@@ -5794,6 +8505,7 @@
   "parent": "Sol",
   "radiusKm": 5.4,
   "massKg": 395750000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 3.88002232,
    "e": 0.2499630231,
@@ -5811,6 +8523,7 @@
   "parent": "Sol",
   "radiusKm": 5.3,
   "massKg": 374169000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 3.064829798,
    "e": 0.5363837256,
@@ -5828,6 +8541,7 @@
   "parent": "Sol",
   "radiusKm": 4.24,
   "massKg": 191574000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 3.562596267,
    "e": 0.6003391501,
@@ -5845,6 +8559,7 @@
   "parent": "Sol",
   "radiusKm": 3.2,
   "massKg": 82355000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 3.035034151,
    "e": 0.9591604569,
@@ -5862,6 +8577,7 @@
   "parent": "Sol",
   "radiusKm": 2.4,
   "massKg": 57905800000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 2.214742776,
    "e": 0.8483340794,
@@ -5879,6 +8595,7 @@
   "parent": "Sol",
   "radiusKm": 17.0,
   "massKg": 12347700000000000,
+  "composition": "Icy-Carbonaceous",
   "orbit": {
    "a": 17.18457314,
    "e": 0.9545600662,
@@ -5896,6 +8613,7 @@
   "parent": "Sol",
   "radiusKm": 5.1,
   "massKg": 333388000000000,
+  "composition": "Icy",
   "orbit": {
    "a": 6.135175112,
    "e": 0.2296848038,
@@ -5938,6 +8656,40 @@
    "peri": 50.913318,
    "meanAnomaly": 89.623085,
    "epoch": 2023
+  }
+ },
+ {
+  "id": "PonsWinnecke",
+  "name": "Pons-Winnecke",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 2.6,
+  "massKg": 37000000000000.0,
+  "orbit": {
+   "a": 3.4192310277,
+   "e": 0.6375828629443808,
+   "i": 22.33452092031365,
+   "node": 93.414925,
+   "peri": 172.505661,
+   "meanAnomaly": 18.312452,
+   "epoch": 2015.40178
+  }
+ },
+ {
+  "id": "Lovas2",
+  "name": "Lovas 2",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 3.1,
+  "massKg": 62000000000000.0,
+  "orbit": {
+   "a": 3.5224948267,
+   "e": 0.604251108072664,
+   "i": 1.551449297513431,
+   "node": 277.744967,
+   "peri": 78.060921,
+   "meanAnomaly": 353.81819,
+   "epoch": 2013.457906
   }
  }
 ]

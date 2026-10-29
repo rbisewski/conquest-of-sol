@@ -4,17 +4,24 @@
   // upper left, surface gravity and name, what it orbits, then Terra Invicta's four figures
   // (distance from its parent, orbital period, escape velocity, diameter), its orbit, its
   // distance from the Earth now and
-  // the next launch window from the Earth (bodyFacts.ts). Opened by clicking a body.
+  // the next launch window from the Earth (bodyFacts.ts). Below, Terra Invicta's four lists:
+  // Moons (name and type; a name opens that moon here), Orbits, Stations and Fleets (still to
+  // come). Opened by clicking a body.
   import { baseContent } from "../../content/index";
   import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
   import { drawBody, drawSun, earthMap, SUN_REACH, type MapImage } from "../solar/bodyArt";
   import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
+  import { scientific } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
 
   const AU_KM = 149597870.7;
   /** Art radius of the portrait, drawn at 2× like the other pixel art. */
   const PORTRAIT_RADIUS = 40;
+  const EARTH_MASS_KG = 5.972e24;
+  /** Bodies whose mass reads better in kilograms than in Earths, and dwarf planets lighter than this many Earths (all but Pluto and Eris). */
+  const SMALL_BODIES = new Set(["asteroid", "asteroidalMoon", "comet"]);
+  const SMALL_DWARF_EARTHS = 0.001;
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const body = $derived(baseContent.solarSystem.find((b) => b.id === game.selectedBodyId) ?? null);
@@ -26,6 +33,8 @@
   const fromEarth = $derived(body && body.id !== "Earth" ? distanceFromEarth(baseContent, body.id, years) : null);
   const launch = $derived(body ? launchWindow(baseContent, body.id, years) : null);
   const moons = $derived(body ? moonsOf(baseContent, body.id) : []);
+  /** The open list; kept from body to body, as in Terra Invicta. */
+  let tab = $state<"moons" | null>(null);
 
   let canvas = $state<HTMLCanvasElement>();
   let map = $state<MapImage | null>(null);
@@ -78,7 +87,7 @@
       <canvas bind:this={canvas} width={2 * PORTRAIT_RADIUS + 2} height={2 * PORTRAIT_RADIUS + 2}></canvas>
       <div class="identity">
         {#if gravity !== null}<span class="gravity" title="Surface gravity">{number(gravity, 2)} g</span>{/if}
-        <span class="name">{body.name}</span>
+        <span class="name" class:long={body.name.length > 14}>{body.name}</span>
         <span class="muted small">
           {#if !parent}The centre of the Solar System{:else if parent.type === "star"}Orbits the Sun{:else}Moon of {parent.name}{/if}
         </span>
@@ -127,12 +136,32 @@
         <dt>From Earth now</dt><dd>{fromEarth < 0.05 ? `${number(fromEarth * AU_KM)} km` : `${number(fromEarth, 2)} AU`} <span class="muted">· light takes {fromEarth * 499 < 120 ? `${number(fromEarth * 499, 1)} s` : `${number((fromEarth * 499) / 60, 1)} min`}</span></dd>
       {/if}
       {#if body.massKg}
-        <dt>Mass</dt><dd>{(body.massKg / 5.972e24).toPrecision(3)} Earths</dd>
-      {/if}
-      {#if moons.length > 0}
-        <dt>Moons</dt><dd>{moons.map((m) => m.name).join(", ")}</dd>
+        <dt>Mass</dt><dd>{SMALL_BODIES.has(body.type) || (body.type === "dwarf" && body.massKg < SMALL_DWARF_EARTHS * EARTH_MASS_KG) ? `${scientific(body.massKg)} kg` : `${(body.massKg / EARTH_MASS_KG).toPrecision(3)} Earths`}</dd>
       {/if}
     </dl>
+
+    <nav class="tabs">
+      <button class:active={tab === "moons" && moons.length > 0} disabled={moons.length === 0} onclick={() => (tab = tab === "moons" ? null : "moons")}>{moons.length} Moon{moons.length === 1 ? "" : "s"}</button>
+      <button disabled title="Still to come">Orbits</button>
+      <button disabled title="Still to come">Stations</button>
+      <button disabled title="Still to come">Fleets</button>
+    </nav>
+
+    {#if tab === "moons" && moons.length > 0}
+      <table class="list">
+        <thead>
+          <tr><th>Moon Name</th><th>Type</th></tr>
+        </thead>
+        <tbody>
+          {#each moons as m (m.id)}
+            <tr>
+              <td><button class="name-link" onclick={() => (game.selectedBodyId = m.id)}>{m.name}</button></td>
+              <td>{m.composition ?? "Unknown"}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    {/if}
   </section>
 {/if}
 
@@ -140,7 +169,7 @@
   .body-panel {
     display: flex;
     flex-direction: column;
-    width: 360px;
+    width: 440px;
     max-height: 100%;
     overflow-y: auto;
   }
@@ -175,6 +204,7 @@
   .identity {
     display: flex;
     flex-direction: column;
+    min-width: 0;
     gap: 2px;
     padding-bottom: 6px;
   }
@@ -187,6 +217,10 @@
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    overflow-wrap: anywhere;
+  }
+  .name.long {
+    font-size: 1.5em;
   }
   .window {
     margin: 0;
@@ -233,5 +267,56 @@
   }
   .small {
     font-size: 0.85em;
+  }
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border-soft);
+  }
+  .tabs button {
+    border: none;
+    border-right: 1px solid var(--border-soft);
+    background: rgba(48, 64, 80, 0.55);
+    padding: 5px 4px;
+  }
+  .tabs button:last-child {
+    border-right: none;
+  }
+  .tabs button.active {
+    background: var(--button-hover);
+    color: var(--accent);
+  }
+  .tabs button:disabled {
+    color: var(--muted);
+  }
+  .list {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1px solid var(--border-soft);
+    font-size: 0.9em;
+  }
+  .list th {
+    font-weight: 400;
+    color: var(--muted);
+    text-align: left;
+    padding: 4px 10px;
+  }
+  .list td {
+    padding: 1px 10px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .list td + td,
+  .list th + th {
+    text-align: center;
+  }
+  .name-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    text-align: left;
+  }
+  .name-link:hover {
+    color: var(--accent);
   }
 </style>

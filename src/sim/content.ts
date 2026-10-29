@@ -736,7 +736,7 @@ export interface NameData {
   nations: Record<string, string>;
 }
 
-export type SpaceBodyType = "star" | "planet" | "moon" | "dwarf" | "asteroid" | "comet";
+export type SpaceBodyType = "star" | "planet" | "moon" | "asteroidalMoon" | "dwarf" | "asteroid" | "comet";
 
 /** Keplerian elements at an epoch, around the body's parent (Terra Invicta's TISpaceBodyTemplate). */
 export interface OrbitDef {
@@ -761,6 +761,8 @@ export interface SpaceBodyDef {
   parent: string | null;
   radiusKm: number;
   massKg: number;
+  /** Terra Invicta's "Type": what most of its hab sites are made of ("Wet Carbonaceous"…); absent for bodies without sites. */
+  composition?: string;
   /** Absent for the Sun. */
   orbit?: OrbitDef;
 }

@@ -1,5 +1,5 @@
-// The Solar System's small bodies (asteroids, comets, the dwarf planets too small for a disc of
-// their own) as one set of pixel-art point sprites. Rocks come from bodyArt.ts's atlas: lumpy
+// The Solar System's small bodies (asteroids, comets, asteroidal moons, the dwarf planets too
+// small for a disc of their own) as one set of pixel-art point sprites. Rocks come from bodyArt.ts's atlas: lumpy
 // for asteroids, round and icy for dwarf planets, tinted per body, and lit in the shader from the
 // Sun's real direction in view space, in the same shade steps as the discs, so they show phases.
 // A comet is an icy nucleus that, inside COMET_ACTIVE AU of the Sun, grows a coma and two tails
@@ -27,6 +27,7 @@ const vertexShader = /* glsl */ `
   attribute float cell;
   attribute float radius;
   attribute float comet;
+  attribute float shown;
   attribute vec3 tint;
   varying float vCell;
   varying float vRadius;
@@ -38,6 +39,11 @@ const vertexShader = /* glsl */ `
   varying float vActivity;
 
   void main() {
+    if (shown < 0.5) {
+      gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+      gl_PointSize = 0.0;
+      return;
+    }
     vec4 view = modelViewMatrix * vec4(position, 1.0);
     vec3 sunView = (viewMatrix * vec4(sun, 1.0)).xyz;
     vLight = normalize(sunView - view.xyz);
@@ -157,6 +163,7 @@ export function makeSmallBodies(bodies: SpaceBodyDef[], pixel: number): THREE.Po
   geometry.setAttribute("radius", new THREE.Float32BufferAttribute(radii, 1));
   geometry.setAttribute("comet", new THREE.Float32BufferAttribute(comets, 1));
   geometry.setAttribute("tint", new THREE.Float32BufferAttribute(tints, 3));
+  geometry.setAttribute("shown", new THREE.Float32BufferAttribute(new Float32Array(bodies.length).fill(1), 1));
   const canvas = rockAtlas();
   const atlas = new THREE.CanvasTexture(canvas);
   atlas.magFilter = THREE.NearestFilter;
@@ -182,6 +189,13 @@ export function makeSmallBodies(bodies: SpaceBodyDef[], pixel: number): THREE.Po
 /** Tells the small bodies where the Sun is (scene coordinates), for their lighting and tails. */
 export function setSmallBodiesSun(points: THREE.Points, sun: THREE.Vector3): void {
   ((points.material as THREE.ShaderMaterial).uniforms.sun!.value as THREE.Vector3).copy(sun);
+}
+
+/** Shows or hides one small body (by its index in the order given to makeSmallBodies). */
+export function setSmallBodyShown(points: THREE.Points, index: number, shown: boolean): void {
+  const attr = points.geometry.getAttribute("shown") as THREE.BufferAttribute;
+  attr.setX(index, shown ? 1 : 0);
+  attr.needsUpdate = true;
 }
 
 /** Frees the atlas (the scene's disposal frees the geometry and material). */

@@ -1,0 +1,159 @@
+{
+ "_about": "Fills in Terra Invicta bodies whose orbits are incomplete in TISpaceBodyTemplate, in the template's own field names; build_solar.py merges each entry over the body. Heliocentric orbits are JPL Small-Body Database solutions (J2000 ecliptic, retrieved 2026-10-29). Masses marked 'estimate' are Terra Invicta's diameter at an assumed density (1.0 g/cm3 for trans-Neptunian objects, 0.5 for comet nuclei).",
+ "PonsWinnecke": {
+  "_source": "JPL SBDB 7P/Pons-Winnecke; mass estimate",
+  "friendlyName": "Pons-Winnecke",
+  "semiMajorAxis_AU": 3.419231027739371,
+  "eccentricity": 0.6375828629443808,
+  "inclination_Deg": 22.33452092031365,
+  "longAscendingNode_Deg": 93.41492452980958,
+  "argPeriapsis_Deg": 172.5056606661706,
+  "meanAnomalyAtEpoch_Deg": 18.31245228732157,
+  "epochJD": 2457170.5,
+  "mass_kg": 3.7e13
+ },
+ "Lovas2": {
+  "_source": "JPL SBDB 184P/Lovas 2; mass estimate",
+  "friendlyName": "Lovas 2",
+  "semiMajorAxis_AU": 3.522494826672229,
+  "eccentricity": 0.604251108072664,
+  "inclination_Deg": 1.551449297513431,
+  "longAscendingNode_Deg": 277.7449665216805,
+  "argPeriapsis_Deg": 78.06092118768561,
+  "meanAnomalyAtEpoch_Deg": 353.8181897927012,
+  "epochJD": 2456460.5,
+  "mass_kg": 6.2e13
+ },
+ "Glkunllhomdima": {
+  "_source": "JPL SBDB 229762 (2007 UK126); system mass from Grundy et al. 2019, Icarus 334",
+  "friendlyName": "Gǃkúnǁʼhòmdímà",
+  "semiMajorAxis_AU": 74.50819049288985,
+  "eccentricity": 0.4957816282699332,
+  "inclination_Deg": 23.32953536634301,
+  "longAscendingNode_Deg": 131.2505901829532,
+  "argPeriapsis_Deg": 346.0576265153255,
+  "meanAnomalyAtEpoch_Deg": 348.9992237037756,
+  "epochJD": 2461200.5,
+  "mass_kg": 1.361e20
+ },
+ "Leleakuhonua": {
+  "_source": "JPL SBDB 541132 (2015 TG387); mass estimate",
+  "semiMajorAxis_AU": 1344.905387006164,
+  "eccentricity": 0.951905319172072,
+  "inclination_Deg": 11.67887107280718,
+  "longAscendingNode_Deg": 301.1344316943008,
+  "argPeriapsis_Deg": 118.2293603285907,
+  "meanAnomalyAtEpoch_Deg": 359.6185683300886,
+  "epochJD": 2461200.5,
+  "mass_kg": 5.6e18
+ },
+ "15874TNO": {
+  "_source": "JPL SBDB 15874 (1996 TL66); mass estimate",
+  "friendlyName": "1996 TL66",
+  "semiMajorAxis_AU": 84.7160141732945,
+  "eccentricity": 0.5856282476985989,
+  "inclination_Deg": 23.96488441448197,
+  "longAscendingNode_Deg": 217.7307666730197,
+  "argPeriapsis_Deg": 185.1373827636416,
+  "meanAnomalyAtEpoch_Deg": 11.4275870702862,
+  "epochJD": 2461200.5,
+  "mass_kg": 2.0e19
+ },
+ "2018VG18TNO": {
+  "_source": "JPL SBDB 2018 VG18; mass estimate",
+  "semiMajorAxis_AU": 81.90720797654177,
+  "eccentricity": 0.5244822275778944,
+  "inclination_Deg": 24.17146148892078,
+  "longAscendingNode_Deg": 245.2729813534031,
+  "argPeriapsis_Deg": 16.86247974986922,
+  "meanAnomalyAtEpoch_Deg": 161.3294098759746,
+  "epochJD": 2461200.5,
+  "mass_kg": 1.48e20
+ },
+ "2014UZ224TNO": {
+  "_source": "JPL SBDB 2014 UZ224; mass estimate",
+  "semiMajorAxis_AU": 109.7301149751114,
+  "eccentricity": 0.6490787444282012,
+  "inclination_Deg": 26.77642992471508,
+  "longAscendingNode_Deg": 131.2102827316242,
+  "argPeriapsis_Deg": 28.7337719132435,
+  "meanAnomalyAtEpoch_Deg": 323.7361509881111,
+  "epochJD": 2461200.5,
+  "mass_kg": 1.34e20
+ },
+ "2012VP113TNO": {
+  "_source": "JPL SBDB 2012 VP113; mass estimate",
+  "semiMajorAxis_AU": 267.5209861941053,
+  "eccentricity": 0.6985589359876868,
+  "inclination_Deg": 24.00179208811373,
+  "longAscendingNode_Deg": 90.8926204194851,
+  "argPeriapsis_Deg": 294.2852296107872,
+  "meanAnomalyAtEpoch_Deg": 3.834281215098069,
+  "epochJD": 2461200.5,
+  "mass_kg": 4.8e19
+ },
+ "512381TNO": {
+  "_source": "JPL SBDB 528381 (2008 ST291): Terra Invicta's number is a typo (512381 is a main-belt asteroid) but its orbit and size match; mass estimate",
+  "friendlyName": "2008 ST291",
+  "semiMajorAxis_AU": 99.41237533770918,
+  "eccentricity": 0.5714568215271709,
+  "inclination_Deg": 20.81037603629629,
+  "longAscendingNode_Deg": 331.1552752664235,
+  "argPeriapsis_Deg": 324.9535357133591,
+  "meanAnomalyAtEpoch_Deg": 26.12696288690283,
+  "epochJD": 2461200.5,
+  "mass_kg": 1.04e20
+ },
+ "523794TNO": {
+  "_source": "JPL SBDB 523794 (2015 RR245); mass estimate",
+  "friendlyName": "2015 RR245",
+  "semiMajorAxis_AU": 82.47906418202849,
+  "eccentricity": 0.5892596593956771,
+  "inclination_Deg": 7.542120117674791,
+  "longAscendingNode_Deg": 211.7902332096181,
+  "argPeriapsis_Deg": 260.6185817136269,
+  "meanAnomalyAtEpoch_Deg": 328.2339850585061,
+  "epochJD": 2461200.5,
+  "mass_kg": 1.3e20
+ },
+ "Styx": {
+  "_source": "JPL mean elements (PLU060; Brozovic & Jacobson 2024, AJ 167:256), Pluto's equator like the game's other Pluto moons",
+  "semiMajorAxis_km": 43200,
+  "eccentricity": 0.025,
+  "inclination_Deg": 0.0,
+  "longAscendingNode_Deg": 0.0,
+  "argPeriapsis_Deg": 322.5,
+  "meanAnomalyAtEpoch_Deg": 358.1,
+  "epoch_floatJYears": 2000
+ },
+ "Kerberos": {
+  "_source": "JPL mean elements (PLU060; Brozovic & Jacobson 2024, AJ 167:256), Pluto's equator like the game's other Pluto moons",
+  "semiMajorAxis_km": 58300,
+  "eccentricity": 0.010,
+  "inclination_Deg": 0.4,
+  "longAscendingNode_Deg": 314.3,
+  "argPeriapsis_Deg": 32.1,
+  "meanAnomalyAtEpoch_Deg": 276.1,
+  "epoch_floatJYears": 2000
+ },
+ "Hiʻiaka": {
+  "_source": "Ragozzine & Brown 2009, AJ 137:4766, Table 2 (J2000 ecliptic), the same fit as the game's Namaka",
+  "semiMajorAxis_km": 49880,
+  "eccentricity": 0.0513,
+  "inclination_Deg": 126.356,
+  "longAscendingNode_Deg": 206.766,
+  "argPeriapsis_Deg": 154.1,
+  "meanAnomalyAtEpoch_Deg": 152.8,
+  "epochJD": 2454615.0
+ },
+ "Weywot": {
+  "_source": "Proudfoot et al. 2025, PSJ, 'Beyond Point Masses V', constrained fit (J2000 ecliptic)",
+  "semiMajorAxis_km": 13329,
+  "eccentricity": 0.01111,
+  "inclination_Deg": 13.62,
+  "longAscendingNode_Deg": 353.3,
+  "argPeriapsis_Deg": 97,
+  "meanAnomalyAtEpoch_Deg": 79,
+  "epochJD": 2454000.0
+ }
+}
