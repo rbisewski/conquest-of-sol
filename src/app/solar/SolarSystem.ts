@@ -61,7 +61,7 @@ const MAX_ART_RADIUS = 80;
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
  * of the map's width, so the middle of the disc shows each map pixel as one art pixel.
  */
-const CLOSE_ART_RADIUS: Record<string, number> = { Mercury: 256 };
+const CLOSE_ART_RADIUS: Record<string, number> = { Mercury: 256, Venus: 256, Luna: 256, Mars: 256, Ceres: 256 };
 /** How close the camera can come to such a body, in its radii (as the globe does the Earth). */
 const CLOSE_RADII = 1.35;
 
@@ -546,7 +546,8 @@ export class SolarSystem {
     const map = this.maps.get(b.def.id) ?? null;
     let key = `${b.r}:${Math.round(light.x * steps)},${Math.round(light.y * steps)},${Math.round(light.z * steps)}${map ? "m" : ""}`;
     let orient: Orient | null = null;
-    const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years) : null;
+    const toParent = b.def.parent ? this.positions.get(b.def.parent)!.clone().sub(at) : new THREE.Vector3(1, 0, 0);
+    const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years, toParent) : null;
     if (frame) {
       // View space to the body's own frame (the globe's, for the Earth): camera to scene, then scene to body.
       const m = frame.clone().transpose().multiply(new THREE.Matrix4().extractRotation(this.camera.matrixWorld));

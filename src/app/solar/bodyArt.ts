@@ -2,8 +2,9 @@
 // shown at a whole-number scale with nearest filtering, like the Earth's map. Each pixel of
 // the disc is a point on a sphere: its colour comes from the body's style (bands, spots, ice
 // caps, value noise) and its brightness from the Sun's direction in view space, in a few
-// steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map, and
-// Mercury a pixel-art map made from MESSENGER's (tools/data/build_mercury.py).
+// steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map;
+// Mercury, Luna, Mars and Ceres pixel-art maps made from spacecraft mosaics, and Venus one of its
+// cloud tops (tools/data/build_body_maps.py).
 
 /** Light direction in view space: x right, y up, z towards the viewer. */
 export interface Light {
@@ -22,7 +23,14 @@ export interface MapImage {
 }
 
 /** Bodies with a surface map (equirectangular, longitude −180° to 180° east, in public/map). */
-const MAP_FILES: Record<string, string> = { Earth: "earth.png", Mercury: "mercury.png" };
+const MAP_FILES: Record<string, string> = {
+  Earth: "earth.png",
+  Mercury: "mercury.png",
+  Venus: "venus.png",
+  Luna: "luna.png",
+  Mars: "mars.png",
+  Ceres: "ceres.png",
+};
 const mapLoads = new Map<string, Promise<MapImage>>();
 
 export function hasMap(id: string): boolean {
@@ -68,11 +76,13 @@ interface Style {
   /** One hemisphere (longitude < 0) this colour instead (Iapetus). */
   twoTone?: string;
   ring?: { color: string; gap: string; inner: number; outer: number };
+  /** A glowing atmosphere just past the limb, this far out in radii (at least two pixels), brighter on the sunward side. */
+  glow?: { color: string; reach: number };
 }
 
 const STYLES: Record<string, Style> = {
   Mercury: { base: "#9a948e", spots: [{ color: "#76716c", scale: 5, threshold: 0.62 }, { color: "#b8b2aa", scale: 9, threshold: 0.7 }] },
-  Venus: { base: "#e6cf9a", bands: { colors: ["#e6cf9a", "#d9bd84", "#efdcb0"], count: 5, wobble: 0.8 } },
+  Venus: { base: "#e6cf9a", bands: { colors: ["#e6cf9a", "#d9bd84", "#efdcb0"], count: 5, wobble: 0.8 }, glow: { color: "#f7ecd8", reach: 0.03 } },
   Earth: { base: "#2c5d9e", caps: { color: "#e8eef2", from: 70 } },
   Luna: { base: "#a7a7a5", spots: [{ color: "#7d7d7c", scale: 3, threshold: 0.6 }, { color: "#c2c2bf", scale: 9, threshold: 0.72 }] },
   Mars: { base: "#c1532f", spots: [{ color: "#8e3b22", scale: 3.5, threshold: 0.6 }, { color: "#d27a4c", scale: 7, threshold: 0.68 }], caps: { color: "#f1ebe4", from: 72 } },
@@ -191,10 +201,20 @@ function shade(lambert: number): number {
   return lambert > 0.4 ? 1 : lambert > 0.12 ? 0.8 : lambert > 0 ? 0.55 : 0.2;
 }
 
-/** Canvas size for a body of art radius r (pixels), leaving room for Saturn's rings. */
+/** The shade steps under a thick, hazy atmosphere: a gentler fall to the terminator, in five small steps. */
+function hazeShade(lambert: number): number {
+  return lambert > 0 ? 0.62 + 0.38 * (Math.round(Math.min(1, lambert / 0.55) * 5) / 5) : 0.2;
+}
+
+/** Pixels a body's glowing atmosphere reaches past its limb at art radius r. */
+function glowReach(style: Style, r: number): number {
+  return style.glow ? Math.max(2, Math.ceil(r * style.glow.reach)) : 0;
+}
+
+/** Canvas size for a body of art radius r (pixels), leaving room for Saturn's rings or an atmosphere's glow. */
 export function canvasSize(id: string, r: number): number {
-  const ring = (STYLES[id] ?? MOON_STYLE).ring;
-  return 2 * Math.ceil(r * (ring ? ring.outer : 1)) + 2;
+  const style = STYLES[id] ?? MOON_STYLE;
+  return 2 * Math.ceil(r * (style.ring ? style.ring.outer : 1)) + 2 + 2 * glowReach(style, r);
 }
 
 /** Draws a lit body of art radius r into a canvas of canvasSize(id, r), from its surface map when given (the body's own; orient turns view space into the map's frame). */
@@ -220,6 +240,8 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
   };
   // Rings catch the light from either side; dimmer when we look at their unlit face.
   const ringLight = light.z > -0.2 ? 0.95 : 0.6;
+  const glow = style.glow ? rgb(style.glow.color) : null;
+  const glowPixels = glowReach(style, r);
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const dx = (x + 0.5 - c) / r;
@@ -231,12 +253,27 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
         put(x, y, ringColor, ringLight);
         continue;
       }
-      if (d2 > 1) continue;
+      if (d2 > 1) {
+        if (!glow) continue;
+        // The atmosphere: fading outwards in steps, lit where the limb faces the Sun.
+        const d = Math.sqrt(d2);
+        const out = ((d - 1) * r) / glowPixels;
+        if (out >= 1) continue;
+        const sunward = Math.max(0, Math.min(1, ((dx / d) * light.x + (dy / d) * light.y) * 0.9 + 0.3));
+        const alpha = Math.round((1 - out) * 3) / 3;
+        if (alpha <= 0 || sunward <= 0) continue;
+        const o = (y * size + x) * 4;
+        image.data[o] = glow[0];
+        image.data[o + 1] = glow[1];
+        image.data[o + 2] = glow[2];
+        image.data[o + 3] = Math.round(alpha * sunward * 150);
+        continue;
+      }
       const z = Math.sqrt(1 - d2);
       const lambert = dx * light.x + dy * light.y + z * light.z;
-      // A slightly darker limb rounds the disc off.
-      const limb = z < 0.35 ? 0.88 : 1;
-      put(x, y, surface(style, id, [dx, dy, z], map, orient), shade(lambert) * limb);
+      // A slightly darker limb rounds the disc off (not under an atmosphere's soft haze).
+      const limb = z < 0.35 && !glow ? 0.88 : 1;
+      put(x, y, surface(style, id, [dx, dy, z], map, orient), (glow ? hazeShade(lambert) : shade(lambert)) * limb);
     }
   }
   ctx.putImageData(image, 0, 0);
