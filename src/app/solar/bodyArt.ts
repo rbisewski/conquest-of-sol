@@ -225,7 +225,60 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
   ctx.putImageData(image, 0, 0);
 }
 
-/** The Sun: a white-hot core, yellow and orange rings and a ragged corona, no shading. */
+/** Art pixels across one cell of the small-body atlas. */
+export const ROCK_CELL = 8;
+/** The small bodies' art radii (pixels), smallest asteroids to the small dwarf planets, and the shapes drawn of each. */
+const ROCK_RADII = [1.2, 1.8, 2.4, 3.0];
+const DWARF_RADIUS = 3.4;
+const SHAPES = 3;
+
+/** A small body's cell in the atlas and its art radius: a lumpy rock sized by its radius, or a round, icy dwarf planet. */
+export function rockCell(id: string, type: string, radiusKm: number): { cell: number; radius: number } {
+  const shape = seedOf(id) % SHAPES;
+  if (type === "dwarf") return { cell: ROCK_RADII.length * SHAPES + shape, radius: DWARF_RADIUS };
+  const size = radiusKm < 20 ? 0 : radiusKm < 60 ? 1 : radiusKm < 150 ? 2 : 3;
+  return { cell: size * SHAPES + shape, radius: ROCK_RADII[size]! };
+}
+
+/**
+ * The small bodies' atlas: a row of ROCK_CELL-pixel cells, each a shape in grey (albedo,
+ * tinted per body and lit in the shader; alpha marks the shape). Rocks are lumpy, darker in
+ * their craters; the dwarf planets round, with frost patches.
+ */
+export function rockAtlas(): HTMLCanvasElement {
+  const cells = (ROCK_RADII.length + 1) * SHAPES;
+  const canvas = document.createElement("canvas");
+  canvas.width = cells * ROCK_CELL;
+  canvas.height = ROCK_CELL;
+  const ctx = canvas.getContext("2d")!;
+  const image = ctx.createImageData(canvas.width, canvas.height);
+  const c = ROCK_CELL / 2;
+  for (let cell = 0; cell < cells; cell++) {
+    const icy = cell >= ROCK_RADII.length * SHAPES;
+    const r = icy ? DWARF_RADIUS : ROCK_RADII[Math.floor(cell / SHAPES)]!;
+    const seed = 101 + cell * 17;
+    for (let y = 0; y < ROCK_CELL; y++) {
+      for (let x = 0; x < ROCK_CELL; x++) {
+        const dx = x + 0.5 - c;
+        const dy = y + 0.5 - c;
+        const angle = Math.atan2(dy, dx);
+        // An outline wobbling round the angle; rocks much more than the near-round dwarfs.
+        const wobble = noise(Math.cos(angle) * 1.6 + 4, Math.sin(angle) * 1.6 + 4, cell, seed);
+        const edge = r * (icy ? 0.92 + 0.12 * wobble : 0.75 + 0.45 * wobble);
+        const core = Math.abs(dx) < 1 && Math.abs(dy) < 1;
+        if (Math.hypot(dx, dy) > edge && !core) continue;
+        let v = 0.84 + 0.16 * noise(dx * 0.9 + 9, dy * 0.9 + 9, 3, seed);
+        if (icy) v = noise(dx * 0.8 + 2, dy * 0.8 + 2, 5, seed) > 0.6 ? 1 : v * 0.86;
+        else if (r > 1.5 && noise(dx * 1.4 + 5, dy * 1.4 + 5, 7, seed) > 0.68) v = 0.6;
+        const o = (y * canvas.width + cell * ROCK_CELL + x) * 4;
+        image.data.set([Math.round(v * 255), Math.round(v * 255), Math.round(v * 255), 255], o);
+      }
+    }
+  }
+  ctx.putImageData(image, 0, 0);
+  return canvas;
+}
+
 /** How far past its radius the Sun's flames and prominences can reach, in radii. */
 export const SUN_REACH = 1.9;
 

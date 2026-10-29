@@ -1,7 +1,7 @@
 // Solar System view, after Terra Invicta's: the Sun in the middle and every body on its orbit,
 // to scale in AU (src/sim/orbits.ts places them at the game's date). Orbits are drawn for the
 // planets, their moons and the larger dwarf planets; the other dwarf planets, asteroids and
-// comets are pixel dots. Bodies are pixel-art discs (bodyArt.ts) lit from the Sun's real
+// comets are small pixel-art sprites (smallBodies.ts). Bodies are pixel-art discs (bodyArt.ts) lit from the Sun's real
 // direction, at least a fixed size on screen, and at their true size once the camera is close
 // enough for that to be bigger. A moon shows once its orbit is wide enough on screen to tell
 // it from its planet.
@@ -22,13 +22,14 @@ import { orbitPath, solarPositions, type Vec3 } from "../../sim/orbits";
 import { GLOBE_FADE_FROM, GLOBE_FARTHEST } from "../globe/Globe";
 import { canvasSize, drawBody, drawSun, earthMap, hasStyle, sunCanvasSize, type Light, type MapImage, type Orient } from "./bodyArt";
 import { EARTH_POLE, globeToScene } from "./earthFrame";
+import { disposeSmallBodies, makeSmallBodies, setSmallBodiesSun } from "./smallBodies";
 
 /** Ecliptic coordinates (z north) to the scene's (y up). */
 const toScene = (p: Vec3, out = new THREE.Vector3()) => out.set(p.x, p.z, -p.y);
 
 /** CSS pixels per art pixel. */
 const PIXEL = 2;
-/** Art radius in pixels of the bodies drawn as discs; other dwarf planets, asteroids and comets are dots. */
+/** Art radius in pixels of the bodies drawn as discs; other dwarf planets, asteroids and comets are small sprites (smallBodies.ts). */
 const ART_RADIUS: Record<string, number> = {
   Sol: 12,
   Jupiter: 8,
@@ -84,7 +85,6 @@ const ORBIT_COLORS: Record<string, { color: string; opacity: number }> = {
   moon: { color: "#3d74d6", opacity: 0.4 },
   dwarf: { color: "#7d8a99", opacity: 0.3 },
 };
-const DOT_COLORS: Record<string, string> = { dwarf: "#c9b9a8", asteroid: "#8f857a", comet: "#bfe3ff" };
 
 interface BodyView {
   def: SpaceBodyDef;
@@ -121,7 +121,7 @@ export class SolarSystem {
   private readonly stars: THREE.Points;
   private readonly bodies: BodyView[] = [];
   private readonly byId = new Map<string, BodyView>();
-  /** Bodies drawn as dots, and their points. */
+  /** Bodies drawn as small sprites, and their points. */
   private readonly dots: SpaceBodyDef[] = [];
   private readonly dotPoints: THREE.Points;
   /** Scene positions of every body, by id. */
@@ -184,7 +184,7 @@ export class SolarSystem {
       }
       this.addBody(def, r);
     }
-    this.dotPoints = this.makeDots();
+    this.dotPoints = makeSmallBodies(this.dots, PIXEL * Math.min(window.devicePixelRatio, 2));
     this.scene.add(this.dotPoints);
 
     void earthMap().then((map) => {
@@ -231,37 +231,6 @@ export class SolarSystem {
     const view: BodyView = { def, baseR: r, r, sprite, canvas, texture, orbit, label, lightKey: "", shown: true };
     this.bodies.push(view);
     this.byId.set(def.id, view);
-  }
-
-  private makeDots(): THREE.Points {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(this.dots.length * 3), 3));
-    const color = new THREE.Color();
-    const colors: number[] = [];
-    for (const d of this.dots) {
-      color.set(DOT_COLORS[d.type] ?? "#8f857a");
-      colors.push(color.r, color.g, color.b);
-    }
-    geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-    // A 3 × 3 rock with its corners knocked off, so the dots stay pixelated.
-    const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 3;
-    const ctx = canvas.getContext("2d")!;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(1, 0, 1, 3);
-    ctx.fillRect(0, 1, 3, 1);
-    const material = new THREE.PointsMaterial({
-      size: 3 * PIXEL * Math.min(window.devicePixelRatio, 2),
-      sizeAttenuation: false,
-      vertexColors: true,
-      map: pixelTexture(canvas),
-      alphaTest: 0.5,
-      depthTest: false,
-      depthWrite: false,
-    });
-    const points = new THREE.Points(geometry, material);
-    points.renderOrder = 2;
-    return points;
   }
 
   private makeStars(): THREE.Points {
@@ -441,6 +410,7 @@ export class SolarSystem {
     const height = this.container.clientHeight;
     const unit = 2 / (Math.max(1, height) * this.camera.projectionMatrix.elements[5]!);
     const sun = this.positions.get("Sol")!;
+    setSmallBodiesSun(this.dotPoints, sun);
     const view = this.camera.matrixWorldInverse;
     const screen = new THREE.Vector3();
     for (const b of this.bodies) {
@@ -621,6 +591,7 @@ export class SolarSystem {
     canvas.removeEventListener("dblclick", this.handleDoubleClick);
     canvas.removeEventListener("wheel", this.handleWheel);
     this.controls.dispose();
+    disposeSmallBodies(this.dotPoints);
     this.scene.traverse((object) => {
       const o = object as THREE.Mesh;
       o.geometry?.dispose();
