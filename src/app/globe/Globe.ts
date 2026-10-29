@@ -25,6 +25,10 @@
 // sailing go to the nearest coast, turn into pixel warships and keep to the water
 // (seaRoutes.ts) until they land again; airlifted armies fly home as pixel helicopters. Occupied
 // regions are hatched with the occupier's colour (setOccupation).
+//
+// Councilors on a mission stand on its region as small pixel people in their faction's colour
+// (grey when we haven't identified them), above the armies; ours appear once their airplane
+// lands (setCouncilors).
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -58,6 +62,19 @@ export interface ArmyMarker {
   slot: number;
   /** Set while the army fights an enemy army in its region: the way its gun points (1 = right). */
   fighting: { facing: 1 | -1 } | null;
+}
+
+/** A councilor on the map, standing on a region centre. */
+export interface CouncilorMarker {
+  id: string;
+  at: LatLon;
+  /** Faction colour, or null for a councilor we haven't identified (drawn grey). */
+  color: string | null;
+  selected: boolean;
+  /** Position among the councilors standing in the same region (0 = centre). */
+  slot: number;
+  /** The flight taking them there: they appear once it lands. */
+  flightId: string | null;
 }
 
 export interface RegionTint {
@@ -428,6 +445,7 @@ function makePlaneTexture(): THREE.Texture {
 class FlightPath {
   readonly group = new THREE.Group();
   readonly key: string;
+  readonly id: string;
   readonly plane: THREE.Sprite;
   private readonly points: THREE.Vector3[] = [];
   private readonly route: THREE.Points;
@@ -442,6 +460,7 @@ class FlightPath {
     private readonly start: number,
   ) {
     this.key = JSON.stringify(flight);
+    this.id = flight.id;
     const a = latLonToVector(flight.from);
     const b = latLonToVector(flight.to);
     const angle = a.angleTo(b);
@@ -465,6 +484,11 @@ class FlightPath {
     this.plane = new THREE.Sprite(new THREE.SpriteMaterial({ map: planeTexture, color: color.clone().lerp(new THREE.Color("#ffffff"), 0.55), sizeAttenuation: false, depthWrite: false }));
     this.plane.renderOrder = 1;
     this.group.add(this.route, this.flown, this.plane);
+  }
+
+  /** Whether the airplane has landed by a time in seconds. */
+  landed(seconds: number): boolean {
+    return seconds - this.start >= this.duration;
   }
 
   /** Moves the airplane along the arc for a time in seconds, heading it on screen. */
@@ -976,6 +1000,86 @@ class ArmySprite {
   }
 }
 
+/** A pixel person, 7 × 11: c = faction colour, s = skin, # = outline. */
+const PERSON_ART = [
+  "..###..",
+  ".#sss#.",
+  ".#sss#.",
+  "..#s#..",
+  ".#ccc#.",
+  "#ccccc#",
+  "#ccccc#",
+  "s#ccc#s",
+  ".#c#c#.",
+  ".#c#c#.",
+  ".##.##.",
+];
+/** The person's canvas: the art with a 1 px margin. */
+const PERSON_W = 9;
+const PERSON_H = 13;
+/** An unidentified councilor's grey clothes and skin. */
+const UNKNOWN_COLOR = "#8d969e";
+const UNKNOWN_SKIN = "#b9c0c6";
+
+function drawPerson(ctx: CanvasRenderingContext2D, color: string | null, selected: boolean): void {
+  ctx.clearRect(0, 0, PERSON_W, PERSON_H);
+  const outline = selected ? "#ffffff" : "#141a20";
+  PERSON_ART.forEach((row, y) =>
+    [...row].forEach((c, x) => {
+      if (c === ".") return;
+      ctx.fillStyle = c === "c" ? (color ?? UNKNOWN_COLOR) : c === "s" ? (color ? "#e2b48c" : UNKNOWN_SKIN) : outline;
+      ctx.fillRect(x + 1, y + 1, 1, 1);
+    }),
+  );
+}
+
+/** One councilor's sprite, standing just above the region's armies. */
+class CouncilorSprite {
+  readonly sprite: THREE.Sprite;
+  private readonly canvas = document.createElement("canvas");
+  private readonly texture: THREE.CanvasTexture;
+  private look = "";
+  marker!: CouncilorMarker;
+
+  constructor(private readonly scene: THREE.Scene) {
+    this.canvas.width = PERSON_W;
+    this.canvas.height = PERSON_H;
+    this.texture = new THREE.CanvasTexture(this.canvas);
+    this.texture.magFilter = THREE.NearestFilter;
+    this.texture.minFilter = THREE.NearestFilter;
+    this.texture.generateMipmaps = false;
+    this.texture.colorSpace = THREE.SRGBColorSpace;
+    this.sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: this.texture, sizeAttenuation: false, depthWrite: false }));
+    scene.add(this.sprite);
+  }
+
+  set(marker: CouncilorMarker): void {
+    this.marker = marker;
+    this.sprite.renderOrder = marker.selected ? 5 : 4;
+    // Side by side, a person's width apart; feet a little above the centre so tanks there stay clear.
+    this.sprite.center.set(0.5 - slotOffset(marker.slot) * 1.1, -0.45);
+    latLonToVector(marker.at, this.sprite.position).multiplyScalar(RADIUS + 0.006);
+    const look = `${marker.color}|${marker.selected}`;
+    if (look !== this.look) {
+      this.look = look;
+      drawPerson(this.canvas.getContext("2d")!, marker.color, marker.selected);
+      this.texture.needsUpdate = true;
+    }
+  }
+
+  /** Sizes the person to match the armies' pixels (scale is ARMY_H pixels); hidden while their flight is in the air. */
+  update(scale: number, flying: boolean): void {
+    this.sprite.visible = !flying;
+    this.sprite.scale.set((scale * PERSON_W) / ARMY_H, (scale * PERSON_H) / ARMY_H, 1);
+  }
+
+  dispose(): void {
+    this.scene.remove(this.sprite);
+    this.sprite.material.dispose();
+    this.texture.dispose();
+  }
+}
+
 function loadTexture(url: string, data: boolean): Promise<THREE.Texture> {
   return new THREE.TextureLoader().loadAsync(url).then((texture) => {
     texture.magFilter = THREE.NearestFilter;
@@ -1020,6 +1124,8 @@ export class Globe {
   private gameMinute = 0;
   /** Called with an army's id when its marker is clicked. */
   onSelectArmy: ((id: string) => void) | null = null;
+  onSelectCouncilor: ((id: string) => void) | null = null;
+  private councilors = new Map<string, CouncilorSprite>();
   private readonly sun = new THREE.Vector3(1, 0, 0);
   private idMap: { width: number; height: number; data: Uint8ClampedArray } | null = null;
   private seaMap: SeaMap | null = null;
@@ -1256,6 +1362,19 @@ export class Globe {
     this.armies = next;
   }
 
+  /** Sets the councilors shown on the map, kept by id. */
+  setCouncilors(markers: CouncilorMarker[]): void {
+    const next = new Map<string, CouncilorSprite>();
+    for (const marker of markers) {
+      const sprite = this.councilors.get(marker.id) ?? new CouncilorSprite(this.scene);
+      this.councilors.delete(marker.id);
+      sprite.set(marker);
+      next.set(marker.id, sprite);
+    }
+    for (const old of this.councilors.values()) old.dispose();
+    this.councilors = next;
+  }
+
   /** Turns the globe (keeping the zoom) so a point faces the camera. */
   lookAt(p: LatLon): void {
     const distance = this.camera.position.length();
@@ -1344,15 +1463,15 @@ export class Globe {
     this.raycaster.setFromCamera(pointer, this.camera);
   }
 
-  /** The army marker under a screen point, ignoring those behind the Earth. */
-  private armyAt(event: PointerEvent): string | null {
+  /** The marker (army or councilor) under a screen point, ignoring those behind the Earth. */
+  private markerAt<T extends { sprite: THREE.Sprite }>(event: PointerEvent, markers: Map<string, T>): string | null {
     this.aim(event);
-    const sprites = [...this.armies.values()].map((a) => a.sprite);
+    const sprites = [...markers.values()].map((a) => a.sprite).filter((sprite) => sprite.visible);
     const hit = this.raycaster.intersectObjects(sprites, false)[0];
     if (!hit) return null;
     const ground = this.raycaster.intersectObject(this.earth)[0];
     if (ground && ground.distance < hit.distance - 0.02) return null;
-    for (const [id, a] of this.armies) if (a.sprite === hit.object) return id;
+    for (const [id, a] of markers) if (a.sprite === hit.object) return id;
     return null;
   }
 
@@ -1379,8 +1498,11 @@ export class Globe {
     this.downAt = null;
     // Dragging rotates the globe; only a near-stationary press counts as a click.
     if (!down || Math.abs(event.clientX - down.x) + Math.abs(event.clientY - down.y) > 5) return;
-    const army = this.onSelectArmy ? this.armyAt(event) : null;
-    if (army) this.onSelectArmy!(army);
+    // Councilors stand in front of the armies, so they are picked first.
+    const councilor = this.onSelectCouncilor ? this.markerAt(event, this.councilors) : null;
+    const army = !councilor && this.onSelectArmy ? this.markerAt(event, this.armies) : null;
+    if (councilor) this.onSelectCouncilor!(councilor);
+    else if (army) this.onSelectArmy!(army);
     else this.onSelectRegion(this.regionAt(event));
   };
 
@@ -1434,6 +1556,8 @@ export class Globe {
       const pixels = ARMY_SCALE - (ARMY_SCALE - ARMY_SCALE_MIN) * THREE.MathUtils.clamp(zoomOut, 0, 1);
       const armyScale = (2 * ARMY_H * pixels) / (height * this.camera.projectionMatrix.elements[5]!);
       for (const a of this.armies.values()) a.update(this.gameMinute, armyScale, seconds);
+      const flying = new Set(this.flights.filter((f) => !f.landed(seconds)).map((f) => f.id));
+      for (const c of this.councilors.values()) c.update(armyScale, c.marker.flightId !== null && flying.has(c.marker.flightId));
     }
     this.renderer.render(this.scene, this.camera);
   };
@@ -1449,6 +1573,7 @@ export class Globe {
     this.controls.dispose();
     this.setFlights([]);
     this.setArmies([]);
+    this.setCouncilors([]);
     for (const s of this.strikes) s.dispose();
     this.planeTexture.dispose();
     this.missileTexture.dispose();

@@ -1,6 +1,6 @@
 <script lang="ts">
   // Strategy layout after Terra Invicta (SPEC 2.13): top bar; nation panel upper left while a
-  // nation is selected; Faction Assets on the right, shrinking to make room for the councilor
+  // nation is selected (or the Rival Councilor panel, after clicking another faction's councilor); Faction Assets on the right, shrinking to make room for the councilor
   // panel (or the army panel) below it while a councilor (or army) is selected; Confirm
   // Assignments at the top centre and
   // the mission hexes at the bottom centre during a council phase; event alerts down the left.
@@ -22,6 +22,7 @@
   import PolicyDialog from "./components/PolicyDialog.svelte";
   import RecruitScreen from "./components/RecruitScreen.svelte";
   import ResearchPanel from "./components/ResearchPanel.svelte";
+  import RivalCouncilorPanel from "./components/RivalCouncilorPanel.svelte";
   import TitleMenu from "./components/TitleMenu.svelte";
   import TopBar from "./components/TopBar.svelte";
   import { game } from "./game.svelte";
@@ -37,7 +38,9 @@
     <GlobeView />
     <div class="top"><TopBar /></div>
     <div class="center"><ConfirmAssignments /></div>
-    {#if game.selectedNationId}
+    {#if game.rivalCouncilorId}
+      <div class="nation"><RivalCouncilorPanel /></div>
+    {:else if game.selectedNationId}
       <div class="nation"><NationPanel /></div>
     {/if}
     <div class="right">

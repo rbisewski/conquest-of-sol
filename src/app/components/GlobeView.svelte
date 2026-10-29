@@ -1,8 +1,23 @@
 <script lang="ts">
   import { baseContent } from "../../content/index";
-  import { armyCommander, atWar, checkMove, dateOfDay, dayOfDate, gdpPerCapita, MINUTES_PER_DAY, MISSION_NAMES, missionRegion, occupiedShare, regionDef, type GameState, type MoveCheck } from "../../sim/index";
+  import {
+    armyCommander,
+    atWar,
+    checkMove,
+    dateOfDay,
+    dayOfDate,
+    gdpPerCapita,
+    intelOn,
+    MINUTES_PER_DAY,
+    MISSION_NAMES,
+    missionRegion,
+    occupiedShare,
+    regionDef,
+    type GameState,
+    type MoveCheck,
+  } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { Globe, slotOffset, type ArmyMarker, type Flight, type RegionTint } from "../globe/Globe";
+  import { Globe, slotOffset, type ArmyMarker, type CouncilorMarker, type Flight, type RegionTint } from "../globe/Globe";
 
   let container: HTMLDivElement;
   let globe = $state<Globe | null>(null);
@@ -83,6 +98,18 @@
       return;
     }
     game.selectedNationId = index === null ? null : ownerOf(index);
+    // The nation panel takes the upper left back from a rival councilor's.
+    game.rivalCouncilorId = null;
+  }
+
+  /** Our councilor opens in Faction Assets; another faction's in the Rival Councilor panel. */
+  function clickCouncilor(id: string) {
+    const ours = game.state?.factions.find((f) => f.id === game.playerFactionId)?.councilors.some((c) => c.id === id);
+    if (ours) {
+      game.selectedCouncilorId = id;
+      game.selectedArmyId = null;
+      game.armyMoveMode = false;
+    } else game.rivalCouncilorId = id;
   }
 
   /** Set when the browser can't give us WebGL (e.g. hardware acceleration is off). */
@@ -102,6 +129,7 @@
         game.selectedCouncilorId = null;
         game.armyMoveMode = false;
       };
+      g.onSelectCouncilor = clickCouncilor;
     } catch (error) {
       console.error(error);
       webglError = true;
@@ -248,6 +276,39 @@
       flights.push({ id: `${c.id}:${to.id}`, from: { lat: from.lat, lon: from.lon }, to: { lat: to.lat, lon: to.lon }, color });
     }
     globe.setFlights(flights);
+  });
+
+  // Councilors on the map. Ours always stand where they are, or at their mission's region once
+  // their airplane lands (see the flights above), and stay there after the mission. Another
+  // faction's councilor on a mission shows once we have located them (grey until identified),
+  // where they are now, or at their mission's region once our intel reveals their mission.
+  $effect(() => {
+    const state = game.state;
+    if (!state || !globe) return;
+    const rules = baseContent.rules.missions;
+    const stacked = new Map<string, number>();
+    const markers: CouncilorMarker[] = [];
+    const place = (id: string, regionId: string, color: string | null, flightId: string | null) => {
+      const region = regionDef(baseContent, regionId);
+      const slot = stacked.get(regionId) ?? 0;
+      stacked.set(regionId, slot + 1);
+      markers.push({ id, at: { lat: region.lat, lon: region.lon }, color, selected: id === game.selectedCouncilorId || id === game.rivalCouncilorId, slot, flightId });
+    };
+    const ours = state.factions.find((f) => f.id === game.playerFactionId);
+    for (const c of ours?.councilors ?? []) {
+      const to = c.mission ? missionRegion(state, baseContent, c, c.mission) : c.regionId;
+      place(c.id, to, factionColor.get(ours!.id) ?? null, to === c.regionId ? null : `${c.id}:${to}`);
+    }
+    for (const f of state.factions) {
+      if (f === ours || !ours) continue;
+      for (const c of f.councilors) {
+        const intel = intelOn(state, ours.id, c.id);
+        if (!c.mission || intel < rules.intelToLocate || state.hidden.includes(c.id)) continue;
+        const regionId = intel >= 0.75 ? missionRegion(state, baseContent, c, c.mission) : c.regionId;
+        place(c.id, regionId, intel >= rules.intelToTarget ? (factionColor.get(f.id) ?? null) : null, null);
+      }
+    }
+    globe.setCouncilors(markers);
   });
 
   // City lights: brighter where people are dense, dimmer where they are poor.

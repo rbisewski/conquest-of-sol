@@ -1,8 +1,8 @@
 <script lang="ts">
   // Event alerts after Terra Invicta: diamonds down the left side of the screen, newest at
   // the top, for our own events and public news. Hovering shows the event, clicking selects
-  // its nation and right-clicking dismisses it. While a nation is open the column shrinks to
-  // the four newest, at the bottom.
+  // its nation and right-clicking dismisses it. While a nation (or a rival councilor) is open
+  // the column shrinks to the four newest, at the bottom.
   import { SvelteSet } from "svelte/reactivity";
   import { baseContent } from "../../content/index";
   import { dateOfDay, formatDate, formatTimeOfDay, MINUTES_PER_DAY, type LogEntry } from "../../sim/index";
@@ -19,7 +19,7 @@
   const key = (e: LogEntry) => `${e.dayIndex}:${e.minuteOfDay}:${e.text}`;
 
   let height = $state(0);
-  const compact = $derived(game.selectedNationId !== null);
+  const compact = $derived(game.selectedNationId !== null || game.rivalCouncilorId !== null);
   const room = $derived(compact ? COMPACT : Math.max(1, Math.floor((height - STEP) / STEP)));
   const entries = $derived.by(() => {
     const log = game.state?.log ?? [];
@@ -39,7 +39,10 @@
   const tone = (e: LogEntry) => entryKind(e).tone ?? (e.factionId ? "mine" : "public");
 
   function open(e: LogEntry) {
-    if (e.nationId) game.selectedNationId = e.nationId;
+    if (!e.nationId) return;
+    game.selectedNationId = e.nationId;
+    // The nation panel takes the upper left back from a rival councilor's.
+    game.rivalCouncilorId = null;
   }
   function dismiss(event: MouseEvent, e: LogEntry) {
     event.preventDefault();

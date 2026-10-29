@@ -28,6 +28,8 @@ class GameClient {
   researchOpen = $state(false);
   /** The councilor whose full summary screen is open, if any (ours, or another faction's we have intel on). */
   summaryCouncilorId = $state<string | null>(null);
+  /** Another faction's councilor, clicked on the globe, whose Rival Councilor panel is open (upper left), if any. */
+  rivalCouncilorId = $state<string | null>(null);
   /** The army whose panel is open (lower right, in place of the councilor's), if any. */
   selectedArmyId = $state<string | null>(null);
   /**
@@ -135,6 +137,7 @@ class GameClient {
     this.selectedCouncilorId = null;
     this.selectedArmyId = null;
     this.summaryCouncilorId = null;
+    this.rivalCouncilorId = null;
     this.recruitingOpen = false;
     this.researchOpen = false;
     this.foreignRelationsNationId = null;
