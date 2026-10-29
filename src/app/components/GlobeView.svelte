@@ -18,9 +18,12 @@
   } from "../../sim/index";
   import { game } from "../game.svelte";
   import { Globe, slotOffset, type ArmyMarker, type CouncilorMarker, type Flight, type RegionTint } from "../globe/Globe";
+  import { handoff } from "../solar/handoff";
 
   let container: HTMLDivElement;
   let globe = $state<Globe | null>(null);
+  /** Where the camera glides in to after flying home from the Solar System view, in Earth radii. */
+  const GLIDE_TO = 3.3;
   let hovered = $state<number | null>(null);
 
   const regions = baseContent.regions;
@@ -130,6 +133,15 @@
         game.armyMoveMode = false;
       };
       g.onSelectCouncilor = clickCouncilor;
+      // Drawn over the Solar System view, which follows the globe's camera.
+      g.overlay();
+      g.onFrame = (camera) => handoff.solar?.followGlobe(camera);
+      g.onZoomOut = (direction, distance) => {
+        hovered = null;
+        handoff.direction.copy(direction);
+        handoff.distance = distance;
+        game.view = "solar";
+      };
     } catch (error) {
       console.error(error);
       webglError = true;
@@ -140,6 +152,16 @@
       g.dispose();
       globe = null;
     };
+  });
+
+  // The globe rests while the Solar System view has the camera, and takes it back where that view left it.
+  let shownView: typeof game.view = "earth";
+  $effect(() => {
+    if (!globe) return;
+    const earth = game.view === "earth";
+    if (earth && shownView !== "earth") globe.setCamera(handoff.direction, handoff.distance, handoff.glide ? GLIDE_TO : undefined);
+    shownView = game.view;
+    globe.setActive(earth);
   });
 
   // The sun follows the game clock.
@@ -399,7 +421,7 @@
   });
 </script>
 
-<div class="globe" bind:this={container}></div>
+<div class="globe" class:resting={game.view !== "earth"} bind:this={container}></div>
 {#if webglError}
   <div class="webgl-error panel">
     <strong>The globe needs WebGL, which this browser isn't providing.</strong>
@@ -468,6 +490,10 @@
   .globe {
     position: absolute;
     inset: 0;
+  }
+  /* The Solar System view beneath has the camera, and the mouse. */
+  .globe.resting {
+    pointer-events: none;
   }
   .webgl-error {
     position: absolute;

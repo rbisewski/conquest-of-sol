@@ -54,3 +54,29 @@ export function detPow(base: number, exponent: number): number {
   if (exponent === 0) return 1;
   return detExp(exponent * detLn(base));
 }
+
+const TWO_PI = 6.283185307179586;
+const HALF_PI = 1.5707963267948966;
+const PI = 3.141592653589793;
+
+/** sin(x), by Taylor series after reducing x to [−π/2, π/2]. */
+export function detSin(x: number): number {
+  // Into [−π, π], then fold onto [−π/2, π/2] (sin(π − r) = sin r).
+  let r = x - TWO_PI * Math.floor(x / TWO_PI + 0.5);
+  if (r > HALF_PI) r = PI - r;
+  else if (r < -HALF_PI) r = -PI - r;
+  // |r| ≤ π/2: the 12th term is below 1e-17.
+  const r2 = r * r;
+  let term = r;
+  let sum = r;
+  for (let n = 1; n < 12; n++) {
+    term = (-term * r2) / ((2 * n) * (2 * n + 1));
+    sum += term;
+  }
+  return sum;
+}
+
+/** cos(x) = sin(x + π/2). */
+export function detCos(x: number): number {
+  return detSin(x + HALF_PI);
+}

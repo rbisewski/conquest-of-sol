@@ -697,7 +697,13 @@ def main() -> None:
         borders[nation_edge] = (255, 255, 255, 230)
     Image.fromarray(borders, "RGBA").save(MAP_OUT / "borders.png", optimize=True)
 
-    make_art(rid_map > 0)
+    # Antarctica belongs to no nation (no regions), but the art still shows it.
+    ata_img = Image.new("L", (W, H), 0)
+    ata_draw = ImageDraw.Draw(ata_img)
+    for f in admin0:
+        if f["properties"]["ADM0_A3"] == "ATA":
+            draw_feature(ata_draw, f["geometry"], 1)
+    make_art((rid_map > 0) | (np.asarray(ata_img) > 0))
     print(f"Wrote {len(nations_out)} nations and {len(regions_out)} regions")
 
 
@@ -765,9 +771,15 @@ def make_art(land: np.ndarray) -> None:
     out = np.where(land[..., None], out, SEA_BANDS[band])
 
     # Dark 1-px outline on the land side of every coast.
-    shore = land & ~(np.roll(land, 1, 0) & np.roll(land, -1, 0) & np.roll(land, 1, 1) & np.roll(land, -1, 1))
+    shore = land & ~(shift_rows(land, 1) & shift_rows(land, -1) & np.roll(land, 1, 1) & np.roll(land, -1, 1))
     out[shore] = out[shore] * 0.55
     Image.fromarray(out.astype(np.uint8), "RGB").save(MAP_OUT / "earth.png", optimize=True)
+
+
+def shift_rows(mask: np.ndarray, n: int) -> np.ndarray:
+    """A mask moved down (n = 1) or up (n = -1) a row. Columns wrap at the antimeridian, but
+    rows don't: Antarctica at the bottom edge isn't next to the Arctic at the top."""
+    return np.vstack([mask[:1], mask[:-1]]) if n > 0 else np.vstack([mask[1:], mask[-1:]])
 
 
 def coast_distance(land: np.ndarray, steps: int) -> np.ndarray:
@@ -776,11 +788,11 @@ def coast_distance(land: np.ndarray, steps: int) -> np.ndarray:
     dist = np.where(land, 0, steps).astype(np.float32)
     frontier = land.copy()
     for d in range(1, steps):
-        grown = frontier | np.roll(frontier, 1, 0) | np.roll(frontier, -1, 0) | np.roll(frontier, 1, 1) | np.roll(frontier, -1, 1)
+        grown = frontier | shift_rows(frontier, 1) | shift_rows(frontier, -1) | np.roll(frontier, 1, 1) | np.roll(frontier, -1, 1)
         if d % 2 == 0:
-            diag = np.roll(frontier, 1, 0)
+            diag = shift_rows(frontier, 1)
             grown |= np.roll(diag, 1, 1) | np.roll(diag, -1, 1)
-            diag = np.roll(frontier, -1, 0)
+            diag = shift_rows(frontier, -1)
             grown |= np.roll(diag, 1, 1) | np.roll(diag, -1, 1)
         newly = grown & ~frontier
         dist[newly] = d

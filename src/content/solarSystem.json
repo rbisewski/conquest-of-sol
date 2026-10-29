@@ -1,0 +1,5943 @@
+[
+ {
+  "id": "Sol",
+  "name": "Sol",
+  "type": "star",
+  "parent": null,
+  "radiusKm": 695700,
+  "massKg": 1.98855e+30
+ },
+ {
+  "id": "Mercury",
+  "name": "Mercury",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 2493.7,
+  "massKg": 3.3011e+23,
+  "orbit": {
+   "a": 0.387099,
+   "e": 0.20563,
+   "i": 7.00487,
+   "node": 48.33167,
+   "peri": 29.124,
+   "meanAnomaly": 174.796,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Venus",
+  "name": "Venus",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 6051.8,
+  "massKg": 4.867e+24,
+  "orbit": {
+   "a": 0.723332,
+   "e": 0.006773,
+   "i": 3.39471,
+   "node": 76.68069,
+   "peri": 54.85229,
+   "meanAnomaly": 50.44675,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Earth",
+  "name": "Earth",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 6378.137,
+  "massKg": 5.972e+24,
+  "orbit": {
+   "a": 1.00000102,
+   "e": 0.0167086,
+   "i": 5e-05,
+   "node": 348.7394,
+   "peri": 114.20783,
+   "meanAnomaly": 358.617,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Mars",
+  "name": "Mars",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 3396.2,
+  "massKg": 6.4171e+23,
+  "orbit": {
+   "a": 1.523679,
+   "e": 0.093412,
+   "i": 1.85061,
+   "node": 49.57854,
+   "peri": 286.537,
+   "meanAnomaly": 19.3564,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Jupiter",
+  "name": "Jupiter",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 71492,
+  "massKg": 1.8986e+27,
+  "orbit": {
+   "a": 5.202887,
+   "e": 0.048386,
+   "i": 1.304397,
+   "node": 100.4739,
+   "peri": 275.066,
+   "meanAnomaly": 18.818,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Saturn",
+  "name": "Saturn",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 60268,
+  "massKg": 5.683e+26,
+  "orbit": {
+   "a": 9.536676,
+   "e": 0.053862,
+   "i": 2.485992,
+   "node": 113.6624,
+   "peri": 336.0139,
+   "meanAnomaly": 320.3468,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Uranus",
+  "name": "Uranus",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 25559,
+  "massKg": 8.681e+25,
+  "orbit": {
+   "a": 19.2184,
+   "e": 0.046381,
+   "i": 0.773,
+   "node": 74.006,
+   "peri": 96.998857,
+   "meanAnomaly": 142.2386,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Neptune",
+  "name": "Neptune",
+  "type": "planet",
+  "parent": "Sol",
+  "radiusKm": 24764,
+  "massKg": 1.0243e+26,
+  "orbit": {
+   "a": 30.110387,
+   "e": 0.009456,
+   "i": 1.767975,
+   "node": 131.784,
+   "peri": 276.336,
+   "meanAnomaly": 256.228,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Ceres",
+  "name": "Ceres",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 482.6,
+  "massKg": 939300000000000000000,
+  "orbit": {
+   "a": 2.7675,
+   "e": 0.075823,
+   "i": 10.593,
+   "node": 80.3293,
+   "peri": 72.522,
+   "meanAnomaly": 77.372,
+   "epoch": 2019.32
+  }
+ },
+ {
+  "id": "19521Chaos",
+  "name": "Chaos",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 300,
+  "massKg": 124407000000000000000,
+  "orbit": {
+   "a": 45.796,
+   "e": 0.10567,
+   "i": 12.0502,
+   "node": 50.0239,
+   "peri": 58.4097,
+   "meanAnomaly": 337.2998,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "20000Varuna",
+  "name": "Varuna",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 334,
+  "massKg": 370000000000000000000,
+  "orbit": {
+   "a": 43.123,
+   "e": 0.050464,
+   "i": 17.165,
+   "node": 97.29,
+   "peri": 270.89,
+   "meanAnomaly": 105.119,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "28978Ixion",
+  "name": "Ixion",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 308.5,
+  "massKg": 129135000000000000000,
+  "orbit": {
+   "a": 39.664,
+   "e": 0.2418,
+   "i": 19.587,
+   "node": 70.996,
+   "peri": 298.84,
+   "meanAnomaly": 283.89,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "Quaoar",
+  "name": "Quaoar",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 555,
+  "massKg": 1.39947e+21,
+  "orbit": {
+   "a": 43.405,
+   "e": 0.034704,
+   "i": 7.987,
+   "node": 188.772,
+   "peri": 155.246,
+   "meanAnomaly": 287.542,
+   "epoch": 2016.329
+  }
+ },
+ {
+  "id": "55565KBO",
+  "name": "Aya",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 384,
+  "massKg": 260901000000000000000,
+  "orbit": {
+   "a": 47.526,
+   "e": 0.13139,
+   "i": 24.351,
+   "node": 297.438,
+   "peri": 293.3,
+   "meanAnomaly": 293.876,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "55637KBO",
+  "name": "Uni",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 332.5,
+  "massKg": 102500000000000000000,
+  "orbit": {
+   "a": 42.488,
+   "e": 0.1413,
+   "i": 19.484,
+   "node": 204.68,
+   "peri": 279,
+   "meanAnomaly": 295.71,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "78799KBO",
+  "name": "Xewioso",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 282.5,
+  "massKg": 94437400000000000000,
+  "orbit": {
+   "a": 37.6,
+   "e": 0.253,
+   "i": 14.383,
+   "node": 46.928,
+   "peri": 247.18,
+   "meanAnomaly": 145.37,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "90482Orcus",
+  "name": "Orcus",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 458.5,
+  "massKg": 547000000000000000000,
+  "orbit": {
+   "a": 39.17,
+   "e": 0.22008,
+   "i": 20.582,
+   "node": 268.716,
+   "peri": 72.393,
+   "meanAnomaly": 177.728,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "90568KBO",
+  "name": "Goibniu",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 340,
+  "massKg": 205795000000000000000,
+  "orbit": {
+   "a": 42.173,
+   "e": 0.081681,
+   "i": 21.9718,
+   "node": 250.6142,
+   "peri": 293.2,
+   "meanAnomaly": 34.603,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "Salacia",
+  "name": "Salacia",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 427,
+  "massKg": 419400000000000000000,
+  "orbit": {
+   "a": 41.874,
+   "e": 0.1099,
+   "i": 23.93,
+   "node": 280.04,
+   "peri": 308.48,
+   "meanAnomaly": 122.66,
+   "epoch": 2017.126
+  }
+ },
+ {
+  "id": "Pluto",
+  "name": "Pluto",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 1189.9,
+  "massKg": 1.303e+22,
+  "orbit": {
+   "a": 39.48,
+   "e": 0.2488,
+   "i": 17.16,
+   "node": 110.299,
+   "peri": 113.834,
+   "meanAnomaly": 14.53,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Haumea",
+  "name": "Haumea",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 960.0,
+  "massKg": 4.01e+21,
+  "orbit": {
+   "a": 43.218,
+   "e": 0.19126,
+   "i": 28.19,
+   "node": 121.79,
+   "peri": 240.2,
+   "meanAnomaly": 209.07,
+   "epoch": 2014.936
+  }
+ },
+ {
+  "id": "Eris",
+  "name": "Eris",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 1163,
+  "massKg": 1.638e+22,
+  "orbit": {
+   "a": 67.684,
+   "e": 0.43607,
+   "i": 44.04,
+   "node": 35.951,
+   "peri": 151.639,
+   "meanAnomaly": 205.989,
+   "epoch": 2020.415301
+  }
+ },
+ {
+  "id": "Makemake",
+  "name": "Makemake",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 715,
+  "massKg": 3.21533e+21,
+  "orbit": {
+   "a": 45.43,
+   "e": 0.16126,
+   "i": 29.9835,
+   "node": 79.62,
+   "peri": 294.834,
+   "meanAnomaly": 165.514,
+   "epoch": 2020.4134
+  }
+ },
+ {
+  "id": "145452KBO",
+  "name": "Ritona",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 339.5,
+  "massKg": 196693000000000000000,
+  "orbit": {
+   "a": 41.80481341,
+   "e": 0.02943059806,
+   "i": 19.21791576,
+   "node": 187.041379,
+   "peri": 174.048846,
+   "meanAnomaly": 349.602101,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "174567Varda",
+  "name": "Varda",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 358,
+  "massKg": 266400000000000000000,
+  "orbit": {
+   "a": 45.805,
+   "e": 0.13986,
+   "i": 21.495,
+   "node": 183.943,
+   "peri": 182.916,
+   "meanAnomaly": 266.99,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "202421KBO",
+  "name": "Unkulunkulu",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 249,
+  "massKg": 77601100000000000000,
+  "orbit": {
+   "a": 43.201,
+   "e": 0.15018,
+   "i": 25.7315,
+   "node": 307.868,
+   "peri": 221.89,
+   "meanAnomaly": 223.93,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "208996KBO",
+  "name": "Achlys",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 470.0,
+  "massKg": 160982000000000000000,
+  "orbit": {
+   "a": 39.362,
+   "e": 0.183,
+   "i": 13.596,
+   "node": 252.202,
+   "peri": 15.211,
+   "meanAnomaly": 232.611,
+   "epoch": 2019.321
+  }
+ },
+ {
+  "id": "Gonggong",
+  "name": "Gonggong",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 615,
+  "massKg": 1.75e+21,
+  "orbit": {
+   "a": 67.485,
+   "e": 0.49943,
+   "i": 30.6273,
+   "node": 336.8573,
+   "peri": 207.6675,
+   "meanAnomaly": 106.496,
+   "epoch": 2020.961749
+  }
+ },
+ {
+  "id": "278361KBO",
+  "name": "Marduk",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 305.0,
+  "massKg": 142616000000000000000,
+  "orbit": {
+   "a": 47.82948455,
+   "e": 0.1576714092,
+   "i": 12.07287604,
+   "node": 272.519578,
+   "peri": 9.250557,
+   "meanAnomaly": 344.419467,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "307261KBO",
+  "name": "Máni",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 411.5,
+  "massKg": 160982000000000000000,
+  "orbit": {
+   "a": 41.717,
+   "e": 0.14439,
+   "i": 17.677,
+   "node": 215.963,
+   "peri": 215.534,
+   "meanAnomaly": 216.187,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "440030KBO",
+  "name": "Kuterastan",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 241.26,
+  "massKg": 73528300000000000000,
+  "orbit": {
+   "a": 43.426,
+   "e": 0.1517,
+   "i": 31.231,
+   "node": 240.87,
+   "peri": 37.4,
+   "meanAnomaly": 41.709,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "455502KBO",
+  "name": "Luison",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 280.5,
+  "massKg": 356400000000000000000,
+  "orbit": {
+   "a": 39.104,
+   "e": 0.22667,
+   "i": 12.04911,
+   "node": 135.93,
+   "peri": 145,
+   "meanAnomaly": 113.43,
+   "epoch": 2019.321
+  }
+ },
+ {
+  "id": "470308KBO",
+  "name": "Volturnus",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 264.5,
+  "massKg": 93013700000000000000,
+  "orbit": {
+   "a": 39.589,
+   "e": 0.0247,
+   "i": 18.129,
+   "node": 64.584,
+   "peri": 4.7053,
+   "meanAnomaly": 177.14,
+   "epoch": 2016.575
+  }
+ },
+ {
+  "id": "470443KBO",
+  "name": "Tagaloa",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 262,
+  "massKg": 90401100000000000000,
+  "orbit": {
+   "a": 46.18198813,
+   "e": 0.06760867784,
+   "i": 22.8131761,
+   "node": 53.489662,
+   "peri": 278.602123,
+   "meanAnomaly": 103.982182,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "472271KBO",
+  "name": "Katonda",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 239,
+  "massKg": 62903500000000000000,
+  "orbit": {
+   "a": 42.897,
+   "e": 0.157,
+   "i": 17.403,
+   "node": 236.58,
+   "peri": 269.24,
+   "meanAnomaly": 269.23,
+   "epoch": 2016.575
+  }
+ },
+ {
+  "id": "482824KBO",
+  "name": "Agudar",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 244.5,
+  "massKg": 67346900000000000000,
+  "orbit": {
+   "a": 42.31898249,
+   "e": 0.2257468368,
+   "i": 18.64166215,
+   "node": 43.145083,
+   "peri": 146.974302,
+   "meanAnomaly": 319.421614,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "523645KBO",
+  "name": "Mbombo",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 260,
+  "massKg": 95708800000000000000,
+  "orbit": {
+   "a": 43.113,
+   "e": 0.11204,
+   "i": 28.861,
+   "node": 150.6,
+   "peri": 82.855,
+   "meanAnomaly": 173.94,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "523681KBO",
+  "name": "Coatlicue",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 252.0,
+  "massKg": 73736600000000000000,
+  "orbit": {
+   "a": 45.56666891,
+   "e": 0.1431230283,
+   "i": 15.42340804,
+   "node": 279.138034,
+   "peri": 349.137677,
+   "meanAnomaly": 266.974545,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "523750KBO",
+  "name": "Anansi",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 259,
+  "massKg": 93153200000000000000,
+  "orbit": {
+   "a": 41.64978063,
+   "e": 0.1159771834,
+   "i": 11.03701072,
+   "node": 318.024518,
+   "peri": 173.214624,
+   "meanAnomaly": 292.696536,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "559182KBO",
+  "name": "Enki",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 261.0,
+  "massKg": 96817400000000000000,
+  "orbit": {
+   "a": 46.74103453,
+   "e": 0.1877377127,
+   "i": 11.42234353,
+   "node": 44.035664,
+   "peri": 300.37726,
+   "meanAnomaly": 273.43211,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "612533KBO",
+  "name": "Chernobog",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 274.6,
+  "massKg": 170000000000000000000,
+  "orbit": {
+   "a": 39.416,
+   "e": 0.12713,
+   "i": 13.281,
+   "node": 19.17,
+   "peri": 163.53,
+   "meanAnomaly": 282.08,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "2010FX86KBO",
+  "name": "Olorun",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 289.0,
+  "massKg": 222436000000000000000,
+  "orbit": {
+   "a": 46.56215266,
+   "e": 0.06048982207,
+   "i": 25.1779923,
+   "node": 310.989021,
+   "peri": 358.347897,
+   "meanAnomaly": 289.627455,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "2010KZ39KBO",
+  "name": "Izanagi",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 333.02,
+  "massKg": 201114000000000000000,
+  "orbit": {
+   "a": 45.395,
+   "e": 0.0535,
+   "i": 26.032,
+   "node": 53.118,
+   "peri": 313.91,
+   "meanAnomaly": 256.31,
+   "epoch": 2017.126
+  }
+ },
+ {
+  "id": "2014WP50KBO",
+  "name": "Huracan",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 304.0,
+  "massKg": 129450000000000000000,
+  "orbit": {
+   "a": 45.08726011,
+   "e": 0.09316613423,
+   "i": 8.325595039,
+   "node": 66.648853,
+   "peri": 337.286511,
+   "meanAnomaly": 55.161815,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "2014YA50KBO",
+  "name": "Nareau",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 290.0,
+  "massKg": 112376000000000000000,
+  "orbit": {
+   "a": 46.1656407,
+   "e": 0.1667298511,
+   "i": 23.92709047,
+   "node": 45.242581,
+   "peri": 195.748154,
+   "meanAnomaly": 314.651587,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "2017OF69KBO",
+  "name": "Meng Po",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 266.5,
+  "massKg": 146674000000000000000,
+  "orbit": {
+   "a": 39.631,
+   "e": 0.2072,
+   "i": 13.654,
+   "node": 218.53,
+   "peri": 215.37,
+   "meanAnomaly": 251.02,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "Sedna",
+  "name": "Sedna",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 453,
+  "massKg": 467266000000000000000,
+  "orbit": {
+   "a": 506,
+   "e": 0.8496,
+   "i": 11.9307,
+   "node": 144.248,
+   "peri": 311.352,
+   "meanAnomaly": 358.117,
+   "epoch": 2020.415301
+  }
+ },
+ {
+  "id": "532037TNO",
+  "name": "Chiminigagua",
+  "type": "dwarf",
+  "parent": "Sol",
+  "radiusKm": 372.5,
+  "massKg": 0,
+  "orbit": {
+   "a": 58.8402185,
+   "e": 0.3918464309,
+   "i": 33.14541705,
+   "node": 187.03094,
+   "peri": 139.457156,
+   "meanAnomaly": 218.071692,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "Luna",
+  "name": "Luna",
+  "type": "moon",
+  "parent": "Earth",
+  "radiusKm": 1738.1,
+  "massKg": 7.34767e+22,
+  "orbit": {
+   "a": 0.0025695486,
+   "e": 0.09548768,
+   "i": 23.46394576,
+   "node": 12.75405,
+   "peri": 194.375691,
+   "meanAnomaly": 208.421945,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Io",
+  "name": "Io",
+  "type": "moon",
+  "parent": "Jupiter",
+  "radiusKm": 1830,
+  "massKg": 8.9319e+22,
+  "orbit": {
+   "a": 0.0028188904,
+   "e": 0.0041,
+   "i": 0.036,
+   "node": 312.981,
+   "peri": 144.754,
+   "meanAnomaly": 8.989,
+   "epoch": 1976.605
+  }
+ },
+ {
+  "id": "Europa",
+  "name": "Europa",
+  "type": "moon",
+  "parent": "Jupiter",
+  "radiusKm": 1560.8,
+  "massKg": 4.8e+22,
+  "orbit": {
+   "a": 0.0044855852,
+   "e": 0.0094,
+   "i": 0.466,
+   "node": 101.087,
+   "peri": 54.425,
+   "meanAnomaly": 20.865,
+   "epoch": 1976.605
+  }
+ },
+ {
+  "id": "Ganymede",
+  "name": "Ganymede",
+  "type": "moon",
+  "parent": "Jupiter",
+  "radiusKm": 2631.2,
+  "massKg": 1.4819e+23,
+  "orbit": {
+   "a": 0.0071552623,
+   "e": 0.0013,
+   "i": 0.177,
+   "node": 119.841,
+   "peri": 68.99,
+   "meanAnomaly": 292.375,
+   "epoch": 1976.605
+  }
+ },
+ {
+  "id": "Callisto",
+  "name": "Callisto",
+  "type": "moon",
+  "parent": "Jupiter",
+  "radiusKm": 2410.3,
+  "massKg": 1.0759e+23,
+  "orbit": {
+   "a": 0.0125851323,
+   "e": 0.0074,
+   "i": 0.192,
+   "node": 323.265,
+   "peri": 12.668,
+   "meanAnomaly": 109.158,
+   "epoch": 1976.605
+  }
+ },
+ {
+  "id": "Mimas",
+  "name": "Mimas",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 208,
+  "massKg": 37493000000000000000,
+  "orbit": {
+   "a": 0.0012393492,
+   "e": 0.0196,
+   "i": 1.574,
+   "node": 173.026,
+   "peri": 332.478,
+   "meanAnomaly": 14.876,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Enceladus",
+  "name": "Enceladus",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 256.5,
+  "massKg": 108000000000000000000,
+  "orbit": {
+   "a": 0.0015905975,
+   "e": 0.0047,
+   "i": 0.009,
+   "node": 343.266,
+   "peri": 188.319,
+   "meanAnomaly": 10.69,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Tethys",
+  "name": "Tethys",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 538.5,
+  "massKg": 617449000000000000000,
+  "orbit": {
+   "a": 0.0019697473,
+   "e": 0.0001,
+   "i": 1.091,
+   "node": 330.882,
+   "peri": 262.845,
+   "meanAnomaly": 9.003,
+   "epoch": 2007.4107
+  }
+ },
+ {
+  "id": "Dione",
+  "name": "Dione",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 564,
+  "massKg": 1.09545e+21,
+  "orbit": {
+   "a": 0.0025227632,
+   "e": 0.0022,
+   "i": 0.028,
+   "node": 290.615,
+   "peri": 284.111,
+   "meanAnomaly": 322.242,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Rhea",
+  "name": "Rhea",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 765,
+  "massKg": 2.30652e+21,
+  "orbit": {
+   "a": 0.0035230448,
+   "e": 0.001,
+   "i": 0.333,
+   "node": 351.018,
+   "peri": 213.663,
+   "meanAnomaly": 207.767,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Titan",
+  "name": "Titan",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 2574.5,
+  "massKg": 1.3452e+23,
+  "orbit": {
+   "a": 0.0081680975,
+   "e": 0.0288,
+   "i": 0.312,
+   "node": 28.758,
+   "peri": 179.92,
+   "meanAnomaly": 163.308,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Iapetus",
+  "name": "Iapetus",
+  "type": "moon",
+  "parent": "Saturn",
+  "radiusKm": 745.5,
+  "massKg": 1.805e+21,
+  "orbit": {
+   "a": 0.0238026115,
+   "e": 0.0293,
+   "i": 8.313,
+   "node": 81.189,
+   "peri": 271.599,
+   "meanAnomaly": 201.81,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Miranda",
+  "name": "Miranda",
+  "type": "moon",
+  "parent": "Uranus",
+  "radiusKm": 240.5,
+  "massKg": 65900000000000000000,
+  "orbit": {
+   "a": 0.0008649187,
+   "e": 0.0013,
+   "i": 4.338,
+   "node": 326.438,
+   "peri": 154.8,
+   "meanAnomaly": 73,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Ariel",
+  "name": "Ariel",
+  "type": "moon",
+  "parent": "Uranus",
+  "radiusKm": 581,
+  "massKg": 1.353e+21,
+  "orbit": {
+   "a": 0.0012768898,
+   "e": 0.0012,
+   "i": 0.041,
+   "node": 22.394,
+   "peri": 9.6,
+   "meanAnomaly": 193.5,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Umbriel",
+  "name": "Umbriel",
+  "type": "moon",
+  "parent": "Uranus",
+  "radiusKm": 584.7,
+  "massKg": 1.172e+21,
+  "orbit": {
+   "a": 0.0017801056,
+   "e": 0.0039,
+   "i": 0.128,
+   "node": 33.485,
+   "peri": 183.4,
+   "meanAnomaly": 253,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Titania",
+  "name": "Titania",
+  "type": "moon",
+  "parent": "Uranus",
+  "radiusKm": 788.4,
+  "massKg": 3.527e+21,
+  "orbit": {
+   "a": 0.0029138784,
+   "e": 0.0011,
+   "i": 0.079,
+   "node": 99.771,
+   "peri": 184,
+   "meanAnomaly": 68.1,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Oberon",
+  "name": "Oberon",
+  "type": "moon",
+  "parent": "Uranus",
+  "radiusKm": 761.4,
+  "massKg": 3.014e+21,
+  "orbit": {
+   "a": 0.0039005903,
+   "e": 0.0014,
+   "i": 0.068,
+   "node": 279.771,
+   "peri": 132.2,
+   "meanAnomaly": 143.6,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "Triton",
+  "name": "Triton",
+  "type": "moon",
+  "parent": "Neptune",
+  "radiusKm": 1354.5,
+  "massKg": 2.1408e+22,
+  "orbit": {
+   "a": 0.0023714174,
+   "e": 0,
+   "i": 156.865,
+   "node": 177.608,
+   "peri": 66.142,
+   "meanAnomaly": 352.257,
+   "epoch": 2000.001
+  }
+ },
+ {
+  "id": "Charon",
+  "name": "Charon",
+  "type": "moon",
+  "parent": "Pluto",
+  "radiusKm": 606,
+  "massKg": 1.586e+21,
+  "orbit": {
+   "a": 0.0001309912,
+   "e": 0.0022,
+   "i": 0.001,
+   "node": 85.187,
+   "peri": 71.255,
+   "meanAnomaly": 147.848,
+   "epoch": 2000
+  }
+ },
+ {
+  "id": "2Pallas",
+  "name": "2 Pallas",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 284.0,
+  "massKg": 204000000000000000000,
+  "orbit": {
+   "a": 2.771668,
+   "e": 0.22997227,
+   "i": 34.832932,
+   "node": 173.024741,
+   "peri": 310.202392,
+   "meanAnomaly": 334.32,
+   "epoch": 2020.416153
+  }
+ },
+ {
+  "id": "3Juno",
+  "name": "3 Juno",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 160.0,
+  "massKg": 30039200000000000000,
+  "orbit": {
+   "a": 2.6669,
+   "e": 0.2589,
+   "i": 12.972,
+   "node": 170.133,
+   "peri": 247.948,
+   "meanAnomaly": 119.146,
+   "epoch": 2002.893
+  }
+ },
+ {
+  "id": "4Vesta",
+  "name": "4 Vesta",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 286.3,
+  "massKg": 259076000000000000000,
+  "orbit": {
+   "a": 2.36179,
+   "e": 0.08874,
+   "i": 7.14043,
+   "node": 103.85136,
+   "peri": 151.19853,
+   "meanAnomaly": 20.86384,
+   "epoch": 2014.939083
+  }
+ },
+ {
+  "id": "5Astraea",
+  "name": "5 Astraea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 83.5,
+  "massKg": 2902390000000000000,
+  "orbit": {
+   "a": 2.577103,
+   "e": 0.190418,
+   "i": 5.368844,
+   "node": 141.6442,
+   "peri": 358.3534,
+   "meanAnomaly": 239.0456,
+   "epoch": 2010.559
+  }
+ },
+ {
+  "id": "6Hebe",
+  "name": "6 Hebe",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 102.5,
+  "massKg": 12780100000000000000,
+  "orbit": {
+   "a": 2.425641,
+   "e": 0.202619,
+   "i": 14.75228,
+   "node": 138.7402,
+   "peri": 239.3597,
+   "meanAnomaly": 247.947,
+   "epoch": 2005.903
+  }
+ },
+ {
+  "id": "7Iris",
+  "name": "7 Iris",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 120.0,
+  "massKg": 13616200000000000000,
+  "orbit": {
+   "a": 2.385,
+   "e": 0.231,
+   "i": 5.527,
+   "node": 259.727,
+   "peri": 145.44,
+   "meanAnomaly": 269.531,
+   "epoch": 2005.903
+  }
+ },
+ {
+  "id": "8Flora",
+  "name": "8 Flora",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 68.0,
+  "massKg": 848024000000000000,
+  "orbit": {
+   "a": 2.202,
+   "e": 0.1561,
+   "i": 5.886,
+   "node": 111.011,
+   "peri": 285.128,
+   "meanAnomaly": 156.401,
+   "epoch": 2005.903
+  }
+ },
+ {
+  "id": "9Metis",
+  "name": "9 Metis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 111.0,
+  "massKg": 11287100000000000000,
+  "orbit": {
+   "a": 2.387,
+   "e": 0.122,
+   "i": 5.576,
+   "node": 68.982,
+   "peri": 5.489,
+   "meanAnomaly": 274.183,
+   "epoch": 2004.536
+  }
+ },
+ {
+  "id": "10Hygiea",
+  "name": "10 Hygiea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 225.0,
+  "massKg": 87400000000000000000,
+  "orbit": {
+   "a": 3.1415,
+   "e": 0.1125,
+   "i": 3.8316,
+   "node": 283.2,
+   "peri": 312.32,
+   "meanAnomaly": 152.18,
+   "epoch": 2019.321
+  }
+ },
+ {
+  "id": "11Parthenope",
+  "name": "11 Parthenope",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 76.65,
+  "massKg": 6151160000000000000,
+  "orbit": {
+   "a": 2.453,
+   "e": 0.1,
+   "i": 4.624,
+   "node": 125.637,
+   "peri": 195.436,
+   "meanAnomaly": 333.562,
+   "epoch": 2004.536
+  }
+ },
+ {
+  "id": "12Victoria",
+  "name": "12 Victoria",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 56.4,
+  "massKg": 1498970000000000000,
+  "orbit": {
+   "a": 2.334,
+   "e": 0.221,
+   "i": 8.363,
+   "node": 235.547,
+   "peri": 69.747,
+   "meanAnomaly": 80.591,
+   "epoch": 2004.536
+  }
+ },
+ {
+  "id": "13Egeria",
+  "name": "13 Egeria",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 108.5,
+  "massKg": 16303600000000000000,
+  "orbit": {
+   "a": 2.576,
+   "e": 0.0085,
+   "i": 16.54,
+   "node": 43.305,
+   "peri": 81.401,
+   "meanAnomaly": 339.787,
+   "epoch": 2004.536
+  }
+ },
+ {
+  "id": "14Irene",
+  "name": "14 Irene",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 83.5,
+  "massKg": 8181640000000000000,
+  "orbit": {
+   "a": 2.585,
+   "e": 0.168,
+   "i": 9.106,
+   "node": 86.493,
+   "peri": 96.473,
+   "meanAnomaly": 326.489,
+   "epoch": 2004.536
+  }
+ },
+ {
+  "id": "15Eunomia",
+  "name": "15 Eunomia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 178.5,
+  "massKg": 31233600000000000000,
+  "orbit": {
+   "a": 2.643,
+   "e": 0.187,
+   "i": 11.738,
+   "node": 293.273,
+   "peri": 97.909,
+   "meanAnomaly": 286.102,
+   "epoch": 2006.449
+  }
+ },
+ {
+  "id": "16Psyche",
+  "name": "16 Psyche",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 139.5,
+  "massKg": 22925200000000000000,
+  "orbit": {
+   "a": 2.921,
+   "e": 0.14,
+   "i": 3.095,
+   "node": 150.352,
+   "peri": 228.047,
+   "meanAnomaly": 323.379,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "17Thetis",
+  "name": "17 Thetis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 45.0,
+  "massKg": 1200370000000000000,
+  "orbit": {
+   "a": 2.47,
+   "e": 0.134,
+   "i": 5.587,
+   "node": 125.622,
+   "peri": 135.906,
+   "meanAnomaly": 38.435,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "18Melpomene",
+  "name": "18 Melpomene",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 85.0,
+  "massKg": 3003920000000000000,
+  "orbit": {
+   "a": 2.296,
+   "e": 0.218,
+   "i": 10.126,
+   "node": 150.547,
+   "peri": 227.975,
+   "meanAnomaly": 205.245,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "19Fortuna",
+  "name": "19 Fortuna",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 112.5,
+  "massKg": 12720400000000000000,
+  "orbit": {
+   "a": 2.441,
+   "e": 0.159,
+   "i": 1.573,
+   "node": 211.379,
+   "peri": 182.091,
+   "meanAnomaly": 268.398,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "20Massalia",
+  "name": "20 Massalia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 80.0,
+  "massKg": 5673400000000000000,
+  "orbit": {
+   "a": 2.408,
+   "e": 0.143,
+   "i": 0.707,
+   "node": 206.53,
+   "peri": 255.578,
+   "meanAnomaly": 161.641,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "21Lutetia",
+  "name": "21 Lutetia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 61.0,
+  "massKg": 1702020000000000000,
+  "orbit": {
+   "a": 2.435,
+   "e": 0.164,
+   "i": 3.064,
+   "node": 80.917,
+   "peri": 250.227,
+   "meanAnomaly": 75.393,
+   "epoch": 2005.082
+  }
+ },
+ {
+  "id": "22Kalliope",
+  "name": "22 Kalliope",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 117.5,
+  "massKg": 8181640000000000000,
+  "orbit": {
+   "a": 2.9112,
+   "e": 0.10213,
+   "i": 13.703,
+   "node": 66.17,
+   "peri": 335.03,
+   "meanAnomaly": 282.54,
+   "epoch": 2010.559
+  }
+ },
+ {
+  "id": "23Thalia",
+  "name": "23 Thalia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 53.75,
+  "massKg": 1301900000000000000,
+  "orbit": {
+   "a": 2.628,
+   "e": 0.233,
+   "i": 10.145,
+   "node": 67.228,
+   "peri": 59.311,
+   "meanAnomaly": 328.687,
+   "epoch": 2005.452
+  }
+ },
+ {
+  "id": "24Themis",
+  "name": "24 Themis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 99.0,
+  "massKg": 11287100000000000000,
+  "orbit": {
+   "a": 3.129,
+   "e": 0.131,
+   "i": 0.7595,
+   "node": 35.99,
+   "peri": 107.7,
+   "meanAnomaly": 146.6,
+   "epoch": 2010.559
+  }
+ },
+ {
+  "id": "25Phocaea",
+  "name": "25 Phocaea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 41.605,
+  "massKg": 440136000000000000,
+  "orbit": {
+   "a": 2.4,
+   "e": 0.255,
+   "i": 21.584,
+   "node": 214.258,
+   "peri": 90.154,
+   "meanAnomaly": 6.932,
+   "epoch": 2006.449
+  }
+ },
+ {
+  "id": "26Proserpina",
+  "name": "26 Proserpina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 47.4,
+  "massKg": 748000000000000000,
+  "orbit": {
+   "a": 2.656,
+   "e": 0.091,
+   "i": 3.564,
+   "node": 45.782,
+   "peri": 193.695,
+   "meanAnomaly": 328.781,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "27Euterpe",
+  "name": "27 Euterpe",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 62.0,
+  "massKg": 1670000000000000000,
+  "orbit": {
+   "a": 2.348,
+   "e": 0.172,
+   "i": 1.584,
+   "node": 94.807,
+   "peri": 356.754,
+   "meanAnomaly": 126.457,
+   "epoch": 2006.449
+  }
+ },
+ {
+  "id": "28Bellona",
+  "name": "28 Bellona",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 60.0,
+  "massKg": 2620000000000000000,
+  "orbit": {
+   "a": 2.77551,
+   "e": 0.15023,
+   "i": 9.431489,
+   "node": 144.345,
+   "peri": 344.4219,
+   "meanAnomaly": 311.1867,
+   "epoch": 2010.559
+  }
+ },
+ {
+  "id": "29Amphitrite",
+  "name": "29 Amphitrite",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 58.25,
+  "massKg": 11800000000000000000,
+  "orbit": {
+   "a": 2.554,
+   "e": 0.073,
+   "i": 6.096,
+   "node": 356.501,
+   "peri": 63.433,
+   "meanAnomaly": 229.662,
+   "epoch": 2006.449
+  }
+ },
+ {
+  "id": "30Urania",
+  "name": "30 Urania",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 55.5,
+  "massKg": 1740000000000000000,
+  "orbit": {
+   "a": 2.367,
+   "e": 0.0126,
+   "i": 2.097,
+   "node": 307.82,
+   "peri": 86.56,
+   "meanAnomaly": 196.549,
+   "epoch": 2006.449
+  }
+ },
+ {
+  "id": "31Euphrosyne",
+  "name": "31 Euphrosyne",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 127.5,
+  "massKg": 58100000000000000000,
+  "orbit": {
+   "a": 3.15,
+   "e": 0.226,
+   "i": 26.316,
+   "node": 31.238,
+   "peri": 61.996,
+   "meanAnomaly": 14.5,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "34Circe",
+  "name": "34 Circe",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 56.51,
+  "massKg": 3660000000000000000,
+  "orbit": {
+   "a": 2.686984,
+   "e": 0.1045,
+   "i": 5.498,
+   "node": 184.44157,
+   "peri": 330.233,
+   "meanAnomaly": 39.80474,
+   "epoch": 2013.841
+  }
+ },
+ {
+  "id": "35Leukothea",
+  "name": "35 Leukothea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 51.55,
+  "massKg": 1979670000000000000,
+  "orbit": {
+   "a": 2.99,
+   "e": 0.228,
+   "i": 7.938,
+   "node": 353.817,
+   "peri": 213.962,
+   "meanAnomaly": 77.469,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "36Atalante",
+  "name": "36 Atalante",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 52.8,
+  "massKg": 4320000000000000000,
+  "orbit": {
+   "a": 2.747,
+   "e": 0.303,
+   "i": 18.432,
+   "node": 358.472,
+   "peri": 47.132,
+   "meanAnomaly": 47.005,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "37Fides",
+  "name": "37 Fides",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 54.175,
+  "massKg": 1300000000000000000,
+  "orbit": {
+   "a": 2.651,
+   "e": 0.177,
+   "i": 3.073,
+   "node": 7.409,
+   "peri": 62.683,
+   "meanAnomaly": 29.315,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "38Leda",
+  "name": "38 Leda",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 57.705,
+  "massKg": 5710000000000000000,
+  "orbit": {
+   "a": 2.743,
+   "e": 0.152,
+   "i": 6.955,
+   "node": 295.89,
+   "peri": 168.804,
+   "meanAnomaly": 107.567,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "39Laetitia",
+  "name": "39 Laetitia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 109.5,
+  "massKg": 4720000000000000000,
+  "orbit": {
+   "a": 2.769,
+   "e": 0.114,
+   "i": 10.383,
+   "node": 157.168,
+   "peri": 209.56,
+   "meanAnomaly": 58.261,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "40Harmonia",
+  "name": "40 Harmonia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 53.8,
+  "massKg": 1300000000000000000,
+  "orbit": {
+   "a": 2.268,
+   "e": 0.046,
+   "i": 4.256,
+   "node": 94.287,
+   "peri": 268.988,
+   "meanAnomaly": 249.12,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "41Daphne",
+  "name": "41 Daphne",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 119.5,
+  "massKg": 6800000000000000000,
+  "orbit": {
+   "a": 2.765,
+   "e": 0.272,
+   "i": 15.765,
+   "node": 178.159,
+   "peri": 46.239,
+   "meanAnomaly": 247.5,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "42Isis",
+  "name": "42 Isis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 51.365,
+  "massKg": 1580000000000000000,
+  "orbit": {
+   "a": 2.442,
+   "e": 0.223,
+   "i": 8.53,
+   "node": 84.398,
+   "peri": 236.626,
+   "meanAnomaly": 121.874,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "43Ariadne",
+  "name": "43 Ariadne",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 47.5,
+  "massKg": 1210000000000000000,
+  "orbit": {
+   "a": 2.204,
+   "e": 0.168,
+   "i": 3.464,
+   "node": 264.937,
+   "peri": 15.948,
+   "meanAnomaly": 101.582,
+   "epoch": 2005.903
+  }
+ },
+ {
+  "id": "44Nysa",
+  "name": "44 Nysa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 56.5,
+  "massKg": 370000000000000000,
+  "orbit": {
+   "a": 2.423805,
+   "e": 0.148159,
+   "i": 3.702889,
+   "node": 131.5952,
+   "peri": 342.5207,
+   "meanAnomaly": 118.7432,
+   "epoch": 2008.369
+  }
+ },
+ {
+  "id": "45Eugenia",
+  "name": "45 Eugenia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 116.0,
+  "massKg": 5690000000000000000,
+  "orbit": {
+   "a": 2.72,
+   "e": 0.082,
+   "i": 6.61,
+   "node": 147.939,
+   "peri": 85.137,
+   "meanAnomaly": 45.254,
+   "epoch": 2005.903
+  }
+ },
+ {
+  "id": "46Hestia",
+  "name": "46 Hestia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 62.05,
+  "massKg": 3500000000000000000,
+  "orbit": {
+   "a": 2.526,
+   "e": 0.172,
+   "i": 2.342,
+   "node": 181.168,
+   "peri": 176.882,
+   "meanAnomaly": 45.401,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "47Aglaja",
+  "name": "47 Aglaja",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 70.95,
+  "massKg": 3250000000000000000,
+  "orbit": {
+   "a": 2.878,
+   "e": 0.135,
+   "i": 4.985,
+   "node": 3.244,
+   "peri": 314.589,
+   "meanAnomaly": 225.007,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "48Doris",
+  "name": "48 Doris",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 139.0,
+  "massKg": 17000000000000000000,
+  "orbit": {
+   "a": 3.11,
+   "e": 0.075,
+   "i": 6.554,
+   "node": 183.754,
+   "peri": 257.583,
+   "meanAnomaly": 336.191,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "49Pales",
+  "name": "49 Pales",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 74.9,
+  "massKg": 2690000000000000000,
+  "orbit": {
+   "a": 3.09392,
+   "e": 0.230323,
+   "i": 3.18,
+   "node": 286.135,
+   "peri": 109.804,
+   "meanAnomaly": 274.69,
+   "epoch": 2008.935
+  }
+ },
+ {
+  "id": "51Nemausa",
+  "name": "51 Nemausa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 85.0,
+  "massKg": 2460000000000000000,
+  "orbit": {
+   "a": 2.365,
+   "e": 0.066,
+   "i": 9.972,
+   "node": 176.168,
+   "peri": 2.82,
+   "meanAnomaly": 316.668,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "52Europa",
+  "name": "52 Europa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 190.0,
+  "massKg": 32700000000000000000,
+  "orbit": {
+   "a": 3.101,
+   "e": 0.102,
+   "i": 7.466,
+   "node": 128.992,
+   "peri": 343.553,
+   "meanAnomaly": 70.73,
+   "epoch": 2005.903
+  }
+ },
+ {
+  "id": "54Alexandra",
+  "name": "54 Alexandra",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 80.0,
+  "massKg": 6160000000000000000,
+  "orbit": {
+   "a": 2.758,
+   "e": 0.145,
+   "i": 7.185,
+   "node": 10.537,
+   "peri": 4.231,
+   "meanAnomaly": 114.993,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "55Pandora",
+  "name": "55 Pandora",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 33.35,
+  "massKg": 310000000000000000,
+  "orbit": {
+   "a": 2.76,
+   "e": 0.142,
+   "i": 7.186,
+   "node": 10.432,
+   "peri": 3.944,
+   "meanAnomaly": 61.834,
+   "epoch": 2015.485
+  }
+ },
+ {
+  "id": "56Melete",
+  "name": "56 Melete",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 56.6,
+  "massKg": 4610000000000000000,
+  "orbit": {
+   "a": 2.595,
+   "e": 0.238,
+   "i": 8.072,
+   "node": 193.478,
+   "peri": 103.648,
+   "meanAnomaly": 267.781,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "57Mnemosyne",
+  "name": "57 Mnemosyne",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 56.505,
+  "massKg": 4320000000000000000,
+  "orbit": {
+   "a": 3.149,
+   "e": 0.118,
+   "i": 15.2,
+   "node": 199.337,
+   "peri": 212.848,
+   "meanAnomaly": 68.001,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "59Elpis",
+  "name": "59 Elpis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 82.4,
+  "massKg": 3000000000000000000,
+  "orbit": {
+   "a": 2.715,
+   "e": 0.117,
+   "i": 8.631,
+   "node": 170.209,
+   "peri": 210.901,
+   "meanAnomaly": 246.848,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "62Erato",
+  "name": "62 Erato",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 47.7,
+  "massKg": 9100000000000000000,
+  "orbit": {
+   "a": 3.122,
+   "e": 0.178,
+   "i": 2.223,
+   "node": 125.738,
+   "peri": 273.285,
+   "meanAnomaly": 161.828,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "63Ausonia",
+  "name": "63 Ausonia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 58.022,
+  "massKg": 1530000000000000000,
+  "orbit": {
+   "a": 2.3951,
+   "e": 0.127,
+   "i": 5.7763,
+   "node": 337.75,
+   "peri": 295.78,
+   "meanAnomaly": 340.16,
+   "epoch": 2017.6767
+  }
+ },
+ {
+  "id": "65Cybele",
+  "name": "65 Cybele",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 151.0,
+  "massKg": 17800000000000000000,
+  "orbit": {
+   "a": 3.433,
+   "e": 0.105,
+   "i": 3.548,
+   "node": 155.808,
+   "peri": 105.757,
+   "meanAnomaly": 279.683,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "68Leto",
+  "name": "68 Leto",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 61.285,
+  "massKg": 3280000000000000000,
+  "orbit": {
+   "a": 2.783,
+   "e": 0.185,
+   "i": 7.972,
+   "node": 44.183,
+   "peri": 305.392,
+   "meanAnomaly": 24.606,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "69Hesperia",
+  "name": "69 Hesperia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 67.5,
+  "massKg": 5860000000000000000,
+  "orbit": {
+   "a": 2.98,
+   "e": 0.170609,
+   "i": 8.5927,
+   "node": 184.996,
+   "peri": 289.34,
+   "meanAnomaly": 185.728,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "76Freia",
+  "name": "76 Freia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 91.85,
+  "massKg": 1970000000000000000,
+  "orbit": {
+   "a": 3.418,
+   "e": 0.163,
+   "i": 2.116,
+   "node": 204.535,
+   "peri": 254.07,
+   "meanAnomaly": 299.268,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "85Io",
+  "name": "85 Io",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 90.0,
+  "massKg": 3400000000000000000,
+  "orbit": {
+   "a": 2.652,
+   "e": 0.193,
+   "i": 11.967,
+   "node": 203.44,
+   "peri": 122.293,
+   "meanAnomaly": 206.947,
+   "epoch": 2006.197
+  }
+ },
+ {
+  "id": "87Sylvia",
+  "name": "87 Sylvia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 192.0,
+  "massKg": 14780000000000000000,
+  "orbit": {
+   "a": 3.49,
+   "e": 0.08,
+   "i": 10.855,
+   "node": 73.342,
+   "peri": 266.195,
+   "meanAnomaly": 352.763,
+   "epoch": 2004.531
+  }
+ },
+ {
+  "id": "88Thisbe",
+  "name": "88 Thisbe",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 127.5,
+  "massKg": 18300000000000000000,
+  "orbit": {
+   "a": 2.768,
+   "e": 0.165,
+   "i": 5.219,
+   "node": 276.765,
+   "peri": 36.591,
+   "meanAnomaly": 165.454,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "89Julia",
+  "name": "89 Julia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 75.5,
+  "massKg": 6710000000000000000,
+  "orbit": {
+   "a": 2.55016,
+   "e": 0.1843,
+   "i": 16.128,
+   "node": 311.563,
+   "peri": 45.461,
+   "meanAnomaly": 255.367,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "92Undina",
+  "name": "92 Undina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 63.21,
+  "massKg": 4430000000000000000,
+  "orbit": {
+   "a": 3.188,
+   "e": 0.10397,
+   "i": 9.929,
+   "node": 101.588,
+   "peri": 239.494,
+   "meanAnomaly": 6.12456,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "93Minerva",
+  "name": "93 Minerva",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 78.0,
+  "massKg": 3700000000000000000,
+  "orbit": {
+   "a": 2.757,
+   "e": 0.13998,
+   "i": 8.561,
+   "node": 4.06265,
+   "peri": 274.543,
+   "meanAnomaly": 262.022,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "94Aurora",
+  "name": "94 Aurora",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 112.5,
+  "massKg": 6230000000000000000,
+  "orbit": {
+   "a": 3.16,
+   "e": 0.087,
+   "i": 7.966,
+   "node": 2.709,
+   "peri": 59.814,
+   "meanAnomaly": 239.694,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "95Arethusa",
+  "name": "95 Arethusa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 68.02,
+  "massKg": 2600000000000000000,
+  "orbit": {
+   "a": 3.06457,
+   "e": 0.15245,
+   "i": 12.9955,
+   "node": 243.038,
+   "peri": 154.196,
+   "meanAnomaly": 250.185,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "96Aegle",
+  "name": "96 Aegle",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 83.96,
+  "massKg": 6480000000000000000,
+  "orbit": {
+   "a": 3.057,
+   "e": 0.132,
+   "i": 15.938,
+   "node": 321.809,
+   "peri": 206.967,
+   "meanAnomaly": 354.814,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "97Klotho",
+  "name": "97 Klotho",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 50.358,
+  "massKg": 2225360000000000000,
+  "orbit": {
+   "a": 2.667322,
+   "e": 0.2579554,
+   "i": 11.779623,
+   "node": 159.62,
+   "peri": 268.542,
+   "meanAnomaly": 267.7697,
+   "epoch": 2023.1534
+  }
+ },
+ {
+  "id": "104Klymene",
+  "name": "104 Klymene",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 81.5,
+  "massKg": 2000000000000000000,
+  "orbit": {
+   "a": 3.15256,
+   "e": 0.15775,
+   "i": 2.7905,
+   "node": 41.698,
+   "peri": 32.134,
+   "meanAnomaly": 101.498,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "106Dione",
+  "name": "106 Dione",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 84.36,
+  "massKg": 3060000000000000000,
+  "orbit": {
+   "a": 3.17451,
+   "e": 0.16653,
+   "i": 4.5972,
+   "node": 62.163,
+   "peri": 329.725,
+   "meanAnomaly": 51.5257,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "107Camilla",
+  "name": "107 Camilla",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 172.0,
+  "massKg": 11200000000000000000,
+  "orbit": {
+   "a": 3.477,
+   "e": 0.078,
+   "i": 10.048,
+   "node": 173.132,
+   "peri": 309.877,
+   "meanAnomaly": 1.746,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "110Lydia",
+  "name": "110 Lydia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 43.045,
+  "massKg": 670000000000000000,
+  "orbit": {
+   "a": 2.7325,
+   "e": 0.081021,
+   "i": 5.9645,
+   "node": 56.871,
+   "peri": 283.499,
+   "meanAnomaly": 348.344,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "114Kassandra",
+  "name": "114 Kassandra",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 49.825,
+  "massKg": 1000000000000000000,
+  "orbit": {
+   "a": 2.67825,
+   "e": 0.13533,
+   "i": 4.9367,
+   "node": 164.22,
+   "peri": 352.208,
+   "meanAnomaly": 197.019,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "117Lomia",
+  "name": "117 Lomia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 74.355,
+  "massKg": 6000000000000000000,
+  "orbit": {
+   "a": 2.9081,
+   "e": 0.0028045,
+   "i": 14.902,
+   "node": 348.79,
+   "peri": 52.461,
+   "meanAnomaly": 317.47,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "120Lachesis",
+  "name": "120 Lachesis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 92.0,
+  "massKg": 5500000000000000000,
+  "orbit": {
+   "a": 3.11767,
+   "e": 0.052528,
+   "i": 6.9643,
+   "node": 341.193,
+   "peri": 232.822,
+   "meanAnomaly": 56.2095,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "121Hermione",
+  "name": "121 Hermione",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 134.0,
+  "massKg": 5380000000000000000,
+  "orbit": {
+   "a": 3.46,
+   "e": 0.138,
+   "i": 7.604,
+   "node": 73.209,
+   "peri": 296.215,
+   "meanAnomaly": 248.068,
+   "epoch": 2006.997
+  }
+ },
+ {
+  "id": "127Johanna",
+  "name": "127 Johanna",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 61.0,
+  "massKg": 3080000000000000000,
+  "orbit": {
+   "a": 2.75615,
+   "e": 0.067041,
+   "i": 8.2449,
+   "node": 31.154,
+   "peri": 94.611,
+   "meanAnomaly": 67.782,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "128Nemesis",
+  "name": "128 Nemesis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 94.08,
+  "massKg": 5970000000000000000,
+  "orbit": {
+   "a": 2.74946,
+   "e": 0.12685,
+   "i": 6.245,
+   "node": 76.2475,
+   "peri": 303.86,
+   "meanAnomaly": 215.699,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "129Antigone",
+  "name": "129 Antigone",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 59.72,
+  "massKg": 2650000000000000000,
+  "orbit": {
+   "a": 2.87038,
+   "e": 0.21145,
+   "i": 12.262,
+   "node": 135.703,
+   "peri": 111.076,
+   "meanAnomaly": 97.3536,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "130Elektra",
+  "name": "130 Elektra",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 107.5,
+  "massKg": 6600000000000000000,
+  "orbit": {
+   "a": 3.12892,
+   "e": 0.20799,
+   "i": 22.8461,
+   "node": 145.401,
+   "peri": 236.231,
+   "meanAnomaly": 128.885,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "132Aethra",
+  "name": "132 Aethra",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 21.435,
+  "massKg": 410000000000000000,
+  "orbit": {
+   "a": 2.6073,
+   "e": 0.39036,
+   "i": 24.997,
+   "node": 258.408,
+   "peri": 255.216,
+   "meanAnomaly": 38.271,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "135Hertha",
+  "name": "135 Hertha",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 39.62,
+  "massKg": 1210000000000000000,
+  "orbit": {
+   "a": 2.429469,
+   "e": 0.205761,
+   "i": 2.30477,
+   "node": 343.8406,
+   "peri": 340.0687,
+   "meanAnomaly": 224.5537,
+   "epoch": 2010.559
+  }
+ },
+ {
+  "id": "137Meliboea",
+  "name": "137 Meliboea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 72.71,
+  "massKg": 7270000000000000000,
+  "orbit": {
+   "a": 3.12402,
+   "e": 0.21465,
+   "i": 13.419,
+   "node": 202.261,
+   "peri": 107.116,
+   "meanAnomaly": 221.115,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "139Juewa",
+  "name": "139 Juewa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 86.0,
+  "massKg": 5540000000000000000,
+  "orbit": {
+   "a": 2.78073,
+   "e": 0.17553,
+   "i": 10.9127,
+   "node": 1.83417,
+   "peri": 165.566,
+   "meanAnomaly": 60.2817,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "146Lucina",
+  "name": "146 Lucina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 66.105,
+  "massKg": 2400000000000000000,
+  "orbit": {
+   "a": 2.71793,
+   "e": 0.066786,
+   "i": 13.0947,
+   "node": 83.9692,
+   "peri": 146.982,
+   "meanAnomaly": 198.102,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "153Hilda",
+  "name": "153 Hilda",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 85.315,
+  "massKg": 5200000000000000000,
+  "orbit": {
+   "a": 3.97,
+   "e": 0.138211,
+   "i": 7.82769,
+   "node": 228.1732,
+   "peri": 39.14267,
+   "meanAnomaly": 162.1932,
+   "epoch": 2011.107
+  }
+ },
+ {
+  "id": "154Bertha",
+  "name": "154 Bertha",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 92.465,
+  "massKg": 9190000000000000000,
+  "orbit": {
+   "a": 3.19694,
+   "e": 0.077261,
+   "i": 20.9724,
+   "node": 36.7441,
+   "peri": 159.722,
+   "meanAnomaly": 125.046,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "165Loreley",
+  "name": "165 Loreley",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 82.46,
+  "massKg": 14500000000000000000,
+  "orbit": {
+   "a": 3.1251,
+   "e": 0.084887,
+   "i": 11.224,
+   "node": 302.53,
+   "peri": 347.29,
+   "meanAnomaly": 125.88,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "168Sibylla",
+  "name": "168 Sibylla",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 74.195,
+  "massKg": 3920000000000000000,
+  "orbit": {
+   "a": 3.3816,
+   "e": 0.070943,
+   "i": 4.6617,
+   "node": 205.959,
+   "peri": 173.92,
+   "meanAnomaly": 171.517,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "185Eunike",
+  "name": "185 Eunike",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 78.755,
+  "massKg": 3560000000000000000,
+  "orbit": {
+   "a": 2.7383,
+   "e": 0.1293,
+   "i": 23.238,
+   "node": 153.84,
+   "peri": 224.01,
+   "meanAnomaly": 327.48,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "187Lamberta",
+  "name": "187 Lamberta",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 65.2,
+  "massKg": 1800000000000000000,
+  "orbit": {
+   "a": 2.7276,
+   "e": 0.24126,
+   "i": 10.588,
+   "node": 21.707,
+   "peri": 196.93,
+   "meanAnomaly": 217.42,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "190Ismene",
+  "name": "190 Ismene",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 90.0,
+  "massKg": 7634070000000000000,
+  "orbit": {
+   "a": 3.9864,
+   "e": 0.16597,
+   "i": 6.1772,
+   "node": 175.48,
+   "peri": 271.47,
+   "meanAnomaly": 134.92,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "192Nausikaa",
+  "name": "192 Nausikaa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 51.6,
+  "massKg": 1790000000000000000,
+  "orbit": {
+   "a": 2.4028,
+   "e": 0.24582,
+   "i": 6.8137,
+   "node": 343.25,
+   "peri": 30.067,
+   "meanAnomaly": 94.342,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "194Prokne",
+  "name": "194 Prokne",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 84.21,
+  "massKg": 2680000000000000000,
+  "orbit": {
+   "a": 2.6158,
+   "e": 0.2381,
+   "i": 18.509,
+   "node": 159.32,
+   "peri": 163.24,
+   "meanAnomaly": 42.282,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "196Philomela",
+  "name": "196 Philomela",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 68.195,
+  "massKg": 4000000000000000000,
+  "orbit": {
+   "a": 3.1177,
+   "e": 0.01753,
+   "i": 7.2554,
+   "node": 72.384,
+   "peri": 195.69,
+   "meanAnomaly": 276.49,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "209Dido",
+  "name": "209 Dido",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 79.97,
+  "massKg": 4590000000000000000,
+  "orbit": {
+   "a": 3.14974,
+   "e": 0.057565,
+   "i": 7.17313,
+   "node": 0.672681,
+   "peri": 248.387,
+   "meanAnomaly": 311.722,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "216Kleopatra",
+  "name": "216 Kleopatra",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 138.0,
+  "massKg": 3000000000000000000,
+  "orbit": {
+   "a": 2.7933,
+   "e": 0.2507,
+   "i": 13.114,
+   "node": 215.36,
+   "peri": 180.16,
+   "meanAnomaly": 261.75,
+   "epoch": 2017.126
+  }
+ },
+ {
+  "id": "221Eos",
+  "name": "221 Eos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 51.935,
+  "massKg": 4050000000000000000,
+  "orbit": {
+   "a": 3.01044,
+   "e": 0.10447,
+   "i": 10.88,
+   "node": 141.845,
+   "peri": 193.56,
+   "meanAnomaly": 66.5202,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "230Athamantis",
+  "name": "230 Athamantis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 54.495,
+  "massKg": 1890000000000000000,
+  "orbit": {
+   "a": 2.38229,
+   "e": 0.061238,
+   "i": 9.4432,
+   "node": 239.9,
+   "peri": 139.121,
+   "meanAnomaly": 116.194,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "233Asterope",
+  "name": "233 Asterope",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 54.78,
+  "massKg": 682191000000000000,
+  "orbit": {
+   "a": 2.6599,
+   "e": 0.1044,
+   "i": 7.6832,
+   "node": 222.017,
+   "peri": 125.128,
+   "meanAnomaly": 138.789,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "238Hypatia",
+  "name": "238 Hypatia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 74.245,
+  "massKg": 4900000000000000000,
+  "orbit": {
+   "a": 2.903,
+   "e": 0.088335,
+   "i": 12.413,
+   "node": 183.89,
+   "peri": 210.75,
+   "meanAnomaly": 170,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "241Germania",
+  "name": "241 Germania",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 84.45,
+  "massKg": 860000000000000000,
+  "orbit": {
+   "a": 3.04857,
+   "e": 0.10213,
+   "i": 5.50482,
+   "node": 270.362,
+   "peri": 80.6364,
+   "meanAnomaly": 277.959,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "246Asperina",
+  "name": "246 Asporina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 30.05,
+  "massKg": 306892000000000000,
+  "orbit": {
+   "a": 2.69355,
+   "e": 0.10984,
+   "i": 15.6259,
+   "node": 162.347,
+   "peri": 96.6218,
+   "meanAnomaly": 172.414,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "250Bettina",
+  "name": "250 Bettina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 60.498,
+  "massKg": 4173620000000000000,
+  "orbit": {
+   "a": 3.14445,
+   "e": 0.136081,
+   "i": 12.8199,
+   "node": 23.808784,
+   "peri": 75.77394,
+   "meanAnomaly": 121.9044,
+   "epoch": 2023.1534
+  }
+ },
+ {
+  "id": "253Mathilde",
+  "name": "253 Mathilde",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 33.0,
+  "massKg": 103000000000000000,
+  "orbit": {
+   "a": 2.6484,
+   "e": 0.26492652,
+   "i": 6.7427,
+   "node": 179.58936,
+   "peri": 157.39642,
+   "meanAnomaly": 170.584,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "259Aletheia",
+  "name": "259 Aletheia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 95.025,
+  "massKg": 7790000000000000000,
+  "orbit": {
+   "a": 3.135,
+   "e": 0.1276,
+   "i": 10.813,
+   "node": 86.864,
+   "peri": 167.07,
+   "meanAnomaly": 71.26,
+   "epoch": 2015.489
+  }
+ },
+ {
+  "id": "279Thule",
+  "name": "279 Thule",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 63.295,
+  "massKg": 1380830000000000000,
+  "orbit": {
+   "a": 4.349,
+   "e": 0.0259,
+   "i": 2.3237,
+   "node": 72.468,
+   "peri": 42.367,
+   "meanAnomaly": 62.758,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "308Polyxo",
+  "name": "308 Polyxo",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 70.345,
+  "massKg": 1895530000000000000,
+  "orbit": {
+   "a": 2.749,
+   "e": 0.040003,
+   "i": 4.361,
+   "node": 181.727,
+   "peri": 115.501,
+   "meanAnomaly": 70.419,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "323Brucia",
+  "name": "323 Brucia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 18.645,
+  "massKg": 35295500000000000,
+  "orbit": {
+   "a": 2.382,
+   "e": 0.3005,
+   "i": 24.23,
+   "node": 97.398,
+   "peri": 291.26,
+   "meanAnomaly": 106.64,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "324Bamberga",
+  "name": "324 Bamberga",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 127.5,
+  "massKg": 11000000000000000000,
+  "orbit": {
+   "a": 2.682,
+   "e": 0.34004,
+   "i": 11.1011,
+   "node": 327.883,
+   "peri": 44.2409,
+   "meanAnomaly": 225.419,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "325Heidelberga",
+  "name": "325 Heidelberga",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 37.86,
+  "massKg": 795607000000000000,
+  "orbit": {
+   "a": 3.21115,
+   "e": 0.15919,
+   "i": 8.5545,
+   "node": 344.881,
+   "peri": 68.563,
+   "meanAnomaly": 7.209,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "328Gudrun",
+  "name": "328 Gudrun",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 61.46,
+  "massKg": 3160000000000000000,
+  "orbit": {
+   "a": 3.11062,
+   "e": 0.10588,
+   "i": 16.1164,
+   "node": 352.328,
+   "peri": 103.924,
+   "meanAnomaly": 325.246,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "334Chicago",
+  "name": "334 Chicago",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 99.385,
+  "massKg": 5060000000000000000,
+  "orbit": {
+   "a": 3.89507,
+   "e": 0.022319,
+   "i": 4.6413,
+   "node": 130.179,
+   "peri": 148.31,
+   "meanAnomaly": 110.236,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "336Lacadiera",
+  "name": "336 Lacadiera",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 34.5,
+  "massKg": 280371000000000000,
+  "orbit": {
+   "a": 2.2517,
+   "e": 0.095224,
+   "i": 5.65173,
+   "node": 234.98639,
+   "peri": 30.949,
+   "meanAnomaly": 304.475,
+   "epoch": 2023.1534
+  }
+ },
+ {
+  "id": "349Dembowska",
+  "name": "349 Dembowska",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 69.885,
+  "massKg": 3580000000000000000,
+  "orbit": {
+   "a": 2.92379,
+   "e": 0.091473,
+   "i": 8.2461,
+   "node": 32.351,
+   "peri": 346.225,
+   "meanAnomaly": 306.898,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "354Eleonora",
+  "name": "354 Eleonora",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 77.585,
+  "massKg": 71800000000000000000,
+  "orbit": {
+   "a": 2.79777,
+   "e": 0.11474,
+   "i": 18.403,
+   "node": 140.37,
+   "peri": 5.5215,
+   "meanAnomaly": 123.762,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "356Liguria",
+  "name": "356 Liguria",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 65.63,
+  "massKg": 7830000000000000000,
+  "orbit": {
+   "a": 2.75806,
+   "e": 0.23721,
+   "i": 8.2243,
+   "node": 354.796,
+   "peri": 78.556,
+   "meanAnomaly": 28.9708,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "361Bononia",
+  "name": "361 Bononia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 70.86,
+  "massKg": 1862950000000000000,
+  "orbit": {
+   "a": 3.96,
+   "e": 0.21394,
+   "i": 12.6264,
+   "node": 18.8738,
+   "peri": 68.3637,
+   "meanAnomaly": 329.195,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "372Palma",
+  "name": "372 Palma",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 94.31,
+  "massKg": 5150000000000000000,
+  "orbit": {
+   "a": 3.15125,
+   "e": 0.25958,
+   "i": 23.828,
+   "node": 327.37,
+   "peri": 115.582,
+   "meanAnomaly": 275.769,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "375Ursula",
+  "name": "375 Ursula",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 108.05,
+  "massKg": 8450000000000000000,
+  "orbit": {
+   "a": 3.12364,
+   "e": 0.1059,
+   "i": 15.9427,
+   "node": 336.571,
+   "peri": 342.146,
+   "meanAnomaly": 189.032,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "386Siegena",
+  "name": "386 Siegena",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 82.505,
+  "massKg": 8140000000000000000,
+  "orbit": {
+   "a": 2.89571,
+   "e": 0.17064,
+   "i": 20.2568,
+   "node": 166.866,
+   "peri": 219.478,
+   "meanAnomaly": 66.751,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "391Ingeborg",
+  "name": "391 Ingeborg",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 9.815,
+  "massKg": 8471620000000000,
+  "orbit": {
+   "a": 2.3203,
+   "e": 0.0352,
+   "i": 23.202,
+   "node": 212.88,
+   "peri": 147.06,
+   "meanAnomaly": 292.16,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "409Aspasia",
+  "name": "409 Aspasia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 88.165,
+  "massKg": 11769600000000000000,
+  "orbit": {
+   "a": 2.5752,
+   "e": 0.073284,
+   "i": 11.262,
+   "node": 242.19,
+   "peri": 353.72,
+   "meanAnomaly": 260.362,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "419Aurelia",
+  "name": "419 Aurelia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 64.505,
+  "massKg": 1911250000000000000,
+  "orbit": {
+   "a": 2.59798,
+   "e": 0.25091,
+   "i": 3.9247,
+   "node": 229.14,
+   "peri": 44.326,
+   "meanAnomaly": 297.81,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "423Diotima",
+  "name": "423 Diotima",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 104.4,
+  "massKg": 3742280000000000000,
+  "orbit": {
+   "a": 3.06774,
+   "e": 0.038297,
+   "i": 11.2304,
+   "node": 69.471,
+   "peri": 200.103,
+   "meanAnomaly": 237.495,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "433Eros",
+  "name": "433 Eros",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 17.0,
+  "massKg": 9289310000000000,
+  "orbit": {
+   "a": 1.4579,
+   "e": 0.2226,
+   "i": 10.828,
+   "node": 304.32,
+   "peri": 178.82,
+   "meanAnomaly": 71.28,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "434Hungaria",
+  "name": "434 Hungaria",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 5.5,
+  "massKg": 1393820000000000,
+  "orbit": {
+   "a": 1.9444,
+   "e": 0.073725,
+   "i": 22.511,
+   "node": 175.332,
+   "peri": 123.8,
+   "meanAnomaly": 221.145,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "444Gyptis",
+  "name": "444 Gyptis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 89.5,
+  "massKg": 10302800000000000000,
+  "orbit": {
+   "a": 2.77005,
+   "e": 0.17569,
+   "i": 10.2775,
+   "node": 195.716,
+   "peri": 154.984,
+   "meanAnomaly": 11.8852,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "451Patientia",
+  "name": "451 Patientia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 117.21,
+  "massKg": 9944220000000000000,
+  "orbit": {
+   "a": 3.0616,
+   "e": 0.075545,
+   "i": 15.236,
+   "node": 89.252,
+   "peri": 337.06,
+   "meanAnomaly": 279.3,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "475Ocllo",
+  "name": "475 Ocllo",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 12.5,
+  "massKg": 6039650000000000,
+  "orbit": {
+   "a": 2.59436,
+   "e": 0.38073,
+   "i": 18.926,
+   "node": 34.496,
+   "peri": 305.68,
+   "meanAnomaly": 174.037,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "488Kreusa",
+  "name": "488 Kreusa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 81.0,
+  "massKg": 2117240000000000000,
+  "orbit": {
+   "a": 3.16916,
+   "e": 0.15906084,
+   "i": 11.517875,
+   "node": 84.23348,
+   "peri": 71.36554,
+   "meanAnomaly": 197.66463,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "490Veritas",
+  "name": "490 Veritas",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 57.775,
+  "massKg": 5990000000000000000,
+  "orbit": {
+   "a": 3.1717,
+   "e": 0.094527,
+   "i": 9.2809,
+   "node": 178.335,
+   "peri": 194.39,
+   "meanAnomaly": 31.094,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "511Davida",
+  "name": "511 Davida",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 178.5,
+  "massKg": 39518200000000000000,
+  "orbit": {
+   "a": 3.167,
+   "e": 0.185,
+   "i": 15.936,
+   "node": 107.683,
+   "peri": 338.694,
+   "meanAnomaly": 124.997,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "512Taurinensis",
+  "name": "512 Taurinensis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 11.545,
+  "massKg": 12166000000000000,
+  "orbit": {
+   "a": 2.1895,
+   "e": 0.2545,
+   "i": 8.7463,
+   "node": 107.04,
+   "peri": 249.36,
+   "meanAnomaly": 30.908,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "532Herculina",
+  "name": "532 Herculina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 112.5,
+  "massKg": 18131600000000000000,
+  "orbit": {
+   "a": 2.7732,
+   "e": 0.1757,
+   "i": 16.313,
+   "node": 107.556,
+   "peri": 76.097,
+   "meanAnomaly": 131.039,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "536Merapi",
+  "name": "536 Merapi",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 76.7,
+  "massKg": 10600000000000000000,
+  "orbit": {
+   "a": 3.4984,
+   "e": 0.085546,
+   "i": 19.425,
+   "node": 59.239,
+   "peri": 295.862,
+   "meanAnomaly": 302.4,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "566Stereoskopia",
+  "name": "566 Stereoskopia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 84.0,
+  "massKg": 2979260000000000000,
+  "orbit": {
+   "a": 3.3856,
+   "e": 0.11662,
+   "i": 4.8864,
+   "node": 79.644,
+   "peri": 298.527,
+   "meanAnomaly": 177.298,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "588Achilles",
+  "name": "588 Achilles",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 67.735,
+  "massKg": 1562100000000000000,
+  "orbit": {
+   "a": 5.19,
+   "e": 0.147,
+   "i": 10.324,
+   "node": 316.583,
+   "peri": 132.77,
+   "meanAnomaly": 157.779,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "596Scheila",
+  "name": "596 Scheila",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 79.863,
+  "massKg": 3035020000000000000,
+  "orbit": {
+   "a": 2.928571328,
+   "e": 0.16263957,
+   "i": 14.65804,
+   "node": 70.584174,
+   "peri": 175.501205,
+   "meanAnomaly": 335.510606,
+   "epoch": 2022.057534
+  }
+ },
+ {
+  "id": "617Patroclus",
+  "name": "617 Patroclus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 56.5,
+  "massKg": 816000000000000000,
+  "orbit": {
+   "a": 5.22,
+   "e": 0.14,
+   "i": 22.1,
+   "node": 44.4,
+   "peri": 307.8,
+   "meanAnomaly": 315.33,
+   "epoch": 2011.107
+  }
+ },
+ {
+  "id": "624Hektor",
+  "name": "624 Hektor",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 201.5,
+  "massKg": 16123600000000000000,
+  "orbit": {
+   "a": 5.222,
+   "e": 0.024,
+   "i": 18.198,
+   "node": 342.791,
+   "peri": 183.579,
+   "meanAnomaly": 94.752,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "654Zelinda",
+  "name": "654 Zelinda",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 80.368,
+  "massKg": 1350000000000000000,
+  "orbit": {
+   "a": 2.297,
+   "e": 0.2315,
+   "i": 18.125,
+   "node": 278.46,
+   "peri": 214.008,
+   "meanAnomaly": 51.9052,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "699Hela",
+  "name": "699 Hela",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 13.5,
+  "massKg": 10102500000000000,
+  "orbit": {
+   "a": 2.6123,
+   "e": 0.40995,
+   "i": 15.297,
+   "node": 242.548,
+   "peri": 91.479,
+   "meanAnomaly": 3.93957,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "702Alauda",
+  "name": "702 Alauda",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 101.0,
+  "massKg": 6057000000000000000,
+  "orbit": {
+   "a": 3.1954,
+   "e": 0.018936,
+   "i": 20.594,
+   "node": 289.91,
+   "peri": 349.51,
+   "meanAnomaly": 242.49,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "704Interamnia",
+  "name": "704 Interamnia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 175.15,
+  "massKg": 38984000000000000000,
+  "orbit": {
+   "a": 3.062,
+   "e": 0.1503,
+   "i": 17.29,
+   "node": 280.38,
+   "peri": 95.76,
+   "meanAnomaly": 119.95,
+   "epoch": 2008.915
+  }
+ },
+ {
+  "id": "747Winchester",
+  "name": "747 Winchester",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 85.855,
+  "massKg": 3810000000000000000,
+  "orbit": {
+   "a": 3.0011,
+   "e": 0.34019,
+   "i": 18.165,
+   "node": 130.081,
+   "peri": 275.511,
+   "meanAnomaly": 59.0474,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "762Pulcova",
+  "name": "762 Pulcova",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 68.54,
+  "massKg": 1400000000000000000,
+  "orbit": {
+   "a": 3.1546,
+   "e": 0.10319,
+   "i": 13.089,
+   "node": 305.76,
+   "peri": 189.54,
+   "meanAnomaly": 348.62,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "776Berbericia",
+  "name": "776 Berbericia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 75.856,
+  "massKg": 2200000000000000000,
+  "orbit": {
+   "a": 2.9304,
+   "e": 0.16471,
+   "i": 18.237,
+   "node": 79.729,
+   "peri": 307.132,
+   "meanAnomaly": 235.69,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "790Praetoria",
+  "name": "790 Praetoria",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 85.185,
+  "massKg": 4580000000000000000,
+  "orbit": {
+   "a": 3.4117,
+   "e": 0.1513,
+   "i": 20.526,
+   "node": 252.032,
+   "peri": 38.637,
+   "meanAnomaly": 87.1149,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "911Agamemnon",
+  "name": "911 Agamemnon",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 83.33,
+  "massKg": 3635670000000000000,
+  "orbit": {
+   "a": 5.2745,
+   "e": 0.065792,
+   "i": 21.762,
+   "node": 338.017,
+   "peri": 81.402,
+   "meanAnomaly": 186.643,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "944Hidalgo",
+  "name": "944 Hidalgo",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 19.0,
+  "massKg": 34477100000000000,
+  "orbit": {
+   "a": 5.745,
+   "e": 0.66,
+   "i": 42.567,
+   "node": 21.549,
+   "peri": 56.569,
+   "meanAnomaly": 346.285,
+   "epoch": 2004.536
+  }
+ },
+ {
+  "id": "1036Ganymed",
+  "name": "1036 Ganymed",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 17.14,
+  "massKg": 52730400000000000,
+  "orbit": {
+   "a": 2.6629,
+   "e": 0.537,
+   "i": 26.644,
+   "node": 215.669,
+   "peri": 132.429,
+   "meanAnomaly": 152.459,
+   "epoch": 2004.809
+  }
+ },
+ {
+  "id": "1143Odysseus",
+  "name": "1143 Odysseus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 63.0,
+  "massKg": 1571090000000000000,
+  "orbit": {
+   "a": 5.2489,
+   "e": 0.089748,
+   "i": 3.1379,
+   "node": 221.29,
+   "peri": 236.95,
+   "meanAnomaly": 117.81,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "1170Siva",
+  "name": "1170 Siva",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 6.065,
+  "massKg": 1599240000000000,
+  "orbit": {
+   "a": 2.3268,
+   "e": 0.2998,
+   "i": 22.16130302,
+   "node": 0.828004,
+   "peri": 59.46174,
+   "meanAnomaly": 264.066544,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "1172Aneas",
+  "name": "1172 Aneas",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 71.5,
+  "massKg": 2296670000000000000,
+  "orbit": {
+   "a": 5.199742,
+   "e": 0.105594,
+   "i": 16.67501,
+   "node": 247.3779,
+   "peri": 49.74433,
+   "meanAnomaly": 7.02424,
+   "epoch": 2010.559
+  }
+ },
+ {
+  "id": "1173Anchises",
+  "name": "1173 Anchises",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 63.135,
+  "massKg": 1581210000000000000,
+  "orbit": {
+   "a": 5.309621,
+   "e": 0.138685,
+   "i": 6.91333,
+   "node": 283.8983,
+   "peri": 40.85445,
+   "meanAnomaly": 333.9271,
+   "epoch": 2011.107
+  }
+ },
+ {
+  "id": "1437Diomedes",
+  "name": "1437 Diomedes",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 142.0,
+  "massKg": 3117500000000000000,
+  "orbit": {
+   "a": 5.1946,
+   "e": 0.044112,
+   "i": 20.491,
+   "node": 315.792,
+   "peri": 131.59,
+   "meanAnomaly": 183.828,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "1580Betulia",
+  "name": "1580 Betulia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.275,
+  "massKg": 197765000000000,
+  "orbit": {
+   "a": 2.195,
+   "e": 0.4876,
+   "i": 52.19,
+   "node": 62.23,
+   "peri": 159.73,
+   "meanAnomaly": 19.64,
+   "epoch": 2025.3424
+  }
+ },
+ {
+  "id": "1627Ivar",
+  "name": "1627 Ivar",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 5.1,
+  "massKg": 1115770000000000,
+  "orbit": {
+   "a": 1.8628,
+   "e": 0.3966,
+   "i": 8.4513,
+   "node": 133.14,
+   "peri": 167.76,
+   "meanAnomaly": 229.02,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "1866Sisyphus",
+  "name": "1866 Sisyphus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.45,
+  "massKg": 598381000000000,
+  "orbit": {
+   "a": 1.8934,
+   "e": 0.5386,
+   "i": 41.202,
+   "node": 63.498,
+   "peri": 293.09,
+   "meanAnomaly": 85.918,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "1867Deiphobus",
+  "name": "1867 Deiphobus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 59.11,
+  "massKg": 1297670000000000000,
+  "orbit": {
+   "a": 5.135166015,
+   "e": 0.0460119535,
+   "i": 26.89801593,
+   "node": 283.700313,
+   "peri": 1.06832,
+   "meanAnomaly": 55.056898,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "1870Glaukos",
+  "name": "1870 Glaukos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 23.825,
+  "massKg": 90631700000000000,
+  "orbit": {
+   "a": 5.2464,
+   "e": 0.0321,
+   "i": 6.5762,
+   "node": 176.3,
+   "peri": 130.22,
+   "meanAnomaly": 199.18,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "1911Schubart",
+  "name": "1911 Schubart",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 33.738,
+  "massKg": 160859000000000000,
+  "orbit": {
+   "a": 3.9762,
+   "e": 0.1697,
+   "i": 1.6431,
+   "node": 284.84,
+   "peri": 181.75,
+   "meanAnomaly": 136.84,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "1917Cuyo",
+  "name": "1917 Cuyo",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.85,
+  "massKg": 290900000000000,
+  "orbit": {
+   "a": 2.149,
+   "e": 0.5056,
+   "i": 23.96,
+   "node": 188.27,
+   "peri": 194.56,
+   "meanAnomaly": 97.51,
+   "epoch": 2025.3424
+  }
+ },
+ {
+  "id": "1951Lick",
+  "name": "1951 Lick",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.8,
+  "massKg": 318155000000000,
+  "orbit": {
+   "a": 1.3904,
+   "e": 0.0616,
+   "i": 39.091,
+   "node": 130.75,
+   "peri": 140.52,
+   "meanAnomaly": 221.32,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "2060Chiron",
+  "name": "2060 Chiron",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 109.0,
+  "massKg": 6509530000000000000,
+  "orbit": {
+   "a": 13.708,
+   "e": 0.37911,
+   "i": 6.9311,
+   "node": 209.31,
+   "peri": 339.98,
+   "meanAnomaly": 94.716,
+   "epoch": 2009.463
+  }
+ },
+ {
+  "id": "2064Thomsen",
+  "name": "2064 Thomsen",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 6.8,
+  "massKg": 1107980000000000,
+  "orbit": {
+   "a": 2.1783,
+   "e": 0.3298,
+   "i": 5.6946,
+   "node": 302.16,
+   "peri": 2.7479,
+   "meanAnomaly": 142.3,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "2099Öpik",
+  "name": "2099 Öpik",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.59,
+  "massKg": 123719000000000,
+  "orbit": {
+   "a": 2.304251356,
+   "e": 0.3603684591,
+   "i": 26.9586284,
+   "node": 218.804671,
+   "peri": 159.383207,
+   "meanAnomaly": 273.877056,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "2204Lyyli",
+  "name": "2204 Lyyli",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 13.56,
+  "massKg": 15375500000000000,
+  "orbit": {
+   "a": 2.5894,
+   "e": 0.4071,
+   "i": 20.561,
+   "node": 160.45,
+   "peri": 283.25,
+   "meanAnomaly": 350.25,
+   "epoch": 2017.676712
+  }
+ },
+ {
+  "id": "2212Hephaistos",
+  "name": "2212 Hephaistos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.0,
+  "massKg": 187975000000000,
+  "orbit": {
+   "a": 2.161294387,
+   "e": 0.8373866877,
+   "i": 11.53992219,
+   "node": 27.50135,
+   "peri": 209.430157,
+   "meanAnomaly": 61.576293,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "2335James",
+  "name": "2335 James",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.183,
+  "massKg": 405438000000000,
+  "orbit": {
+   "a": 2.123507038,
+   "e": 0.3604639923,
+   "i": 36.30121728,
+   "node": 19.892695,
+   "peri": 79.539655,
+   "meanAnomaly": 147.728708,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "3200Phaethon",
+  "name": "3200 Phaethon",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.05,
+  "massKg": 247344000000000,
+  "orbit": {
+   "a": 1.2714,
+   "e": 0.8899,
+   "i": 22.26,
+   "node": 265.22,
+   "peri": 322.19,
+   "meanAnomaly": 313.94,
+   "epoch": 2019.3205
+  }
+ },
+ {
+  "id": "3317Paris",
+  "name": "3317 Paris",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 59.395,
+  "massKg": 58512300000000000,
+  "orbit": {
+   "a": 5.22758,
+   "e": 0.12896,
+   "i": 27.862484,
+   "node": 135.9017,
+   "peri": 150.79805,
+   "meanAnomaly": 33.62648,
+   "epoch": 2023.1534
+  }
+ },
+ {
+  "id": "3353Jarvis",
+  "name": "3353 Jarvis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 5.264,
+  "massKg": 917816000000000,
+  "orbit": {
+   "a": 1.86307,
+   "e": 0.08484,
+   "i": 21.8064,
+   "node": 245.5761,
+   "peri": 34.858113,
+   "meanAnomaly": 58.991,
+   "epoch": 2021.638
+  }
+ },
+ {
+  "id": "3443Leetsungdao",
+  "name": "3443 Leetsungdao",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.426,
+  "massKg": 617407000000000,
+  "orbit": {
+   "a": 2.393063085,
+   "e": 0.3075130657,
+   "i": 12.70725353,
+   "node": 184.320774,
+   "peri": 112.923878,
+   "meanAnomaly": 209.565227,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "3451Mentor",
+  "name": "3451 Mentor",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 63.144,
+  "massKg": 66400300000000000,
+  "orbit": {
+   "a": 5.172865,
+   "e": 0.07489217,
+   "i": 24.638619,
+   "node": 179.558141,
+   "peri": 131.435,
+   "meanAnomaly": 28.6756,
+   "epoch": 2023.1534
+  }
+ },
+ {
+  "id": "3552DonQuixote",
+  "name": "3552 Don Quixote",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 9.2,
+  "massKg": 3914110000000000,
+  "orbit": {
+   "a": 4.2367,
+   "e": 0.7089,
+   "i": 31.092,
+   "node": 350.03,
+   "peri": 316.42,
+   "meanAnomaly": 332.47,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "3674Erbisbuhl",
+  "name": "3674 Erbisbuhl",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.534,
+  "massKg": 1171260000000000,
+  "orbit": {
+   "a": 2.360829615,
+   "e": 0.3754667294,
+   "i": 21.02689025,
+   "node": 296.795591,
+   "peri": 98.22826,
+   "meanAnomaly": 41.879229,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "3737Beckman",
+  "name": "3737 Beckman",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.484,
+  "massKg": 531428000000000,
+  "orbit": {
+   "a": 2.406624205,
+   "e": 0.3965654254,
+   "i": 20.13389802,
+   "node": 288.137632,
+   "peri": 85.512719,
+   "meanAnomaly": 92.939797,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "3753Cruithne",
+  "name": "3753 Cruithne",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.5,
+  "massKg": 130900000000000,
+  "orbit": {
+   "a": 0.99774,
+   "e": 0.51485,
+   "i": 19.805,
+   "node": 126.23,
+   "peri": 43.831,
+   "meanAnomaly": 257.46,
+   "epoch": 207.616712
+  }
+ },
+ {
+  "id": "4222Nancita",
+  "name": "4222 Nancita",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.818,
+  "massKg": 1405430000000000,
+  "orbit": {
+   "a": 2.366769105,
+   "e": 0.2963229847,
+   "i": 3.741650551,
+   "node": 206.803064,
+   "peri": 217.862375,
+   "meanAnomaly": 196.553469,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "4558Janesick",
+  "name": "4558 Janesick",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.663,
+  "massKg": 617619000000000,
+  "orbit": {
+   "a": 2.197607603,
+   "e": 0.36285583,
+   "i": 22.18082601,
+   "node": 254.78808,
+   "peri": 94.392072,
+   "meanAnomaly": 153.239348,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "4954Eric",
+  "name": "4954 Eric",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 5.4,
+  "massKg": 450177000000000,
+  "orbit": {
+   "a": 2.0016,
+   "e": 0.44848,
+   "i": 17.4461,
+   "node": 358.52,
+   "peri": 52.429,
+   "meanAnomaly": 314.18,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "5145Pholus",
+  "name": "5145 Pholus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 95.0,
+  "massKg": 4309640000000000000,
+  "orbit": {
+   "a": 20.378,
+   "e": 0.5722,
+   "i": 24.705,
+   "node": 119.3,
+   "peri": 335.1,
+   "meanAnomaly": 97.208,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "5230Asahina",
+  "name": "5230 Asahina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.841,
+  "massKg": 288001000000000,
+  "orbit": {
+   "a": 2.398040116,
+   "e": 0.3752137061,
+   "i": 20.68107407,
+   "node": 195.186889,
+   "peri": 266.352547,
+   "meanAnomaly": 81.329448,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "5731Zeus",
+  "name": "5371 Zeus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.615,
+  "massKg": 104925000000000,
+  "orbit": {
+   "a": 2.266313513,
+   "e": 0.6518967474,
+   "i": 11.1975629,
+   "node": 280.585784,
+   "peri": 218.447627,
+   "meanAnomaly": 50.704617,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "6500Kodaira",
+  "name": "6500 Kodaira",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.744,
+  "massKg": 1028280000000000,
+  "orbit": {
+   "a": 2.754465577,
+   "e": 0.41784478,
+   "i": 29.31785164,
+   "node": 186.101039,
+   "peri": 255.348824,
+   "meanAnomaly": 108.595664,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "7066Nessus",
+  "name": "7066 Nessus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 30.0,
+  "massKg": 135717000000000000,
+  "orbit": {
+   "a": 24.525,
+   "e": 0.5203,
+   "i": 15.66868,
+   "node": 31.1557,
+   "peri": 170.478,
+   "meanAnomaly": 72.524,
+   "epoch": 2016.578
+  }
+ },
+ {
+  "id": "7092Cadmus",
+  "name": "7092 Cadmus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.15,
+  "massKg": 93474600000000,
+  "orbit": {
+   "a": 2.545511675,
+   "e": 0.6937552106,
+   "i": 17.78617422,
+   "node": 56.725954,
+   "peri": 94.782682,
+   "meanAnomaly": 293.483803,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "7096Napier",
+  "name": "7096 Napier",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.795,
+  "massKg": 155483000000000,
+  "orbit": {
+   "a": 2.775841979,
+   "e": 0.5030439282,
+   "i": 11.15358891,
+   "node": 146.452506,
+   "peri": 258.070974,
+   "meanAnomaly": 48.92871,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "7505Furusho",
+  "name": "7505 Furusho",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.535,
+  "massKg": 1328310000000000,
+  "orbit": {
+   "a": 2.638078486,
+   "e": 0.3806818908,
+   "i": 6.3746335,
+   "node": 86.452375,
+   "peri": 288.003912,
+   "meanAnomaly": 324.928108,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "8373Stephengould",
+  "name": "8373 Stephengould",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.874,
+  "massKg": 298312000000000,
+  "orbit": {
+   "a": 3.277739211,
+   "e": 0.5555326783,
+   "i": 40.79991399,
+   "node": 88.861313,
+   "peri": 55.34598,
+   "meanAnomaly": 235.736876,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "8405Asbolus",
+  "name": "8405 Asbolus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 39.0,
+  "massKg": 273322000000000000,
+  "orbit": {
+   "a": 17.976,
+   "e": 0.6203,
+   "i": 17.64,
+   "node": 6.1502,
+   "peri": 290.07,
+   "meanAnomaly": 68.836,
+   "epoch": 2017.126
+  }
+ },
+ {
+  "id": "10199Chariklo",
+  "name": "10199 Chariklo",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 167.0,
+  "massKg": 9814750000000000000,
+  "orbit": {
+   "a": 15.801,
+   "e": 0.17244,
+   "i": 23.405,
+   "node": 300.39,
+   "peri": 242.2,
+   "meanAnomaly": 68.918,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "10370Hylonome",
+  "name": "10370 Hylonome",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 37.0,
+  "massKg": 233392000000000000,
+  "orbit": {
+   "a": 25.105,
+   "e": 0.2483,
+   "i": 4.1443,
+   "node": 178.07,
+   "peri": 6.7926,
+   "meanAnomaly": 61.91,
+   "epoch": 2017.126
+  }
+ },
+ {
+  "id": "14222Asteroid",
+  "name": "14222 Ayyur",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.35,
+  "massKg": 266279000000000,
+  "orbit": {
+   "a": 3.099418891,
+   "e": 0.5442337747,
+   "i": 17.1724401,
+   "node": 229.139869,
+   "peri": 84.875704,
+   "meanAnomaly": 308.448923,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "15760Albion",
+  "name": "15760 Albion",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 83.5,
+  "massKg": 1223840000000000000,
+  "orbit": {
+   "a": 43.779,
+   "e": 0.0679,
+   "i": 2.1828,
+   "node": 359.34,
+   "peri": 0.6029,
+   "meanAnomaly": 33.562,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "15789KBO",
+  "name": "15789 Anguta",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 164.0,
+  "massKg": 24019500000000000000,
+  "orbit": {
+   "a": 39.4,
+   "e": 0.18372,
+   "i": 5.1667,
+   "node": 354.75,
+   "peri": 316.2,
+   "meanAnomaly": 66.186,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "15810Arawn",
+  "name": "15810 Arawn",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 66.5,
+  "massKg": 1355020000000000000,
+  "orbit": {
+   "a": 39.40494457,
+   "e": 0.1159304981,
+   "i": 3.798084791,
+   "node": 144.798928,
+   "peri": 103.562242,
+   "meanAnomaly": 39.0528,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "25916Asteroid",
+  "name": "25916 Khalfu",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.841,
+  "massKg": 288305000000000,
+  "orbit": {
+   "a": 2.557713939,
+   "e": 0.4997811952,
+   "i": 15.76392368,
+   "node": 94.638562,
+   "peri": 199.698905,
+   "meanAnomaly": 282.567801,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "26760Asteroid",
+  "name": "26760 Coniraya",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.705,
+  "massKg": 140162000000000,
+  "orbit": {
+   "a": 2.854,
+   "e": 0.5571,
+   "i": 11.01,
+   "node": 146.25,
+   "peri": 155.14,
+   "meanAnomaly": 330.1,
+   "epoch": 2025.3424
+  }
+ },
+ {
+  "id": "31824Elatus",
+  "name": "31824 Elatus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 28.5,
+  "massKg": 126057000000000000,
+  "orbit": {
+   "a": 11.75224958,
+   "e": 0.3855807723,
+   "i": 5.250748193,
+   "node": 87.044378,
+   "peri": 281.930061,
+   "meanAnomaly": 224.123872,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "32532Thereus",
+  "name": "32532 Thereus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 43.25,
+  "massKg": 440545000000000000,
+  "orbit": {
+   "a": 10.65,
+   "e": 0.1978514,
+   "i": 20.3529,
+   "node": 205.3272,
+   "peri": 86.3223,
+   "meanAnomaly": 192.91,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "35671KBO",
+  "name": "35671 Tawa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 230,
+  "massKg": 45868500000000000000,
+  "orbit": {
+   "a": 37.821,
+   "e": 0.04,
+   "i": 4.6125,
+   "node": 192.11,
+   "peri": 265.75,
+   "meanAnomaly": 192.11,
+   "epoch": 2019.320548
+  }
+ },
+ {
+  "id": "38628Huya",
+  "name": "38628 Huya",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 217.5,
+  "massKg": 30307500000000000000,
+  "orbit": {
+   "a": 39.628,
+   "e": 0.27997,
+   "i": 15.463,
+   "node": 169.23,
+   "peri": 67.576,
+   "meanAnomaly": 1.5319,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "49036Pelion",
+  "name": "49036 Pelion",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 55.0,
+  "massKg": 905983000000000000,
+  "orbit": {
+   "a": 19.911,
+   "e": 0.13727,
+   "i": 9.348,
+   "node": 126.945,
+   "peri": 152.007,
+   "meanAnomaly": 101.575,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "52762Asteroid",
+  "name": "52762 Khonsu",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.371,
+  "massKg": 302488000000000,
+  "orbit": {
+   "a": 2.416617448,
+   "e": 0.6529200605,
+   "i": 33.85547767,
+   "node": 308.960491,
+   "peri": 254.501485,
+   "meanAnomaly": 284.243623,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "52872Okyrhoe",
+  "name": "52872 Okyrhoe",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 24.5,
+  "massKg": 37790600000000000,
+  "orbit": {
+   "a": 8.354,
+   "e": 0.305576,
+   "i": 15.6635,
+   "node": 173.0329,
+   "peri": 337.958,
+   "meanAnomaly": 143.232,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "52975Cyllarus",
+  "name": "52975 Cyllarus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 35.0,
+  "massKg": 197554000000000000,
+  "orbit": {
+   "a": 26.113,
+   "e": 0.3775,
+   "i": 12.651,
+   "node": 52.073,
+   "peri": 300.77,
+   "meanAnomaly": 75.673,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "53311Deucalion",
+  "name": "53311 Deucalion",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 105.5,
+  "massKg": 5410520000000000000,
+  "orbit": {
+   "a": 44.289,
+   "e": 0.062384,
+   "i": 0.036736,
+   "node": 51.412,
+   "peri": 236.92,
+   "meanAnomaly": 303.33,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "53319Asteroid",
+  "name": "53319 Thoth",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 3.5,
+  "massKg": 106309000000000,
+  "orbit": {
+   "a": 2.723309421,
+   "e": 0.6414631158,
+   "i": 13.84032953,
+   "node": 133.621249,
+   "peri": 166.81985,
+   "meanAnomaly": 140.972705,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "54598Bienor",
+  "name": "54598 Bienor",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 103.5,
+  "massKg": 3440700000000000000,
+  "orbit": {
+   "a": 15.505,
+   "e": 0.22039,
+   "i": 20.749,
+   "node": 337.851,
+   "peri": 153.589,
+   "meanAnomaly": 303.563,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "55576Amycus",
+  "name": "55576 Amycus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 50.45,
+  "massKg": 313676000000000000,
+  "orbit": {
+   "a": 25.098,
+   "e": 0.39526,
+   "i": 13.352,
+   "node": 315.45,
+   "peri": 239.17,
+   "meanAnomaly": 37.041,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "60558Echeclus",
+  "name": "60558 Echeclus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 29.5,
+  "massKg": 74054200000000000,
+  "orbit": {
+   "a": 10.68,
+   "e": 0.45566689,
+   "i": 4.3444,
+   "node": 173.333,
+   "peri": 162.804,
+   "meanAnomaly": 24.47205,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "83982Crantor",
+  "name": "83982 Crantor",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 30.0,
+  "massKg": 107442000000000000,
+  "orbit": {
+   "a": 19.44978619,
+   "e": 0.273531695,
+   "i": 12.77131508,
+   "node": 117.428033,
+   "peri": 93.333565,
+   "meanAnomaly": 89.55471,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "84719KBO",
+  "name": "84719 Ankou",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 224.25,
+  "massKg": 47237400000000000000,
+  "orbit": {
+   "a": 39.325,
+   "e": 0.26257,
+   "i": 14.04,
+   "node": 23.152,
+   "peri": 287.87,
+   "meanAnomaly": 73.453,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "84922KBO",
+  "name": "84922 Veles",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 313.5,
+  "massKg": 87430900000000000000,
+  "orbit": {
+   "a": 39.435,
+   "e": 0.075539,
+   "i": 14.777,
+   "node": 302.792,
+   "peri": 114.317,
+   "meanAnomaly": 15.535,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "88263Asteroid",
+  "name": "88263 Changxi",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.874,
+  "massKg": 169043000000000,
+  "orbit": {
+   "a": 2.096723014,
+   "e": 0.4325588341,
+   "i": 38.78989958,
+   "node": 232.815327,
+   "peri": 241.58111,
+   "meanAnomaly": 89.702822,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "89830Asteroid",
+  "name": "89830 Mayari",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.534,
+  "massKg": 115798000000000,
+  "orbit": {
+   "a": 2.077654192,
+   "e": 0.5070022515,
+   "i": 43.64378238,
+   "node": 19.887395,
+   "peri": 5.851523,
+   "meanAnomaly": 24.893576,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "95626Centaur",
+  "name": "95626 Demeleon",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 115.25,
+  "massKg": 7053490000000000000,
+  "orbit": {
+   "a": 23.2182,
+   "e": 0.22416,
+   "i": 15.0171,
+   "node": 107.283,
+   "peri": 154.871,
+   "meanAnomaly": 354.07,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "97514Asteroid",
+  "name": "97514 Bulan",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.494,
+  "massKg": 646088000000000,
+  "orbit": {
+   "a": 2.017,
+   "e": 0.2721,
+   "i": 43.64,
+   "node": 19.89,
+   "peri": 5.85,
+   "meanAnomaly": 319.07,
+   "epoch": 2025.3424
+  }
+ },
+ {
+  "id": "101742Asteroid",
+  "name": "101742 Mokosh",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.06,
+  "massKg": 476558000000000,
+  "orbit": {
+   "a": 2.385120204,
+   "e": 0.3440536328,
+   "i": 23.21687303,
+   "node": 349.399895,
+   "peri": 88.161447,
+   "meanAnomaly": 142.801869,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "102528Asteroid",
+  "name": "102528 Napir",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 6.425,
+  "massKg": 1888670000000000,
+  "orbit": {
+   "a": 2.766,
+   "e": 0.5174,
+   "i": 28.92,
+   "node": 268.03,
+   "peri": 182,
+   "meanAnomaly": 195.96,
+   "epoch": 2025.3424
+  }
+ },
+ {
+  "id": "119951KBO",
+  "name": "119951 Nuwa",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 227.5,
+  "massKg": 59185300000000000000,
+  "orbit": {
+   "a": 38.867,
+   "e": 0.041762,
+   "i": 0.40348,
+   "node": 286.686,
+   "peri": 37.244,
+   "meanAnomaly": 261.303,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "120061Centaur",
+  "name": "120061 Lykas",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 41.0,
+  "massKg": 282922000000000000,
+  "orbit": {
+   "a": 20.832,
+   "e": 0.475086,
+   "i": 19.72,
+   "node": 78.429,
+   "peri": 116.5876,
+   "meanAnomaly": 41.5617,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "120348KBO",
+  "name": "120348 Xolas",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 256.0,
+  "massKg": 80817700000000000000,
+  "orbit": {
+   "a": 38.78,
+   "e": 0.06714,
+   "i": 24.849,
+   "node": 140.6141,
+   "peri": 359.71,
+   "meanAnomaly": 265.93,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "136204Centaur",
+  "name": "136204 Rhaecus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 59.0,
+  "massKg": 946318000000000000,
+  "orbit": {
+   "a": 20.136,
+   "e": 0.256919,
+   "i": 11.164,
+   "node": 4.75457,
+   "peri": 70.858,
+   "meanAnomaly": 25.2857,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "144897KBO",
+  "name": "144897 Erlik",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 199.0,
+  "massKg": 30000000000000000000,
+  "orbit": {
+   "a": 38.865,
+   "e": 0.041,
+   "i": 9.539,
+   "node": 148.06,
+   "peri": 147.96,
+   "meanAnomaly": 99.606,
+   "epoch": 2016.575
+  }
+ },
+ {
+  "id": "145453KBO",
+  "name": "145453 Viracocha",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 126.0,
+  "massKg": 10055000000000000000,
+  "orbit": {
+   "a": 43.163,
+   "e": 0.013639,
+   "i": 28.506,
+   "node": 85.852,
+   "peri": 279.66,
+   "meanAnomaly": 43.576,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "175113KBO",
+  "name": "175113 Shingon",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 203.0,
+  "massKg": 38545100000000000000,
+  "orbit": {
+   "a": 38.828,
+   "e": 0.071207,
+   "i": 13.357,
+   "node": 84.601,
+   "peri": 84.2,
+   "meanAnomaly": 165.41,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "248835Centaur",
+  "name": "248835 Helops",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 37.5,
+  "massKg": 2000000000000000000,
+  "orbit": {
+   "a": 22.027,
+   "e": 0.4572,
+   "i": 36.299,
+   "node": 280.05,
+   "peri": 70.625,
+   "meanAnomaly": 19.679,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "281371Centaur",
+  "name": "281371 Pyretos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 29.0,
+  "massKg": 102160000000000000,
+  "orbit": {
+   "a": 14.67,
+   "e": 0.30652,
+   "i": 27.152,
+   "node": 245.664,
+   "peri": 141.814,
+   "meanAnomaly": 22.311,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "301842Asteroid",
+  "name": "301842 Avatea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 4.489,
+  "massKg": 643934000000000,
+  "orbit": {
+   "a": 2.787205526,
+   "e": 0.4044517052,
+   "i": 30.01974028,
+   "node": 354.580623,
+   "peri": 94.513131,
+   "meanAnomaly": 331.170463,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "301964Asteroid",
+  "name": "301964 Saggar",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 5.4,
+  "massKg": 1121290000000000,
+  "orbit": {
+   "a": 4.617269191,
+   "e": 0.7055370752,
+   "i": 10.07980453,
+   "node": 178.215157,
+   "peri": 115.752622,
+   "meanAnomaly": 173.061276,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "309239Centaur",
+  "name": "309239 Ripheus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 123.5,
+  "massKg": 7890230000000000000,
+  "orbit": {
+   "a": 30.16,
+   "e": 0.29987,
+   "i": 36.172,
+   "node": 187.07,
+   "peri": 95.684,
+   "meanAnomaly": 66.98,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "310071Centaur",
+  "name": "310071 Pyraethus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 55.03,
+  "massKg": 698051000000000000,
+  "orbit": {
+   "a": 29.74228708,
+   "e": 0.5640264736,
+   "i": 19.70254344,
+   "node": 46.843536,
+   "peri": 108.067646,
+   "meanAnomaly": 30.095028,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "315898Centaur",
+  "name": "315898 Latreus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 15.5,
+  "massKg": 15598500000000000,
+  "orbit": {
+   "a": 8.4087,
+   "e": 0.35149,
+   "i": 42.028,
+   "node": 344.7,
+   "peri": 68.923,
+   "meanAnomaly": 79.666,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "316179Centaur",
+  "name": "316179 Sanape",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 100.0,
+  "massKg": 4188790000000000000,
+  "orbit": {
+   "a": 30.851,
+   "e": 0.3146,
+   "i": 19.218,
+   "node": 234.43,
+   "peri": 226.04,
+   "meanAnomaly": 44.262,
+   "epoch": 2016.575
+  }
+ },
+ {
+  "id": "342842Centaur",
+  "name": "342842 Lykidas",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 33.55,
+  "massKg": 158185000000000000,
+  "orbit": {
+   "a": 11.616,
+   "e": 0.4404,
+   "i": 105.056,
+   "node": 112.573,
+   "peri": 330.92159,
+   "meanAnomaly": 59.06555,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "385571Otrera",
+  "name": "385571 Otrera",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 51.5,
+  "massKg": 572151000000000000,
+  "orbit": {
+   "a": 30.063,
+   "e": 0.02474,
+   "i": 1.4349,
+   "node": 34.758,
+   "peri": 7.0511,
+   "meanAnomaly": 348.6,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "405058Asteroid",
+  "name": "405058 Bendis",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.8,
+  "massKg": 349419000000000,
+  "orbit": {
+   "a": 3.573299526,
+   "e": 0.6006,
+   "i": 0.6007509858,
+   "node": 69.301479,
+   "peri": 53.582284,
+   "meanAnomaly": 186.533094,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "447178Centaur",
+  "name": "447178 Agrius",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 97.0,
+  "massKg": 4205300000000000000,
+  "orbit": {
+   "a": 28.91960208,
+   "e": 0.5199923777,
+   "i": 35.45599497,
+   "node": 198.064417,
+   "peri": 326.423919,
+   "meanAnomaly": 341.975758,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "469306KBO",
+  "name": "469306 Numbakulla",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 220,
+  "massKg": 53522700000000000000,
+  "orbit": {
+   "a": 43.775,
+   "e": 0.1454,
+   "i": 25.486,
+   "node": 119.03,
+   "peri": 143.51,
+   "meanAnomaly": 250.48,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "469372KBO",
+  "name": "469372 Maximon",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 204.1,
+  "massKg": 53420600000000000000,
+  "orbit": {
+   "a": 39.241,
+   "e": 0.11429,
+   "i": 22.408,
+   "node": 164.24,
+   "peri": 41.215,
+   "meanAnomaly": 154.29,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "471288KBO",
+  "name": "471288 Cagn",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 223,
+  "massKg": 51097100000000000000,
+  "orbit": {
+   "a": 43.953,
+   "e": 0.0301,
+   "i": 13.033,
+   "node": 257.17,
+   "peri": 214.93,
+   "meanAnomaly": 70.965,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "472651Centaur",
+  "name": "472651 Dryalos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 51.0,
+  "massKg": 500082000000000000,
+  "orbit": {
+   "a": 19.03971398,
+   "e": 0.3218061209,
+   "i": 37.81018226,
+   "node": 6.252709,
+   "peri": 238.750425,
+   "meanAnomaly": 339.365391,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "499514KBO",
+  "name": "499514 Eskeri",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 235.5,
+  "massKg": 60180300000000000000,
+  "orbit": {
+   "a": 42.43195274,
+   "e": 0.1298663351,
+   "i": 25.84305157,
+   "node": 220.014061,
+   "peri": 244.115366,
+   "meanAnomaly": 250.916796,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "514041Asteroid",
+  "name": "514041 Awilix",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 2.636,
+  "massKg": 130429000000000,
+  "orbit": {
+   "a": 2.900702852,
+   "e": 0.5986276901,
+   "i": 35.07231635,
+   "node": 347.205165,
+   "peri": 333.077204,
+   "meanAnomaly": 84.577787,
+   "epoch": 2025.890411
+  }
+ },
+ {
+  "id": "523643Centaur",
+  "name": "523643 Pisenor",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 160.5,
+  "massKg": 19050500000000000000,
+  "orbit": {
+   "a": 39.40414375,
+   "e": 0.462764693,
+   "i": 22.44645093,
+   "node": 111.346408,
+   "peri": 2.306025,
+   "meanAnomaly": 332.263936,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "523695Centaur",
+  "name": "523695 Medon",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 139.5,
+  "massKg": 13645600000000000000,
+  "orbit": {
+   "a": 33.29017643,
+   "e": 0.1000518022,
+   "i": 15.17922622,
+   "node": 132.316169,
+   "peri": 330.556813,
+   "meanAnomaly": 122.084331,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "523727Centaur",
+  "name": "523727 Eurytion",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 137.5,
+  "massKg": 8820560000000000000,
+  "orbit": {
+   "a": 23.28202931,
+   "e": 0.5201586898,
+   "i": 20.4224061,
+   "node": 216.018805,
+   "peri": 232.787696,
+   "meanAnomaly": 313.09393,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "556068KBO",
+  "name": "556068 Whiro",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 227.0,
+  "massKg": 53896300000000000000,
+  "orbit": {
+   "a": 39.45706316,
+   "e": 0.09425032009,
+   "i": 15.38102882,
+   "node": 119.166178,
+   "peri": 297.144852,
+   "meanAnomaly": 257.124004,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "556416KBO",
+  "name": "556416 Nzambi",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 182.0,
+  "massKg": 27777600000000000000,
+  "orbit": {
+   "a": 46.40465699,
+   "e": 0.114339951,
+   "i": 3.925895456,
+   "node": 308.924649,
+   "peri": 260.289567,
+   "meanAnomaly": 78.120585,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "562274Centaur",
+  "name": "562274 Hippasus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 113.0,
+  "massKg": 7252790000000000000,
+  "orbit": {
+   "a": 27.80842523,
+   "e": 0.3756924684,
+   "i": 11.89992458,
+   "node": 144.213216,
+   "peri": 49.705229,
+   "meanAnomaly": 339.645806,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "578993KBO",
+  "name": "578993 Xargi",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 223.5,
+  "massKg": 56118000000000000000,
+  "orbit": {
+   "a": 39.56444826,
+   "e": 0.07367758884,
+   "i": 19.35673592,
+   "node": 146.280205,
+   "peri": 317.553766,
+   "meanAnomaly": 214.652218,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "612243Centaur",
+  "name": "612243 Penthesilea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 62.5,
+  "massKg": 971521000000000000,
+  "orbit": {
+   "a": 30.44667002,
+   "e": 0.02947387522,
+   "i": 1.322849766,
+   "node": 151.518454,
+   "peri": 172.224062,
+   "meanAnomaly": 78.661463,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "613490Centaur",
+  "name": "613490 Myrina",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 82.0,
+  "massKg": 2771480000000000000,
+  "orbit": {
+   "a": 30.23563569,
+   "e": 0.02938156359,
+   "i": 8.162494654,
+   "node": 120.835462,
+   "peri": 14.729701,
+   "meanAnomaly": 283.412178,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "636872Centaur",
+  "name": "636872 Caeneus",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 38.5,
+  "massKg": 262944000000000000,
+  "orbit": {
+   "a": 19.11349798,
+   "e": 0.2799363278,
+   "i": 25.52409665,
+   "node": 91.347251,
+   "peri": 280.483284,
+   "meanAnomaly": 103.656549,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "2008LC18Centaur",
+  "name": "2008 LC18 Aegea",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 50.0,
+  "massKg": 628319000000000000,
+  "orbit": {
+   "a": 29.969,
+   "e": 0.08304,
+   "i": 27.546,
+   "node": 88.51,
+   "peri": 8.169,
+   "meanAnomaly": 179.96,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "2010THCentaur",
+  "name": "2010THCentaur",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 34.95,
+  "massKg": 214591000000000000,
+  "orbit": {
+   "a": 18.494,
+   "e": 0.3223,
+   "i": 26.71,
+   "node": 123.676,
+   "peri": 209.84,
+   "meanAnomaly": 60.855,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "2011GN27Centaur",
+  "name": "2011 GN27 Dictys",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 80.5,
+  "massKg": 2403640000000000000,
+  "orbit": {
+   "a": 15.75481386,
+   "e": 0.4001253142,
+   "i": 153.4183599,
+   "node": 47.803979,
+   "peri": 32.701826,
+   "meanAnomaly": 178.621975,
+   "epoch": 2011.254795
+  }
+ },
+ {
+  "id": "2011HM102Centaur",
+  "name": "2011 HM102 Myrleia",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 72.5,
+  "massKg": 1755880000000000000,
+  "orbit": {
+   "a": 30.115,
+   "e": 0.082112,
+   "i": 29.393,
+   "node": 100.98,
+   "peri": 149.92,
+   "meanAnomaly": 31.306,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "2011MM4Centaur",
+  "name": "2011 MM4 Bromos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 31.85,
+  "massKg": 148871000000000000,
+  "orbit": {
+   "a": 21.119132,
+   "e": 0.47292,
+   "i": 100.472,
+   "node": 282.476,
+   "peri": 6.809,
+   "meanAnomaly": 47.19,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "2011QF99Centaur",
+  "name": "2011 QF99 Exadius",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 30.0,
+  "massKg": 124407000000000000,
+  "orbit": {
+   "a": 19.081,
+   "e": 0.17846,
+   "i": 10.8233,
+   "node": 222.509,
+   "peri": 287.63,
+   "meanAnomaly": 277.47,
+   "epoch": 2016.033
+  }
+ },
+ {
+  "id": "2013KY18Centaur",
+  "name": "2013 KY18 Ephesos",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 100.0,
+  "massKg": 4607670000000000000,
+  "orbit": {
+   "a": 30.3027,
+   "e": 0.1209,
+   "i": 6.6483,
+   "node": 84.40677,
+   "peri": 268.803,
+   "meanAnomaly": 279.026,
+   "epoch": 2017.674
+  }
+ },
+ {
+  "id": "2015AH281Centaur",
+  "name": "2015 AH281 Pylenor",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 167.0,
+  "massKg": 23411000000000000000,
+  "orbit": {
+   "a": 37.69928502,
+   "e": 0.4058068055,
+   "i": 9.557233649,
+   "node": 286.082528,
+   "peri": 354.145838,
+   "meanAnomaly": 202.167067,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "2015QW23KBO",
+  "name": "2015 QW23 Nanabohzo",
+  "type": "asteroid",
+  "parent": "Sol",
+  "radiusKm": 184.0,
+  "massKg": 33922300000000000000,
+  "orbit": {
+   "a": 47.61460359,
+   "e": 0.03449885275,
+   "i": 20.88723368,
+   "node": 94.072716,
+   "peri": 100.808794,
+   "meanAnomaly": 113.16544,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "SwiftTuttle",
+  "name": "Swift-Tuttle",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 13.0,
+  "massKg": 5521660000000000,
+  "orbit": {
+   "a": 26.092,
+   "e": 0.9632,
+   "i": 113.45,
+   "node": 139.3811,
+   "peri": 152.982167,
+   "meanAnomaly": 7.631696,
+   "epoch": 1995.775342
+  }
+ },
+ {
+  "id": "Neujmin",
+  "name": "Neujmin",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 10.7,
+  "massKg": 3078870000000000,
+  "orbit": {
+   "a": 6.911,
+   "e": 0.7755,
+   "i": 14.31027228,
+   "node": 346.344654,
+   "peri": 347.467431,
+   "meanAnomaly": 40.724449,
+   "epoch": 2023.282192
+  }
+ },
+ {
+  "id": "Loneos",
+  "name": "Loneos",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 6.8,
+  "massKg": 790254000000000,
+  "orbit": {
+   "a": 13.30009309,
+   "e": 0.9252600806,
+   "i": 80.24505923,
+   "node": 10.55529,
+   "peri": 116.419511,
+   "meanAnomaly": 357.96382,
+   "epoch": 2001.928767
+  }
+ },
+ {
+  "id": "Levy",
+  "name": "Levy",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 5.8,
+  "massKg": 490370000000000,
+  "orbit": {
+   "a": 13.81307682,
+   "e": 0.9288584031,
+   "i": 19.19010771,
+   "node": 329.431597,
+   "peri": 41.478818,
+   "meanAnomaly": 3.336757,
+   "epoch": 1991.994521
+  }
+ },
+ {
+  "id": "Halley",
+  "name": "Halley",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 7.5,
+  "massKg": 220000000000000,
+  "orbit": {
+   "a": 17.92781774,
+   "e": 0.9679427911,
+   "i": 162.1878712,
+   "node": 59.114483,
+   "peri": 112.257792,
+   "meanAnomaly": 274.140492,
+   "epoch": 1968.005464
+  }
+ },
+ {
+  "id": "Gunn",
+  "name": "Gunn",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 5.4,
+  "massKg": 395750000000000,
+  "orbit": {
+   "a": 3.88002232,
+   "e": 0.2499630231,
+   "i": 9.18524231,
+   "node": 62.016385,
+   "peri": 213.568017,
+   "meanAnomaly": 28.123859,
+   "epoch": 2018.391781
+  }
+ },
+ {
+  "id": "Tempel",
+  "name": "Tempel",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 5.3,
+  "massKg": 374169000000000,
+  "orbit": {
+   "a": 3.064829798,
+   "e": 0.5363837256,
+   "i": 12.02709701,
+   "node": 117.802729,
+   "peri": 195.544151,
+   "meanAnomaly": 187.486773,
+   "epoch": 2013.323288
+  }
+ },
+ {
+  "id": "ArendRigaux",
+  "name": "Arend-Rigaux",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 4.24,
+  "massKg": 191574000000000,
+  "orbit": {
+   "a": 3.562596267,
+   "e": 0.6003391501,
+   "i": 19.05041404,
+   "node": 118.876439,
+   "peri": 332.790534,
+   "meanAnomaly": 3.359607,
+   "epoch": 2011.863014
+  }
+ },
+ {
+  "id": "Machholz",
+  "name": "Machholz",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 3.2,
+  "massKg": 82355000000000,
+  "orbit": {
+   "a": 3.035034151,
+   "e": 0.9591604569,
+   "i": 58.1379342,
+   "node": 94.254755,
+   "peri": 14.792919,
+   "meanAnomaly": 340.993923,
+   "epoch": 2017.545205
+  }
+ },
+ {
+  "id": "Encke",
+  "name": "Encke",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 2.4,
+  "massKg": 57905800000000,
+  "orbit": {
+   "a": 2.214742776,
+   "e": 0.8483340794,
+   "i": 11.7782263,
+   "node": 334.560053,
+   "peri": 186.562694,
+   "meanAnomaly": 341.432284,
+   "epoch": 2017.019178
+  }
+ },
+ {
+  "id": "PonsBrooks",
+  "name": "Pons-Brooks",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 17.0,
+  "massKg": 12347700000000000,
+  "orbit": {
+   "a": 17.18457314,
+   "e": 0.9545600662,
+   "i": 74.19082648,
+   "node": 255.855001,
+   "peri": 198.987981,
+   "meanAnomaly": 356.940525,
+   "epoch": 2023.70137
+  }
+ },
+ {
+  "id": "Kowal",
+  "name": "Kowal",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 5.1,
+  "massKg": 333388000000000,
+  "orbit": {
+   "a": 6.135175112,
+   "e": 0.2296848038,
+   "i": 4.337463322,
+   "node": 28.179469,
+   "peri": 174.191914,
+   "meanAnomaly": 187.190469,
+   "epoch": 2014.975342
+  }
+ },
+ {
+  "id": "Cineos",
+  "name": "Cineos",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 33.085,
+  "massKg": 91019300000000000,
+  "orbit": {
+   "a": 16.1420589,
+   "e": 0.2700193033,
+   "i": 19.12660376,
+   "node": 295.837027,
+   "peri": 343.645778,
+   "meanAnomaly": 16.521844,
+   "epoch": 2004.248634
+  }
+ },
+ {
+  "id": "SchwassmannWachmann",
+  "name": "Schwassmann-Wachmann",
+  "type": "comet",
+  "parent": "Sol",
+  "radiusKm": 30.2,
+  "massKg": 69224600000000000,
+  "orbit": {
+   "a": 6.047164128,
+   "e": 0.04475336042,
+   "i": 9.364069791,
+   "node": 312.39415,
+   "peri": 50.913318,
+   "meanAnomaly": 89.623085,
+   "epoch": 2023
+  }
+ }
+]

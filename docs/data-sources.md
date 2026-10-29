@@ -30,6 +30,10 @@ Run order: `build_breakaways.py`, `build_world.py`, `build_claims.py`, then `bui
 
 Claims come from Terra Invicta's TIBilateralTemplate (relationType "Claim"), with TIRegionTemplate, TIMapRegionTemplate (region latitude and longitude) and TINationTemplate to match its map to ours (`src/content/claims.json`). Run it before `build_research.py`, which keeps the projects that unlock claims. How the matching works is in `docs/formulas.md` ("Claims").
 
+## Solar System — `tools/data/build_solar.py`
+
+The bodies and their orbits come from Terra Invicta's TISpaceBodyTemplate, in the game's install or the same `Pzixel/terra-invicta-techtree-update` repository; the script's docstring has the command. It keeps the Sun, the planets, their moons, and the dwarf planets, asteroids and comets that have a full set of orbital elements (350 bodies), with names, radii, masses and Keplerian elements. Moons' semi-major axes are converted from km to AU; for Jupiter's moons the argument of periapsis and mean anomaly are worked out from the longitude of periapsis and mean longitude the game gives. Left out: the moons of asteroids and dwarf planets, the hypothetical Planet Nine, and bodies with incomplete elements. Some dwarf-planet names are Terra Invicta's own for unnamed objects.
+
 ## Research — `tools/data/build_research.py`
 
 Techs and projects come from Terra Invicta's own template files and English localization: TITechTemplate, TIProjectTemplate and TIEffectTemplate. These are published with the community tech tree site ([pzixel.github.io/terra-invicta-techtree-update](https://pzixel.github.io/terra-invicta-techtree-update), repository `Pzixel/terra-invicta-techtree-update`, folder `public/gamefiles/stable`). The script's docstring has the commands.

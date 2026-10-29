@@ -12,7 +12,7 @@ All tunables live in `src/content/rules.json`. Names like `missions.rollBase` re
 
 ## Determinism rule
 
-Simulation code uses only `+ − × ÷`, `Math.sqrt`, `Math.floor`, `Math.round`, `Math.min`/`Math.max`, comparisons, and `detLn` / `detExp` / `detPow` from `src/sim/detmath.ts`.
+Simulation code uses only `+ − × ÷`, `Math.sqrt`, `Math.floor`, `Math.round`, `Math.min`/`Math.max`, comparisons, and `detLn` / `detExp` / `detPow` / `detSin` / `detCos` from `src/sim/detmath.ts`.
 Those helpers are built from basic arithmetic, so a game in WebKitGTK and the same seed under Node produce identical states.
 Never use `Math.pow`, `exp`, `log` or trigonometry in `src/sim/`.
 

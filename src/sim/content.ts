@@ -736,6 +736,35 @@ export interface NameData {
   nations: Record<string, string>;
 }
 
+export type SpaceBodyType = "star" | "planet" | "moon" | "dwarf" | "asteroid" | "comet";
+
+/** Keplerian elements at an epoch, around the body's parent (Terra Invicta's TISpaceBodyTemplate). */
+export interface OrbitDef {
+  /** Semi-major axis, AU. */
+  a: number;
+  e: number;
+  /** Inclination, ascending node, argument of periapsis and mean anomaly at the epoch, degrees. */
+  i: number;
+  node: number;
+  peri: number;
+  meanAnomaly: number;
+  /** Julian year of the elements (2000 = J2000). */
+  epoch: number;
+}
+
+/** A body of the solar system (src/content/solarSystem.json, from tools/data/build_solar.py). */
+export interface SpaceBodyDef {
+  id: string;
+  name: string;
+  type: SpaceBodyType;
+  /** The body it orbits; null for the Sun. */
+  parent: string | null;
+  radiusKm: number;
+  massKg: number;
+  /** Absent for the Sun. */
+  orbit?: OrbitDef;
+}
+
 export interface Content {
   factions: FactionDef[];
   professions: ProfessionDef[];
@@ -752,6 +781,8 @@ export interface Content {
   climate: ClimateContent;
   /** Real formation names per nation, used in order as armies are raised. */
   armyNames: Record<string, string[]>;
+  /** The Sun and the bodies orbiting it, parents before the bodies that orbit them. */
+  solarSystem: SpaceBodyDef[];
   rules: Rules;
 }
 
@@ -873,6 +904,12 @@ export function validateContent(content: Content): Content {
     if (!nationIds.has(c.nation)) fail(`claim by unknown nation "${c.nation}"`);
     if (!regionIds.has(c.region)) fail(`claim on unknown region "${c.region}"`);
     if (c.project && !projectIds.has(c.project)) fail(`claim unlocked by unknown project "${c.project}"`);
+  }
+  unique("space body", content.solarSystem.map((b) => b.id));
+  const placed = new Set<string>();
+  for (const b of content.solarSystem) {
+    if (b.parent === null ? b.orbit !== undefined : !placed.has(b.parent) || !b.orbit) fail(`space body "${b.id}" needs an orbit around a body listed before it`);
+    placed.add(b.id);
   }
   return content;
 }

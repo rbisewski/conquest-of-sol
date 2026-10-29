@@ -1,7 +1,7 @@
 <script lang="ts">
   // Event alerts after Terra Invicta: diamonds down the left side of the screen, newest at
   // the top, for our own events and public news. Hovering shows the event, clicking selects
-  // its nation and right-clicking dismisses it. While a nation (or a rival councilor) is open
+  // its nation and right-clicking dismisses it. While a nation (or a rival councilor, or a celestial body) is open
   // the column shrinks to the four newest, at the bottom.
   import { SvelteSet } from "svelte/reactivity";
   import { baseContent } from "../../content/index";
@@ -19,7 +19,7 @@
   const key = (e: LogEntry) => `${e.dayIndex}:${e.minuteOfDay}:${e.text}`;
 
   let height = $state(0);
-  const compact = $derived(game.selectedNationId !== null || game.rivalCouncilorId !== null);
+  const compact = $derived(game.selectedNationId !== null || game.rivalCouncilorId !== null || (game.view === "solar" && game.selectedBodyId !== null));
   const room = $derived(compact ? COMPACT : Math.max(1, Math.floor((height - STEP) / STEP)));
   const entries = $derived.by(() => {
     const log = game.state?.log ?? [];

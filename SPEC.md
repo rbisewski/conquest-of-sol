@@ -91,7 +91,7 @@ Seven factions, each with its own ideology, objectives and victory condition:
 - Pro-alien factions gain from the aliens' activity. The endgame is a military escalation in which the aliens land on Earth.
 
 ### 1.10 Presentation and pacing
-- 3D globe view for Earth and a 3D Solar System view, with time controls (pause, multiple speeds).
+- One continuous 3D view from the Earth's globe out to the whole Solar System: zooming out, the globe fades into a pixel-art Earth among the other bodies, with time controls (pause, multiple speeds).
 - Turn structure: mission phases run twice a month, everything else runs in real-time-with-pause.
 - Strengths: depth, ideological factions and scientific grounding. Weaknesses: a punishing learning curve, slow pacing, UI density and late-game micromanagement.
 
@@ -246,6 +246,7 @@ Seven ideological factions mirror the strategic spread of the reference without 
 ### 2.10 Space layer
 #### 2.10.1 The Solar System
 - Keplerian orbits for 8 planets, the major moons, the dwarf planets, about 150 named asteroids and comets, and the Earth–Moon/Sun–Earth Lagrange points.
+- **Built so far (the System View)**: 350 bodies from Terra Invicta's space-body data (`src/content/solarSystem.json`, made by `tools/data/build_solar.py`): the Sun, 8 planets, 19 major moons, 40 dwarf planets, 268 asteroids and 14 comets, each on its real orbit (Keplerian elements at an epoch, `src/sim/orbits.ts`), placed at the game's date and moving with the clock. Orbits are to scale in AU; bodies keep a fixed size on screen. The globe zooms out to 12 Earth radii; zooming on carries straight into the System View at the same distance and angle, where the Earth is drawn from the globe's map at its true size, turned and lit the same way (bodies are drawn at their true size whenever that is bigger than their usual icon). Scrolling back in on the Earth, double-clicking it or "Return to Earth" hands back the same way. Clicking a body makes the camera follow it and opens the **Celestial Body panel** at the upper left (the event alerts shrink to the four newest, as for the nation panel), after Terra Invicta's: the body's class (Terrestrial Planet, Gas Giant, Planetary Moon…), a large pixel portrait, surface gravity and name, the next Earth launch window (a Hohmann estimate) with the transfer time, its distance from its parent, orbital period, escape velocity and diameter, then orbital speed, eccentricity, inclination, distance from the Earth now (with the light delay), mass and moons. Lagrange points, mining sites and transfers are still to come.
 - Each body has **mining sites** with randomized yields, revealed by **prospecting**.
 - **Transfers**: a Lambert solver with a porkchop-style "launch window" chooser that is simplified into a slider from Fast/Expensive to Slow/Cheap.
 
@@ -302,7 +303,7 @@ Marines resolve as a short vignette with sprites fighting in hab corridors. The 
 | Scene | Purpose | Notes |
 |---|---|---|
 | **Globe View** | Strategic Earth map | Stylized 3D globe with pixel-textured terrain, region borders as glowing lines, and miniature city/launch-site props at zoom |
-| **System View** | Strategic space map | Pixel-textured planets with orbit lines, sprite-icon fleets and habs |
+| **System View** | Strategic space map | Pixel-art planets with orbit lines, sprite-icon fleets and habs. Built: the Sun, planets, moons and the larger dwarf planets are pixel-art discs drawn pixel by pixel (bands, storms, ice caps, Saturn's rings; the Earth from the globe's own map) and lit in a few steps from the Sun's real direction, so they show phases; smaller bodies are pixel dots. A moon appears once its orbit is wide enough on screen, and a planet's name once it is clear of the Sun |
 | **Tactical Combat** | Space battles | Tilted plane, pixel VFX |
 | **Dioramas** | Faction HQs (2.4), the national-priority capital view (2.6.3), mission vignettes (2.7), hab assaults (2.11.4) | About 12 reusable sets with walking map sprites, shown with the fixed 3/4 camera |
 | **Event/Dialogue** | Events and story | A pop-up with choices for minor events. Story events and milestones play as dialogue scenes with full portraits (2.5, 2.14) |

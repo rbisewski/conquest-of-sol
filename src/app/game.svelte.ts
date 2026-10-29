@@ -28,6 +28,10 @@ class GameClient {
   researchOpen = $state(false);
   /** The councilor whose full summary screen is open, if any (ours, or another faction's we have intel on). */
   summaryCouncilorId = $state<string | null>(null);
+  /** Which view fills the screen: the Earth's globe, or the Solar System (zoom out of the globe to reach it). */
+  view = $state<"earth" | "solar">("earth");
+  /** The solar-system body whose Celestial Body panel is open in the Solar System view, if any. */
+  selectedBodyId = $state<string | null>(null);
   /** Another faction's councilor, clicked on the globe, whose Rival Councilor panel is open (upper left), if any. */
   rivalCouncilorId = $state<string | null>(null);
   /** The army whose panel is open (lower right, in place of the councilor's), if any. */
@@ -138,6 +142,8 @@ class GameClient {
     this.selectedArmyId = null;
     this.summaryCouncilorId = null;
     this.rivalCouncilorId = null;
+    this.view = "earth";
+    this.selectedBodyId = null;
     this.recruitingOpen = false;
     this.researchOpen = false;
     this.foreignRelationsNationId = null;

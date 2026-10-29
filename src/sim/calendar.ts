@@ -11,7 +11,8 @@ export interface CalendarDate {
 }
 
 // Howard Hinnant's days_from_civil / civil_from_days algorithms.
-function daysFromCivil(y: number, m: number, d: number): number {
+/** Days since 1970-01-01 for a calendar date. */
+export function daysFromCivil(y: number, m: number, d: number): number {
   const yy = m <= 2 ? y - 1 : y;
   const era = Math.floor(yy / 400);
   const yoe = yy - era * 400;

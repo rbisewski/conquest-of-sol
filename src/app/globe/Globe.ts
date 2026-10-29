@@ -763,6 +763,17 @@ const ARMY_SCALE = 2;
 const ARMY_SCALE_MIN = 0;
 /** The camera's distance from the Earth's centre at the start, in Earth radii. */
 const CAMERA_START_DISTANCE = Math.hypot(0.9, 1.2, 2.9);
+/** Armies and councilors have shrunk away by this distance, in Earth radii. */
+const MARKER_FADE_DISTANCE = 6;
+/**
+ * The farthest the globe zooms out, in Earth radii. Zooming on out from here hands over to the
+ * Solar System view at the same distance, where the Earth is drawn at the same size.
+ */
+export const GLOBE_FARTHEST = 12;
+/** Over the solar system (see overlay), the globe fades out from here to GLOBE_FARTHEST, into the pixel-art Earth drawn beneath it. */
+export const GLOBE_FADE_FROM = 8;
+/** Seconds the camera takes to glide in after coming back from the Solar System view. */
+const GLIDE_SECONDS = 0.8;
 
 /** Stack slots 1, 2, 3… alternate right and left of the centre, in tank widths. */
 export function slotOffset(slot: number): number {
@@ -1125,7 +1136,26 @@ export class Globe {
   /** Called with an army's id when its marker is clicked. */
   onSelectArmy: ((id: string) => void) | null = null;
   onSelectCouncilor: ((id: string) => void) | null = null;
+  /**
+   * Called when the player scrolls out past the farthest zoom (to the Solar System view), with
+   * the camera's direction from the Earth's centre (in the globe's Earth-fixed frame) and its
+   * distance in Earth radii.
+   */
+  onZoomOut: ((direction: THREE.Vector3, distance: number) => void) | null = null;
   private councilors = new Map<string, CouncilorSprite>();
+  /**
+   * Called every frame, just before the globe is drawn, with its camera: the Solar System view
+   * beneath (see overlay) follows it, drawing in the same frame.
+   */
+  onFrame: ((camera: THREE.PerspectiveCamera) => void) | null = null;
+  /** Rendering pauses while another view is shown. */
+  private active = true;
+  /** Drawn see-through over the Solar System view, fading out as the camera nears GLOBE_FARTHEST. */
+  private overlaid = false;
+  private readonly stars: THREE.Points;
+  /** A glide in after coming back from the Solar System view, in Earth radii. */
+  private glide: { from: number; to: number; start: number } | null = null;
+
   private readonly sun = new THREE.Vector3(1, 0, 0);
   private idMap: { width: number; height: number; data: Uint8ClampedArray } | null = null;
   private seaMap: SeaMap | null = null;
@@ -1152,7 +1182,7 @@ export class Globe {
     private readonly onSelectRegion: (regionIndex: number | null) => void,
     private readonly onHoverRegion: (regionIndex: number | null) => void,
   ) {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false });
+    this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(this.renderer.domElement);
 
@@ -1162,7 +1192,7 @@ export class Globe {
     this.controls.enableDamping = true;
     this.controls.enablePan = false;
     this.controls.minDistance = 1.35;
-    this.controls.maxDistance = 6;
+    this.controls.maxDistance = GLOBE_FARTHEST;
     this.controls.rotateSpeed = 0.5;
     this.controls.zoomSpeed = 0.8;
 
@@ -1239,7 +1269,8 @@ export class Globe {
     );
     // Before the other see-through things, so markers above the clouds draw over them.
     this.clouds.renderOrder = -1;
-    this.scene.add(this.earth, atmosphere, this.clouds, this.makeStars());
+    this.stars = this.makeStars();
+    this.scene.add(this.earth, atmosphere, this.clouds, this.stars);
 
     const base = import.meta.env.BASE_URL;
     void Promise.all([
@@ -1264,6 +1295,7 @@ export class Globe {
     canvas.addEventListener("pointerup", this.handleUp);
     canvas.addEventListener("pointermove", this.handleMove);
     canvas.addEventListener("pointerleave", this.handleLeave);
+    canvas.addEventListener("wheel", this.handleWheel, { passive: true });
     this.resizeObserver = new ResizeObserver(() => this.resize());
     this.resizeObserver.observe(container);
     this.resize();
@@ -1396,6 +1428,18 @@ export class Globe {
     this.controls.update();
   }
 
+  /**
+   * In-game mode: no background or stars of its own, so the Solar System view drawn beneath shows
+   * through (its stars, the Sun and the Moon), and the globe fades into its pixel-art Earth as
+   * the camera pulls out.
+   */
+  overlay(): void {
+    this.overlaid = true;
+    this.scene.background = null;
+    this.scene.remove(this.stars);
+    this.renderer.setClearColor(0x000000, 0);
+  }
+
   /** The game clock in minutes since the campaign start, for armies on the move. */
   setGameMinute(minute: number): void {
     this.gameMinute = minute;
@@ -1520,6 +1564,33 @@ export class Globe {
     this.onHoverRegion(null);
   };
 
+  /** Another notch out at the farthest zoom carries on into the Solar System view. */
+  private readonly handleWheel = (event: WheelEvent): void => {
+    const far = this.camera.position.length() >= this.controls.maxDistance * 0.995;
+    if (event.deltaY > 0 && far && this.onZoomOut) this.onZoomOut(this.camera.position.clone().normalize(), this.camera.position.length());
+  };
+
+  /** Pauses rendering (and hides the globe, so the view beneath takes the mouse) while another view is shown. */
+  setActive(active: boolean): void {
+    if (active === this.active) return;
+    this.active = active;
+    this.renderer.domElement.style.visibility = active ? "" : "hidden";
+    if (!active) return;
+    this.controls.update();
+    this.resize();
+  }
+
+  /**
+   * Puts the camera at a direction (Earth-fixed frame) and distance in Earth radii, e.g. on
+   * coming back from the Solar System view, and optionally glides it in to another distance.
+   */
+  setCamera(direction: THREE.Vector3, distance: number, glideTo?: number): void {
+    const clamp = (d: number) => THREE.MathUtils.clamp(d, this.controls.minDistance, this.controls.maxDistance);
+    this.camera.position.copy(direction).normalize().multiplyScalar(clamp(distance));
+    this.glide = glideTo === undefined ? null : { from: clamp(distance), to: clamp(glideTo), start: this.clock.getElapsedTime() };
+    this.controls.update();
+  }
+
   private resize(): void {
     const { clientWidth: w, clientHeight: h } = this.container;
     if (w === 0 || h === 0) return;
@@ -1531,7 +1602,20 @@ export class Globe {
 
   private animate = (): void => {
     this.frame = requestAnimationFrame(this.animate);
+    if (!this.active) return;
+    // Zooming speeds up with distance, matching the Solar System view where they meet.
+    this.controls.zoomSpeed = 0.8 * Math.sqrt(Math.max(1, this.camera.position.length() / CAMERA_START_DISTANCE));
+    if (this.glide) {
+      const t = Math.min(1, (this.clock.getElapsedTime() - this.glide.start) / GLIDE_SECONDS);
+      const eased = t * (2 - t);
+      this.camera.position.setLength(Math.exp(THREE.MathUtils.lerp(Math.log(this.glide.from), Math.log(this.glide.to), eased)));
+      if (t >= 1) this.glide = null;
+    }
     this.controls.update();
+    if (this.overlaid) {
+      const fade = (this.camera.position.length() - GLOBE_FADE_FROM) / (GLOBE_FARTHEST - GLOBE_FADE_FROM);
+      this.renderer.domElement.style.opacity = String(1 - THREE.MathUtils.clamp(fade, 0, 1));
+    }
     if (this.attracting) {
       const right = new THREE.Vector3().crossVectors(this.camera.up, this.camera.position).normalize();
       this.sun.copy(this.camera.position).normalize().addScaledVector(right, -0.45).normalize();
@@ -1552,13 +1636,15 @@ export class Globe {
     // Same on-screen size at any canvas size, as for the airplanes, but smaller when zoomed out.
     const height = this.container.clientHeight;
     if (height > 0) {
-      const zoomOut = (1.7*this.camera.position.length() - CAMERA_START_DISTANCE) / (this.controls.maxDistance - CAMERA_START_DISTANCE);
+      const zoomOut = (1.7*this.camera.position.length() - CAMERA_START_DISTANCE) / (MARKER_FADE_DISTANCE - CAMERA_START_DISTANCE);
       const pixels = ARMY_SCALE - (ARMY_SCALE - ARMY_SCALE_MIN) * THREE.MathUtils.clamp(zoomOut, 0, 1);
       const armyScale = (2 * ARMY_H * pixels) / (height * this.camera.projectionMatrix.elements[5]!);
       for (const a of this.armies.values()) a.update(this.gameMinute, armyScale, seconds);
       const flying = new Set(this.flights.filter((f) => !f.landed(seconds)).map((f) => f.id));
       for (const c of this.councilors.values()) c.update(armyScale, c.marker.flightId !== null && flying.has(c.marker.flightId));
     }
+    this.camera.updateMatrixWorld();
+    this.onFrame?.(this.camera);
     this.renderer.render(this.scene, this.camera);
   };
 
@@ -1570,6 +1656,7 @@ export class Globe {
     canvas.removeEventListener("pointerup", this.handleUp);
     canvas.removeEventListener("pointermove", this.handleMove);
     canvas.removeEventListener("pointerleave", this.handleLeave);
+    canvas.removeEventListener("wheel", this.handleWheel);
     this.controls.dispose();
     this.setFlights([]);
     this.setArmies([]);

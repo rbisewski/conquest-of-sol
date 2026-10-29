@@ -15,6 +15,7 @@ import professions from "./professions.json";
 import regions from "./regions.json";
 import relations from "./relations.json";
 import rules from "./rules.json";
+import solarSystem from "./solarSystem.json";
 import techs from "./techs.json";
 import traits from "./traits.json";
 
@@ -33,5 +34,6 @@ export const baseContent: Content = validateContent({
   claims,
   climate: climate as unknown as Content["climate"],
   armyNames: armyNames as Record<string, string[]>,
+  solarSystem: solarSystem as unknown as Content["solarSystem"],
   rules: rules as unknown as Rules,
 } as Content);
