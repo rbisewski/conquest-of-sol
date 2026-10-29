@@ -20,7 +20,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { Content, SpaceBodyDef } from "../../sim/content";
 import { orbitPath, solarPositions, type Vec3 } from "../../sim/orbits";
 import { GLOBE_FADE_FROM, GLOBE_FARTHEST } from "../globe/Globe";
-import { canvasSize, drawBody, drawSun, earthMap, hasStyle, sunCanvasSize, type Light, type MapImage, type Orient } from "./bodyArt";
+import { bodyMap, canvasSize, drawBody, drawSun, hasMap, hasStyle, sunCanvasSize, type Light, type MapImage, type Orient } from "./bodyArt";
+import { bodyToScene, hasFrame } from "./bodyFrames";
 import { EARTH_POLE, globeToScene } from "./earthFrame";
 import { disposeSmallBodies, makeSmallBodies, setSmallBodiesSun, setSmallBodyShown } from "./smallBodies";
 
@@ -56,6 +57,13 @@ const ART_RADIUS: Record<string, number> = {
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
 const MAX_ART_RADIUS = 80;
+/**
+ * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
+ * of the map's width, so the middle of the disc shows each map pixel as one art pixel.
+ */
+const CLOSE_ART_RADIUS: Record<string, number> = { Mercury: 256 };
+/** How close the camera can come to such a body, in its radii (as the globe does the Earth). */
+const CLOSE_RADII = 1.35;
 
 const AU_KM = 149597870.7;
 const EARTH_RADIUS_AU = 6378.137 / AU_KM;
@@ -137,7 +145,8 @@ export class SolarSystem {
   private focusId = "Earth";
   private focusFrom: { from: THREE.Vector3; start: number } | null = null;
   private readonly clock = new THREE.Clock();
-  private earthMap: MapImage | null = null;
+  /** Surface maps of the bodies that have one (bodyArt.ts), once loaded. */
+  private readonly maps = new Map<string, MapImage>();
   /** While the globe has the camera, this view follows it (followGlobe) instead of drawing on its own. */
   private following = false;
   /** A flight home to the Earth, from a distance in AU. */
@@ -194,11 +203,14 @@ export class SolarSystem {
     this.dotShown.push(...this.dots.map(() => true));
     this.scene.add(this.dotPoints);
 
-    void earthMap().then((map) => {
-      this.earthMap = map;
-      const earth = this.byId.get("Earth");
-      if (earth) earth.lightKey = "";
-    });
+    for (const def of content.solarSystem) {
+      if (!hasMap(def.id)) continue;
+      void bodyMap(def.id)!.then((map) => {
+        this.maps.set(def.id, map);
+        const view = this.byId.get(def.id);
+        if (view) view.lightKey = "";
+      });
+    }
 
     const canvas = this.renderer.domElement;
     canvas.addEventListener("pointerdown", this.handleDown);
@@ -287,7 +299,7 @@ export class SolarSystem {
   private closest(id: string): number {
     if (id === "Earth") return HANDOFF * 0.98;
     const body = this.content.solarSystem.find((b) => b.id === id)!;
-    return Math.max(3 * (body.radiusKm / AU_KM), 2e-6);
+    return Math.max((id in CLOSE_ART_RADIUS ? CLOSE_RADII : 3) * (body.radiusKm / AU_KM), 2e-6);
   }
 
   /** Takes over from the globe: focused on the Earth, the camera where the globe's was (direction in the globe's frame, distance in Earth radii). */
@@ -445,7 +457,7 @@ export class SolarSystem {
       b.sprite.position.copy(at);
       // Close up, a body is drawn at its true size.
       const truePixels = (b.def.radiusKm / AU_KM) * this.pixelsPerUnit(at);
-      this.resizeArt(b, Math.max(b.baseR, Math.min(MAX_ART_RADIUS, Math.ceil(truePixels / PIXEL))));
+      this.resizeArt(b, Math.max(b.baseR, Math.min(CLOSE_ART_RADIUS[b.def.id] ?? MAX_ART_RADIUS, Math.ceil(truePixels / PIXEL))));
       const pixel = Math.max(PIXEL, truePixels / b.r);
       const size = b.canvas.width * pixel;
       b.sprite.scale.set(size * unit, size * unit, 1);
@@ -531,18 +543,22 @@ export class SolarSystem {
     const light: Light = { x: dir.x, y: dir.y, z: dir.z };
     // Finer steps on a big disc, where a jump in the terminator would show.
     const steps = b.r > 12 ? 40 : 8;
-    let key = `${b.r}:${Math.round(light.x * steps)},${Math.round(light.y * steps)},${Math.round(light.z * steps)}${this.earthMap ? "m" : ""}`;
+    const map = this.maps.get(b.def.id) ?? null;
+    let key = `${b.r}:${Math.round(light.x * steps)},${Math.round(light.y * steps)},${Math.round(light.z * steps)}${map ? "m" : ""}`;
     let orient: Orient | null = null;
-    if (b.def.id === "Earth") {
-      // View space to the globe's frame: camera to scene, then scene to globe.
-      const m = this.earthToScene.clone().transpose().multiply(new THREE.Matrix4().extractRotation(this.camera.matrixWorld));
+    const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years) : null;
+    if (frame) {
+      // View space to the body's own frame (the globe's, for the Earth): camera to scene, then scene to body.
+      const m = frame.clone().transpose().multiply(new THREE.Matrix4().extractRotation(this.camera.matrixWorld));
       const e = m.elements;
-      key += `|${[0, 1, 2, 4, 5, 6].map((i) => Math.round(e[i]! * 60)).join(",")}`;
+      // Finer on a big close-up disc, where a coarse step would make it jump as it turns.
+      const turnSteps = b.r > MAX_ART_RADIUS ? 1200 : 60;
+      key += `|${[0, 1, 2, 4, 5, 6].map((i) => Math.round(e[i]! * turnSteps)).join(",")}`;
       orient = ([x, y, z]) => [e[0]! * x + e[4]! * y + e[8]! * z, e[1]! * x + e[5]! * y + e[9]! * z, e[2]! * x + e[6]! * y + e[10]! * z];
     }
     if (key === b.lightKey) return;
     b.lightKey = key;
-    drawBody(b.canvas.getContext("2d")!, b.def.id, b.r, light, this.earthMap, orient);
+    drawBody(b.canvas.getContext("2d")!, b.def.id, b.r, light, map, orient);
     b.texture.needsUpdate = true;
   }
 

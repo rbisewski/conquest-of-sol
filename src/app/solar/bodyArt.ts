@@ -2,7 +2,8 @@
 // shown at a whole-number scale with nearest filtering, like the Earth's map. Each pixel of
 // the disc is a point on a sphere: its colour comes from the body's style (bands, spots, ice
 // caps, value noise) and its brightness from the Sun's direction in view space, in a few
-// steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map.
+// steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map, and
+// Mercury a pixel-art map made from MESSENGER's (tools/data/build_mercury.py).
 
 /** Light direction in view space: x right, y up, z towards the viewer. */
 export interface Light {
@@ -20,13 +21,28 @@ export interface MapImage {
   data: Uint8ClampedArray;
 }
 
-let mapLoad: Promise<MapImage> | null = null;
+/** Bodies with a surface map (equirectangular, longitude −180° to 180° east, in public/map). */
+const MAP_FILES: Record<string, string> = { Earth: "earth.png", Mercury: "mercury.png" };
+const mapLoads = new Map<string, Promise<MapImage>>();
+
+export function hasMap(id: string): boolean {
+  return id in MAP_FILES;
+}
 
 /** The globe's pixel map of the Earth, loaded once. */
 export function earthMap(): Promise<MapImage> {
-  mapLoad ??= (async () => {
+  return bodyMap("Earth")!;
+}
+
+/** A body's pixel map, loaded once; null if it has none. */
+export function bodyMap(id: string): Promise<MapImage> | null {
+  const file = MAP_FILES[id];
+  if (!file) return null;
+  let load = mapLoads.get(id);
+  if (load) return load;
+  load = (async () => {
     const image = new Image();
-    image.src = `${import.meta.env.BASE_URL}map/earth.png`;
+    image.src = `${import.meta.env.BASE_URL}map/${file}`;
     await image.decode();
     const canvas = document.createElement("canvas");
     canvas.width = image.width;
@@ -35,7 +51,8 @@ export function earthMap(): Promise<MapImage> {
     ctx.drawImage(image, 0, 0);
     return { width: image.width, height: image.height, data: ctx.getImageData(0, 0, image.width, image.height).data };
   })();
-  return mapLoad;
+  mapLoads.set(id, load);
+  return load;
 }
 
 interface Style {
@@ -180,7 +197,7 @@ export function canvasSize(id: string, r: number): number {
   return 2 * Math.ceil(r * (ring ? ring.outer : 1)) + 2;
 }
 
-/** Draws a lit body of art radius r into a canvas of canvasSize(id, r). */
+/** Draws a lit body of art radius r into a canvas of canvasSize(id, r), from its surface map when given (the body's own; orient turns view space into the map's frame). */
 export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, map: MapImage | null = null, orient: Orient | null = null): void {
   const style = STYLES[id] ?? MOON_STYLE;
   const size = ctx.canvas.width;
@@ -219,7 +236,7 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
       const lambert = dx * light.x + dy * light.y + z * light.z;
       // A slightly darker limb rounds the disc off.
       const limb = z < 0.35 ? 0.88 : 1;
-      put(x, y, surface(style, id, [dx, dy, z], id === "Earth" ? map : null, orient), shade(lambert) * limb);
+      put(x, y, surface(style, id, [dx, dy, z], map, orient), shade(lambert) * limb);
     }
   }
   ctx.putImageData(image, 0, 0);

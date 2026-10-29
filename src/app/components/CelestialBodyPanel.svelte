@@ -10,7 +10,7 @@
   import { baseContent } from "../../content/index";
   import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { drawBody, drawComet, drawRock, drawSun, earthMap, SUN_REACH, type MapImage } from "../solar/bodyArt";
+  import { bodyMap, drawBody, drawComet, drawRock, drawSun, SUN_REACH, type MapImage } from "../solar/bodyArt";
   import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
   import { scientific } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
@@ -39,8 +39,12 @@
   let tab = $state<"moons" | null>(null);
 
   let canvas = $state<HTMLCanvasElement>();
-  let map = $state<MapImage | null>(null);
-  void earthMap().then((m) => (map = m));
+  /** Surface maps of the bodies shown so far, by id, once loaded. */
+  let maps = $state<Record<string, MapImage>>({});
+  $effect(() => {
+    const id = body?.id;
+    if (id && !maps[id]) void bodyMap(id)?.then((m) => (maps = { ...maps, [id]: m }));
+  });
 
   /** Seconds between frames of the Sun's flames, as in the Solar System view, and of a comet's tails. */
   const SUN_FRAME = 1 / 10;
@@ -65,7 +69,7 @@
       return () => clearInterval(timer);
     }
     if (body.type !== "star") {
-      drawBody(ctx, body.id, PORTRAIT_RADIUS, LIGHT, map);
+      drawBody(ctx, body.id, PORTRAIT_RADIUS, LIGHT, maps[body.id] ?? null);
       return;
     }
     // The Sun's portrait burns on, its flames reaching to the frame.

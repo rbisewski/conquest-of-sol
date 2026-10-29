@@ -5,12 +5,16 @@ Sources (all free to use):
   World Bank Open Data (CC BY 4.0): population projections, GDP, Gini, governance, military spending.
   Our World in Data (CC BY 4.0): V-Dem electoral democracy index, UNDP mean years of schooling,
     Global Carbon Project annual CO2 emissions.
+  USGS Astrogeology (public domain): MESSENGER MDIS global colour mosaic of Mercury (665 m/px,
+    about 800 MB; Denevi et al.) and the USGS global DEM from MESSENGER stereo (665 m/px,
+    about 500 MB; Becker et al.), for build_mercury.py.
 
 Run: python3 tools/data/fetch.py
 """
 
 import json
 import pathlib
+import shutil
 import urllib.request
 
 CACHE = pathlib.Path(__file__).parent / ".cache"
@@ -25,6 +29,8 @@ FILES = {
     "owid_democracy.csv": "https://ourworldindata.org/grapher/electoral-democracy-index.csv",
     "owid_schooling.csv": "https://ourworldindata.org/grapher/mean-years-of-schooling-long-run.csv",
     "owid_co2.csv": "https://ourworldindata.org/grapher/annual-co2-emissions-per-country.csv",
+    "Mercury_MESSENGER_ClrMosaic_global_665m_v3.tif": "https://planetarymaps.usgs.gov/mosaic/Mercury_MESSENGER_ClrMosaic_global_665m_v3.tif",
+    "Mercury_Messenger_USGS_DEM_Global_665m_v2.tif": "https://planetarymaps.usgs.gov/mosaic/Mercury_Messenger_USGS_DEM_Global_665m_v2.tif",
 }
 
 # indicator -> (date range, extra query)
@@ -45,8 +51,10 @@ def download(name: str, url: str) -> None:
         return
     print(f"fetch   {name}")
     request = urllib.request.Request(url, headers={"User-Agent": "conquest-of-sol-data/1.0"})
-    with urllib.request.urlopen(request, timeout=600) as response:
-        target.write_bytes(response.read())
+    partial = target.with_suffix(target.suffix + ".part")
+    with urllib.request.urlopen(request, timeout=600) as response, open(partial, "wb") as out:
+        shutil.copyfileobj(response, out, 1 << 20)
+    partial.rename(target)
 
 
 def main() -> None:
