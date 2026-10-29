@@ -1,0 +1,878 @@
+{
+  "startYear": 2030,
+  "councilSize": 4,
+  "councilPhaseDays": [
+    1,
+    16
+  ],
+  "recruitPoolSize": 3,
+  "attribute": {
+    "min": 0,
+    "max": 25
+  },
+  "startingResources": {
+    "money": 50,
+    "influence": 30,
+    "ops": 10,
+    "boost": 0,
+    "missionControl": 0
+  },
+  "controlPoints": {
+    "gdpExponent": 0.18,
+    "divisor": 1.09,
+    "min": 1,
+    "max": 6,
+    "capacityExponent": 0.6,
+    "capacityDivisor": 2,
+    "capAttributes": [
+      "administration",
+      "persuasion",
+      "command"
+    ]
+  },
+  "corruption": {
+    "base": 0.5,
+    "perGovernment": 0.0265515,
+    "perCohesion": 0.0057342,
+    "perGdppc3000": 0.00824624,
+    "min": 0.05
+  },
+  "investment": {
+    "gdpExponent": 0.35,
+    "unrestThreshold": 2,
+    "unrestPenaltyPerPoint": 0.1,
+    "maxUnrestPenalty": 0.8,
+    "armyUpkeep": 0.5,
+    "navyUpkeep": 0.5
+  },
+  "populationScaling": {
+    "referenceMillions": 50,
+    "exponent": 0.35
+  },
+  "defaultPriorities": {
+    "economy": 3,
+    "welfare": 2,
+    "knowledge": 2,
+    "unity": 1,
+    "build-army": 1
+  },
+  "unrest": {
+    "base": 10.5,
+    "perGdppc10k": 1,
+    "perCohesion": 1,
+    "monthlyStep": 0.25
+  },
+  "priorityEffects": {
+    "economy": {
+      "gdppcBase": 3,
+      "gdppcPerGovernment": 0.5,
+      "gdppcPerEducation": 1,
+      "inequality": 0.00015
+    },
+    "welfare": {
+      "inequality": -0.005
+    },
+    "knowledge": {
+      "education": 0.005,
+      "educationLow": 8.5,
+      "educationHigh": 12,
+      "cohesionTowardCenter": 0.01,
+      "cohesionCenter": 5
+    },
+    "government": {
+      "governmentPerEducation": 0.001
+    },
+    "unity": {
+      "cohesionBase": 0.1,
+      "cohesionPerEducation": -0.005,
+      "cohesionPerGovernment": -0.005,
+      "cohesionMin": 0.025,
+      "education": -0.001,
+      "propagandaPerCp": 5,
+      "religionCpWeight": 4
+    },
+    "military": {
+      "miltech": 0.00125
+    },
+    "oppression": {
+      "government": -0.0025,
+      "unrestBase": 0.1,
+      "unrestPerGovernment": -0.01,
+      "unrestMultiplier": 3,
+      "cohesionPerGovernmentOver5": -0.025
+    },
+    "spoils": {
+      "inequality": 0.0025,
+      "government": -0.0005,
+      "propagandaPerEduGov": -0.125,
+      "moneyPerMonthlyIp": 5,
+      "moneyPerMissingGovernment": 2.5,
+      "aristocracyBonus": 0.2
+    },
+    "funding": {
+      "annualBase": 10,
+      "capPerGdpBillion": 5,
+      "financialSectorBonus": 0.05
+    },
+    "boost": {
+      "annualBase": 0.4,
+      "latitudeDivisor": 250
+    },
+    "foundSpaceProgram": {
+      "annualBoost": 0.1
+    },
+    "foundMilitary": {
+      "minMiltech": 2
+    },
+    "buildArmy": {
+      "populationBase": 5,
+      "populationPerArmy": 25
+    },
+    "buildNavy": {
+      "minControlPoints": 4,
+      "smallNationControlPoints": 3,
+      "smallNationGdppc": 40
+    }
+  },
+  "startingEconomy": {
+    "fundingShareOfGdp": {
+      "spaceProgram": 0.0005,
+      "other": 0.0001
+    }
+  },
+  "influence": {
+    "base": 2,
+    "perBillionSupporters": 20
+  },
+  "publicOpinion": {
+    "undecided": 0.86,
+    "affinityBias": 0.2
+  },
+  "propaganda": {
+    "opinionPerStrength": 0.004
+  },
+  "missions": {
+    "rollBase": 0.775,
+    "spend": {
+      "steps": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "bonusPerDoubling": 1
+    },
+    "costs": {
+      "controlNation": {
+        "resource": "influence",
+        "spend": true
+      },
+      "crackdown": {
+        "resource": "influence",
+        "spend": true
+      },
+      "purge": {
+        "resource": "influence",
+        "spend": true
+      },
+      "coup": {
+        "resource": "ops",
+        "spend": true
+      },
+      "assassinate": {
+        "resource": "ops",
+        "spend": true
+      },
+      "investigateCouncilor": {
+        "resource": "ops",
+        "spend": true
+      },
+      "inspire": {
+        "resource": "influence",
+        "spend": true
+      },
+      "stabilizeNation": {
+        "resource": "ops",
+        "spend": true
+      },
+      "increaseUnrest": {
+        "resource": "ops",
+        "spend": true
+      },
+      "publicCampaign": {
+        "resource": "money",
+        "spend": true
+      },
+      "defendInterests": {
+        "resource": "influence",
+        "fixed": 16
+      },
+      "advise": {
+        "resource": "influence",
+        "fixed": 8
+      },
+      "setPolicy": {
+        "resource": "influence",
+        "fixed": 8
+      }
+    },
+    "critDivisor": 10,
+    "gdpScalingFactor": 1,
+    "councilStatDivisor": 12,
+    "supportBase": 10,
+    "neighborWeight": 6,
+    "allyWeight": 6,
+    "cpTypeBonus": 3,
+    "ideologyWeight": 2,
+    "defendBonus": 10,
+    "overcapDivisor": 3,
+    "critSuccessPropaganda": 5,
+    "controlNation": {
+      "order": 4,
+      "xp": 2,
+      "supportWeight": 3
+    },
+    "publicCampaign": {
+      "order": 1,
+      "xp": 1,
+      "populationScale": 1
+    },
+    "defendInterests": {
+      "order": 0,
+      "xp": 1,
+      "daysPerCp": 90,
+      "baseDays": 360
+    },
+    "crackdown": {
+      "order": 2,
+      "xp": 2,
+      "disableMonths": 1,
+      "critDisableMonths": 2
+    },
+    "purge": {
+      "order": 4,
+      "xp": 2,
+      "difficulty": 3,
+      "disabledBase": -10,
+      "disabledPerExtra": -5
+    },
+    "setPolicy": {
+      "order": 1,
+      "xp": 1
+    },
+    "investigateCouncilor": {
+      "order": 1,
+      "xp": 2,
+      "intelBase": 0.25,
+      "intelPerInvestigation": 0.005
+    },
+    "assassinate": {
+      "order": 1,
+      "xp": 3,
+      "difficulty": 12,
+      "detainPhases": 3
+    },
+    "protectTarget": {
+      "order": 0,
+      "xp": 1
+    },
+    "inspire": {
+      "order": 0,
+      "xp": 2,
+      "difficulty": 8,
+      "loyalty": {
+        "criticalSuccess": [
+          2,
+          4
+        ],
+        "success": [
+          1,
+          3
+        ],
+        "failure": [
+          -1,
+          1
+        ],
+        "criticalFailure": [
+          -3,
+          -1
+        ]
+      },
+      "apparentLoyalty": {
+        "criticalSuccess": 3,
+        "success": 2,
+        "failure": 0,
+        "criticalFailure": -2
+      }
+    },
+    "stabilizeNation": {
+      "order": 2,
+      "xp": 2,
+      "unrestReduction": 1
+    },
+    "increaseUnrest": {
+      "order": 2,
+      "xp": 2,
+      "unrestIncrease": 1
+    },
+    "advise": {
+      "order": 0,
+      "xp": 1
+    },
+    "detection": {
+      "sameRegion": 0.1667,
+      "sameNation": 0.0833,
+      "neighborRegion": 0.0417,
+      "cpWeight": 2,
+      "intel": 0.1,
+      "critIntel": 0.25
+    },
+    "surveilLocation": {
+      "order": 0,
+      "xp": 1,
+      "detectionBonus": 12
+    },
+    "goToGround": {
+      "order": 0,
+      "xp": 1,
+      "intelLossBase": 0.5,
+      "intelLossPerEspionage": 0.03
+    },
+    "noise": {
+      "goToGround": -8,
+      "surveilLocation": -4,
+      "investigateCouncilor": -2,
+      "inspire": -4,
+      "coup": 2
+    },
+    "intelDecay": 0.025,
+    "intelToLocate": 0.1,
+    "intelToTarget": 0.25,
+    "coup": {
+      "order": 2,
+      "xp": 2,
+      "difficulty": 8,
+      "eliteDissatisfactionWeight": 15,
+      "eliteSatisfactionWeight": 10,
+      "detainPhases": 3,
+      "critFailPropaganda": -5
+    }
+  },
+  "councilors": {
+    "augmentXpCost": 20,
+    "maxStartingTraits": 4,
+    "orgMarket": {
+      "refreshDay": 15,
+      "minSize": 3,
+      "maxSize": 5,
+      "keepChancePerTier": 0.25
+    },
+    "orgSellRefund": 0.333,
+    "hireCost": 60,
+    "recruitPool": {
+      "minSize": 6,
+      "maxSize": 9
+    }
+  },
+  "military": {
+    "deployedArmyUpkeep": 1,
+    "landKmPerDay": 300,
+    "navalKmPerDay": 792,
+    "navalBaseDays": 14,
+    "speedMiltech": 4,
+    "hostileMoveFactor": 5,
+    "unrestMoveDivisor": 6.5,
+    "smallRegionKm2": 150000,
+    "airliftBaseDays": 3,
+    "homeBonus": 0.2,
+    "disabledCpPenalty": 0.2,
+    "cohesionBonus": 0.05,
+    "unrestPenalty": 0.05,
+    "adjacentRegionBonus": 0.1,
+    "lostHealthEffect": 0.5,
+    "occupationEffect": 0.3333333333,
+    "hitBase": 0.775,
+    "hitExponent": 1.5,
+    "armyDamage": 0.02,
+    "regionDamage": 0.000225,
+    "occupationRate": 0.003,
+    "maxOccupationPerHit": 0.1,
+    "crowdingAreaKm2": 100000,
+    "crowdingPenalty": 0.02,
+    "crowdingFloor": 0.5,
+    "liberationRate": 0.003,
+    "occupationDecay": 0.01,
+    "heal": {
+      "base": 0.005,
+      "homeNation": 0.005,
+      "homeRegion": 0.005
+    },
+    "armyRefund": {
+      "home": [
+        0.3,
+        0.5
+      ],
+      "abroad": [
+        0.15,
+        0.25
+      ]
+    },
+    "navyRefund": {
+      "home": [
+        0.7,
+        0.9
+      ],
+      "abroad": [
+        0.6,
+        0.8
+      ],
+      "blockaded": [
+        0.1,
+        0.3
+      ]
+    },
+    "unrestPerArmy": 0.5,
+    "unrestRegionExponent": 0.65,
+    "strength": {
+      "perRegion": 0.7,
+      "perArmy": 3,
+      "perNavy": 1,
+      "perUnrest": -1,
+      "hasNukes": 100,
+      "perNuke": 5
+    },
+    "conquest": {
+      "unrestBase": 4,
+      "unrestPerOccupiedShare": -6,
+      "cohesionLoss": 3,
+      "governmentLoss": 0.5,
+      "governmentConvergence": [
+        0.25,
+        0.75
+      ]
+    },
+    "declareWar": {
+      "earlyRivalryDays": 90,
+      "earlyCohesionPerGovernment": 0.5,
+      "attackerCohesion": 1,
+      "defenderCohesion": 3,
+      "allyCohesion": 1,
+      "joinCohesion": 0.5,
+      "maxUnrest": 8,
+      "minCohesion": 2,
+      "maxGovernment": 7
+    },
+    "nukes": {
+      "gdp": {
+        "offensive": [
+          0.525,
+          0.875
+        ],
+        "defensive": [
+          0.15,
+          0.25
+        ]
+      },
+      "population": {
+        "offensive": [
+          0.1875,
+          0.3125
+        ],
+        "defensive": [
+          0.01875,
+          0.03125
+        ]
+      },
+      "pollution": {
+        "offensive": [
+          0.075,
+          0.125
+        ],
+        "defensive": [
+          0.00375,
+          0.00625
+        ]
+      },
+      "worldGdp": {
+        "perWorldShare": 0.25,
+        "random": 0.02,
+        "defensivePerWorldShare": 0.05
+      },
+      "funding": 0.5,
+      "keepPriorities": [
+        "spoils",
+        "unity",
+        "oppression"
+      ],
+      "hardening": [
+        0.01,
+        0.05
+      ],
+      "hardeningFrom": 3.79,
+      "friendlyDivisor": [
+        48,
+        52
+      ],
+      "councilorDeath": 0.5,
+      "survivorTrait": "survivor",
+      "aerosols": 0.00777
+    }
+  },
+  "claims": {
+    "hostileGovernmentGap": 1.5,
+    "hostilePenalty": 1.6,
+    "integration": 200,
+    "demandCooldownDays": 90,
+    "independenceCooldownDays": 180,
+    "annex": {
+      "baseDays": 45,
+      "minDays": 45,
+      "maxDays": 270,
+      "minHealth": 0.8
+    },
+    "secession": {
+      "maxCohesion": 3,
+      "minUnrest": 6,
+      "neighborEveryDays": 4,
+      "hostileFactor": 3,
+      "armyGovernment": 8,
+      "armyDivisor": 20,
+      "divisor": 75
+    },
+    "unrestSecession": {
+      "base": 1000,
+      "criticalFactor": 10,
+      "projectFactor": 3,
+      "divisor": 300
+    },
+    "conquestUnrest": {
+      "psyops": 3,
+      "guerrilla": 3,
+      "perRaised": 0.25
+    },
+    "unificationMaxUnrest": 9.8
+  },
+  "diplomacy": {
+    "influenceCost": 10,
+    "cooldownDays": 90,
+    "rejectedCooldownDays": 60,
+    "minControlPoints": 2,
+    "disarmNukes": 5,
+    "consolidationDays": 90,
+    "federation": {
+      "joinCooldownDays": 360,
+      "leaveCooldownDays": 720,
+      "vetoGovernment": 4,
+      "shareExponent": 3,
+      "economyExponent": 0.25,
+      "economyDivisor": 2,
+      "leaveGdpLoss": 0.02,
+      "defectionWarDays": 30
+    }
+  },
+  "climate": {
+    "start": {
+      "co2": 443,
+      "ch4": 1.98,
+      "n2o": 0.3386,
+      "aerosols": 0,
+      "seaLevel": 28
+    },
+    "gases": {
+      "co2": {
+        "baseline": 325.68,
+        "ppmPerDegree": 94.5,
+        "removalDivisor": 90000,
+        "ppmPerTonne": 4.2094188e-11,
+        "spoils": 6.124,
+        "environment": -4.758325
+      },
+      "ch4": {
+        "baseline": 1.3,
+        "ppmPerDegree": 4.5,
+        "removalDivisor": 144,
+        "ppmPerTonne": 1.9212627e-12,
+        "spoils": 0.832,
+        "environment": -0.033275
+      },
+      "n2o": {
+        "baseline": 0.29,
+        "ppmPerDegree": 0.3269896,
+        "removalDivisor": 14641,
+        "ppmPerTonne": 2.7429978e-14,
+        "spoils": 0.2,
+        "environment": -0.03025
+      }
+    },
+    "aerosols": {
+      "ppmPerDegree": 0.03885,
+      "minDegrees": -40,
+      "decay": 0.935,
+      "decayFlat": 0.001,
+      "perNuclearWeapon": 7.77e-05
+    },
+    "emissions": {
+      "perGdpBillion": 275000,
+      "perPerson": 2.41,
+      "gdppcFull": 15000,
+      "gdppcFullSquared": 7500,
+      "perOilRegion": 250000000,
+      "oilCapPerGdpBillion": 27500
+    },
+    "pollution": {
+      "max": 10,
+      "floor": 0.3325,
+      "floorTechs": {
+        "ArrivalInternationalDevelopment": 0.05,
+        "DesignerLifeforms": 0.05,
+        "IntegratedEarthSpaceEconomy": 0.05,
+        "CleanEnergy": 0.1,
+        "ClimateChangeMitigation": 0.1
+      },
+      "spoilsGain": 0.0005,
+      "spoilsGainPerResource": 0.0005,
+      "environmentCut": 0.005,
+      "spoilsResourceBonus": 0.5,
+      "spoilsDivisor": 1000000,
+      "environmentDivisor": 10000
+    },
+    "damage": {
+      "threshold": 0.25,
+      "square": 0.0014577,
+      "linear": 0.0031839,
+      "inequalityBase": 1.14,
+      "extremeStart": 10.25,
+      "extremeStartMin": 5.25,
+      "extremeCap": 1.5,
+      "cold": 0.04032,
+      "colderAt": -7,
+      "coldestAt": -10.5,
+      "coldest": 0.4032,
+      "cap": 0.99,
+      "inequalityShare": 0.2,
+      "co2EducationAt": 945,
+      "co2EducationMinEducation": 9.45,
+      "co2EducationPerPpm": 0.005,
+      "co2EducationMax": 0.1,
+      "populationAt": 8,
+      "populationPerDegree": 0.01
+    },
+    "seaLevel": {
+      "perDegreeMonth": 0.017,
+      "visibleAt": 60
+    },
+    "melts": [
+      {
+        "name": "Larsen A Ice Shelf",
+        "degrees": 0.4,
+        "cm": 0
+      },
+      {
+        "name": "Larsen B Ice Shelf",
+        "degrees": 0.55,
+        "cm": 0
+      },
+      {
+        "name": "Larsen C Ice Shelf",
+        "degrees": 0.94,
+        "cm": 5
+      },
+      {
+        "name": "Thwaites Ice Shelf",
+        "degrees": 1.35,
+        "cm": 10
+      },
+      {
+        "name": "Pine Island Glacier",
+        "degrees": 1.8,
+        "cm": 20
+      },
+      {
+        "name": "Greenland Ice Sheet",
+        "degrees": 2.2,
+        "cm": 120
+      },
+      {
+        "name": "Totten Ice Shelf",
+        "degrees": 2.7,
+        "cm": 10
+      },
+      {
+        "name": "Aurora Basin",
+        "degrees": 3.8,
+        "cm": 20
+      },
+      {
+        "name": "Wilkes Basin",
+        "degrees": 4.2,
+        "cm": 120
+      },
+      {
+        "name": "West Antarctic Ice Sheet",
+        "degrees": 4.8,
+        "cm": 50
+      }
+    ],
+    "events": {
+      "methane": {
+        "degrees": 1.25,
+        "cooldownMonths": 8,
+        "chancePerMonth": 0.2,
+        "ch4": [
+          0.04,
+          0.06
+        ]
+      },
+      "volcano": {
+        "cooldownMonths": 72,
+        "chancePerMonth": 0.03,
+        "aerosols": [
+          0.008,
+          0.012
+        ]
+      },
+      "majorVolcano": {
+        "cooldownMonths": 600,
+        "chancePerMonth": 0.003,
+        "aerosols": [
+          0.016,
+          0.024
+        ]
+      },
+      "colossalVolcano": {
+        "cooldownMonths": 100000,
+        "chancePerMonth": 0.0005,
+        "aerosols": [
+          0.04,
+          0.06
+        ]
+      }
+    },
+    "choices": {
+      "extremists": [
+        "iron-dawn",
+        "choir"
+      ],
+      "exploiters": [
+        "meridian"
+      ],
+      "wealthMitigationGdppc": 25000,
+      "degradation": {
+        "degrees": 1.5,
+        "chancePerMonth": 0.25,
+        "mitigationTech": "ClimateChangeMitigation",
+        "mitigatedChancePerMonth": 0.125,
+        "cooldownMonths": 3,
+        "regionCooldownMonths": 12,
+        "protectedAt": 0.5,
+        "vulnerableWeight": 20,
+        "lowWelfareWeight": 10,
+        "lowWelfareShare": 0.1,
+        "ignore": {
+          "recession": 0.2,
+          "unrest": 3,
+          "propaganda": -10
+        },
+        "subsidize": {
+          "recession": 0.1,
+          "propaganda": 10,
+          "cost": {
+            "money": 10,
+            "moneyPerMillion": 2
+          }
+        },
+        "recruit": {
+          "recession": 0.2,
+          "cohesion": 1,
+          "propaganda": 25,
+          "cost": {
+            "moneyPerMillion": 0.2,
+            "influencePerMillion": 0.004
+          }
+        },
+        "loot": {
+          "recession": 0.5,
+          "unrest": 3,
+          "education": -1,
+          "inequality": 1,
+          "cost": {
+            "moneyPerMillion": -1
+          }
+        }
+      },
+      "wetBulb": {
+        "degrees": 1.5,
+        "months": [
+          5,
+          10
+        ],
+        "chancePerMonth": 0.1,
+        "cooldownMonths": 8,
+        "regionCooldownMonths": 48,
+        "population": 0.005,
+        "assist": {
+          "population": 0.0025,
+          "propaganda": 10,
+          "cost": {
+            "money": 100,
+            "ops": 50,
+            "influence": -50
+          }
+        }
+      },
+      "cropFailures": {
+        "degrees": -4,
+        "cooldownMonths": 120,
+        "gdp": 0.5,
+        "cohesion": 6,
+        "population": 0.33
+      }
+    }
+  },
+  "difficulty": {
+    "easy": {
+      "researchCost": 0.6,
+      "aiBonus": -0.25
+    },
+    "normal": {
+      "researchCost": 1.0,
+      "aiBonus": 0
+    },
+    "hard": {
+      "researchCost": 1.8,
+      "aiBonus": 0.25
+    }
+  },
+  "research": {
+    "startingTechs": [
+      "WeAreNotAlone",
+      "Skywatch",
+      "MissionToSpace"
+    ],
+    "maxProjectSlots": 3,
+    "factionBase": 30,
+    "maxPips": 3,
+    "defaultPips": 1,
+    "bonusPerActiveSlot": 0.05,
+    "sciencePerPoint": 0.01,
+    "knowledgeSectorBonus": 0.05,
+    "startingMaxMiltech": 5,
+    "national": {
+      "scale": 0.0075,
+      "gdppcPivot": 15000,
+      "gdppcKnee": 30000,
+      "gdppcExponent": 0.6,
+      "educationCap": 12,
+      "governmentRoot": 6,
+      "basePopulationDivisor": 5000,
+      "cohesionPeak": 5,
+      "cohesionSlope": 0.1,
+      "cohesionMax": 1.25,
+      "unrestSquared": 0.01
+    }
+  }
+}

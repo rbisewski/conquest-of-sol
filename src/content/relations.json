@@ -1,0 +1,58 @@
+{
+  "rivalries": [
+    ["ind", "pak"],
+    ["kor", "prk"],
+    ["isr", "irn"],
+    ["chn", "twn"],
+    ["arm", "aze"],
+    ["sau", "irn"],
+    ["usa", "prk"],
+    ["usa", "irn"],
+    ["rus", "ukr"],
+    ["chn", "ind"],
+    ["eth", "eri"],
+    ["ven", "guy"],
+    ["mar", "dza"]
+  ],
+  "alliances": [
+    ["usa", "can"],
+    ["usa", "gbr"],
+    ["usa", "jpn"],
+    ["usa", "kor"],
+    ["usa", "aus"],
+    ["gbr", "fra"],
+    ["chn", "prk"]
+  ],
+  "federations": [
+    { "name": "European Union", "leader": "fra",
+      "members": ["aut", "bel", "bgr", "cyp", "cze", "deu", "dnk", "esp", "est", "fin", "fra", "grc", "hrv", "hun", "irl", "ita", "ltu", "lux", "lva", "mlt", "nld", "pol", "prt", "rou", "svk", "svn", "swe"] },
+    { "name": "Eurasian Union", "leader": "rus",
+      "members": ["arm", "blr", "kaz", "kgz", "rus"] }
+  ],
+  "federationNames": {
+    "eth": "African Union",
+    "gtm": "Central American Confederation",
+    "kaz": "Central Asian Union",
+    "tza": "East African Federation",
+    "rus": "Eurasian Union",
+    "fra": "European Union",
+    "col": "Gran Colombia",
+    "ago": "Great Bantu Free State",
+    "nga": "Nigerian Confederation",
+    "swe": "Nordic Federation",
+    "jpn": "Pacific Defense League",
+    "chn": "Pan-Asian Combine",
+    "per": "Peruvian Confederation",
+    "aus": "Republic of the Southern Cross",
+    "pol": "Slavic Commonwealth",
+    "bol": "South American Union",
+    "tha": "Southeast Asian Alliance",
+    "dza": "Tamazgha",
+    "tur": "Turkestan",
+    "egy": "United Arab League",
+    "mys": "United Malay Nation",
+    "usa": "United States of North America",
+    "mli": "Sahel Confederation",
+    "zaf": "Southern Africa Federation"
+  }
+}

@@ -1,0 +1,20 @@
+[
+  { "id": "economy", "name": "Economy", "cost": 1, "diversity": 0.5 },
+  { "id": "welfare", "name": "Welfare", "cost": 1, "diversity": 0.2 },
+  { "id": "environment", "name": "Environment", "cost": 1, "diversity": 0.2 },
+  { "id": "knowledge", "name": "Knowledge", "cost": 1, "diversity": 0.2 },
+  { "id": "government", "name": "Government", "cost": 1, "diversity": 0.2 },
+  { "id": "unity", "name": "Unity", "cost": 2, "diversity": 0.2 },
+  { "id": "military", "name": "Military", "cost": 1, "diversity": 0.2 },
+  { "id": "oppression", "name": "Oppression", "cost": 1 },
+  { "id": "spoils", "name": "Spoils", "cost": 1 },
+  { "id": "funding", "name": "Funding", "cost": 1 },
+  { "id": "boost", "name": "Boost", "cost": 2 },
+  { "id": "mission-control", "name": "Mission Control", "cost": 25 },
+  { "id": "found-space-program", "name": "Found Space Program", "cost": 50 },
+  { "id": "found-military", "name": "Found Military", "cost": 40 },
+  { "id": "build-army", "name": "Build Army", "cost": 60 },
+  { "id": "build-navy", "name": "Build Navy", "cost": 100 },
+  { "id": "atomic-bomb", "name": "Develop Atomic Bomb", "cost": 80 },
+  { "id": "nuclear-weapons", "name": "Nuclear Weapons", "cost": 40 }
+]

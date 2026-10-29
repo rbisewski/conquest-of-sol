@@ -1,0 +1,9 @@
+[
+  { "id": "aegis", "name": "Aegis Coalition", "ideology": "Defend humanity, expel the visitors", "alienStance": -2, "means": 1, "color": "#4a90d9" },
+  { "id": "iron-dawn", "name": "Iron Dawn", "ideology": "Total war, human supremacy", "alienStance": -3, "means": -3, "color": "#c0392b" },
+  { "id": "lumen", "name": "Lumen Institute", "ideology": "Understanding and contact", "alienStance": 1, "means": 2, "color": "#f1c40f" },
+  { "id": "meridian", "name": "Meridian Consortium", "ideology": "Profit and power", "alienStance": 0, "means": 0, "color": "#27ae60" },
+  { "id": "ark", "name": "Ark Covenant", "ideology": "Escape", "alienStance": -1, "means": -1, "color": "#e67e22" },
+  { "id": "concord", "name": "The Concord", "ideology": "Negotiated vassalage", "alienStance": 2, "means": -2, "color": "#8e44ad" },
+  { "id": "choir", "name": "Choir of the Descent", "ideology": "Devotion to the visitors", "alienStance": 3, "means": -1, "color": "#1abc9c" }
+]

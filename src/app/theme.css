@@ -1,0 +1,131 @@
+/* UI skin after Terra Invicta's strategy layer (SPEC 2.13): translucent slate panels with
+   thin steel borders, light uppercase section headers, and icon-led rows of numbers. */
+@import "@fontsource-variable/exo-2";
+
+:root {
+  --bg: #070b12;
+  --panel: rgba(20, 30, 41, 0.9);
+  --panel-solid: #141e29;
+  --cell: rgba(8, 13, 19, 0.72);
+  --header: rgba(56, 72, 88, 0.85);
+  --header-text: #d5e2ec;
+  --border: #4d6072;
+  --border-soft: #2b3a48;
+  --border-strong: #8ba4b9;
+  --text: #dbe5ec;
+  --muted: #8b9cab;
+  --accent: #9fd7ff;
+  --gold: #e9bd4c;
+  --good: #9be35b;
+  --bad: #ef4b3f;
+  --button: rgba(48, 64, 80, 0.92);
+  --button-hover: rgba(72, 94, 114, 0.95);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 400 14px/1.35 "Exo 2 Variable", "Exo 2", system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+}
+
+/* A section title bar, as in Terra Invicta's OVERVIEW / MILITARY headers. */
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 0;
+  padding: 2px 8px;
+  background: var(--header);
+  color: var(--header-text);
+  font-size: 0.95em;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cell {
+  background: var(--cell);
+  border: 1px solid var(--border-soft);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.good {
+  color: var(--good);
+}
+
+.bad {
+  color: var(--bad);
+}
+
+button,
+select,
+input {
+  font: inherit;
+  color: var(--text);
+  background: var(--button);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled),
+select:hover {
+  background: var(--button-hover);
+  border-color: var(--border-strong);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Square icon button (close, search, speed controls). */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  min-width: 26px;
+  min-height: 26px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -1,0 +1,10580 @@
+[
+ {
+  "id": "afg-1",
+  "name": "Kabul",
+  "nationId": "afg",
+  "lat": 35.01,
+  "lon": 69.03,
+  "population": 37.993,
+  "areaKm2": 298594,
+  "xyz": [
+   0.293096,
+   0.764843,
+   0.573681
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "afg-2",
+   "afg-3",
+   "chn-11",
+   "pak-2",
+   "pak-4",
+   "pak-6",
+   "pak-7",
+   "tjk-1",
+   "tkm-1",
+   "uzb-3"
+  ]
+ },
+ {
+  "id": "afg-2",
+  "name": "Hirat",
+  "nationId": "afg",
+  "lat": 34.53,
+  "lon": 63.28,
+  "population": 5.634,
+  "areaKm2": 187397,
+  "xyz": [
+   0.370439,
+   0.735875,
+   0.5668
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "afg-3",
+   "irn-3",
+   "irn-4",
+   "tkm-1"
+  ]
+ },
+ {
+  "id": "afg-3",
+  "name": "Kandahar",
+  "nationId": "afg",
+  "lat": 31.13,
+  "lon": 65.2,
+  "population": 6.412,
+  "areaKm2": 179248,
+  "xyz": [
+   0.359076,
+   0.776999,
+   0.517046
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "afg-2",
+   "irn-3",
+   "pak-4"
+  ]
+ },
+ {
+  "id": "ago-1",
+  "name": "Luanda",
+  "nationId": "ago",
+  "lat": -8.65,
+  "lon": 13.38,
+  "population": 31.913,
+  "areaKm2": 182800,
+  "xyz": [
+   0.961781,
+   0.228804,
+   -0.150422
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "ago-3",
+   "ago-4",
+   "cod-1",
+   "cog-1"
+  ]
+ },
+ {
+  "id": "ago-2",
+  "name": "Luena",
+  "nationId": "ago",
+  "lat": -15.0,
+  "lon": 20.39,
+  "population": 0.664,
+  "areaKm2": 377916,
+  "xyz": [
+   0.905378,
+   0.336581,
+   -0.258853
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ago-3",
+   "ago-4",
+   "cod-2",
+   "nam-1",
+   "zmb-1"
+  ]
+ },
+ {
+  "id": "ago-3",
+  "name": "Huambo",
+  "nationId": "ago",
+  "lat": -13.05,
+  "lon": 15.13,
+  "population": 10.734,
+  "areaKm2": 434051,
+  "xyz": [
+   0.940374,
+   0.254321,
+   -0.225872
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ago-1",
+   "ago-2",
+   "ago-4",
+   "nam-1"
+  ]
+ },
+ {
+  "id": "ago-4",
+  "name": "Malanje",
+  "nationId": "ago",
+  "lat": -9.12,
+  "lon": 18.73,
+  "population": 1.849,
+  "areaKm2": 277338,
+  "xyz": [
+   0.935051,
+   0.317107,
+   -0.158501
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ago-1",
+   "ago-2",
+   "ago-3",
+   "cod-1",
+   "cod-2",
+   "cod-4"
+  ]
+ },
+ {
+  "id": "alb-1",
+  "name": "Durrës",
+  "nationId": "alb",
+  "lat": 41.33,
+  "lon": 19.81,
+  "population": 2.249,
+  "areaKm2": 29281,
+  "xyz": [
+   0.70654,
+   0.25448,
+   0.660335
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "grc-1",
+   "mkd-1",
+   "mne-1",
+   "xkx-1"
+  ]
+ },
+ {
+  "id": "are-1",
+  "name": "Dubay",
+  "nationId": "are",
+  "lat": 24.72,
+  "lon": 55.08,
+  "population": 12.28,
+  "areaKm2": 79154,
+  "xyz": [
+   0.520016,
+   0.744816,
+   0.41813
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "omn-1",
+   "sau-3"
+  ]
+ },
+ {
+  "id": "arg-1",
+  "name": "Ciudad de Buenos Aires",
+  "nationId": "arg",
+  "lat": -34.12,
+  "lon": -58.98,
+  "population": 32.049,
+  "areaKm2": 637396,
+  "xyz": [
+   0.426578,
+   -0.709483,
+   -0.56095
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "arg-2",
+   "arg-3",
+   "arg-4",
+   "bra-4",
+   "bra-9",
+   "pry-1",
+   "ury-1"
+  ]
+ },
+ {
+  "id": "arg-2",
+  "name": "Neuquen",
+  "nationId": "arg",
+  "lat": -43.9,
+  "lon": -67.79,
+  "population": 1.88,
+  "areaKm2": 714612,
+  "xyz": [
+   0.27237,
+   -0.667108,
+   -0.693384
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "arg-1",
+   "arg-4",
+   "chl-1",
+   "chl-2"
+  ]
+ },
+ {
+  "id": "arg-3",
+  "name": "Tucumán",
+  "nationId": "arg",
+  "lat": -26.12,
+  "lon": -64.89,
+  "population": 5.168,
+  "areaKm2": 716725,
+  "xyz": [
+   0.381053,
+   -0.812996,
+   -0.440269
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "arg-1",
+   "arg-4",
+   "bol-1",
+   "bol-2",
+   "chl-1",
+   "pry-1"
+  ]
+ },
+ {
+  "id": "arg-4",
+  "name": "Córdoba",
+  "nationId": "arg",
+  "lat": -33.45,
+  "lon": -66.05,
+  "population": 7.489,
+  "areaKm2": 726911,
+  "xyz": [
+   0.338718,
+   -0.762565,
+   -0.551148
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "arg-1",
+   "arg-2",
+   "arg-3",
+   "chl-1"
+  ]
+ },
+ {
+  "id": "arm-1",
+  "name": "Erevan",
+  "nationId": "arm",
+  "lat": 40.28,
+  "lon": 44.5,
+  "population": 2.994,
+  "areaKm2": 27222,
+  "xyz": [
+   0.544109,
+   0.534737,
+   0.646531
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "aze-1",
+   "geo-1",
+   "irn-5",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "aus-1",
+  "name": "Victoria",
+  "nationId": "aus",
+  "lat": -37.12,
+  "lon": 145.17,
+  "population": 8.625,
+  "areaKm2": 357719,
+  "xyz": [
+   -0.654531,
+   0.455392,
+   -0.603496
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "aus-5",
+   "aus-6"
+  ]
+ },
+ {
+  "id": "aus-2",
+  "name": "Darwin",
+  "nationId": "aus",
+  "lat": -19.65,
+  "lon": 133.13,
+  "population": 0.482,
+  "areaKm2": 1406169,
+  "xyz": [
+   -0.643855,
+   0.687311,
+   -0.336234
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aus-3",
+   "aus-4",
+   "aus-5"
+  ]
+ },
+ {
+  "id": "aus-3",
+  "name": "Perth",
+  "nationId": "aus",
+  "lat": -25.88,
+  "lon": 121.27,
+  "population": 3.227,
+  "areaKm2": 2579530,
+  "xyz": [
+   -0.467056,
+   0.769006,
+   -0.43645
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aus-2",
+   "aus-5"
+  ]
+ },
+ {
+  "id": "aus-4",
+  "name": "Queensland",
+  "nationId": "aus",
+  "lat": -23.14,
+  "lon": 144.78,
+  "population": 5.198,
+  "areaKm2": 1771044,
+  "xyz": [
+   -0.75122,
+   0.53036,
+   -0.392921
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aus-2",
+   "aus-5",
+   "aus-6",
+   "png-1"
+  ]
+ },
+ {
+  "id": "aus-5",
+  "name": "South Australia",
+  "nationId": "aus",
+  "lat": -29.65,
+  "lon": 135.78,
+  "population": 2.073,
+  "areaKm2": 1033089,
+  "xyz": [
+   -0.622859,
+   0.606063,
+   -0.494707
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aus-1",
+   "aus-2",
+   "aus-3",
+   "aus-4",
+   "aus-6"
+  ]
+ },
+ {
+  "id": "aus-6",
+  "name": "New South Wales",
+  "nationId": "aus",
+  "lat": -32.48,
+  "lon": 146.78,
+  "population": 9.156,
+  "areaKm2": 815868,
+  "xyz": [
+   -0.705762,
+   0.462172,
+   -0.536933
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aus-1",
+   "aus-4",
+   "aus-5"
+  ]
+ },
+ {
+  "id": "aut-1",
+  "name": "Wien",
+  "nationId": "aut",
+  "lat": 48.02,
+  "lon": 15.46,
+  "population": 9.16,
+  "areaKm2": 86124,
+  "xyz": [
+   0.644629,
+   0.17826,
+   0.743422
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "che-1",
+   "cze-1",
+   "deu-3",
+   "hun-1",
+   "ita-2",
+   "svk-1",
+   "svn-1"
+  ]
+ },
+ {
+  "id": "aze-1",
+  "name": "Bakı",
+  "nationId": "aze",
+  "lat": 40.34,
+  "lon": 48.82,
+  "population": 10.514,
+  "areaKm2": 102953,
+  "xyz": [
+   0.501836,
+   0.573632,
+   0.647385
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "arm-1",
+   "geo-1",
+   "irn-5",
+   "rus-5",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "bdi-1",
+  "name": "Bujumbura Mairie",
+  "nationId": "bdi",
+  "lat": -3.36,
+  "lon": 29.66,
+  "population": 16.182,
+  "areaKm2": 32649,
+  "xyz": [
+   0.867525,
+   0.493928,
+   -0.058604
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "cod-3",
+   "rwa-1",
+   "tza-3"
+  ]
+ },
+ {
+  "id": "bel-1",
+  "name": "Flemish Brabant",
+  "nationId": "bel",
+  "lat": 50.86,
+  "lon": 4.51,
+  "population": 11.99,
+  "areaKm2": 35424,
+  "xyz": [
+   0.629308,
+   0.049646,
+   0.775569
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "deu-2",
+   "deu-4",
+   "fra-1",
+   "lux-1",
+   "nld-1"
+  ]
+ },
+ {
+  "id": "ben-1",
+  "name": "Littoral",
+  "nationId": "ben",
+  "lat": 7.59,
+  "lon": 2.33,
+  "population": 16.619,
+  "areaKm2": 112873,
+  "xyz": [
+   0.990427,
+   0.040376,
+   0.132004
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bfa-1",
+   "ner-1",
+   "nga-1",
+   "nga-4",
+   "nga-6",
+   "nga-7",
+   "tgo-1"
+  ]
+ },
+ {
+  "id": "bfa-1",
+  "name": "Oubritenga",
+  "nationId": "bfa",
+  "lat": 12.64,
+  "lon": -1.23,
+  "population": 20.284,
+  "areaKm2": 190270,
+  "xyz": [
+   0.975532,
+   -0.020945,
+   0.218856
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ben-1",
+   "bfa-2",
+   "gha-2",
+   "mli-2",
+   "mli-3",
+   "ner-1",
+   "tgo-1"
+  ]
+ },
+ {
+  "id": "bfa-2",
+  "name": "Houet",
+  "nationId": "bfa",
+  "lat": 11.34,
+  "lon": -4.04,
+  "population": 6.446,
+  "areaKm2": 96956,
+  "xyz": [
+   0.978033,
+   -0.069014,
+   0.196695
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bfa-1",
+   "civ-2",
+   "gha-2",
+   "mli-1",
+   "mli-3"
+  ]
+ },
+ {
+  "id": "bgd-1",
+  "name": "Dhaka",
+  "nationId": "bgd",
+  "lat": 24.17,
+  "lon": 90.43,
+  "population": 115.897,
+  "areaKm2": 41566,
+  "xyz": [
+   -0.006823,
+   0.912281,
+   0.409509
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "bgd-2",
+   "bgd-3",
+   "bgd-4",
+   "ind-23",
+   "ind-4"
+  ]
+ },
+ {
+  "id": "bgd-2",
+  "name": "Chittagong",
+  "nationId": "bgd",
+  "lat": 22.42,
+  "lon": 92.13,
+  "population": 38.174,
+  "areaKm2": 27786,
+  "xyz": [
+   -0.03441,
+   0.923742,
+   0.381466
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bgd-1",
+   "bgd-3",
+   "ind-23",
+   "mmr-2",
+   "mmr-3"
+  ]
+ },
+ {
+  "id": "bgd-3",
+  "name": "Khulna",
+  "nationId": "bgd",
+  "lat": 22.87,
+  "lon": 89.46,
+  "population": 18.052,
+  "areaKm2": 45235,
+  "xyz": [
+   0.008743,
+   0.921343,
+   0.388651
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bgd-1",
+   "bgd-2",
+   "bgd-4",
+   "ind-12"
+  ]
+ },
+ {
+  "id": "bgd-4",
+  "name": "Rajshahi",
+  "nationId": "bgd",
+  "lat": 25.01,
+  "lon": 89.07,
+  "population": 13.949,
+  "areaKm2": 41966,
+  "xyz": [
+   0.014784,
+   0.906106,
+   0.422793
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgd-1",
+   "bgd-3",
+   "ind-12",
+   "ind-16",
+   "ind-18",
+   "ind-23",
+   "ind-4"
+  ]
+ },
+ {
+  "id": "bgr-1",
+  "name": "Grad Sofiya",
+  "nationId": "bgr",
+  "lat": 42.77,
+  "lon": 24.89,
+  "population": 6.177,
+  "areaKm2": 115090,
+  "xyz": [
+   0.665935,
+   0.308998,
+   0.679008
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "grc-1",
+   "mkd-1",
+   "rou-1",
+   "rou-2",
+   "srb-1",
+   "tur-1"
+  ]
+ },
+ {
+  "id": "bhr-1",
+  "name": "Al Muḩarraq",
+  "nationId": "bhr",
+  "lat": 26.25,
+  "lon": 50.63,
+  "population": 1.711,
+  "areaKm2": 3762,
+  "xyz": [
+   0.568877,
+   0.693349,
+   0.442319
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "qat-1",
+   "sau-3"
+  ]
+ },
+ {
+  "id": "bhs-1",
+  "name": "New Providence",
+  "nationId": "bhs",
+  "lat": 24.89,
+  "lon": -77.0,
+  "population": 0.41,
+  "areaKm2": 55083,
+  "xyz": [
+   0.203994,
+   -0.883895,
+   0.420851
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "bih-1",
+  "name": "Sarajevo",
+  "nationId": "bih",
+  "lat": 44.12,
+  "lon": 18.0,
+  "population": 3.014,
+  "areaKm2": 53191,
+  "xyz": [
+   0.682731,
+   0.221881,
+   0.696166
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "hrv-1",
+   "mne-1",
+   "srb-1"
+  ]
+ },
+ {
+  "id": "blr-1",
+  "name": "City of Minsk",
+  "nationId": "blr",
+  "lat": 53.67,
+  "lon": 27.97,
+  "population": 8.78,
+  "areaKm2": 195385,
+  "xyz": [
+   0.523181,
+   0.277873,
+   0.805647
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ltu-1",
+   "lva-1",
+   "pol-1",
+   "rus-1",
+   "rus-18",
+   "ukr-1"
+  ]
+ },
+ {
+  "id": "blz-1",
+  "name": "Belize",
+  "nationId": "blz",
+  "lat": 17.38,
+  "lon": -88.57,
+  "population": 0.45,
+  "areaKm2": 30157,
+  "xyz": [
+   0.023886,
+   -0.954051,
+   0.298691
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gtm-1",
+   "mex-2"
+  ]
+ },
+ {
+  "id": "bol-1",
+  "name": "Santa Cruz",
+  "nationId": "bol",
+  "lat": -17.36,
+  "lon": -61.65,
+  "population": 5.573,
+  "areaKm2": 430358,
+  "xyz": [
+   0.453203,
+   -0.839995,
+   -0.298356
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "arg-3",
+   "bol-2",
+   "bra-1",
+   "bra-2",
+   "bra-4",
+   "pry-1"
+  ]
+ },
+ {
+  "id": "bol-2",
+  "name": "La Paz",
+  "nationId": "bol",
+  "lat": -16.1,
+  "lon": -66.76,
+  "population": 7.832,
+  "areaKm2": 644513,
+  "xyz": [
+   0.379156,
+   -0.882776,
+   -0.277394
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "arg-3",
+   "bol-1",
+   "bra-2",
+   "chl-1",
+   "per-2"
+  ]
+ },
+ {
+  "id": "bra-1",
+  "name": "Distrito Federal",
+  "nationId": "bra",
+  "lat": -15.02,
+  "lon": -49.83,
+  "population": 15.35,
+  "areaKm2": 1582167,
+  "xyz": [
+   0.623008,
+   -0.73805,
+   -0.25912
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "bol-1",
+   "bra-10",
+   "bra-2",
+   "bra-3",
+   "bra-4",
+   "bra-6",
+   "bra-8"
+  ]
+ },
+ {
+  "id": "bra-2",
+  "name": "Manaus",
+  "nationId": "bra",
+  "lat": -4.88,
+  "lon": -63.96,
+  "population": 7.971,
+  "areaKm2": 2113410,
+  "xyz": [
+   0.43743,
+   -0.895216,
+   -0.085102
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bol-1",
+   "bol-2",
+   "bra-1",
+   "bra-6",
+   "col-1",
+   "col-3",
+   "guy-1",
+   "per-2",
+   "per-4",
+   "ven-1"
+  ]
+ },
+ {
+  "id": "bra-3",
+  "name": "Fortaleza",
+  "nationId": "bra",
+  "lat": -7.04,
+  "lon": -38.53,
+  "population": 29.244,
+  "areaKm2": 718542,
+  "xyz": [
+   0.77634,
+   -0.618281,
+   -0.122572
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bra-1",
+   "bra-6",
+   "bra-8"
+  ]
+ },
+ {
+  "id": "bra-4",
+  "name": "Porto Alegre",
+  "nationId": "bra",
+  "lat": -25.04,
+  "lon": -51.62,
+  "population": 20.175,
+  "areaKm2": 635897,
+  "xyz": [
+   0.562562,
+   -0.710226,
+   -0.423204
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "arg-1",
+   "bol-1",
+   "bra-1",
+   "bra-10",
+   "bra-5",
+   "bra-9",
+   "pry-1"
+  ]
+ },
+ {
+  "id": "bra-5",
+  "name": "Sao Paulo",
+  "nationId": "bra",
+  "lat": -22.23,
+  "lon": -48.52,
+  "population": 53.976,
+  "areaKm2": 256620,
+  "xyz": [
+   0.613134,
+   -0.693525,
+   -0.378272
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bra-10",
+   "bra-4",
+   "bra-7"
+  ]
+ },
+ {
+  "id": "bra-6",
+  "name": "Pará",
+  "nationId": "bra",
+  "lat": -2.45,
+  "lon": -52.32,
+  "population": 9.369,
+  "areaKm2": 1391378,
+  "xyz": [
+   0.610689,
+   -0.790714,
+   -0.042773
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bra-1",
+   "bra-2",
+   "bra-3",
+   "fra-2",
+   "guy-1",
+   "sur-1"
+  ]
+ },
+ {
+  "id": "bra-7",
+  "name": "Rio de Janeiro",
+  "nationId": "bra",
+  "lat": -21.96,
+  "lon": -42.68,
+  "population": 33.324,
+  "areaKm2": 88732,
+  "xyz": [
+   0.681766,
+   -0.628769,
+   -0.373958
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bra-10",
+   "bra-5",
+   "bra-8"
+  ]
+ },
+ {
+  "id": "bra-8",
+  "name": "Bahia",
+  "nationId": "bra",
+  "lat": -11.5,
+  "lon": -41.64,
+  "population": 14.891,
+  "areaKm2": 841609,
+  "xyz": [
+   0.732351,
+   -0.651083,
+   -0.199381
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bra-1",
+   "bra-10",
+   "bra-3",
+   "bra-7"
+  ]
+ },
+ {
+  "id": "bra-9",
+  "name": "Rio Grande do Sul",
+  "nationId": "bra",
+  "lat": -29.73,
+  "lon": -53.66,
+  "population": 13.261,
+  "areaKm2": 260579,
+  "xyz": [
+   0.514637,
+   -0.699467,
+   -0.495879
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "arg-1",
+   "bra-4",
+   "ury-1"
+  ]
+ },
+ {
+  "id": "bra-10",
+  "name": "Minas Gerais",
+  "nationId": "bra",
+  "lat": -18.59,
+  "lon": -44.48,
+  "population": 18.513,
+  "areaKm2": 635263,
+  "xyz": [
+   0.676261,
+   -0.664114,
+   -0.318786
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bra-1",
+   "bra-4",
+   "bra-5",
+   "bra-7",
+   "bra-8"
+  ]
+ },
+ {
+  "id": "brn-1",
+  "name": "Brunei and Muara",
+  "nationId": "brn",
+  "lat": 4.7,
+  "lon": 114.7,
+  "population": 0.482,
+  "areaKm2": 12891,
+  "xyz": [
+   -0.416528,
+   0.905417,
+   0.082007
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "mys-2"
+  ]
+ },
+ {
+  "id": "btn-1",
+  "name": "Paro",
+  "nationId": "btn",
+  "lat": 27.4,
+  "lon": 90.01,
+  "population": 0.821,
+  "areaKm2": 47918,
+  "xyz": [
+   -0.000161,
+   0.887781,
+   0.460267
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "chn-8",
+   "ind-12",
+   "ind-16",
+   "ind-4"
+  ]
+ },
+ {
+  "id": "bwa-1",
+  "name": "Gaborone",
+  "nationId": "bwa",
+  "lat": -23.25,
+  "lon": 25.7,
+  "population": 2.766,
+  "areaKm2": 575298,
+  "xyz": [
+   0.827926,
+   0.398448,
+   -0.394686
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "nam-1",
+   "zaf-1",
+   "zaf-2",
+   "zwe-2"
+  ]
+ },
+ {
+  "id": "caf-1",
+  "name": "Bangui",
+  "nationId": "caf",
+  "lat": 4.79,
+  "lon": 18.22,
+  "population": 5.636,
+  "areaKm2": 279239,
+  "xyz": [
+   0.946519,
+   0.311644,
+   0.08354
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "caf-2",
+   "cmr-1",
+   "cmr-3",
+   "cod-5",
+   "cog-1",
+   "tcd-1"
+  ]
+ },
+ {
+  "id": "caf-2",
+  "name": "Bambari",
+  "nationId": "caf",
+  "lat": 6.77,
+  "lon": 22.32,
+  "population": 0.842,
+  "areaKm2": 349673,
+  "xyz": [
+   0.918656,
+   0.37708,
+   0.117823
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "caf-1",
+   "cod-3",
+   "cod-5",
+   "sdn-5",
+   "sds-1",
+   "tcd-1",
+   "tcd-2"
+  ]
+ },
+ {
+  "id": "can-1",
+  "name": "Ottawa",
+  "nationId": "can",
+  "lat": 50.52,
+  "lon": -84.79,
+  "population": 13.989,
+  "areaKm2": 1060615,
+  "xyz": [
+   0.057683,
+   -0.633127,
+   0.771895
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "can-2",
+   "can-7",
+   "can-8",
+   "usa-1",
+   "usa-17",
+   "usa-18",
+   "usa-19"
+  ]
+ },
+ {
+  "id": "can-2",
+  "name": "Montreal",
+  "nationId": "can",
+  "lat": 52.26,
+  "lon": -73.72,
+  "population": 11.105,
+  "areaKm2": 1524820,
+  "xyz": [
+   0.171621,
+   -0.587537,
+   0.790789
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-1",
+   "can-10",
+   "can-5",
+   "can-7",
+   "usa-17",
+   "usa-5"
+  ]
+ },
+ {
+  "id": "can-3",
+  "name": "North West Territories",
+  "nationId": "can",
+  "lat": 64.08,
+  "lon": -119.94,
+  "population": 0.855,
+  "areaKm2": 1425495,
+  "xyz": [
+   -0.21815,
+   -0.378732,
+   0.899429
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-11",
+   "can-4",
+   "can-6",
+   "can-7",
+   "can-8",
+   "can-9"
+  ]
+ },
+ {
+  "id": "can-4",
+  "name": "Calgary",
+  "nationId": "can",
+  "lat": 55.28,
+  "lon": -115.0,
+  "population": 4.508,
+  "areaKm2": 665382,
+  "xyz": [
+   -0.240699,
+   -0.516182,
+   0.821961
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "can-3",
+   "can-6",
+   "can-9",
+   "usa-12"
+  ]
+ },
+ {
+  "id": "can-5",
+  "name": "St. John's",
+  "nationId": "can",
+  "lat": 48.66,
+  "lon": -56.22,
+  "population": 0.516,
+  "areaKm2": 496357,
+  "xyz": [
+   0.367287,
+   -0.548997,
+   0.750801
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-2",
+   "can-7",
+   "fra-4"
+  ]
+ },
+ {
+  "id": "can-6",
+  "name": "Victoria",
+  "nationId": "can",
+  "lat": 54.69,
+  "lon": -124.66,
+  "population": 6.124,
+  "areaKm2": 963715,
+  "xyz": [
+   -0.328694,
+   -0.475367,
+   0.81608
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-11",
+   "can-3",
+   "can-4",
+   "usa-12",
+   "usa-6",
+   "usa-8"
+  ]
+ },
+ {
+  "id": "can-7",
+  "name": "Nunavut",
+  "nationId": "can",
+  "lat": 64.39,
+  "lon": -97.14,
+  "population": 1.714,
+  "areaKm2": 2423174,
+  "xyz": [
+   -0.053767,
+   -0.428961,
+   0.901722
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-1",
+   "can-2",
+   "can-3",
+   "can-5",
+   "can-8"
+  ]
+ },
+ {
+  "id": "can-8",
+  "name": "Winnipeg",
+  "nationId": "can",
+  "lat": 54.85,
+  "lon": -97.38,
+  "population": 1.482,
+  "areaKm2": 654769,
+  "xyz": [
+   -0.073979,
+   -0.570946,
+   0.817648
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-1",
+   "can-3",
+   "can-7",
+   "can-9",
+   "usa-11",
+   "usa-19"
+  ]
+ },
+ {
+  "id": "can-9",
+  "name": "Regina",
+  "nationId": "can",
+  "lat": 54.5,
+  "lon": -105.68,
+  "population": 1.124,
+  "areaKm2": 642836,
+  "xyz": [
+   -0.156976,
+   -0.559135,
+   0.81408
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "can-3",
+   "can-4",
+   "can-8",
+   "usa-11",
+   "usa-12"
+  ]
+ },
+ {
+  "id": "can-10",
+  "name": "Halifax",
+  "nationId": "can",
+  "lat": 45.78,
+  "lon": -64.09,
+  "population": 1.34,
+  "areaKm2": 179407,
+  "xyz": [
+   0.3047,
+   -0.62728,
+   0.716713
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-2",
+   "usa-5"
+  ]
+ },
+ {
+  "id": "can-11",
+  "name": "Yukon",
+  "nationId": "can",
+  "lat": 63.61,
+  "lon": -135.7,
+  "population": 0.283,
+  "areaKm2": 483003,
+  "xyz": [
+   -0.318124,
+   -0.310444,
+   0.89578
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-3",
+   "can-6",
+   "usa-6"
+  ]
+ },
+ {
+  "id": "che-1",
+  "name": "Aargau",
+  "nationId": "che",
+  "lat": 47.19,
+  "lon": 7.93,
+  "population": 9.228,
+  "areaKm2": 41347,
+  "xyz": [
+   0.673086,
+   0.093708,
+   0.733604
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "aut-1",
+   "deu-3",
+   "fra-1",
+   "fra-3",
+   "ita-2",
+   "ita-4"
+  ]
+ },
+ {
+  "id": "chl-1",
+  "name": "Región Metropolitana de Santiago",
+  "nationId": "chl",
+  "lat": -33.35,
+  "lon": -71.01,
+  "population": 19.819,
+  "areaKm2": 562819,
+  "xyz": [
+   0.27175,
+   -0.789839,
+   -0.549824
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "arg-2",
+   "arg-3",
+   "arg-4",
+   "bol-2",
+   "chl-2",
+   "per-2"
+  ]
+ },
+ {
+  "id": "chl-2",
+  "name": "Magallanes y Antártica Chilena",
+  "nationId": "chl",
+  "lat": -51.44,
+  "lon": -72.07,
+  "population": 0.414,
+  "areaKm2": 330400,
+  "xyz": [
+   0.191866,
+   -0.593056,
+   -0.781967
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "arg-2",
+   "chl-1"
+  ]
+ },
+ {
+  "id": "chn-1",
+  "name": "Hebei",
+  "nationId": "chn",
+  "lat": 39.25,
+  "lon": 116.17,
+  "population": 123.696,
+  "areaKm2": 226722,
+  "xyz": [
+   -0.341571,
+   0.69499,
+   0.632706
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "chn-16",
+   "chn-17",
+   "chn-2",
+   "chn-20",
+   "chn-5"
+  ]
+ },
+ {
+  "id": "chn-2",
+  "name": "Taiyuan",
+  "nationId": "chn",
+  "lat": 37.76,
+  "lon": 112.39,
+  "population": 38.076,
+  "areaKm2": 167823,
+  "xyz": [
+   -0.301133,
+   0.731002,
+   0.612336
+  ],
+  "capital": false,
+  "coastal": false,
+  "launchSite": "Taiyuan",
+  "neighbors": [
+   "chn-1",
+   "chn-17",
+   "chn-19",
+   "chn-20"
+  ]
+ },
+ {
+  "id": "chn-3",
+  "name": "Quanzhou",
+  "nationId": "chn",
+  "lat": 26.95,
+  "lon": 117.24,
+  "population": 78.749,
+  "areaKm2": 303682,
+  "xyz": [
+   -0.407951,
+   0.792555,
+   0.453247
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-18",
+   "chn-22",
+   "chn-4",
+   "chn-7",
+   "chn-9",
+   "twn-1"
+  ]
+ },
+ {
+  "id": "chn-4",
+  "name": "Changsha",
+  "nationId": "chn",
+  "lat": 27.67,
+  "lon": 111.71,
+  "population": 44.491,
+  "areaKm2": 214626,
+  "xyz": [
+   -0.327644,
+   0.82283,
+   0.464327
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-10",
+   "chn-18",
+   "chn-21",
+   "chn-23",
+   "chn-3",
+   "chn-9"
+  ]
+ },
+ {
+  "id": "chn-5",
+  "name": "Shenyang",
+  "nationId": "chn",
+  "lat": 41.39,
+  "lon": 123.07,
+  "population": 78.446,
+  "areaKm2": 165794,
+  "xyz": [
+   -0.409396,
+   0.628732,
+   0.661129
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-1",
+   "chn-20",
+   "chn-24",
+   "prk-1"
+  ]
+ },
+ {
+  "id": "chn-6",
+  "name": "Kunming",
+  "nationId": "chn",
+  "lat": 24.46,
+  "lon": 101.66,
+  "population": 23.763,
+  "areaKm2": 338962,
+  "xyz": [
+   -0.18398,
+   0.891461,
+   0.414063
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-10",
+   "chn-13",
+   "chn-23",
+   "chn-8",
+   "lao-1",
+   "mmr-2",
+   "mmr-3",
+   "vnm-1"
+  ]
+ },
+ {
+  "id": "chn-7",
+  "name": "Shanghai",
+  "nationId": "chn",
+  "lat": 32.09,
+  "lon": 119.64,
+  "population": 174.328,
+  "areaKm2": 268031,
+  "xyz": [
+   -0.419021,
+   0.736354,
+   0.53123
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-16",
+   "chn-17",
+   "chn-18",
+   "chn-22",
+   "chn-3"
+  ]
+ },
+ {
+  "id": "chn-8",
+  "name": "Lhasa",
+  "nationId": "chn",
+  "lat": 31.45,
+  "lon": 88.41,
+  "population": 2.207,
+  "areaKm2": 1086621,
+  "xyz": [
+   0.023616,
+   0.852755,
+   0.521777
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "btn-1",
+   "chn-11",
+   "chn-13",
+   "chn-15",
+   "chn-6",
+   "ind-13",
+   "ind-16",
+   "ind-4",
+   "ind-8",
+   "mmr-2",
+   "npl-1",
+   "npl-2"
+  ]
+ },
+ {
+  "id": "chn-9",
+  "name": "Guangzhou",
+  "nationId": "chn",
+  "lat": 23.79,
+  "lon": 113.72,
+  "population": 90.282,
+  "areaKm2": 190635,
+  "xyz": [
+   -0.36808,
+   0.837715,
+   0.403424
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-10",
+   "chn-12",
+   "chn-3",
+   "chn-4"
+  ]
+ },
+ {
+  "id": "chn-10",
+  "name": "Nanning",
+  "nationId": "chn",
+  "lat": 22.91,
+  "lon": 108.96,
+  "population": 49.53,
+  "areaKm2": 262398,
+  "xyz": [
+   -0.299218,
+   0.871143,
+   0.389331
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Wenchang",
+  "neighbors": [
+   "chn-23",
+   "chn-4",
+   "chn-6",
+   "chn-9",
+   "vnm-1"
+  ]
+ },
+ {
+  "id": "chn-11",
+  "name": "Urumqi",
+  "nationId": "chn",
+  "lat": 41.12,
+  "lon": 85.43,
+  "population": 38.71,
+  "areaKm2": 1558310,
+  "xyz": [
+   0.060083,
+   0.750911,
+   0.657665
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "chn-15",
+   "chn-8",
+   "ind-8",
+   "kaz-1",
+   "kgz-1",
+   "mng-2",
+   "pak-7",
+   "rus-12",
+   "tjk-1"
+  ]
+ },
+ {
+  "id": "chn-12",
+  "name": "Hong Kong",
+  "nationId": "chn",
+  "lat": 22.36,
+  "lon": 114.06,
+  "population": 61.225,
+  "areaKm2": 7465,
+  "xyz": [
+   -0.376968,
+   0.844497,
+   0.380422
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-9"
+  ]
+ },
+ {
+  "id": "chn-13",
+  "name": "Sichuan",
+  "nationId": "chn",
+  "lat": 30.54,
+  "lon": 102.38,
+  "population": 64.521,
+  "areaKm2": 484272,
+  "xyz": [
+   -0.184705,
+   0.841208,
+   0.508186
+  ],
+  "capital": false,
+  "coastal": false,
+  "launchSite": "Xichang",
+  "neighbors": [
+   "chn-15",
+   "chn-19",
+   "chn-21",
+   "chn-23",
+   "chn-6",
+   "chn-8"
+  ]
+ },
+ {
+  "id": "chn-14",
+  "name": "Heilongjiang",
+  "nationId": "chn",
+  "lat": 46.85,
+  "lon": 127.97,
+  "population": 58.141,
+  "areaKm2": 433222,
+  "xyz": [
+   -0.420814,
+   0.539199,
+   0.729507
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-20",
+   "chn-24",
+   "rus-15",
+   "rus-17",
+   "rus-23"
+  ]
+ },
+ {
+  "id": "chn-15",
+  "name": "Gansu",
+  "nationId": "chn",
+  "lat": 38.21,
+  "lon": 100.01,
+  "population": 29.333,
+  "areaKm2": 1140660,
+  "xyz": [
+   -0.136549,
+   0.77379,
+   0.618549
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-11",
+   "chn-13",
+   "chn-19",
+   "chn-20",
+   "chn-8",
+   "mng-2"
+  ]
+ },
+ {
+  "id": "chn-16",
+  "name": "Shandong",
+  "nationId": "chn",
+  "lat": 36.33,
+  "lon": 118.11,
+  "population": 102.397,
+  "areaKm2": 165307,
+  "xyz": [
+   -0.379644,
+   0.710591,
+   0.592394
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-1",
+   "chn-17",
+   "chn-7"
+  ]
+ },
+ {
+  "id": "chn-17",
+  "name": "Henan",
+  "nationId": "chn",
+  "lat": 33.91,
+  "lon": 113.48,
+  "population": 60.542,
+  "areaKm2": 164714,
+  "xyz": [
+   -0.330733,
+   0.761214,
+   0.557825
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-1",
+   "chn-16",
+   "chn-18",
+   "chn-19",
+   "chn-2",
+   "chn-7"
+  ]
+ },
+ {
+  "id": "chn-18",
+  "name": "Hubei",
+  "nationId": "chn",
+  "lat": 30.99,
+  "lon": 112.26,
+  "population": 65.955,
+  "areaKm2": 210597,
+  "xyz": [
+   -0.324808,
+   0.793383,
+   0.514824
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-17",
+   "chn-19",
+   "chn-21",
+   "chn-3",
+   "chn-4",
+   "chn-7"
+  ]
+ },
+ {
+  "id": "chn-19",
+  "name": "Shaanxi",
+  "nationId": "chn",
+  "lat": 34.2,
+  "lon": 108.08,
+  "population": 33.915,
+  "areaKm2": 276597,
+  "xyz": [
+   -0.256695,
+   0.786222,
+   0.562105
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-13",
+   "chn-15",
+   "chn-17",
+   "chn-18",
+   "chn-2",
+   "chn-20",
+   "chn-21"
+  ]
+ },
+ {
+  "id": "chn-20",
+  "name": "Inner Mongol",
+  "nationId": "chn",
+  "lat": 41.59,
+  "lon": 111.62,
+  "population": 29.78,
+  "areaKm2": 1060072,
+  "xyz": [
+   -0.275588,
+   0.695241,
+   0.663845
+  ],
+  "capital": false,
+  "coastal": false,
+  "launchSite": "Jiuquan",
+  "neighbors": [
+   "chn-1",
+   "chn-14",
+   "chn-15",
+   "chn-19",
+   "chn-2",
+   "chn-24",
+   "chn-5",
+   "mng-1",
+   "mng-2",
+   "rus-23"
+  ]
+ },
+ {
+  "id": "chn-21",
+  "name": "Chongqing",
+  "nationId": "chn",
+  "lat": 30.02,
+  "lon": 107.73,
+  "population": 30.657,
+  "areaKm2": 77634,
+  "xyz": [
+   -0.263686,
+   0.824747,
+   0.500261
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-13",
+   "chn-18",
+   "chn-19",
+   "chn-23",
+   "chn-4"
+  ]
+ },
+ {
+  "id": "chn-22",
+  "name": "Zhejiang",
+  "nationId": "chn",
+  "lat": 29.11,
+  "lon": 119.97,
+  "population": 42.621,
+  "areaKm2": 112332,
+  "xyz": [
+   -0.436454,
+   0.756876,
+   0.486463
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-3",
+   "chn-7"
+  ]
+ },
+ {
+  "id": "chn-23",
+  "name": "Guizhou",
+  "nationId": "chn",
+  "lat": 26.8,
+  "lon": 106.56,
+  "population": 31.222,
+  "areaKm2": 194473,
+  "xyz": [
+   -0.254382,
+   0.855543,
+   0.450929
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-10",
+   "chn-13",
+   "chn-21",
+   "chn-4",
+   "chn-6"
+  ]
+ },
+ {
+  "id": "chn-24",
+  "name": "Jilin",
+  "nationId": "chn",
+  "lat": 43.3,
+  "lon": 126.47,
+  "population": 35.671,
+  "areaKm2": 196578,
+  "xyz": [
+   -0.432564,
+   0.585303,
+   0.68579
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-14",
+   "chn-20",
+   "chn-5",
+   "prk-1",
+   "prk-2",
+   "rus-17"
+  ]
+ },
+ {
+  "id": "civ-1",
+  "name": "Lagunes",
+  "nationId": "civ",
+  "lat": 5.62,
+  "lon": -4.66,
+  "population": 28.526,
+  "areaKm2": 119125,
+  "xyz": [
+   0.991916,
+   -0.080788,
+   0.097861
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "civ-2",
+   "gha-1",
+   "gha-2",
+   "lbr-1"
+  ]
+ },
+ {
+  "id": "civ-2",
+  "name": "Vallée du Bandama",
+  "nationId": "civ",
+  "lat": 8.12,
+  "lon": -5.87,
+  "population": 8.173,
+  "areaKm2": 194865,
+  "xyz": [
+   0.984777,
+   -0.101304,
+   0.141254
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bfa-2",
+   "civ-1",
+   "gha-2",
+   "gin-1",
+   "lbr-1",
+   "mli-1"
+  ]
+ },
+ {
+  "id": "cmr-1",
+  "name": "Centre",
+  "nationId": "cmr",
+  "lat": 4.9,
+  "lon": 11.93,
+  "population": 15.014,
+  "areaKm2": 307718,
+  "xyz": [
+   0.974815,
+   0.206033,
+   0.085354
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "caf-1",
+   "cmr-2",
+   "cmr-3",
+   "cog-1",
+   "gab-1",
+   "gnq-1",
+   "nga-3",
+   "nga-5"
+  ]
+ },
+ {
+  "id": "cmr-2",
+  "name": "Bamenda",
+  "nationId": "cmr",
+  "lat": 4.76,
+  "lon": 10.03,
+  "population": 14.803,
+  "areaKm2": 56806,
+  "xyz": [
+   0.98131,
+   0.17362,
+   0.082986
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "cmr-1",
+   "nga-3"
+  ]
+ },
+ {
+  "id": "cmr-3",
+  "name": "Nord",
+  "nationId": "cmr",
+  "lat": 9.6,
+  "lon": 14.14,
+  "population": 3.959,
+  "areaKm2": 96754,
+  "xyz": [
+   0.956135,
+   0.240807,
+   0.166787
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "caf-1",
+   "cmr-1",
+   "nga-5",
+   "tcd-1"
+  ]
+ },
+ {
+  "id": "cod-1",
+  "name": "Kinshasa City",
+  "nationId": "cod",
+  "lat": -4.54,
+  "lon": 16.03,
+  "population": 68.233,
+  "areaKm2": 349868,
+  "xyz": [
+   0.958119,
+   0.275209,
+   -0.079176
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "ago-1",
+   "ago-4",
+   "cod-4",
+   "cod-5",
+   "cog-1"
+  ]
+ },
+ {
+  "id": "cod-2",
+  "name": "Lubumbashi",
+  "nationId": "cod",
+  "lat": -8.48,
+  "lon": 26.25,
+  "population": 19.47,
+  "areaKm2": 446457,
+  "xyz": [
+   0.88705,
+   0.437468,
+   -0.147529
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ago-2",
+   "ago-4",
+   "cod-3",
+   "cod-4",
+   "tza-3",
+   "tza-4",
+   "zmb-1",
+   "zmb-2"
+  ]
+ },
+ {
+  "id": "cod-3",
+  "name": "Orientale",
+  "nationId": "cod",
+  "lat": 0.81,
+  "lon": 27.58,
+  "population": 15.021,
+  "areaKm2": 611283,
+  "xyz": [
+   0.886303,
+   0.462893,
+   0.014054
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bdi-1",
+   "caf-2",
+   "cod-2",
+   "cod-4",
+   "cod-5",
+   "rwa-1",
+   "sds-1",
+   "tza-3",
+   "uga-1",
+   "uga-2"
+  ]
+ },
+ {
+  "id": "cod-4",
+  "name": "Kasaï-Oriental",
+  "nationId": "cod",
+  "lat": -4.45,
+  "lon": 23.44,
+  "population": 22.564,
+  "areaKm2": 485181,
+  "xyz": [
+   0.914702,
+   0.396599,
+   -0.077645
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ago-4",
+   "cod-1",
+   "cod-2",
+   "cod-3",
+   "cod-5"
+  ]
+ },
+ {
+  "id": "cod-5",
+  "name": "Équateur",
+  "nationId": "cod",
+  "lat": 1.22,
+  "lon": 20.47,
+  "population": 6.244,
+  "areaKm2": 375503,
+  "xyz": [
+   0.936625,
+   0.349689,
+   0.021263
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "caf-1",
+   "caf-2",
+   "cod-1",
+   "cod-3",
+   "cod-4",
+   "cog-1"
+  ]
+ },
+ {
+  "id": "cog-1",
+  "name": "Pointe Noire",
+  "nationId": "cog",
+  "lat": -3.9,
+  "lon": 12.7,
+  "population": 7.282,
+  "areaKm2": 329051,
+  "xyz": [
+   0.973277,
+   0.219356,
+   -0.067937
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "ago-1",
+   "caf-1",
+   "cmr-1",
+   "cod-1",
+   "cod-5",
+   "gab-1"
+  ]
+ },
+ {
+  "id": "col-1",
+  "name": "Cundinamarca",
+  "nationId": "col",
+  "lat": 5.68,
+  "lon": -74.27,
+  "population": 30.713,
+  "areaKm2": 601209,
+  "xyz": [
+   0.269726,
+   -0.957843,
+   0.098915
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bra-2",
+   "col-2",
+   "col-3",
+   "pan-1",
+   "ven-1",
+   "ven-2"
+  ]
+ },
+ {
+  "id": "col-2",
+  "name": "Magdalena",
+  "nationId": "col",
+  "lat": 9.8,
+  "lon": -74.4,
+  "population": 11.978,
+  "areaKm2": 173985,
+  "xyz": [
+   0.264985,
+   -0.949121,
+   0.170155
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "col-1",
+   "ven-2"
+  ]
+ },
+ {
+  "id": "col-3",
+  "name": "Valle del Cauca",
+  "nationId": "col",
+  "lat": 3.49,
+  "lon": -76.25,
+  "population": 13.046,
+  "areaKm2": 401481,
+  "xyz": [
+   0.237185,
+   -0.969551,
+   0.060946
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bra-2",
+   "col-1",
+   "ecu-2",
+   "pan-1",
+   "per-4"
+  ]
+ },
+ {
+  "id": "com-1",
+  "name": "Andjazîdja",
+  "nationId": "com",
+  "lat": -11.77,
+  "lon": 43.43,
+  "population": 0.964,
+  "areaKm2": 6324,
+  "xyz": [
+   0.710909,
+   0.673062,
+   -0.20395
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "cpv-1",
+  "name": "Praia",
+  "nationId": "cpv",
+  "lat": 15.71,
+  "lon": -24.08,
+  "population": 0.539,
+  "areaKm2": 15724,
+  "xyz": [
+   0.878881,
+   -0.392796,
+   0.270702
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "cri-1",
+  "name": "Cartago",
+  "nationId": "cri",
+  "lat": 9.96,
+  "lon": -83.93,
+  "population": 5.251,
+  "areaKm2": 62945,
+  "xyz": [
+   0.104096,
+   -0.97941,
+   0.172972
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "nic-1",
+   "pan-1"
+  ]
+ },
+ {
+  "id": "cub-1",
+  "name": "Ciudad de la Habana",
+  "nationId": "cub",
+  "lat": 22.01,
+  "lon": -79.72,
+  "population": 10.701,
+  "areaKm2": 161867,
+  "xyz": [
+   0.165383,
+   -0.912276,
+   0.374701
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "cyp-1",
+  "name": "Nicosia",
+  "nationId": "cyp",
+  "lat": 34.94,
+  "lon": 33.15,
+  "population": 1.422,
+  "areaKm2": 15559,
+  "xyz": [
+   0.686263,
+   0.448287,
+   0.572784
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "cze-1",
+  "name": "Prague",
+  "nationId": "cze",
+  "lat": 49.81,
+  "lon": 15.62,
+  "population": 10.741,
+  "areaKm2": 82346,
+  "xyz": [
+   0.621506,
+   0.17381,
+   0.763885
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "aut-1",
+   "deu-1",
+   "deu-3",
+   "deu-4",
+   "pol-2",
+   "svk-1"
+  ]
+ },
+ {
+  "id": "deu-1",
+  "name": "Berlin",
+  "nationId": "deu",
+  "lat": 52.19,
+  "lon": 13.27,
+  "population": 14.384,
+  "areaKm2": 100868,
+  "xyz": [
+   0.596684,
+   0.140701,
+   0.790045
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "cze-1",
+   "deu-4",
+   "deu-5",
+   "pol-2",
+   "pol-3"
+  ]
+ },
+ {
+  "id": "deu-2",
+  "name": "Nordrhein-Westfalen",
+  "nationId": "deu",
+  "lat": 51.61,
+  "lon": 7.66,
+  "population": 19.787,
+  "areaKm2": 35028,
+  "xyz": [
+   0.615411,
+   0.082737,
+   0.783852
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bel-1",
+   "deu-4",
+   "deu-5",
+   "nld-1"
+  ]
+ },
+ {
+  "id": "deu-3",
+  "name": "Munich",
+  "nationId": "deu",
+  "lat": 48.85,
+  "lon": 9.79,
+  "population": 19.047,
+  "areaKm2": 94865,
+  "xyz": [
+   0.648404,
+   0.111862,
+   0.753034
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "aut-1",
+   "che-1",
+   "cze-1",
+   "deu-4",
+   "fra-1"
+  ]
+ },
+ {
+  "id": "deu-4",
+  "name": "Hessen",
+  "nationId": "deu",
+  "lat": 50.59,
+  "lon": 8.99,
+  "population": 18.37,
+  "areaKm2": 59027,
+  "xyz": [
+   0.627002,
+   0.099251,
+   0.77267
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bel-1",
+   "cze-1",
+   "deu-1",
+   "deu-2",
+   "deu-3",
+   "deu-5",
+   "fra-1",
+   "lux-1"
+  ]
+ },
+ {
+  "id": "deu-5",
+  "name": "Hamburg",
+  "nationId": "deu",
+  "lat": 53.31,
+  "lon": 9.41,
+  "population": 10.866,
+  "areaKm2": 64224,
+  "xyz": [
+   0.589479,
+   0.097672,
+   0.801857
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "deu-1",
+   "deu-2",
+   "deu-4",
+   "dnk-1",
+   "nld-1"
+  ]
+ },
+ {
+  "id": "dji-1",
+  "name": "Djibouti",
+  "nationId": "dji",
+  "lat": 11.58,
+  "lon": 42.98,
+  "population": 1.263,
+  "areaKm2": 24953,
+  "xyz": [
+   0.716687,
+   0.667906,
+   0.200652
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "eri-1",
+   "eth-2",
+   "eth-6",
+   "som-2",
+   "yem-1"
+  ]
+ },
+ {
+  "id": "dnk-1",
+  "name": "Hovedstaden",
+  "nationId": "dnk",
+  "lat": 55.98,
+  "lon": 10.83,
+  "population": 3.826,
+  "areaKm2": 72202,
+  "xyz": [
+   0.549467,
+   0.105148,
+   0.828873
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "deu-5",
+   "swe-2"
+  ]
+ },
+ {
+  "id": "dnk-2",
+  "name": "Nuuk",
+  "nationId": "dnk",
+  "lat": 64.16,
+  "lon": -44.93,
+  "population": 0.522,
+  "areaKm2": 745024,
+  "xyz": [
+   0.308561,
+   -0.307769,
+   0.900038
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dnk-3",
+   "dnk-4"
+  ]
+ },
+ {
+  "id": "dnk-3",
+  "name": "Nationalparken",
+  "nationId": "dnk",
+  "lat": 77.06,
+  "lon": -33.46,
+  "population": 1.099,
+  "areaKm2": 926586,
+  "xyz": [
+   0.186851,
+   -0.123471,
+   0.974598
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dnk-2",
+   "dnk-4"
+  ]
+ },
+ {
+  "id": "dnk-4",
+  "name": "Qaasuitsup Kommunia",
+  "nationId": "dnk",
+  "lat": 75.35,
+  "lon": -55.12,
+  "population": 0.615,
+  "areaKm2": 614442,
+  "xyz": [
+   0.144604,
+   -0.20746,
+   0.967497
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dnk-2",
+   "dnk-3"
+  ]
+ },
+ {
+  "id": "dom-1",
+  "name": "Monte Plata",
+  "nationId": "dom",
+  "lat": 18.96,
+  "lon": -70.23,
+  "population": 11.939,
+  "areaKm2": 63330,
+  "xyz": [
+   0.319969,
+   -0.889987,
+   0.324874
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "hti-1"
+  ]
+ },
+ {
+  "id": "dza-1",
+  "name": "Tipaza",
+  "nationId": "dza",
+  "lat": 36.04,
+  "lon": 3.04,
+  "population": 41.893,
+  "areaKm2": 279017,
+  "xyz": [
+   0.807423,
+   0.042885,
+   0.588412
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dza-3",
+   "mar-1",
+   "tun-1"
+  ]
+ },
+ {
+  "id": "dza-2",
+  "name": "Tamanghasset",
+  "nationId": "dza",
+  "lat": 23.69,
+  "lon": 4.98,
+  "population": 3.481,
+  "areaKm2": 1274593,
+  "xyz": [
+   0.912292,
+   0.07955,
+   0.401739
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "dza-3",
+   "lby-1",
+   "lby-2",
+   "mli-2",
+   "mrt-2",
+   "ner-2"
+  ]
+ },
+ {
+  "id": "dza-3",
+  "name": "Ouargla",
+  "nationId": "dza",
+  "lat": 31.72,
+  "lon": 3.13,
+  "population": 4.78,
+  "areaKm2": 776468,
+  "xyz": [
+   0.849362,
+   0.046411,
+   0.525766
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "dza-1",
+   "dza-2",
+   "lby-1",
+   "mar-1",
+   "mar-2",
+   "mar-3",
+   "mrt-2",
+   "tun-1"
+  ]
+ },
+ {
+  "id": "ecu-1",
+  "name": "Guayas",
+  "nationId": "ecu",
+  "lat": -2.03,
+  "lon": -79.81,
+  "population": 11.294,
+  "areaKm2": 152754,
+  "xyz": [
+   0.176857,
+   -0.983597,
+   -0.035466
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ecu-2",
+   "per-3",
+   "per-4"
+  ]
+ },
+ {
+  "id": "ecu-2",
+  "name": "Pichincha",
+  "nationId": "ecu",
+  "lat": -0.08,
+  "lon": -78.46,
+  "population": 7.775,
+  "areaKm2": 129670,
+  "xyz": [
+   0.200028,
+   -0.979789,
+   -0.001358
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "col-3",
+   "ecu-1",
+   "per-4"
+  ]
+ },
+ {
+  "id": "egy-1",
+  "name": "Al Jizah",
+  "nationId": "egy",
+  "lat": 29.28,
+  "lon": 29.76,
+  "population": 72.466,
+  "areaKm2": 235097,
+  "xyz": [
+   0.757228,
+   0.432933,
+   0.489055
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "egy-2",
+   "egy-3",
+   "egy-4",
+   "egy-5",
+   "lby-2"
+  ]
+ },
+ {
+  "id": "egy-2",
+  "name": "Luxor",
+  "nationId": "egy",
+  "lat": 24.83,
+  "lon": 28.96,
+  "population": 3.29,
+  "areaKm2": 456513,
+  "xyz": [
+   0.7941,
+   0.439373,
+   0.41995
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "egy-1",
+   "egy-4",
+   "lby-2",
+   "sdn-3"
+  ]
+ },
+ {
+  "id": "egy-3",
+  "name": "Al Iskandariyah",
+  "nationId": "egy",
+  "lat": 30.79,
+  "lon": 29.83,
+  "population": 21.635,
+  "areaKm2": 19581,
+  "xyz": [
+   0.74522,
+   0.427286,
+   0.511932
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "egy-1",
+   "egy-5"
+  ]
+ },
+ {
+  "id": "egy-4",
+  "name": "Suhaj",
+  "nationId": "egy",
+  "lat": 26.32,
+  "lon": 32.09,
+  "population": 11.553,
+  "areaKm2": 217621,
+  "xyz": [
+   0.759339,
+   0.476195,
+   0.443444
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "egy-1",
+   "egy-2",
+   "egy-5",
+   "sdn-1",
+   "sdn-3",
+   "sdn-4"
+  ]
+ },
+ {
+  "id": "egy-5",
+  "name": "Al Gharbiyah",
+  "nationId": "egy",
+  "lat": 30.65,
+  "lon": 31.82,
+  "population": 18.196,
+  "areaKm2": 104132,
+  "xyz": [
+   0.731054,
+   0.453538,
+   0.509769
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "egy-1",
+   "egy-3",
+   "egy-4",
+   "isr-1",
+   "jor-1",
+   "pse-1",
+   "sau-4"
+  ]
+ },
+ {
+  "id": "eri-1",
+  "name": "Anseba",
+  "nationId": "eri",
+  "lat": 15.07,
+  "lon": 39.17,
+  "population": 4.003,
+  "areaKm2": 144551,
+  "xyz": [
+   0.748672,
+   0.609848,
+   0.259954
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dji-1",
+   "eth-3",
+   "eth-6",
+   "sdn-1",
+   "sdn-4",
+   "yem-1"
+  ]
+ },
+ {
+  "id": "esp-1",
+  "name": "Madrid",
+  "nationId": "esp",
+  "lat": 40.63,
+  "lon": -4.08,
+  "population": 14.509,
+  "areaKm2": 184014,
+  "xyz": [
+   0.757037,
+   -0.053948,
+   0.651141
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "esp-2",
+   "esp-3",
+   "esp-5",
+   "prt-1"
+  ]
+ },
+ {
+  "id": "esp-2",
+  "name": "Barcelona",
+  "nationId": "esp",
+  "lat": 41.15,
+  "lon": 1.31,
+  "population": 16.085,
+  "areaKm2": 119121,
+  "xyz": [
+   0.7528,
+   0.017224,
+   0.658024
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "esp-1",
+   "esp-3",
+   "esp-5",
+   "fra-3"
+  ]
+ },
+ {
+  "id": "esp-3",
+  "name": "Bilbao",
+  "nationId": "esp",
+  "lat": 43.06,
+  "lon": -4.19,
+  "population": 7.256,
+  "areaKm2": 101505,
+  "xyz": [
+   0.728736,
+   -0.053407,
+   0.682709
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "esp-1",
+   "esp-2",
+   "fra-3"
+  ]
+ },
+ {
+  "id": "esp-4",
+  "name": "Santa Cruz de Tenerife",
+  "nationId": "esp",
+  "lat": 28.08,
+  "lon": -16.05,
+  "population": 1.624,
+  "areaKm2": 21757,
+  "xyz": [
+   0.84789,
+   -0.243862,
+   0.470759
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "esp-5",
+  "name": "Sevilla",
+  "nationId": "esp",
+  "lat": 37.35,
+  "lon": -4.44,
+  "population": 9.495,
+  "areaKm2": 124400,
+  "xyz": [
+   0.79256,
+   -0.061592,
+   0.606676
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "esp-1",
+   "esp-2",
+   "mar-1",
+   "prt-1"
+  ]
+ },
+ {
+  "id": "est-1",
+  "name": "Harju",
+  "nationId": "est",
+  "lat": 59.0,
+  "lon": 25.62,
+  "population": 1.332,
+  "areaKm2": 55863,
+  "xyz": [
+   0.464364,
+   0.222682,
+   0.857192
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "lva-1",
+   "rus-18"
+  ]
+ },
+ {
+  "id": "eth-1",
+  "name": "Addis Ababa",
+  "nationId": "eth",
+  "lat": 8.97,
+  "lon": 38.78,
+  "population": 74.376,
+  "areaKm2": 1878,
+  "xyz": [
+   0.770015,
+   0.618699,
+   0.155848
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "eth-4"
+  ]
+ },
+ {
+  "id": "eth-2",
+  "name": "Somali",
+  "nationId": "eth",
+  "lat": 7.09,
+  "lon": 43.53,
+  "population": 4.024,
+  "areaKm2": 270995,
+  "xyz": [
+   0.719411,
+   0.683519,
+   0.123491
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "dji-1",
+   "eth-4",
+   "eth-6",
+   "ken-2",
+   "som-1",
+   "som-2"
+  ]
+ },
+ {
+  "id": "eth-3",
+  "name": "Mekelle",
+  "nationId": "eth",
+  "lat": 12.26,
+  "lon": 37.76,
+  "population": 24.284,
+  "areaKm2": 240729,
+  "xyz": [
+   0.772525,
+   0.598401,
+   0.212419
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "eri-1",
+   "eth-4",
+   "eth-6",
+   "sdn-1",
+   "sds-2"
+  ]
+ },
+ {
+  "id": "eth-4",
+  "name": "Oromiya",
+  "nationId": "eth",
+  "lat": 7.56,
+  "lon": 40.22,
+  "population": 33.03,
+  "areaKm2": 364418,
+  "xyz": [
+   0.756893,
+   0.640172,
+   0.131502
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "eth-1",
+   "eth-2",
+   "eth-3",
+   "eth-5",
+   "eth-6",
+   "ken-2",
+   "sds-2"
+  ]
+ },
+ {
+  "id": "eth-5",
+  "name": "Southern Nations, Nationalities and Peoples",
+  "nationId": "eth",
+  "lat": 6.27,
+  "lon": 36.37,
+  "population": 6.606,
+  "areaKm2": 108782,
+  "xyz": [
+   0.800394,
+   0.58943,
+   0.109278
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "eth-4",
+   "ken-2",
+   "ken-4",
+   "sds-1",
+   "sds-2"
+  ]
+ },
+ {
+  "id": "eth-6",
+  "name": "Dire Dawa",
+  "nationId": "eth",
+  "lat": 9.51,
+  "lon": 42.07,
+  "population": 10.536,
+  "areaKm2": 88569,
+  "xyz": [
+   0.732157,
+   0.660802,
+   0.165185
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "dji-1",
+   "eri-1",
+   "eth-2",
+   "eth-3",
+   "eth-4"
+  ]
+ },
+ {
+  "id": "fin-1",
+  "name": "Uusimaa",
+  "nationId": "fin",
+  "lat": 61.54,
+  "lon": 24.8,
+  "population": 5.593,
+  "areaKm2": 352716,
+  "xyz": [
+   0.432586,
+   0.199926,
+   0.879146
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "nor-1",
+   "rus-18",
+   "rus-9",
+   "swe-1"
+  ]
+ },
+ {
+  "id": "fji-1",
+  "name": "Central",
+  "nationId": "fji",
+  "lat": -19.16,
+  "lon": 177.13,
+  "population": 0.953,
+  "areaKm2": 55095,
+  "xyz": [
+   -0.943414,
+   0.047307,
+   -0.328226
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "fra-1",
+  "name": "Val-d'Oise",
+  "nationId": "fra",
+  "lat": 48.97,
+  "lon": 2.83,
+  "population": 36.241,
+  "areaKm2": 201333,
+  "xyz": [
+   0.655675,
+   0.032401,
+   0.754348
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bel-1",
+   "che-1",
+   "deu-3",
+   "deu-4",
+   "fra-3",
+   "fra-4",
+   "lux-1"
+  ]
+ },
+ {
+  "id": "fra-2",
+  "name": "Kourou",
+  "nationId": "fra",
+  "lat": 13.24,
+  "lon": -59.77,
+  "population": 1.326,
+  "areaKm2": 86890,
+  "xyz": [
+   0.490104,
+   -0.841039,
+   0.229021
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Kourou",
+  "neighbors": [
+   "bra-6",
+   "ecs-4",
+   "sur-1"
+  ]
+ },
+ {
+  "id": "fra-3",
+  "name": "Toulouse",
+  "nationId": "fra",
+  "lat": 44.59,
+  "lon": 4.1,
+  "population": 25.258,
+  "areaKm2": 259108,
+  "xyz": [
+   0.710275,
+   0.050856,
+   0.702085
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "che-1",
+   "esp-2",
+   "esp-3",
+   "fra-1",
+   "fra-4",
+   "ita-1",
+   "ita-4"
+  ]
+ },
+ {
+  "id": "fra-4",
+  "name": "Nantes",
+  "nationId": "fra",
+  "lat": 47.94,
+  "lon": -1.56,
+  "population": 4.896,
+  "areaKm2": 117507,
+  "xyz": [
+   0.669699,
+   -0.018232,
+   0.742409
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-5",
+   "fra-1",
+   "fra-3",
+   "gbr-1"
+  ]
+ },
+ {
+  "id": "fra-5",
+  "name": "Noumea",
+  "nationId": "fra",
+  "lat": -20.85,
+  "lon": 170.41,
+  "population": 0.26,
+  "areaKm2": 39776,
+  "xyz": [
+   -0.921454,
+   0.155732,
+   -0.355907
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "fra-6",
+  "name": "La Réunion",
+  "nationId": "fra",
+  "lat": -22.15,
+  "lon": 54.48,
+  "population": 0.69,
+  "areaKm2": 27230,
+  "xyz": [
+   0.538139,
+   0.753817,
+   -0.37705
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "fra-7",
+  "name": "Windward Islands",
+  "nationId": "fra",
+  "lat": -17.48,
+  "lon": -148.78,
+  "population": 0.367,
+  "areaKm2": 54810,
+  "xyz": [
+   -0.815698,
+   -0.494419,
+   -0.30031
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "gab-1",
+  "name": "Estuaire",
+  "nationId": "gab",
+  "lat": -0.08,
+  "lon": 10.63,
+  "population": 2.867,
+  "areaKm2": 277534,
+  "xyz": [
+   0.982853,
+   0.184389,
+   -0.001331
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "cmr-1",
+   "cog-1",
+   "gnq-1"
+  ]
+ },
+ {
+  "id": "gbr-1",
+  "name": "Surrey",
+  "nationId": "gbr",
+  "lat": 51.28,
+  "lon": -0.39,
+  "population": 28.253,
+  "areaKm2": 59572,
+  "xyz": [
+   0.625492,
+   -0.00422,
+   0.780219
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "fra-4",
+   "gbr-2",
+   "gbr-4"
+  ]
+ },
+ {
+  "id": "gbr-2",
+  "name": "Birmingham",
+  "nationId": "gbr",
+  "lat": 53.36,
+  "lon": -1.81,
+  "population": 28.987,
+  "areaKm2": 67234,
+  "xyz": [
+   0.596492,
+   -0.018799,
+   0.802399
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "gbr-1",
+   "gbr-3",
+   "gbr-4"
+  ]
+ },
+ {
+  "id": "gbr-3",
+  "name": "Glasgow",
+  "nationId": "gbr",
+  "lat": 55.56,
+  "lon": -3.68,
+  "population": 8.835,
+  "areaKm2": 144008,
+  "xyz": [
+   0.564416,
+   -0.036311,
+   0.824691
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "gbr-2",
+   "gbr-4",
+   "irl-1"
+  ]
+ },
+ {
+  "id": "gbr-4",
+  "name": "Cardiff",
+  "nationId": "gbr",
+  "lat": 51.39,
+  "lon": -3.49,
+  "population": 4.807,
+  "areaKm2": 46344,
+  "xyz": [
+   0.622905,
+   -0.037943,
+   0.781377
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "gbr-1",
+   "gbr-2",
+   "gbr-3",
+   "irl-1"
+  ]
+ },
+ {
+  "id": "gbr-5",
+  "name": "Falkland Islands",
+  "nationId": "gbr",
+  "lat": -42.14,
+  "lon": -35.27,
+  "population": 0.026,
+  "areaKm2": 43373,
+  "xyz": [
+   0.605367,
+   -0.428145,
+   -0.670986
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "gbr-6",
+  "name": "Saint George's",
+  "nationId": "gbr",
+  "lat": 24.04,
+  "lon": -65.57,
+  "population": 0.148,
+  "areaKm2": 17349,
+  "xyz": [
+   0.37765,
+   -0.831551,
+   0.407313
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ecs-6",
+   "nld-1",
+   "usa-3"
+  ]
+ },
+ {
+  "id": "geo-1",
+  "name": "Tbilisi",
+  "nationId": "geo",
+  "lat": 41.83,
+  "lon": 44.07,
+  "population": 3.922,
+  "areaKm2": 70963,
+  "xyz": [
+   0.535336,
+   0.518246,
+   0.66696
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "arm-1",
+   "aze-1",
+   "rus-5",
+   "rus-7",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "gha-1",
+  "name": "Greater Accra",
+  "nationId": "gha",
+  "lat": 6.23,
+  "lon": -0.62,
+  "population": 32.6,
+  "areaKm2": 116008,
+  "xyz": [
+   0.99403,
+   -0.010751,
+   0.108574
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "civ-1",
+   "gha-2",
+   "tgo-1"
+  ]
+ },
+ {
+  "id": "gha-2",
+  "name": "Northern",
+  "nationId": "gha",
+  "lat": 9.44,
+  "lon": -1.22,
+  "population": 5.623,
+  "areaKm2": 130633,
+  "xyz": [
+   0.986229,
+   -0.021024,
+   0.164045
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bfa-1",
+   "bfa-2",
+   "civ-1",
+   "civ-2",
+   "gha-1",
+   "tgo-1"
+  ]
+ },
+ {
+  "id": "gin-1",
+  "name": "Conakry",
+  "nationId": "gin",
+  "lat": 9.84,
+  "lon": -12.48,
+  "population": 16.807,
+  "areaKm2": 253165,
+  "xyz": [
+   0.962013,
+   -0.212873,
+   0.170928
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "civ-2",
+   "gnb-1",
+   "lbr-1",
+   "mli-1",
+   "sen-2",
+   "sle-1"
+  ]
+ },
+ {
+  "id": "gmb-1",
+  "name": "Banjul",
+  "nationId": "gmb",
+  "lat": 13.42,
+  "lon": -16.28,
+  "population": 3.13,
+  "areaKm2": 16651,
+  "xyz": [
+   0.933692,
+   -0.272715,
+   0.232049
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "sen-1",
+   "sen-2"
+  ]
+ },
+ {
+  "id": "gnb-1",
+  "name": "Quinara",
+  "nationId": "gnb",
+  "lat": 11.67,
+  "lon": -15.18,
+  "population": 2.489,
+  "areaKm2": 46882,
+  "xyz": [
+   0.94516,
+   -0.256477,
+   0.202217
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gin-1",
+   "sen-1",
+   "sen-2"
+  ]
+ },
+ {
+  "id": "gnq-1",
+  "name": "Litoral",
+  "nationId": "gnq",
+  "lat": 2.27,
+  "lon": 9.45,
+  "population": 2.17,
+  "areaKm2": 36489,
+  "xyz": [
+   0.985662,
+   0.164013,
+   0.039632
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "cmr-1",
+   "gab-1"
+  ]
+ },
+ {
+  "id": "grc-1",
+  "name": "Attiki",
+  "nationId": "grc",
+  "lat": 38.57,
+  "lon": 23.49,
+  "population": 10.178,
+  "areaKm2": 214965,
+  "xyz": [
+   0.717051,
+   0.311655,
+   0.623465
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "alb-1",
+   "bgr-1",
+   "mkd-1",
+   "tur-1"
+  ]
+ },
+ {
+  "id": "gtm-1",
+  "name": "Guatemala",
+  "nationId": "gtm",
+  "lat": 14.95,
+  "lon": -90.73,
+  "population": 20.067,
+  "areaKm2": 108415,
+  "xyz": [
+   -0.012388,
+   -0.966067,
+   0.257993
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "blz-1",
+   "hnd-1",
+   "mex-2",
+   "slv-1"
+  ]
+ },
+ {
+  "id": "guy-1",
+  "name": "East Berbice-Corentyne",
+  "nationId": "guy",
+  "lat": 6.19,
+  "lon": -58.19,
+  "population": 0.861,
+  "areaKm2": 217442,
+  "xyz": [
+   0.524081,
+   -0.844816,
+   0.107816
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bra-2",
+   "bra-6",
+   "sur-1",
+   "ven-1"
+  ]
+ },
+ {
+  "id": "hnd-1",
+  "name": "Francisco Morazán",
+  "nationId": "hnd",
+  "lat": 14.77,
+  "lon": -87.46,
+  "population": 11.885,
+  "areaKm2": 127164,
+  "xyz": [
+   0.042815,
+   -0.96601,
+   0.254933
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gtm-1",
+   "nic-1",
+   "slv-1"
+  ]
+ },
+ {
+  "id": "hrv-1",
+  "name": "Grad Zagreb",
+  "nationId": "hrv",
+  "lat": 45.22,
+  "lon": 16.06,
+  "population": 3.756,
+  "areaKm2": 66057,
+  "xyz": [
+   0.676844,
+   0.194882,
+   0.709861
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bih-1",
+   "hun-1",
+   "ita-2",
+   "srb-1",
+   "svn-1"
+  ]
+ },
+ {
+  "id": "hti-1",
+  "name": "Ouest",
+  "nationId": "hti",
+  "lat": 18.72,
+  "lon": -72.41,
+  "population": 12.552,
+  "areaKm2": 39933,
+  "xyz": [
+   0.286252,
+   -0.902827,
+   0.320878
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dom-1"
+  ]
+ },
+ {
+  "id": "hun-1",
+  "name": "Budapest",
+  "nationId": "hun",
+  "lat": 47.3,
+  "lon": 19.34,
+  "population": 9.343,
+  "areaKm2": 95280,
+  "xyz": [
+   0.63986,
+   0.224579,
+   0.734944
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "aut-1",
+   "hrv-1",
+   "rou-2",
+   "srb-1",
+   "svk-1",
+   "svn-1",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "idn-1",
+  "name": "Banten",
+  "nationId": "idn",
+  "lat": -5.96,
+  "lon": 106.26,
+  "population": 120.354,
+  "areaKm2": 218684,
+  "xyz": [
+   -0.278541,
+   0.954794,
+   -0.103842
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "idn-10",
+   "idn-4"
+  ]
+ },
+ {
+  "id": "idn-2",
+  "name": "Banda Aceh",
+  "nationId": "idn",
+  "lat": 4.42,
+  "lon": 97.0,
+  "population": 4.742,
+  "areaKm2": 75477,
+  "xyz": [
+   -0.121432,
+   0.98961,
+   0.076986
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-9"
+  ]
+ },
+ {
+  "id": "idn-3",
+  "name": "Biak",
+  "nationId": "idn",
+  "lat": -3.13,
+  "lon": 136.62,
+  "population": 3.884,
+  "areaKm2": 474774,
+  "xyz": [
+   -0.725783,
+   0.685748,
+   -0.054662
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "png-1"
+  ]
+ },
+ {
+  "id": "idn-4",
+  "name": "Medan",
+  "nationId": "idn",
+  "lat": -0.86,
+  "lon": 101.65,
+  "population": 21.221,
+  "areaKm2": 262655,
+  "xyz": [
+   -0.201973,
+   0.979277,
+   -0.014969
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-1",
+   "idn-9",
+   "mys-1",
+   "sgp-1"
+  ]
+ },
+ {
+  "id": "idn-5",
+  "name": "Samarinda",
+  "nationId": "idn",
+  "lat": -1.54,
+  "lon": 113.31,
+  "population": 12.041,
+  "areaKm2": 381270,
+  "xyz": [
+   -0.395505,
+   0.91807,
+   -0.026891
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-11",
+   "mys-2"
+  ]
+ },
+ {
+  "id": "idn-6",
+  "name": "Ambon",
+  "nationId": "idn",
+  "lat": -8.25,
+  "lon": 128.16,
+  "population": 2.533,
+  "areaKm2": 107124,
+  "xyz": [
+   -0.611482,
+   0.778144,
+   -0.14346
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "tls-1"
+  ]
+ },
+ {
+  "id": "idn-7",
+  "name": "Jawa Timur",
+  "nationId": "idn",
+  "lat": -8.01,
+  "lon": 113.3,
+  "population": 44.196,
+  "areaKm2": 109955,
+  "xyz": [
+   -0.391635,
+   0.909513,
+   -0.139315
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-10",
+   "idn-8"
+  ]
+ },
+ {
+  "id": "idn-8",
+  "name": "Sulawesi Selatan",
+  "nationId": "idn",
+  "lat": -3.0,
+  "lon": 121.15,
+  "population": 27.222,
+  "areaKm2": 430934,
+  "xyz": [
+   -0.516613,
+   0.854623,
+   -0.052252
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-7",
+   "tls-1"
+  ]
+ },
+ {
+  "id": "idn-9",
+  "name": "Sumatera Utara",
+  "nationId": "idn",
+  "lat": 2.36,
+  "lon": 99.22,
+  "population": 22.982,
+  "areaKm2": 90066,
+  "xyz": [
+   -0.160022,
+   0.986252,
+   0.041231
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-2",
+   "idn-4"
+  ]
+ },
+ {
+  "id": "idn-10",
+  "name": "Jawa Tengah",
+  "nationId": "idn",
+  "lat": -7.37,
+  "lon": 109.97,
+  "population": 28.455,
+  "areaKm2": 45267,
+  "xyz": [
+   -0.338729,
+   0.93211,
+   -0.128192
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-1",
+   "idn-7"
+  ]
+ },
+ {
+  "id": "idn-11",
+  "name": "Kalimantan Timur",
+  "nationId": "idn",
+  "lat": 1.29,
+  "lon": 116.35,
+  "population": 8.246,
+  "areaKm2": 196126,
+  "xyz": [
+   -0.443804,
+   0.895842,
+   0.022498
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "idn-5",
+   "mys-2"
+  ]
+ },
+ {
+  "id": "ind-1",
+  "name": "Haryana",
+  "nationId": "ind",
+  "lat": 29.1,
+  "lon": 76.27,
+  "population": 29.242,
+  "areaKm2": 60081,
+  "xyz": [
+   0.207372,
+   0.848805,
+   0.48634
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ind-13",
+   "ind-15",
+   "ind-21",
+   "ind-22",
+   "ind-9"
+  ]
+ },
+ {
+  "id": "ind-2",
+  "name": "Mumbai",
+  "nationId": "ind",
+  "lat": 19.47,
+  "lon": 75.46,
+  "population": 272.833,
+  "areaKm2": 289345,
+  "xyz": [
+   0.236721,
+   0.912589,
+   0.333383
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-10",
+   "ind-11",
+   "ind-14",
+   "ind-5",
+   "ind-6"
+  ]
+ },
+ {
+  "id": "ind-3",
+  "name": "Bhubaneswar",
+  "nationId": "ind",
+  "lat": 20.62,
+  "lon": 84.43,
+  "population": 20.903,
+  "areaKm2": 152894,
+  "xyz": [
+   0.090774,
+   0.931493,
+   0.35225
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-11",
+   "ind-12",
+   "ind-18",
+   "ind-19",
+   "ind-6"
+  ]
+ },
+ {
+  "id": "ind-4",
+  "name": "Gauhati",
+  "nationId": "ind",
+  "lat": 25.94,
+  "lon": 93.53,
+  "population": 6.309,
+  "areaKm2": 196224,
+  "xyz": [
+   -0.055354,
+   0.897519,
+   0.437487
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgd-1",
+   "bgd-4",
+   "btn-1",
+   "chn-8",
+   "ind-12",
+   "ind-23",
+   "mmr-2"
+  ]
+ },
+ {
+  "id": "ind-5",
+  "name": "Ahmedabad",
+  "nationId": "ind",
+  "lat": 22.75,
+  "lon": 71.3,
+  "population": 98.483,
+  "areaKm2": 203684,
+  "xyz": [
+   0.29565,
+   0.873524,
+   0.386713
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-10",
+   "ind-2",
+   "ind-9",
+   "pak-3"
+  ]
+ },
+ {
+  "id": "ind-6",
+  "name": "Hyderabad",
+  "nationId": "ind",
+  "lat": 17.43,
+  "lon": 78.47,
+  "population": 68.623,
+  "areaKm2": 133970,
+  "xyz": [
+   0.190731,
+   0.934839,
+   0.299496
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-11",
+   "ind-14",
+   "ind-19",
+   "ind-2",
+   "ind-3"
+  ]
+ },
+ {
+  "id": "ind-7",
+  "name": "Chennai",
+  "nationId": "ind",
+  "lat": 11.02,
+  "lon": 78.27,
+  "population": 113.782,
+  "areaKm2": 160073,
+  "xyz": [
+   0.199531,
+   0.96108,
+   0.19108
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-14",
+   "ind-19",
+   "ind-20"
+  ]
+ },
+ {
+  "id": "ind-8",
+  "name": "Srinagar",
+  "nationId": "ind",
+  "lat": 33.97,
+  "lon": 76.65,
+  "population": 19.31,
+  "areaKm2": 100843,
+  "xyz": [
+   0.191422,
+   0.806916,
+   0.558788
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-11",
+   "chn-8",
+   "ind-13",
+   "ind-22",
+   "pak-5",
+   "pak-7",
+   "pak-8"
+  ]
+ },
+ {
+  "id": "ind-9",
+  "name": "Jaipur",
+  "nationId": "ind",
+  "lat": 26.75,
+  "lon": 73.86,
+  "population": 56.688,
+  "areaKm2": 313831,
+  "xyz": [
+   0.248308,
+   0.857788,
+   0.450049
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-1",
+   "ind-10",
+   "ind-15",
+   "ind-22",
+   "ind-5",
+   "pak-3",
+   "pak-5"
+  ]
+ },
+ {
+  "id": "ind-10",
+  "name": "Indore",
+  "nationId": "ind",
+  "lat": 22.94,
+  "lon": 78.42,
+  "population": 59.22,
+  "areaKm2": 345619,
+  "xyz": [
+   0.184838,
+   0.902171,
+   0.389773
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-11",
+   "ind-15",
+   "ind-2",
+   "ind-5",
+   "ind-9"
+  ]
+ },
+ {
+  "id": "ind-11",
+  "name": "Raipur",
+  "nationId": "ind",
+  "lat": 21.8,
+  "lon": 82.31,
+  "population": 18.242,
+  "areaKm2": 157245,
+  "xyz": [
+   0.12429,
+   0.920101,
+   0.371439
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-10",
+   "ind-15",
+   "ind-18",
+   "ind-2",
+   "ind-3",
+   "ind-6"
+  ]
+ },
+ {
+  "id": "ind-12",
+  "name": "Kolkata",
+  "nationId": "ind",
+  "lat": 23.05,
+  "lon": 87.73,
+  "population": 164.691,
+  "areaKm2": 69709,
+  "xyz": [
+   0.036463,
+   0.919425,
+   0.391571
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bgd-3",
+   "bgd-4",
+   "btn-1",
+   "ind-16",
+   "ind-18",
+   "ind-3",
+   "ind-4",
+   "npl-1"
+  ]
+ },
+ {
+  "id": "ind-13",
+  "name": "Faridabad",
+  "nationId": "ind",
+  "lat": 30.77,
+  "lon": 77.69,
+  "population": 16.501,
+  "areaKm2": 107985,
+  "xyz": [
+   0.183143,
+   0.839445,
+   0.511656
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-8",
+   "ind-1",
+   "ind-15",
+   "ind-22",
+   "ind-8",
+   "npl-2"
+  ]
+ },
+ {
+  "id": "ind-14",
+  "name": "Bangalore",
+  "nationId": "ind",
+  "lat": 14.37,
+  "lon": 75.66,
+  "population": 102.69,
+  "areaKm2": 204690,
+  "xyz": [
+   0.239953,
+   0.93851,
+   0.248236
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-19",
+   "ind-2",
+   "ind-20",
+   "ind-6",
+   "ind-7"
+  ]
+ },
+ {
+  "id": "ind-15",
+  "name": "Uttar Pradesh",
+  "nationId": "ind",
+  "lat": 26.72,
+  "lon": 81.0,
+  "population": 146.376,
+  "areaKm2": 233254,
+  "xyz": [
+   0.139782,
+   0.882208,
+   0.449632
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-1",
+   "ind-10",
+   "ind-11",
+   "ind-13",
+   "ind-16",
+   "ind-18",
+   "ind-21",
+   "ind-9",
+   "npl-1",
+   "npl-2"
+  ]
+ },
+ {
+  "id": "ind-16",
+  "name": "Bihar",
+  "nationId": "ind",
+  "lat": 25.73,
+  "lon": 85.87,
+  "population": 27.876,
+  "areaKm2": 93754,
+  "xyz": [
+   0.064848,
+   0.898524,
+   0.434107
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgd-4",
+   "btn-1",
+   "chn-8",
+   "ind-12",
+   "ind-15",
+   "ind-18",
+   "npl-1"
+  ]
+ },
+ {
+  "id": "ind-17",
+  "name": "Andaman and Nicobar",
+  "nationId": "ind",
+  "lat": 6.84,
+  "lon": 93.79,
+  "population": 0.943,
+  "areaKm2": 26519,
+  "xyz": [
+   -0.065621,
+   0.990719,
+   0.119037
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "ind-18",
+  "name": "Jharkhand",
+  "nationId": "ind",
+  "lat": 23.52,
+  "lon": 85.06,
+  "population": 25.904,
+  "areaKm2": 94055,
+  "xyz": [
+   0.078983,
+   0.913498,
+   0.399103
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgd-4",
+   "ind-11",
+   "ind-12",
+   "ind-15",
+   "ind-16",
+   "ind-3"
+  ]
+ },
+ {
+  "id": "ind-19",
+  "name": "Andhra Pradesh",
+  "nationId": "ind",
+  "lat": 16.49,
+  "lon": 79.21,
+  "population": 84.777,
+  "areaKm2": 145662,
+  "xyz": [
+   0.179547,
+   0.941933,
+   0.283771
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Satish Dhawan",
+  "neighbors": [
+   "ind-14",
+   "ind-3",
+   "ind-6",
+   "ind-7"
+  ]
+ },
+ {
+  "id": "ind-20",
+  "name": "Kerala",
+  "nationId": "ind",
+  "lat": 10.37,
+  "lon": 76.5,
+  "population": 28.853,
+  "areaKm2": 45608,
+  "xyz": [
+   0.229556,
+   0.956502,
+   0.180023
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-14",
+   "ind-7"
+  ]
+ },
+ {
+  "id": "ind-21",
+  "name": "Delhi",
+  "nationId": "ind",
+  "lat": 28.69,
+  "lon": 77.09,
+  "population": 114.485,
+  "areaKm2": 667,
+  "xyz": [
+   0.196057,
+   0.85504,
+   0.48007
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-1",
+   "ind-15"
+  ]
+ },
+ {
+  "id": "ind-22",
+  "name": "Punjab",
+  "nationId": "ind",
+  "lat": 31.02,
+  "lon": 75.38,
+  "population": 32.157,
+  "areaKm2": 44706,
+  "xyz": [
+   0.216355,
+   0.829186,
+   0.515405
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-1",
+   "ind-13",
+   "ind-8",
+   "ind-9",
+   "pak-5"
+  ]
+ },
+ {
+  "id": "ind-23",
+  "name": "Meghalaya",
+  "nationId": "ind",
+  "lat": 24.76,
+  "lon": 91.61,
+  "population": 16.25,
+  "areaKm2": 70368,
+  "xyz": [
+   -0.025507,
+   0.907724,
+   0.418792
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgd-1",
+   "bgd-2",
+   "bgd-4",
+   "ind-4",
+   "mmr-2"
+  ]
+ },
+ {
+  "id": "irl-1",
+  "name": "South Dublin",
+  "nationId": "irl",
+  "lat": 53.08,
+  "lon": -7.16,
+  "population": 5.688,
+  "areaKm2": 86174,
+  "xyz": [
+   0.596046,
+   -0.07484,
+   0.799455
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gbr-3",
+   "gbr-4"
+  ]
+ },
+ {
+  "id": "irn-1",
+  "name": "Tehran",
+  "nationId": "irn",
+  "lat": 35.15,
+  "lon": 51.68,
+  "population": 44.829,
+  "areaKm2": 318306,
+  "xyz": [
+   0.506964,
+   0.6415,
+   0.57573
+  ],
+  "capital": true,
+  "coastal": true,
+  "launchSite": "Semnan",
+  "neighbors": [
+   "irn-2",
+   "irn-4",
+   "irn-5",
+   "tkm-1"
+  ]
+ },
+ {
+  "id": "irn-2",
+  "name": "Ahvaz",
+  "nationId": "irn",
+  "lat": 30.98,
+  "lon": 50.31,
+  "population": 13.602,
+  "areaKm2": 307693,
+  "xyz": [
+   0.547482,
+   0.659728,
+   0.514804
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "irn-1",
+   "irn-3",
+   "irn-4",
+   "irn-5",
+   "irq-1",
+   "irq-3",
+   "kwt-1"
+  ]
+ },
+ {
+  "id": "irn-3",
+  "name": "Sistan and Baluchestan",
+  "nationId": "irn",
+  "lat": 28.53,
+  "lon": 58.48,
+  "population": 6.684,
+  "areaKm2": 430430,
+  "xyz": [
+   0.459305,
+   0.748982,
+   0.477561
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "afg-2",
+   "afg-3",
+   "irn-2",
+   "irn-4",
+   "pak-4"
+  ]
+ },
+ {
+  "id": "irn-4",
+  "name": "Razavi Khorasan",
+  "nationId": "irn",
+  "lat": 35.13,
+  "lon": 58.39,
+  "population": 12.908,
+  "areaKm2": 383662,
+  "xyz": [
+   0.428645,
+   0.696533,
+   0.575417
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-2",
+   "irn-1",
+   "irn-2",
+   "irn-3",
+   "tkm-1"
+  ]
+ },
+ {
+  "id": "irn-5",
+  "name": "East Azarbaijan",
+  "nationId": "irn",
+  "lat": 36.56,
+  "lon": 47.25,
+  "population": 17.464,
+  "areaKm2": 209424,
+  "xyz": [
+   0.545296,
+   0.589814,
+   0.595627
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "arm-1",
+   "aze-1",
+   "irn-1",
+   "irn-2",
+   "irq-1",
+   "irq-2",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "irq-1",
+  "name": "Baghdad",
+  "nationId": "irq",
+  "lat": 33.13,
+  "lon": 44.19,
+  "population": 26.918,
+  "areaKm2": 217282,
+  "xyz": [
+   0.600485,
+   0.58366,
+   0.546589
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "irn-2",
+   "irn-5",
+   "irq-2",
+   "irq-3",
+   "jor-1",
+   "sau-4",
+   "syr-1",
+   "syr-2"
+  ]
+ },
+ {
+  "id": "irq-2",
+  "name": "Mosul",
+  "nationId": "irq",
+  "lat": 35.76,
+  "lon": 43.62,
+  "population": 16.293,
+  "areaKm2": 115037,
+  "xyz": [
+   0.587488,
+   0.559825,
+   0.584341
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "irn-5",
+   "irq-1",
+   "syr-1",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "irq-3",
+  "name": "Al-Basrah",
+  "nationId": "irq",
+  "lat": 31.06,
+  "lon": 46.74,
+  "population": 8.726,
+  "areaKm2": 110053,
+  "xyz": [
+   0.587072,
+   0.623781,
+   0.515987
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "irn-2",
+   "irq-1",
+   "kwt-1",
+   "sau-4"
+  ]
+ },
+ {
+  "id": "isl-1",
+  "name": "Höfuðborgarsvæði",
+  "nationId": "isl",
+  "lat": 64.49,
+  "lon": -20.7,
+  "population": 0.407,
+  "areaKm2": 124046,
+  "xyz": [
+   0.402877,
+   -0.152215,
+   0.902508
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "isr-1",
+  "name": "Tel Aviv",
+  "nationId": "isr",
+  "lat": 32.08,
+  "lon": 34.9,
+  "population": 10.808,
+  "areaKm2": 18123,
+  "xyz": [
+   0.694902,
+   0.484749,
+   0.531158
+  ],
+  "capital": true,
+  "coastal": true,
+  "launchSite": "Palmachim",
+  "neighbors": [
+   "egy-5",
+   "jor-1",
+   "lbn-1",
+   "pse-1",
+   "syr-2"
+  ]
+ },
+ {
+  "id": "ita-1",
+  "name": "Roma",
+  "nationId": "ita",
+  "lat": 41.71,
+  "lon": 13.04,
+  "population": 19.017,
+  "areaKm2": 112309,
+  "xyz": [
+   0.727297,
+   0.168446,
+   0.665331
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "fra-3",
+   "ita-2",
+   "ita-3"
+  ]
+ },
+ {
+  "id": "ita-2",
+  "name": "Milan",
+  "nationId": "ita",
+  "lat": 44.6,
+  "lon": 11.28,
+  "population": 11.179,
+  "areaKm2": 89306,
+  "xyz": [
+   0.698309,
+   0.139331,
+   0.702105
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aut-1",
+   "che-1",
+   "hrv-1",
+   "ita-1",
+   "ita-4",
+   "svn-1"
+  ]
+ },
+ {
+  "id": "ita-3",
+  "name": "Naples",
+  "nationId": "ita",
+  "lat": 40.5,
+  "lon": 16.2,
+  "population": 6.402,
+  "areaKm2": 67599,
+  "xyz": [
+   0.730182,
+   0.212087,
+   0.649502
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ita-1",
+   "ita-5"
+  ]
+ },
+ {
+  "id": "ita-4",
+  "name": "Milano",
+  "nationId": "ita",
+  "lat": 45.28,
+  "lon": 8.62,
+  "population": 15.152,
+  "areaKm2": 46231,
+  "xyz": [
+   0.695693,
+   0.105475,
+   0.710553
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "che-1",
+   "fra-3",
+   "ita-2"
+  ]
+ },
+ {
+  "id": "ita-5",
+  "name": "Palermo",
+  "nationId": "ita",
+  "lat": 37.77,
+  "lon": 14.34,
+  "population": 5.855,
+  "areaKm2": 40972,
+  "xyz": [
+   0.765893,
+   0.195748,
+   0.612447
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ita-3"
+  ]
+ },
+ {
+  "id": "jam-1",
+  "name": "Portland",
+  "nationId": "jam",
+  "lat": 18.1,
+  "lon": -76.79,
+  "population": 2.809,
+  "areaKm2": 18072,
+  "xyz": [
+   0.217189,
+   -0.925395,
+   0.310601
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "jor-1",
+  "name": "Zarqa",
+  "nationId": "jor",
+  "lat": 31.88,
+  "lon": 36.5,
+  "population": 12.449,
+  "areaKm2": 92412,
+  "xyz": [
+   0.682617,
+   0.505085,
+   0.528133
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "egy-5",
+   "irq-1",
+   "isr-1",
+   "pse-1",
+   "sau-4",
+   "syr-2"
+  ]
+ },
+ {
+  "id": "jpn-1",
+  "name": "Saitama",
+  "nationId": "jpn",
+  "lat": 36.19,
+  "lon": 139.32,
+  "population": 69.341,
+  "areaKm2": 162772,
+  "xyz": [
+   -0.6121,
+   0.526032,
+   0.590443
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "jpn-2",
+   "jpn-5"
+  ]
+ },
+ {
+  "id": "jpn-2",
+  "name": "Sapporo",
+  "nationId": "jpn",
+  "lat": 43.09,
+  "lon": 142.59,
+  "population": 6.186,
+  "areaKm2": 114773,
+  "xyz": [
+   -0.58005,
+   0.443715,
+   0.683125
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "jpn-1",
+   "rus-20"
+  ]
+ },
+ {
+  "id": "jpn-3",
+  "name": "Okinawa",
+  "nationId": "jpn",
+  "lat": 24.33,
+  "lon": 123.8,
+  "population": 1.207,
+  "areaKm2": 22118,
+  "xyz": [
+   -0.506897,
+   0.757136,
+   0.412069
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "jpn-4",
+  "name": "Fukuoka",
+  "nationId": "jpn",
+  "lat": 33.42,
+  "lon": 131.34,
+  "population": 13.24,
+  "areaKm2": 124735,
+  "xyz": [
+   -0.551303,
+   0.626665,
+   0.550778
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Uchinoura",
+  "neighbors": [
+   "jpn-5"
+  ]
+ },
+ {
+  "id": "jpn-5",
+  "name": "Ōsaka",
+  "nationId": "jpn",
+  "lat": 34.8,
+  "lon": 135.69,
+  "population": 29.299,
+  "areaKm2": 94608,
+  "xyz": [
+   -0.587652,
+   0.573596,
+   0.57066
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "jpn-1",
+   "jpn-4"
+  ]
+ },
+ {
+  "id": "kaz-1",
+  "name": "Almaty City",
+  "nationId": "kaz",
+  "lat": 46.21,
+  "lon": 77.58,
+  "population": 9.233,
+  "areaKm2": 732650,
+  "xyz": [
+   0.148904,
+   0.675865,
+   0.721827
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-11",
+   "kaz-3",
+   "kgz-1",
+   "rus-12"
+  ]
+ },
+ {
+  "id": "kaz-2",
+  "name": "Aqtöbe",
+  "nationId": "kaz",
+  "lat": 47.72,
+  "lon": 54.39,
+  "population": 3.324,
+  "areaKm2": 739738,
+  "xyz": [
+   0.391709,
+   0.546955,
+   0.739868
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "kaz-3",
+   "rus-22",
+   "rus-5",
+   "rus-6",
+   "rus-7",
+   "tkm-1",
+   "uzb-2"
+  ]
+ },
+ {
+  "id": "kaz-3",
+  "name": "Qaraghandy",
+  "nationId": "kaz",
+  "lat": 48.18,
+  "lon": 68.16,
+  "population": 9.446,
+  "areaKm2": 1196321,
+  "xyz": [
+   0.248069,
+   0.618928,
+   0.745245
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "kaz-1",
+   "kaz-2",
+   "kgz-1",
+   "rus-10",
+   "rus-12",
+   "rus-22",
+   "uzb-1",
+   "uzb-2",
+   "uzb-3"
+  ]
+ },
+ {
+  "id": "ken-1",
+  "name": "Central",
+  "nationId": "ken",
+  "lat": -0.71,
+  "lon": 36.85,
+  "population": 34.178,
+  "areaKm2": 22057,
+  "xyz": [
+   0.800184,
+   0.599626,
+   -0.012419
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ken-2",
+   "ken-4"
+  ]
+ },
+ {
+  "id": "ken-2",
+  "name": "Mombasa",
+  "nationId": "ken",
+  "lat": 2.2,
+  "lon": 38.43,
+  "population": 4.192,
+  "areaKm2": 292985,
+  "xyz": [
+   0.782809,
+   0.621077,
+   0.038376
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "eth-2",
+   "eth-4",
+   "eth-5",
+   "ken-1",
+   "ken-3",
+   "ken-4",
+   "som-1"
+  ]
+ },
+ {
+  "id": "ken-3",
+  "name": "Coast",
+  "nationId": "ken",
+  "lat": -2.52,
+  "lon": 39.58,
+  "population": 11.401,
+  "areaKm2": 95359,
+  "xyz": [
+   0.769975,
+   0.636563,
+   -0.043883
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ken-2",
+   "ken-4",
+   "som-1",
+   "tza-2"
+  ]
+ },
+ {
+  "id": "ken-4",
+  "name": "Western",
+  "nationId": "ken",
+  "lat": 0.62,
+  "lon": 35.08,
+  "population": 13.332,
+  "areaKm2": 185833,
+  "xyz": [
+   0.818333,
+   0.574642,
+   0.010826
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "eth-5",
+   "ken-1",
+   "ken-2",
+   "ken-3",
+   "sds-1",
+   "tza-2",
+   "tza-3",
+   "uga-1",
+   "uga-2"
+  ]
+ },
+ {
+  "id": "kgz-1",
+  "name": "Bishkek",
+  "nationId": "kgz",
+  "lat": 42.01,
+  "lon": 74.48,
+  "population": 7.855,
+  "areaKm2": 207791,
+  "xyz": [
+   0.198856,
+   0.715897,
+   0.669289
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "chn-11",
+   "kaz-1",
+   "kaz-3",
+   "tjk-1",
+   "uzb-1"
+  ]
+ },
+ {
+  "id": "khm-1",
+  "name": "Phnom Penh",
+  "nationId": "khm",
+  "lat": 11.65,
+  "lon": 104.95,
+  "population": 15.693,
+  "areaKm2": 126308,
+  "xyz": [
+   -0.252681,
+   0.946252,
+   0.20189
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "khm-2",
+   "lao-1",
+   "tha-1",
+   "vnm-2",
+   "vnm-3"
+  ]
+ },
+ {
+  "id": "khm-2",
+  "name": "Batdâmbâng",
+  "nationId": "khm",
+  "lat": 13.22,
+  "lon": 103.51,
+  "population": 3.135,
+  "areaKm2": 56263,
+  "xyz": [
+   -0.227479,
+   0.946545,
+   0.228707
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "khm-1",
+   "lao-1",
+   "tha-1"
+  ]
+ },
+ {
+  "id": "kor-1",
+  "name": "Seoul",
+  "nationId": "kor",
+  "lat": 37.39,
+  "lon": 127.03,
+  "population": 31.323,
+  "areaKm2": 52103,
+  "xyz": [
+   -0.478456,
+   0.634321,
+   0.60722
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "kor-2",
+   "prk-1"
+  ]
+ },
+ {
+  "id": "kor-2",
+  "name": "Busan",
+  "nationId": "kor",
+  "lat": 35.48,
+  "lon": 128.22,
+  "population": 19.721,
+  "areaKm2": 71953,
+  "xyz": [
+   -0.503854,
+   0.639726,
+   0.580415
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Naro",
+  "neighbors": [
+   "kor-1"
+  ]
+ },
+ {
+  "id": "kwt-1",
+  "name": "Al Asimah",
+  "nationId": "kwt",
+  "lat": 29.37,
+  "lon": 48.26,
+  "population": 5.138,
+  "areaKm2": 20572,
+  "xyz": [
+   0.58016,
+   0.65024,
+   0.490512
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "irn-2",
+   "irq-3",
+   "sau-3",
+   "sau-4"
+  ]
+ },
+ {
+  "id": "lao-1",
+  "name": "Vientiane [prefecture]",
+  "nationId": "lao",
+  "lat": 18.02,
+  "lon": 103.27,
+  "population": 8.357,
+  "areaKm2": 217136,
+  "xyz": [
+   -0.218229,
+   0.925573,
+   0.309338
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "chn-6",
+   "khm-1",
+   "khm-2",
+   "mmr-3",
+   "tha-1",
+   "tha-3",
+   "vnm-1",
+   "vnm-3",
+   "vnm-4"
+  ]
+ },
+ {
+  "id": "lbn-1",
+  "name": "Beirut",
+  "nationId": "lbn",
+  "lat": 33.97,
+  "lon": 35.63,
+  "population": 6.104,
+  "areaKm2": 10740,
+  "xyz": [
+   0.674142,
+   0.483089,
+   0.55871
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "isr-1",
+   "syr-2"
+  ]
+ },
+ {
+  "id": "lbr-1",
+  "name": "Montserrado",
+  "nationId": "lbr",
+  "lat": 6.6,
+  "lon": -10.19,
+  "population": 6.366,
+  "areaKm2": 105065,
+  "xyz": [
+   0.97769,
+   -0.175785,
+   0.114985
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "civ-1",
+   "civ-2",
+   "gin-1",
+   "sle-1"
+  ]
+ },
+ {
+  "id": "lby-1",
+  "name": "Az Zawiyah",
+  "nationId": "lby",
+  "lat": 32.02,
+  "lon": 12.94,
+  "population": 4.822,
+  "areaKm2": 432650,
+  "xyz": [
+   0.826384,
+   0.189836,
+   0.530143
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dza-2",
+   "dza-3",
+   "lby-2",
+   "lby-3",
+   "tun-1"
+  ]
+ },
+ {
+  "id": "lby-2",
+  "name": "Ajdabiya",
+  "nationId": "lby",
+  "lat": 28.72,
+  "lon": 21.85,
+  "population": 0.881,
+  "areaKm2": 1076934,
+  "xyz": [
+   0.813973,
+   0.326421,
+   0.480518
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dza-2",
+   "egy-1",
+   "egy-2",
+   "lby-1",
+   "lby-3",
+   "ner-2",
+   "sdn-2",
+   "sdn-3",
+   "tcd-2"
+  ]
+ },
+ {
+  "id": "lby-3",
+  "name": "Benghazi",
+  "nationId": "lby",
+  "lat": 31.36,
+  "lon": 20.59,
+  "population": 2.183,
+  "areaKm2": 109646,
+  "xyz": [
+   0.799307,
+   0.300345,
+   0.520481
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "lby-1",
+   "lby-2"
+  ]
+ },
+ {
+  "id": "lka-1",
+  "name": "Kŏḷamba",
+  "nationId": "lka",
+  "lat": 7.66,
+  "lon": 80.38,
+  "population": 22.222,
+  "areaKm2": 81021,
+  "xyz": [
+   0.165626,
+   0.977134,
+   0.133329
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "lso-1",
+  "name": "Maseru",
+  "nationId": "lso",
+  "lat": -29.61,
+  "lon": 27.92,
+  "population": 2.494,
+  "areaKm2": 38358,
+  "xyz": [
+   0.768147,
+   0.407134,
+   -0.494158
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "zaf-1",
+   "zaf-3"
+  ]
+ },
+ {
+  "id": "ltu-1",
+  "name": "Vilniaus",
+  "nationId": "ltu",
+  "lat": 55.21,
+  "lon": 24.08,
+  "population": 2.775,
+  "areaKm2": 60642,
+  "xyz": [
+   0.520927,
+   0.232802,
+   0.821242
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "blr-1",
+   "lva-1",
+   "pol-1",
+   "rus-3"
+  ]
+ },
+ {
+  "id": "lux-1",
+  "name": "Luxembourg",
+  "nationId": "lux",
+  "lat": 49.66,
+  "lon": 6.07,
+  "population": 0.719,
+  "areaKm2": 2702,
+  "xyz": [
+   0.643718,
+   0.068471,
+   0.762193
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "bel-1",
+   "deu-4",
+   "fra-1"
+  ]
+ },
+ {
+  "id": "lva-1",
+  "name": "Baldones",
+  "nationId": "lva",
+  "lat": 56.77,
+  "lon": 24.56,
+  "population": 1.776,
+  "areaKm2": 76133,
+  "xyz": [
+   0.498471,
+   0.227787,
+   0.836445
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "blr-1",
+   "est-1",
+   "ltu-1",
+   "rus-18"
+  ]
+ },
+ {
+  "id": "mar-1",
+  "name": "Grand Casablanca",
+  "nationId": "mar",
+  "lat": 33.64,
+  "lon": -6.15,
+  "population": 30.475,
+  "areaKm2": 226424,
+  "xyz": [
+   0.827753,
+   -0.089198,
+   0.553957
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dza-1",
+   "dza-3",
+   "esp-5",
+   "mar-3"
+  ]
+ },
+ {
+  "id": "mar-2",
+  "name": "Laâyoune",
+  "nationId": "mar",
+  "lat": 24.89,
+  "lon": -13.85,
+  "population": 1.055,
+  "areaKm2": 242358,
+  "xyz": [
+   0.880745,
+   -0.217098,
+   0.4209
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dza-3",
+   "mar-3",
+   "mrt-1",
+   "mrt-2"
+  ]
+ },
+ {
+  "id": "mar-3",
+  "name": "Souss - Massa - Draâ",
+  "nationId": "mar",
+  "lat": 31.04,
+  "lon": -8.4,
+  "population": 8.423,
+  "areaKm2": 219415,
+  "xyz": [
+   0.847608,
+   -0.125114,
+   0.515661
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dza-3",
+   "mar-1",
+   "mar-2"
+  ]
+ },
+ {
+  "id": "mda-1",
+  "name": "Ialoveni",
+  "nationId": "mda",
+  "lat": 47.01,
+  "lon": 28.67,
+  "population": 2.235,
+  "areaKm2": 41913,
+  "xyz": [
+   0.598302,
+   0.327177,
+   0.73143
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "rou-1",
+   "rou-3",
+   "ukr-1",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "mdg-1",
+  "name": "Analamanga",
+  "nationId": "mdg",
+  "lat": -18.01,
+  "lon": 47.65,
+  "population": 31.074,
+  "areaKm2": 361042,
+  "xyz": [
+   0.640583,
+   0.702871,
+   -0.309234
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "mdg-2"
+  ]
+ },
+ {
+  "id": "mdg-2",
+  "name": "Haute Matsiatra",
+  "nationId": "mdg",
+  "lat": -22.14,
+  "lon": 45.91,
+  "population": 5.619,
+  "areaKm2": 280147,
+  "xyz": [
+   0.644491,
+   0.665292,
+   -0.376853
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mdg-1"
+  ]
+ },
+ {
+  "id": "mdv-1",
+  "name": "Malé",
+  "nationId": "mdv",
+  "lat": 3.77,
+  "lon": 73.33,
+  "population": 0.54,
+  "areaKm2": 36400,
+  "xyz": [
+   0.286304,
+   0.955874,
+   0.065838
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "mex-1",
+  "name": "Distrito Federal",
+  "nationId": "mex",
+  "lat": 19.18,
+  "lon": -98.74,
+  "population": 67.097,
+  "areaKm2": 348938,
+  "xyz": [
+   -0.143508,
+   -0.933544,
+   0.328483
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "mex-2",
+   "mex-3",
+   "mex-6"
+  ]
+ },
+ {
+  "id": "mex-2",
+  "name": "Merida",
+  "nationId": "mex",
+  "lat": 18.94,
+  "lon": -90.3,
+  "population": 7.817,
+  "areaKm2": 258627,
+  "xyz": [
+   -0.004941,
+   -0.945838,
+   0.324601
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "blz-1",
+   "gtm-1",
+   "mex-1"
+  ]
+ },
+ {
+  "id": "mex-3",
+  "name": "Monterrey",
+  "nationId": "mex",
+  "lat": 25.45,
+  "lon": -99.76,
+  "population": 15.809,
+  "areaKm2": 301297,
+  "xyz": [
+   -0.153122,
+   -0.889848,
+   0.429796
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Starbase",
+  "neighbors": [
+   "mex-1",
+   "mex-4",
+   "mex-6",
+   "mex-7",
+   "usa-10"
+  ]
+ },
+ {
+  "id": "mex-4",
+  "name": "Tijuana",
+  "nationId": "mex",
+  "lat": 29.34,
+  "lon": -108.89,
+  "population": 6.945,
+  "areaKm2": 426560,
+  "xyz": [
+   -0.282209,
+   -0.82481,
+   0.489945
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mex-3",
+   "mex-5",
+   "mex-7",
+   "usa-10",
+   "usa-16"
+  ]
+ },
+ {
+  "id": "mex-5",
+  "name": "Baja California",
+  "nationId": "mex",
+  "lat": 30.34,
+  "lon": -115.21,
+  "population": 4.055,
+  "areaKm2": 89221,
+  "xyz": [
+   -0.367589,
+   -0.780848,
+   0.505129
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mex-4",
+   "mex-7",
+   "usa-16",
+   "usa-4"
+  ]
+ },
+ {
+  "id": "mex-6",
+  "name": "Jalisco",
+  "nationId": "mex",
+  "lat": 20.77,
+  "lon": -102.29,
+  "population": 26.686,
+  "areaKm2": 359171,
+  "xyz": [
+   -0.199008,
+   -0.91356,
+   0.354689
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mex-1",
+   "mex-3",
+   "mex-7"
+  ]
+ },
+ {
+  "id": "mex-7",
+  "name": "Durango",
+  "nationId": "mex",
+  "lat": 25.05,
+  "lon": -106.65,
+  "population": 8.496,
+  "areaKm2": 311538,
+  "xyz": [
+   -0.259523,
+   -0.867965,
+   0.42342
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mex-3",
+   "mex-4",
+   "mex-5",
+   "mex-6"
+  ]
+ },
+ {
+  "id": "mkd-1",
+  "name": "Kisela Voda",
+  "nationId": "mkd",
+  "lat": 41.73,
+  "lon": 21.52,
+  "population": 1.769,
+  "areaKm2": 29876,
+  "xyz": [
+   0.694269,
+   0.273816,
+   0.665594
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "alb-1",
+   "bgr-1",
+   "grc-1",
+   "srb-1",
+   "xkx-1"
+  ]
+ },
+ {
+  "id": "mli-1",
+  "name": "Bamako",
+  "nationId": "mli",
+  "lat": 12.53,
+  "lon": -7.92,
+  "population": 21.667,
+  "areaKm2": 285923,
+  "xyz": [
+   0.96686,
+   -0.134482,
+   0.217015
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "bfa-2",
+   "civ-2",
+   "gin-1",
+   "mli-3",
+   "mrt-1",
+   "mrt-2",
+   "sen-2"
+  ]
+ },
+ {
+  "id": "mli-2",
+  "name": "Gao",
+  "nationId": "mli",
+  "lat": 17.86,
+  "lon": -0.24,
+  "population": 3.601,
+  "areaKm2": 816687,
+  "xyz": [
+   0.951779,
+   -0.003984,
+   0.30676
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bfa-1",
+   "dza-2",
+   "mli-3",
+   "mrt-2",
+   "ner-1",
+   "ner-2"
+  ]
+ },
+ {
+  "id": "mli-3",
+  "name": "Ségou",
+  "nationId": "mli",
+  "lat": 14.06,
+  "lon": -4.61,
+  "population": 3.735,
+  "areaKm2": 141054,
+  "xyz": [
+   0.966889,
+   -0.078043,
+   0.242971
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bfa-1",
+   "bfa-2",
+   "mli-1",
+   "mli-2",
+   "mrt-2"
+  ]
+ },
+ {
+  "id": "mlt-1",
+  "name": "Birgu",
+  "nationId": "mlt",
+  "lat": 35.9,
+  "lon": 14.46,
+  "population": 0.585,
+  "areaKm2": 2155,
+  "xyz": [
+   0.784326,
+   0.202303,
+   0.586436
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "mmr-1",
+  "name": "Yangon",
+  "nationId": "mmr",
+  "lat": 17.18,
+  "lon": 96.25,
+  "population": 32.266,
+  "areaKm2": 130021,
+  "xyz": [
+   -0.104001,
+   0.949699,
+   0.29539
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "mmr-3",
+   "mmr-4",
+   "tha-1",
+   "tha-3"
+  ]
+ },
+ {
+  "id": "mmr-2",
+  "name": "Sagaing",
+  "nationId": "mmr",
+  "lat": 24.22,
+  "lon": 95.69,
+  "population": 2.705,
+  "areaKm2": 214227,
+  "xyz": [
+   -0.090424,
+   0.907488,
+   0.41023
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgd-2",
+   "chn-6",
+   "chn-8",
+   "ind-23",
+   "ind-4",
+   "mmr-3"
+  ]
+ },
+ {
+  "id": "mmr-3",
+  "name": "Mandalay",
+  "nationId": "mmr",
+  "lat": 20.53,
+  "lon": 95.92,
+  "population": 19.127,
+  "areaKm2": 312393,
+  "xyz": [
+   -0.096615,
+   0.931461,
+   0.350778
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bgd-2",
+   "chn-6",
+   "lao-1",
+   "mmr-1",
+   "mmr-2",
+   "tha-3"
+  ]
+ },
+ {
+  "id": "mmr-4",
+  "name": "Tanintharyi",
+  "nationId": "mmr",
+  "lat": 13.61,
+  "lon": 98.77,
+  "population": 2.254,
+  "areaKm2": 60139,
+  "xyz": [
+   -0.148263,
+   0.960538,
+   0.235339
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mmr-1",
+   "tha-1",
+   "tha-2"
+  ]
+ },
+ {
+  "id": "mne-1",
+  "name": "Danilovgrad",
+  "nationId": "mne",
+  "lat": 42.65,
+  "lon": 19.2,
+  "population": 0.607,
+  "areaKm2": 18438,
+  "xyz": [
+   0.694615,
+   0.241849,
+   0.67751
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "alb-1",
+   "bih-1",
+   "srb-1",
+   "xkx-1"
+  ]
+ },
+ {
+  "id": "mng-1",
+  "name": "Ulaanbaatar",
+  "nationId": "mng",
+  "lat": 47.9,
+  "lon": 107.0,
+  "population": 3.03,
+  "areaKm2": 889388,
+  "xyz": [
+   -0.19597,
+   0.641121,
+   0.741997
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "chn-20",
+   "mng-2",
+   "rus-13",
+   "rus-23"
+  ]
+ },
+ {
+  "id": "mng-2",
+  "name": "Uvs",
+  "nationId": "mng",
+  "lat": 47.98,
+  "lon": 95.52,
+  "population": 0.731,
+  "areaKm2": 688654,
+  "xyz": [
+   -0.064376,
+   0.666326,
+   0.742877
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-11",
+   "chn-15",
+   "chn-20",
+   "mng-1",
+   "rus-12",
+   "rus-13"
+  ]
+ },
+ {
+  "id": "moz-1",
+  "name": "Maputo",
+  "nationId": "moz",
+  "lat": -24.87,
+  "lon": 32.96,
+  "population": 21.928,
+  "areaKm2": 230837,
+  "xyz": [
+   0.761223,
+   0.493651,
+   -0.420534
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "moz-2",
+   "swz-1",
+   "zaf-1",
+   "zwe-1",
+   "zwe-2"
+  ]
+ },
+ {
+  "id": "moz-2",
+  "name": "Nampula",
+  "nationId": "moz",
+  "lat": -15.88,
+  "lon": 36.86,
+  "population": 18.919,
+  "areaKm2": 582380,
+  "xyz": [
+   0.769601,
+   0.576956,
+   -0.273562
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "moz-1",
+   "mwi-1",
+   "mwi-2",
+   "tza-1",
+   "tza-4",
+   "zmb-1",
+   "zmb-2",
+   "zwe-1"
+  ]
+ },
+ {
+  "id": "mrt-1",
+  "name": "Nouakchott",
+  "nationId": "mrt",
+  "lat": 18.16,
+  "lon": -15.26,
+  "population": 4.451,
+  "areaKm2": 245014,
+  "xyz": [
+   0.916687,
+   -0.250106,
+   0.31166
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "mar-2",
+   "mli-1",
+   "mrt-2",
+   "sen-1",
+   "sen-2"
+  ]
+ },
+ {
+  "id": "mrt-2",
+  "name": "Hodh ech Chargui",
+  "nationId": "mrt",
+  "lat": 19.62,
+  "lon": -8.3,
+  "population": 1.612,
+  "areaKm2": 828740,
+  "xyz": [
+   0.932046,
+   -0.135974,
+   0.33586
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "dza-2",
+   "dza-3",
+   "mar-2",
+   "mli-1",
+   "mli-2",
+   "mli-3",
+   "mrt-1"
+  ]
+ },
+ {
+  "id": "mus-1",
+  "name": "Port Louis",
+  "nationId": "mus",
+  "lat": -20.13,
+  "lon": 57.57,
+  "population": 1.229,
+  "areaKm2": 6462,
+  "xyz": [
+   0.503461,
+   0.792548,
+   -0.344085
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "mwi-1",
+  "name": "Lilongwe",
+  "nationId": "mwi",
+  "lat": -13.34,
+  "lon": 33.75,
+  "population": 14.295,
+  "areaKm2": 82460,
+  "xyz": [
+   0.809061,
+   0.540519,
+   -0.230782
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "moz-2",
+   "mwi-2",
+   "tza-4",
+   "zmb-2"
+  ]
+ },
+ {
+  "id": "mwi-2",
+  "name": "Blantyre",
+  "nationId": "mwi",
+  "lat": -15.49,
+  "lon": 35.05,
+  "population": 10.865,
+  "areaKm2": 47698,
+  "xyz": [
+   0.788896,
+   0.55342,
+   -0.267152
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "moz-2",
+   "mwi-1"
+  ]
+ },
+ {
+  "id": "mys-1",
+  "name": "Pulau Pinang",
+  "nationId": "mys",
+  "lat": 4.21,
+  "lon": 101.35,
+  "population": 31.47,
+  "areaKm2": 150577,
+  "xyz": [
+   -0.196315,
+   0.977784,
+   0.073474
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "idn-4",
+   "sgp-1",
+   "tha-2"
+  ]
+ },
+ {
+  "id": "mys-2",
+  "name": "Sabah",
+  "nationId": "mys",
+  "lat": 4.14,
+  "lon": 115.55,
+  "population": 6.492,
+  "areaKm2": 218495,
+  "xyz": [
+   -0.430164,
+   0.899855,
+   0.072244
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "brn-1",
+   "idn-11",
+   "idn-5"
+  ]
+ },
+ {
+  "id": "nam-1",
+  "name": "Khomas",
+  "nationId": "nam",
+  "lat": -21.48,
+  "lon": 17.53,
+  "population": 3.39,
+  "areaKm2": 851531,
+  "xyz": [
+   0.887338,
+   0.280244,
+   -0.366188
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "ago-2",
+   "ago-3",
+   "bwa-1",
+   "zaf-2",
+   "zmb-1",
+   "zwe-2"
+  ]
+ },
+ {
+  "id": "ner-1",
+  "name": "Niamey",
+  "nationId": "ner",
+  "lat": 13.91,
+  "lon": 3.49,
+  "population": 22.883,
+  "areaKm2": 248770,
+  "xyz": [
+   0.96887,
+   0.059069,
+   0.240418
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ben-1",
+   "bfa-1",
+   "mli-2",
+   "ner-2",
+   "nga-2",
+   "nga-7"
+  ]
+ },
+ {
+  "id": "ner-2",
+  "name": "Zinder",
+  "nationId": "ner",
+  "lat": 16.74,
+  "lon": 10.22,
+  "population": 9.635,
+  "areaKm2": 913569,
+  "xyz": [
+   0.942447,
+   0.169878,
+   0.287983
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "dza-2",
+   "lby-2",
+   "mli-2",
+   "ner-1",
+   "nga-2",
+   "nga-5",
+   "tcd-1",
+   "tcd-2"
+  ]
+ },
+ {
+  "id": "nga-1",
+  "name": "Kaduna",
+  "nationId": "nga",
+  "lat": 9.53,
+  "lon": 7.5,
+  "population": 36.925,
+  "areaKm2": 220237,
+  "xyz": [
+   0.977776,
+   0.12866,
+   0.165531
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ben-1",
+   "nga-2",
+   "nga-3",
+   "nga-4",
+   "nga-6",
+   "nga-7"
+  ]
+ },
+ {
+  "id": "nga-2",
+  "name": "Kano",
+  "nationId": "nga",
+  "lat": 11.71,
+  "lon": 8.54,
+  "population": 27.418,
+  "areaKm2": 119173,
+  "xyz": [
+   0.968306,
+   0.145481,
+   0.203025
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ner-1",
+   "ner-2",
+   "nga-1",
+   "nga-3",
+   "nga-5",
+   "nga-7"
+  ]
+ },
+ {
+  "id": "nga-3",
+  "name": "Port Harcourt",
+  "nationId": "nga",
+  "lat": 5.88,
+  "lon": 7.53,
+  "population": 35.348,
+  "areaKm2": 161977,
+  "xyz": [
+   0.986154,
+   0.1304,
+   0.102447
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "cmr-1",
+   "cmr-2",
+   "nga-1",
+   "nga-2",
+   "nga-4",
+   "nga-5"
+  ]
+ },
+ {
+  "id": "nga-4",
+  "name": "Lagos",
+  "nationId": "nga",
+  "lat": 6.47,
+  "lon": 4.11,
+  "population": 93.865,
+  "areaKm2": 74480,
+  "xyz": [
+   0.991071,
+   0.071138,
+   0.11277
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ben-1",
+   "nga-1",
+   "nga-3",
+   "nga-6"
+  ]
+ },
+ {
+  "id": "nga-5",
+  "name": "Borno",
+  "nationId": "nga",
+  "lat": 11.45,
+  "lon": 12.43,
+  "population": 15.742,
+  "areaKm2": 167387,
+  "xyz": [
+   0.957125,
+   0.210945,
+   0.198527
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "cmr-1",
+   "cmr-3",
+   "ner-2",
+   "nga-2",
+   "nga-3",
+   "tcd-1"
+  ]
+ },
+ {
+  "id": "nga-6",
+  "name": "Oyo",
+  "nationId": "nga",
+  "lat": 8.08,
+  "lon": 4.01,
+  "population": 45.881,
+  "areaKm2": 89909,
+  "xyz": [
+   0.987644,
+   0.069227,
+   0.140596
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ben-1",
+   "nga-1",
+   "nga-4"
+  ]
+ },
+ {
+  "id": "nga-7",
+  "name": "Sokoto",
+  "nationId": "nga",
+  "lat": 12.67,
+  "lon": 5.41,
+  "population": 7.201,
+  "areaKm2": 89917,
+  "xyz": [
+   0.971294,
+   0.091926,
+   0.219401
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ben-1",
+   "ner-1",
+   "nga-1",
+   "nga-2"
+  ]
+ },
+ {
+  "id": "nic-1",
+  "name": "Managua",
+  "nationId": "nic",
+  "lat": 12.43,
+  "lon": -86.09,
+  "population": 7.442,
+  "areaKm2": 139056,
+  "xyz": [
+   0.066573,
+   -0.974291,
+   0.215234
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "cri-1",
+   "hnd-1",
+   "slv-1"
+  ]
+ },
+ {
+  "id": "nld-1",
+  "name": "Zuid-Holland",
+  "nationId": "nld",
+  "lat": 51.81,
+  "lon": 0.95,
+  "population": 18.425,
+  "areaKm2": 50604,
+  "xyz": [
+   0.618208,
+   0.010213,
+   0.785948
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bel-1",
+   "deu-2",
+   "deu-5",
+   "ecs-7",
+   "gbr-6",
+   "ven-2"
+  ]
+ },
+ {
+  "id": "nor-1",
+  "name": "Oslo",
+  "nationId": "nor",
+  "lat": 61.0,
+  "lon": 9.94,
+  "population": 5.691,
+  "areaKm2": 473263,
+  "xyz": [
+   0.477537,
+   0.083679,
+   0.874618
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "fin-1",
+   "rus-9",
+   "swe-1",
+   "swe-2"
+  ]
+ },
+ {
+  "id": "nor-2",
+  "name": "Bouvet Island",
+  "nationId": "nor",
+  "lat": -54.42,
+  "lon": 3.42,
+  "population": 0.0,
+  "areaKm2": 221,
+  "xyz": [
+   0.580874,
+   0.034681,
+   -0.813254
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "npl-1",
+  "name": "Bagmati",
+  "nationId": "npl",
+  "lat": 27.78,
+  "lon": 85.16,
+  "population": 28.337,
+  "areaKm2": 79860,
+  "xyz": [
+   0.074664,
+   0.88159,
+   0.466074
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "chn-8",
+   "ind-12",
+   "ind-15",
+   "ind-16",
+   "npl-2"
+  ]
+ },
+ {
+  "id": "npl-2",
+  "name": "Bheri",
+  "nationId": "npl",
+  "lat": 28.73,
+  "lon": 82.1,
+  "population": 2.173,
+  "areaKm2": 77793,
+  "xyz": [
+   0.120463,
+   0.86857,
+   0.480703
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-8",
+   "ind-13",
+   "ind-15",
+   "npl-1"
+  ]
+ },
+ {
+  "id": "nzl-1",
+  "name": "Auckland",
+  "nationId": "nzl",
+  "lat": -37.36,
+  "lon": 175.94,
+  "population": 4.632,
+  "areaKm2": 172739,
+  "xyz": [
+   -0.79283,
+   0.056273,
+   -0.606839
+  ],
+  "capital": true,
+  "coastal": true,
+  "launchSite": "Mahia",
+  "neighbors": [
+   "nzl-2"
+  ]
+ },
+ {
+  "id": "nzl-2",
+  "name": "Christchurch",
+  "nationId": "nzl",
+  "lat": -44.42,
+  "lon": 170.91,
+  "population": 0.834,
+  "areaKm2": 173065,
+  "xyz": [
+   -0.705303,
+   0.112792,
+   -0.699876
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "nzl-1"
+  ]
+ },
+ {
+  "id": "omn-1",
+  "name": "Muscat",
+  "nationId": "omn",
+  "lat": 22.7,
+  "lon": 57.45,
+  "population": 6.113,
+  "areaKm2": 335122,
+  "xyz": [
+   0.496331,
+   0.777668,
+   0.38586
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "are-1",
+   "sau-3",
+   "yem-2"
+  ]
+ },
+ {
+  "id": "pak-1",
+  "name": "F.C.T.",
+  "nationId": "pak",
+  "lat": 33.7,
+  "lon": 73.06,
+  "population": 17.936,
+  "areaKm2": 2850,
+  "xyz": [
+   0.242365,
+   0.795858,
+   0.55486
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "pak-5",
+   "pak-6",
+   "pak-8"
+  ]
+ },
+ {
+  "id": "pak-2",
+  "name": "Peshawar",
+  "nationId": "pak",
+  "lat": 32.61,
+  "lon": 69.9,
+  "population": 15.829,
+  "areaKm2": 27357,
+  "xyz": [
+   0.28949,
+   0.791004,
+   0.538988
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "pak-4",
+   "pak-5",
+   "pak-6"
+  ]
+ },
+ {
+  "id": "pak-3",
+  "name": "Karachi",
+  "nationId": "pak",
+  "lat": 26.37,
+  "lon": 68.87,
+  "population": 101.825,
+  "areaKm2": 148165,
+  "xyz": [
+   0.322987,
+   0.835673,
+   0.444219
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ind-5",
+   "ind-9",
+   "pak-4",
+   "pak-5"
+  ]
+ },
+ {
+  "id": "pak-4",
+  "name": "Quetta",
+  "nationId": "pak",
+  "lat": 27.52,
+  "lon": 65.55,
+  "population": 8.135,
+  "areaKm2": 349110,
+  "xyz": [
+   0.367051,
+   0.807332,
+   0.462049
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "afg-1",
+   "afg-3",
+   "irn-3",
+   "pak-2",
+   "pak-3",
+   "pak-5",
+   "pak-6"
+  ]
+ },
+ {
+  "id": "pak-5",
+  "name": "Punjab",
+  "nationId": "pak",
+  "lat": 31.36,
+  "lon": 72.34,
+  "population": 108.335,
+  "areaKm2": 199027,
+  "xyz": [
+   0.258984,
+   0.813704,
+   0.520397
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-22",
+   "ind-8",
+   "ind-9",
+   "pak-1",
+   "pak-2",
+   "pak-3",
+   "pak-4",
+   "pak-6",
+   "pak-8"
+  ]
+ },
+ {
+  "id": "pak-6",
+  "name": "K.P.",
+  "nationId": "pak",
+  "lat": 34.94,
+  "lon": 72.64,
+  "population": 23.257,
+  "areaKm2": 64202,
+  "xyz": [
+   0.244588,
+   0.782406,
+   0.572728
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "pak-1",
+   "pak-2",
+   "pak-4",
+   "pak-5",
+   "pak-7",
+   "pak-8",
+   "tjk-1"
+  ]
+ },
+ {
+  "id": "pak-7",
+  "name": "Northern Areas",
+  "nationId": "pak",
+  "lat": 35.79,
+  "lon": 74.98,
+  "population": 1.543,
+  "areaKm2": 62612,
+  "xyz": [
+   0.210163,
+   0.783506,
+   0.584765
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "chn-11",
+   "ind-8",
+   "pak-6",
+   "pak-8"
+  ]
+ },
+ {
+  "id": "pak-8",
+  "name": "Azad Kashmir",
+  "nationId": "pak",
+  "lat": 33.87,
+  "lon": 73.8,
+  "population": 0.023,
+  "areaKm2": 21091,
+  "xyz": [
+   0.231603,
+   0.797369,
+   0.557281
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "ind-8",
+   "pak-1",
+   "pak-5",
+   "pak-6",
+   "pak-7"
+  ]
+ },
+ {
+  "id": "pan-1",
+  "name": "Panama",
+  "nationId": "pan",
+  "lat": 8.94,
+  "lon": -79.49,
+  "population": 4.834,
+  "areaKm2": 101181,
+  "xyz": [
+   0.180179,
+   -0.971281,
+   0.155395
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "col-1",
+   "col-3",
+   "cri-1"
+  ]
+ },
+ {
+  "id": "per-1",
+  "name": "Callao",
+  "nationId": "per",
+  "lat": -11.97,
+  "lon": -76.96,
+  "population": 23.644,
+  "areaKm2": 243164,
+  "xyz": [
+   0.220767,
+   -0.953005,
+   -0.207469
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "per-2",
+   "per-3"
+  ]
+ },
+ {
+  "id": "per-2",
+  "name": "Arequipa",
+  "nationId": "per",
+  "lat": -14.66,
+  "lon": -71.78,
+  "population": 5.425,
+  "areaKm2": 506548,
+  "xyz": [
+   0.302408,
+   -0.918967,
+   -0.253079
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bol-2",
+   "bra-2",
+   "chl-1",
+   "per-1",
+   "per-3",
+   "per-4"
+  ]
+ },
+ {
+  "id": "per-3",
+  "name": "La Libertad",
+  "nationId": "per",
+  "lat": -6.5,
+  "lon": -79.28,
+  "population": 5.979,
+  "areaKm2": 227940,
+  "xyz": [
+   0.184879,
+   -0.976223,
+   -0.113174
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ecu-1",
+   "per-1",
+   "per-2",
+   "per-4"
+  ]
+ },
+ {
+  "id": "per-4",
+  "name": "Loreto",
+  "nationId": "per",
+  "lat": -4.27,
+  "lon": -73.89,
+  "population": 1.146,
+  "areaKm2": 377739,
+  "xyz": [
+   0.276764,
+   -0.958043,
+   -0.074539
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bra-2",
+   "col-3",
+   "ecu-1",
+   "ecu-2",
+   "per-2",
+   "per-3"
+  ]
+ },
+ {
+  "id": "phl-1",
+  "name": "San Juan",
+  "nationId": "phl",
+  "lat": 14.72,
+  "lon": 121.09,
+  "population": 80.147,
+  "areaKm2": 165336,
+  "xyz": [
+   -0.499466,
+   0.828213,
+   0.254159
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "phl-3"
+  ]
+ },
+ {
+  "id": "phl-2",
+  "name": "Davao",
+  "nationId": "phl",
+  "lat": 7.48,
+  "lon": 125.03,
+  "population": 20.901,
+  "areaKm2": 108511,
+  "xyz": [
+   -0.569057,
+   0.811922,
+   0.130216
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "phl-3",
+   "phl-4"
+  ]
+ },
+ {
+  "id": "phl-3",
+  "name": "Negros Occidental",
+  "nationId": "phl",
+  "lat": 10.82,
+  "lon": 123.49,
+  "population": 15.381,
+  "areaKm2": 126404,
+  "xyz": [
+   -0.54202,
+   0.819123,
+   0.187756
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "phl-1",
+   "phl-2"
+  ]
+ },
+ {
+  "id": "phl-4",
+  "name": "Zamboanga",
+  "nationId": "phl",
+  "lat": 7.56,
+  "lon": 121.71,
+  "population": 4.98,
+  "areaKm2": 74800,
+  "xyz": [
+   -0.521029,
+   0.843348,
+   0.131501
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "phl-2"
+  ]
+ },
+ {
+  "id": "png-1",
+  "name": "National Capital District",
+  "nationId": "png",
+  "lat": -7.25,
+  "lon": 145.94,
+  "population": 10.005,
+  "areaKm2": 452485,
+  "xyz": [
+   -0.821787,
+   0.555659,
+   -0.126134
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "aus-4",
+   "idn-3",
+   "png-2"
+  ]
+ },
+ {
+  "id": "png-2",
+  "name": "North Solomons",
+  "nationId": "png",
+  "lat": -5.77,
+  "lon": 152.39,
+  "population": 1.666,
+  "areaKm2": 143177,
+  "xyz": [
+   -0.881667,
+   0.461045,
+   -0.100502
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "png-1",
+   "slb-1"
+  ]
+ },
+ {
+  "id": "pol-1",
+  "name": "Masovian",
+  "nationId": "pol",
+  "lat": 51.91,
+  "lon": 21.28,
+  "population": 11.753,
+  "areaKm2": 153286,
+  "xyz": [
+   0.574794,
+   0.223903,
+   0.78707
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "blr-1",
+   "ltu-1",
+   "pol-2",
+   "pol-3",
+   "rus-3",
+   "svk-1",
+   "ukr-1",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "pol-2",
+  "name": "Katowice",
+  "nationId": "pol",
+  "lat": 50.26,
+  "lon": 18.85,
+  "population": 15.413,
+  "areaKm2": 46460,
+  "xyz": [
+   0.604972,
+   0.206597,
+   0.768977
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "cze-1",
+   "deu-1",
+   "pol-1",
+   "pol-3",
+   "svk-1"
+  ]
+ },
+ {
+  "id": "pol-3",
+  "name": "Pomeranian",
+  "nationId": "pol",
+  "lat": 53.4,
+  "lon": 17.56,
+  "population": 8.524,
+  "areaKm2": 114759,
+  "xyz": [
+   0.568489,
+   0.179883,
+   0.802784
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "deu-1",
+   "pol-1",
+   "pol-2",
+   "rus-3"
+  ]
+ },
+ {
+  "id": "prk-1",
+  "name": "P'yŏngyang",
+  "nationId": "prk",
+  "lat": 38.92,
+  "lon": 125.74,
+  "population": 20.775,
+  "areaKm2": 85528,
+  "xyz": [
+   -0.454471,
+   0.631547,
+   0.628176
+  ],
+  "capital": true,
+  "coastal": true,
+  "launchSite": "Sohae",
+  "neighbors": [
+   "chn-24",
+   "chn-5",
+   "kor-1",
+   "prk-2"
+  ]
+ },
+ {
+  "id": "prk-2",
+  "name": "Hamgyŏng-bukto",
+  "nationId": "prk",
+  "lat": 41.19,
+  "lon": 128.72,
+  "population": 6.01,
+  "areaKm2": 63607,
+  "xyz": [
+   -0.47079,
+   0.587124,
+   0.658516
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-24",
+   "prk-1",
+   "rus-17"
+  ]
+ },
+ {
+  "id": "prt-1",
+  "name": "Lisboa",
+  "nationId": "prt",
+  "lat": 39.67,
+  "lon": -8.96,
+  "population": 10.541,
+  "areaKm2": 103644,
+  "xyz": [
+   0.760304,
+   -0.119921,
+   0.638402
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "esp-1",
+   "esp-5"
+  ]
+ },
+ {
+  "id": "prt-2",
+  "name": "Funchal",
+  "nationId": "prt",
+  "lat": 38.64,
+  "lon": -28.04,
+  "population": 0.142,
+  "areaKm2": 12210,
+  "xyz": [
+   0.689452,
+   -0.367196,
+   0.624358
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pry-1",
+  "name": "Asunción",
+  "nationId": "pry",
+  "lat": -25.51,
+  "lon": -57.1,
+  "population": 7.408,
+  "areaKm2": 417161,
+  "xyz": [
+   0.490156,
+   -0.757779,
+   -0.430718
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "arg-1",
+   "arg-3",
+   "bol-1",
+   "bra-4"
+  ]
+ },
+ {
+  "id": "pse-1",
+  "name": "Gaza Strip",
+  "nationId": "pse",
+  "lat": 31.71,
+  "lon": 34.82,
+  "population": 5.926,
+  "areaKm2": 5173,
+  "xyz": [
+   0.698352,
+   0.485781,
+   0.525662
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "egy-5",
+   "isr-1",
+   "jor-1"
+  ]
+ },
+ {
+  "id": "qat-1",
+  "name": "Ad Dawhah",
+  "nationId": "qat",
+  "lat": 25.28,
+  "lon": 51.52,
+  "population": 3.166,
+  "areaKm2": 14434,
+  "xyz": [
+   0.562655,
+   0.707885,
+   0.426987
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bhr-1",
+   "sau-3"
+  ]
+ },
+ {
+  "id": "rou-1",
+  "name": "Bucharest",
+  "nationId": "rou",
+  "lat": 44.73,
+  "lon": 26.25,
+  "population": 11.12,
+  "areaKm2": 90740,
+  "xyz": [
+   0.637197,
+   0.314275,
+   0.703713
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bgr-1",
+   "mda-1",
+   "rou-2",
+   "rou-3",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "rou-2",
+  "name": "Cluj",
+  "nationId": "rou",
+  "lat": 46.33,
+  "lon": 22.97,
+  "population": 4.906,
+  "areaKm2": 91239,
+  "xyz": [
+   0.63569,
+   0.269459,
+   0.723388
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bgr-1",
+   "hun-1",
+   "rou-1",
+   "rou-3",
+   "srb-1",
+   "ukr-1",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "rou-3",
+  "name": "Iasi",
+  "nationId": "rou",
+  "lat": 46.88,
+  "lon": 26.83,
+  "population": 2.452,
+  "areaKm2": 52610,
+  "xyz": [
+   0.609966,
+   0.30853,
+   0.729897
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "mda-1",
+   "rou-1",
+   "rou-2",
+   "ukr-1",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "rus-1",
+  "name": "Moskva",
+  "nationId": "rus",
+  "lat": 55.1,
+  "lon": 37.52,
+  "population": 29.775,
+  "areaKm2": 460006,
+  "xyz": [
+   0.453788,
+   0.348462,
+   0.820153
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "blr-1",
+   "rus-18",
+   "rus-4",
+   "rus-6",
+   "rus-7",
+   "rus-8",
+   "ukr-1"
+  ]
+ },
+ {
+  "id": "rus-2",
+  "name": "Sevastopol",
+  "nationId": "rus",
+  "lat": 45.04,
+  "lon": 34.06,
+  "population": 1.843,
+  "areaKm2": 34556,
+  "xyz": [
+   0.585402,
+   0.395721,
+   0.707608
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-7",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "rus-3",
+  "name": "Kaliningrad",
+  "nationId": "rus",
+  "lat": 54.66,
+  "lon": 21.23,
+  "population": 0.864,
+  "areaKm2": 17783,
+  "xyz": [
+   0.539129,
+   0.209425,
+   0.81577
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ltu-1",
+   "pol-1",
+   "pol-3"
+  ]
+ },
+ {
+  "id": "rus-4",
+  "name": "Nizhny Novgorod",
+  "nationId": "rus",
+  "lat": 55.61,
+  "lon": 44.88,
+  "population": 7.4,
+  "areaKm2": 224820,
+  "xyz": [
+   0.400242,
+   0.398521,
+   0.82522
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "rus-1",
+   "rus-6",
+   "rus-8"
+  ]
+ },
+ {
+  "id": "rus-5",
+  "name": "Makhachkala",
+  "nationId": "rus",
+  "lat": 44.12,
+  "lon": 45.17,
+  "population": 5.707,
+  "areaKm2": 217253,
+  "xyz": [
+   0.506165,
+   0.509123,
+   0.696126
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "aze-1",
+   "geo-1",
+   "kaz-2",
+   "rus-7"
+  ]
+ },
+ {
+  "id": "rus-6",
+  "name": "Kazan",
+  "nationId": "rus",
+  "lat": 54.48,
+  "lon": 49.76,
+  "population": 14.192,
+  "areaKm2": 414822,
+  "xyz": [
+   0.37531,
+   0.443544,
+   0.813887
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "kaz-2",
+   "rus-1",
+   "rus-10",
+   "rus-14",
+   "rus-22",
+   "rus-4",
+   "rus-7",
+   "rus-8"
+  ]
+ },
+ {
+  "id": "rus-7",
+  "name": "Rostov-On-Don",
+  "nationId": "rus",
+  "lat": 48.12,
+  "lon": 41.15,
+  "population": 12.805,
+  "areaKm2": 464357,
+  "xyz": [
+   0.502603,
+   0.439296,
+   0.744586
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "geo-1",
+   "kaz-2",
+   "rus-1",
+   "rus-2",
+   "rus-5",
+   "rus-6",
+   "ukr-1",
+   "ukr-2"
+  ]
+ },
+ {
+  "id": "rus-8",
+  "name": "St. Petersburg",
+  "nationId": "rus",
+  "lat": 59.77,
+  "lon": 40.91,
+  "population": 4.595,
+  "areaKm2": 667899,
+  "xyz": [
+   0.380525,
+   0.32978,
+   0.863971
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Plesetsk",
+  "neighbors": [
+   "rus-1",
+   "rus-14",
+   "rus-18",
+   "rus-4",
+   "rus-6",
+   "rus-9"
+  ]
+ },
+ {
+  "id": "rus-9",
+  "name": "Murmansk",
+  "nationId": "rus",
+  "lat": 66.29,
+  "lon": 33.83,
+  "population": 1.738,
+  "areaKm2": 319945,
+  "xyz": [
+   0.334021,
+   0.223852,
+   0.915598
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "fin-1",
+   "nor-1",
+   "rus-18",
+   "rus-8"
+  ]
+ },
+ {
+  "id": "rus-10",
+  "name": "Yekaterinburg",
+  "nationId": "rus",
+  "lat": 58.45,
+  "lon": 61.49,
+  "population": 9.354,
+  "areaKm2": 578435,
+  "xyz": [
+   0.249771,
+   0.459805,
+   0.85217
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "kaz-3",
+   "rus-12",
+   "rus-14",
+   "rus-21",
+   "rus-22",
+   "rus-6"
+  ]
+ },
+ {
+  "id": "rus-11",
+  "name": "Yakutsk",
+  "nationId": "rus",
+  "lat": 65.6,
+  "lon": 130.99,
+  "population": 2.524,
+  "areaKm2": 3106433,
+  "xyz": [
+   -0.270999,
+   0.311869,
+   0.910658
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-13",
+   "rus-15",
+   "rus-16",
+   "rus-19",
+   "rus-23",
+   "rus-24"
+  ]
+ },
+ {
+  "id": "rus-12",
+  "name": "Novosibirsk",
+  "nationId": "rus",
+  "lat": 55.01,
+  "lon": 82.05,
+  "population": 11.81,
+  "areaKm2": 1087832,
+  "xyz": [
+   0.079341,
+   0.56793,
+   0.819244
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-11",
+   "kaz-1",
+   "kaz-3",
+   "mng-2",
+   "rus-10",
+   "rus-13",
+   "rus-16",
+   "rus-21"
+  ]
+ },
+ {
+  "id": "rus-13",
+  "name": "Irkutsk",
+  "nationId": "rus",
+  "lat": 55.81,
+  "lon": 105.96,
+  "population": 4.093,
+  "areaKm2": 1292935,
+  "xyz": [
+   -0.154518,
+   0.540267,
+   0.827186
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "mng-1",
+   "mng-2",
+   "rus-11",
+   "rus-12",
+   "rus-16",
+   "rus-23"
+  ]
+ },
+ {
+  "id": "rus-14",
+  "name": "Arkhangelsk",
+  "nationId": "rus",
+  "lat": 64.32,
+  "lon": 55.84,
+  "population": 1.293,
+  "areaKm2": 626004,
+  "xyz": [
+   0.243351,
+   0.35862,
+   0.901206
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-10",
+   "rus-21",
+   "rus-6",
+   "rus-8"
+  ]
+ },
+ {
+  "id": "rus-15",
+  "name": "Vladivostok",
+  "nationId": "rus",
+  "lat": 55.61,
+  "lon": 132.75,
+  "population": 3.066,
+  "areaKm2": 1150416,
+  "xyz": [
+   -0.383382,
+   0.414813,
+   0.825196
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Vostochny",
+  "neighbors": [
+   "chn-14",
+   "rus-11",
+   "rus-17",
+   "rus-20",
+   "rus-23",
+   "rus-24"
+  ]
+ },
+ {
+  "id": "rus-16",
+  "name": "Krasnoyarsk",
+  "nationId": "rus",
+  "lat": 65.56,
+  "lon": 95.2,
+  "population": 4.34,
+  "areaKm2": 2357858,
+  "xyz": [
+   -0.037519,
+   0.412032,
+   0.910396
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-11",
+   "rus-12",
+   "rus-13",
+   "rus-21"
+  ]
+ },
+ {
+  "id": "rus-17",
+  "name": "Primor'ye",
+  "nationId": "rus",
+  "lat": 45.15,
+  "lon": 134.46,
+  "population": 2.091,
+  "areaKm2": 223230,
+  "xyz": [
+   -0.493962,
+   0.503325,
+   0.708989
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "chn-14",
+   "chn-24",
+   "prk-2",
+   "rus-15"
+  ]
+ },
+ {
+  "id": "rus-18",
+  "name": "City of St. Petersburg",
+  "nationId": "rus",
+  "lat": 59.61,
+  "lon": 30.55,
+  "population": 9.614,
+  "areaKm2": 195565,
+  "xyz": [
+   0.435644,
+   0.257172,
+   0.862599
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "blr-1",
+   "est-1",
+   "fin-1",
+   "lva-1",
+   "rus-1",
+   "rus-8",
+   "rus-9"
+  ]
+ },
+ {
+  "id": "rus-19",
+  "name": "Chukchi Autonomous Okrug",
+  "nationId": "rus",
+  "lat": 66.75,
+  "lon": 170.52,
+  "population": 0.458,
+  "areaKm2": 739943,
+  "xyz": [
+   -0.389321,
+   0.065038,
+   0.918803
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-11",
+   "rus-24",
+   "usa-6"
+  ]
+ },
+ {
+  "id": "rus-20",
+  "name": "Sakhalin",
+  "nationId": "rus",
+  "lat": 47.35,
+  "lon": 152.47,
+  "population": 0.64,
+  "areaKm2": 130269,
+  "xyz": [
+   -0.600809,
+   0.313202,
+   0.735481
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "jpn-2",
+   "rus-15",
+   "rus-24"
+  ]
+ },
+ {
+  "id": "rus-21",
+  "name": "Khanty-Mansiy",
+  "nationId": "rus",
+  "lat": 62.79,
+  "lon": 72.49,
+  "population": 3.158,
+  "areaKm2": 1225615,
+  "xyz": [
+   0.137521,
+   0.436028,
+   0.889363
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-10",
+   "rus-12",
+   "rus-14",
+   "rus-16"
+  ]
+ },
+ {
+  "id": "rus-22",
+  "name": "Bashkortostan",
+  "nationId": "rus",
+  "lat": 53.59,
+  "lon": 57.86,
+  "population": 8.666,
+  "areaKm2": 355188,
+  "xyz": [
+   0.315815,
+   0.50259,
+   0.804776
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "kaz-2",
+   "kaz-3",
+   "rus-10",
+   "rus-6"
+  ]
+ },
+ {
+  "id": "rus-23",
+  "name": "Chita",
+  "nationId": "rus",
+  "lat": 52.16,
+  "lon": 116.56,
+  "population": 1.113,
+  "areaKm2": 438647,
+  "xyz": [
+   -0.274295,
+   0.548735,
+   0.789716
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "chn-14",
+   "chn-20",
+   "mng-1",
+   "rus-11",
+   "rus-13",
+   "rus-15"
+  ]
+ },
+ {
+  "id": "rus-24",
+  "name": "Kamchatka",
+  "nationId": "rus",
+  "lat": 59.02,
+  "lon": 157.89,
+  "population": 0.974,
+  "areaKm2": 982069,
+  "xyz": [
+   -0.476948,
+   0.193728,
+   0.857316
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-11",
+   "rus-15",
+   "rus-19",
+   "rus-20"
+  ]
+ },
+ {
+  "id": "rwa-1",
+  "name": "Kigali City",
+  "nationId": "rwa",
+  "lat": -2.04,
+  "lon": 29.79,
+  "population": 16.155,
+  "areaKm2": 23184,
+  "xyz": [
+   0.867272,
+   0.496561,
+   -0.035595
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "bdi-1",
+   "cod-3",
+   "tza-3",
+   "uga-1"
+  ]
+ },
+ {
+  "id": "sau-1",
+  "name": "Ar Riyad",
+  "nationId": "sau",
+  "lat": 23.52,
+  "lon": 45.01,
+  "population": 12.886,
+  "areaKm2": 527659,
+  "xyz": [
+   0.648226,
+   0.648514,
+   0.399038
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "sau-2",
+   "sau-3",
+   "sau-4",
+   "yem-1",
+   "yem-2"
+  ]
+ },
+ {
+  "id": "sau-2",
+  "name": "Jeddah",
+  "nationId": "sau",
+  "lat": 21.23,
+  "lon": 40.46,
+  "population": 12.075,
+  "areaKm2": 261810,
+  "xyz": [
+   0.709193,
+   0.604911,
+   0.362116
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "sau-1",
+   "sau-4",
+   "yem-1"
+  ]
+ },
+ {
+  "id": "sau-3",
+  "name": "Ash Sharqiyah",
+  "nationId": "sau",
+  "lat": 22.99,
+  "lon": 50.17,
+  "population": 8.835,
+  "areaKm2": 540964,
+  "xyz": [
+   0.589632,
+   0.70698,
+   0.39053
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "are-1",
+   "bhr-1",
+   "kwt-1",
+   "omn-1",
+   "qat-1",
+   "sau-1",
+   "sau-4",
+   "yem-2"
+  ]
+ },
+ {
+  "id": "sau-4",
+  "name": "Al Madinah",
+  "nationId": "sau",
+  "lat": 26.68,
+  "lon": 39.54,
+  "population": 6.135,
+  "areaKm2": 607719,
+  "xyz": [
+   0.689108,
+   0.568778,
+   0.449022
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "egy-5",
+   "irq-1",
+   "irq-3",
+   "jor-1",
+   "kwt-1",
+   "sau-1",
+   "sau-2",
+   "sau-3"
+  ]
+ },
+ {
+  "id": "sdn-1",
+  "name": "Khartoum",
+  "nationId": "sdn",
+  "lat": 15.45,
+  "lon": 33.01,
+  "population": 49.614,
+  "areaKm2": 667041,
+  "xyz": [
+   0.808238,
+   0.525113,
+   0.266472
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "egy-4",
+   "eri-1",
+   "eth-3",
+   "sdn-2",
+   "sdn-3",
+   "sdn-4",
+   "sdn-5",
+   "sds-2"
+  ]
+ },
+ {
+  "id": "sdn-2",
+  "name": "Nyala",
+  "nationId": "sdn",
+  "lat": 15.57,
+  "lon": 24.54,
+  "population": 2.263,
+  "areaKm2": 342424,
+  "xyz": [
+   0.876297,
+   0.40007,
+   0.268418
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "lby-2",
+   "sdn-1",
+   "sdn-3",
+   "sdn-5",
+   "tcd-2"
+  ]
+ },
+ {
+  "id": "sdn-3",
+  "name": "Port Sudan",
+  "nationId": "sdn",
+  "lat": 19.32,
+  "lon": 28.83,
+  "population": 0.519,
+  "areaKm2": 346632,
+  "xyz": [
+   0.826722,
+   0.455112,
+   0.330763
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "egy-2",
+   "egy-4",
+   "lby-2",
+   "sdn-1",
+   "sdn-2"
+  ]
+ },
+ {
+  "id": "sdn-4",
+  "name": "Red Sea",
+  "nationId": "sdn",
+  "lat": 19.53,
+  "lon": 35.89,
+  "population": 2.999,
+  "areaKm2": 215822,
+  "xyz": [
+   0.763565,
+   0.552471,
+   0.334282
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "egy-4",
+   "eri-1",
+   "sdn-1"
+  ]
+ },
+ {
+  "id": "sdn-5",
+  "name": "Southern Darfur",
+  "nationId": "sdn",
+  "lat": 11.42,
+  "lon": 26.43,
+  "population": 3.177,
+  "areaKm2": 300711,
+  "xyz": [
+   0.877734,
+   0.436357,
+   0.197927
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "caf-2",
+   "sdn-1",
+   "sdn-2",
+   "sds-1",
+   "sds-2",
+   "tcd-2"
+  ]
+ },
+ {
+  "id": "sds-1",
+  "name": "Central Equatoria",
+  "nationId": "sds",
+  "lat": 5.83,
+  "lon": 29.7,
+  "population": 9.582,
+  "areaKm2": 353247,
+  "xyz": [
+   0.86415,
+   0.492861,
+   0.101649
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "caf-2",
+   "cod-3",
+   "eth-5",
+   "ken-4",
+   "sdn-5",
+   "sds-2",
+   "uga-2"
+  ]
+ },
+ {
+  "id": "sds-2",
+  "name": "Upper Nile",
+  "nationId": "sds",
+  "lat": 9.84,
+  "lon": 31.27,
+  "population": 3.875,
+  "areaKm2": 272646,
+  "xyz": [
+   0.842129,
+   0.511472,
+   0.170925
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "eth-3",
+   "eth-4",
+   "eth-5",
+   "sdn-1",
+   "sdn-5",
+   "sds-1"
+  ]
+ },
+ {
+  "id": "sen-1",
+  "name": "Dakar",
+  "nationId": "sen",
+  "lat": 14.6,
+  "lon": -17.02,
+  "population": 19.989,
+  "areaKm2": 84507,
+  "xyz": [
+   0.925341,
+   -0.283251,
+   0.252017
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gmb-1",
+   "gnb-1",
+   "mrt-1",
+   "sen-2"
+  ]
+ },
+ {
+  "id": "sen-2",
+  "name": "Tambacounda",
+  "nationId": "sen",
+  "lat": 13.67,
+  "lon": -13.7,
+  "population": 1.174,
+  "areaKm2": 111810,
+  "xyz": [
+   0.944014,
+   -0.230182,
+   0.236335
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "gin-1",
+   "gmb-1",
+   "gnb-1",
+   "mli-1",
+   "mrt-1",
+   "sen-1"
+  ]
+ },
+ {
+  "id": "sgp-1",
+  "name": "North West",
+  "nationId": "sgp",
+  "lat": 1.42,
+  "lon": 103.81,
+  "population": 6.26,
+  "areaKm2": 2281,
+  "xyz": [
+   -0.238601,
+   0.970803,
+   0.024739
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "idn-4",
+   "mys-1"
+  ]
+ },
+ {
+  "id": "slb-1",
+  "name": "Guadalcanal",
+  "nationId": "slb",
+  "lat": -9.63,
+  "lon": 160.44,
+  "population": 0.938,
+  "areaKm2": 81881,
+  "xyz": [
+   -0.928984,
+   0.33013,
+   -0.167343
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "png-2"
+  ]
+ },
+ {
+  "id": "sle-1",
+  "name": "Western",
+  "nationId": "sle",
+  "lat": 8.3,
+  "lon": -12.49,
+  "population": 9.695,
+  "areaKm2": 73356,
+  "xyz": [
+   0.966112,
+   -0.213954,
+   0.144402
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gin-1",
+   "lbr-1"
+  ]
+ },
+ {
+  "id": "slv-1",
+  "name": "San Salvador",
+  "nationId": "slv",
+  "lat": 13.73,
+  "lon": -89.09,
+  "population": 6.486,
+  "areaKm2": 24020,
+  "xyz": [
+   0.015395,
+   -0.971315,
+   0.237299
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "gtm-1",
+   "hnd-1",
+   "nic-1"
+  ]
+ },
+ {
+  "id": "som-1",
+  "name": "Shabeellaha Dhexe",
+  "nationId": "som",
+  "lat": 2.5,
+  "lon": 44.85,
+  "population": 14.052,
+  "areaKm2": 393786,
+  "xyz": [
+   0.708288,
+   0.704577,
+   0.043584
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "eth-2",
+   "ken-2",
+   "ken-3",
+   "som-2"
+  ]
+ },
+ {
+  "id": "som-2",
+  "name": "Somaliland",
+  "nationId": "som",
+  "lat": 9.63,
+  "lon": 46.12,
+  "population": 8.863,
+  "areaKm2": 293087,
+  "xyz": [
+   0.683411,
+   0.710606,
+   0.167297
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dji-1",
+   "eth-2",
+   "som-1"
+  ]
+ },
+ {
+  "id": "srb-1",
+  "name": "Grad Beograd",
+  "nationId": "srb",
+  "lat": 44.44,
+  "lon": 20.57,
+  "population": 6.325,
+  "areaKm2": 75902,
+  "xyz": [
+   0.668462,
+   0.250862,
+   0.700162
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "bgr-1",
+   "bih-1",
+   "hrv-1",
+   "hun-1",
+   "mkd-1",
+   "mne-1",
+   "rou-2",
+   "xkx-1"
+  ]
+ },
+ {
+  "id": "stp-1",
+  "name": "São Tomé",
+  "nationId": "stp",
+  "lat": 0.37,
+  "lon": 6.69,
+  "population": 0.265,
+  "areaKm2": 4183,
+  "xyz": [
+   0.993167,
+   0.116522,
+   0.006538
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "sur-1",
+  "name": "Commewijne",
+  "nationId": "sur",
+  "lat": 5.45,
+  "lon": -55.14,
+  "population": 0.666,
+  "areaKm2": 145615,
+  "xyz": [
+   0.568936,
+   -0.816879,
+   0.094977
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bra-6",
+   "fra-2",
+   "guy-1"
+  ]
+ },
+ {
+  "id": "svk-1",
+  "name": "Košický",
+  "nationId": "svk",
+  "lat": 48.56,
+  "lon": 19.25,
+  "population": 5.353,
+  "areaKm2": 43669,
+  "xyz": [
+   0.624897,
+   0.218201,
+   0.749594
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "aut-1",
+   "cze-1",
+   "hun-1",
+   "pol-1",
+   "pol-2",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "svn-1",
+  "name": "Ljubljana",
+  "nationId": "svn",
+  "lat": 46.17,
+  "lon": 14.94,
+  "population": 2.111,
+  "areaKm2": 27950,
+  "xyz": [
+   0.669123,
+   0.178587,
+   0.721374
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "aut-1",
+   "hrv-1",
+   "hun-1",
+   "ita-2"
+  ]
+ },
+ {
+  "id": "swe-1",
+  "name": "Stockholm",
+  "nationId": "swe",
+  "lat": 60.4,
+  "lon": 17.27,
+  "population": 6.365,
+  "areaKm2": 356995,
+  "xyz": [
+   0.471659,
+   0.146614,
+   0.869507
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "fin-1",
+   "nor-1",
+   "swe-2"
+  ]
+ },
+ {
+  "id": "swe-2",
+  "name": "Västra Götaland",
+  "nationId": "swe",
+  "lat": 57.45,
+  "lon": 13.78,
+  "population": 4.376,
+  "areaKm2": 113032,
+  "xyz": [
+   0.52261,
+   0.12815,
+   0.842886
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "dnk-1",
+   "nor-1",
+   "swe-1"
+  ]
+ },
+ {
+  "id": "swz-1",
+  "name": "Manzini",
+  "nationId": "swz",
+  "lat": -26.62,
+  "lon": 31.29,
+  "population": 1.321,
+  "areaKm2": 20756,
+  "xyz": [
+   0.763991,
+   0.464335,
+   -0.448008
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "moz-1",
+   "zaf-1"
+  ]
+ },
+ {
+  "id": "syc-1",
+  "name": "Les Mamelles",
+  "nationId": "syc",
+  "lat": -4.8,
+  "lon": 55.2,
+  "population": 0.129,
+  "areaKm2": 7936,
+  "xyz": [
+   0.568665,
+   0.818297,
+   -0.08372
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "syr-1",
+  "name": "Aleppo",
+  "nationId": "syr",
+  "lat": 35.87,
+  "lon": 37.75,
+  "population": 15.201,
+  "areaKm2": 108972,
+  "xyz": [
+   0.640743,
+   0.496063,
+   0.585978
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "irq-1",
+   "irq-2",
+   "syr-2",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "syr-2",
+  "name": "Damascus",
+  "nationId": "syr",
+  "lat": 33.68,
+  "lon": 36.82,
+  "population": 14.195,
+  "areaKm2": 78957,
+  "xyz": [
+   0.666156,
+   0.498673,
+   0.554582
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "irq-1",
+   "isr-1",
+   "jor-1",
+   "lbn-1",
+   "syr-1"
+  ]
+ },
+ {
+  "id": "tcd-1",
+  "name": "Ville de N'Djamena",
+  "nationId": "tcd",
+  "lat": 10.92,
+  "lon": 15.71,
+  "population": 19.625,
+  "areaKm2": 294854,
+  "xyz": [
+   0.945195,
+   0.265945,
+   0.189419
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "caf-1",
+   "caf-2",
+   "cmr-3",
+   "ner-2",
+   "nga-5",
+   "tcd-2"
+  ]
+ },
+ {
+  "id": "tcd-2",
+  "name": "Ouaddaï",
+  "nationId": "tcd",
+  "lat": 14.15,
+  "lon": 20.03,
+  "population": 4.583,
+  "areaKm2": 978211,
+  "xyz": [
+   0.911033,
+   0.332046,
+   0.24447
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "caf-2",
+   "lby-2",
+   "ner-2",
+   "sdn-2",
+   "sdn-5",
+   "tcd-1"
+  ]
+ },
+ {
+  "id": "tgo-1",
+  "name": "Maritime",
+  "nationId": "tgo",
+  "lat": 6.8,
+  "lon": 1.2,
+  "population": 9.561,
+  "areaKm2": 54513,
+  "xyz": [
+   0.99274,
+   0.020715,
+   0.118486
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "ben-1",
+   "bfa-1",
+   "gha-1",
+   "gha-2"
+  ]
+ },
+ {
+  "id": "tha-1",
+  "name": "Nonthaburi",
+  "nationId": "tha",
+  "lat": 13.93,
+  "lon": 100.7,
+  "population": 50.643,
+  "areaKm2": 192447,
+  "xyz": [
+   -0.180152,
+   0.953704,
+   0.240819
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "khm-1",
+   "khm-2",
+   "lao-1",
+   "mmr-1",
+   "mmr-4",
+   "tha-2",
+   "tha-3"
+  ]
+ },
+ {
+  "id": "tha-2",
+  "name": "Songkhla",
+  "nationId": "tha",
+  "lat": 7.65,
+  "lon": 100.03,
+  "population": 8.747,
+  "areaKm2": 97464,
+  "xyz": [
+   -0.172531,
+   0.975963,
+   0.133154
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mmr-4",
+   "mys-1",
+   "tha-1"
+  ]
+ },
+ {
+  "id": "tha-3",
+  "name": "Lamphun",
+  "nationId": "tha",
+  "lat": 17.47,
+  "lon": 101.19,
+  "population": 11.825,
+  "areaKm2": 268817,
+  "xyz": [
+   -0.185168,
+   0.935712,
+   0.30026
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "lao-1",
+   "mmr-1",
+   "mmr-3",
+   "tha-1"
+  ]
+ },
+ {
+  "id": "tjk-1",
+  "name": "Dushanbe",
+  "nationId": "tjk",
+  "lat": 38.74,
+  "lon": 69.03,
+  "population": 11.733,
+  "areaKm2": 130045,
+  "xyz": [
+   0.279133,
+   0.728309,
+   0.62582
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "afg-1",
+   "chn-11",
+   "kgz-1",
+   "pak-6",
+   "uzb-1",
+   "uzb-3"
+  ]
+ },
+ {
+  "id": "tkm-1",
+  "name": "Ahal",
+  "nationId": "tkm",
+  "lat": 39.06,
+  "lon": 59.59,
+  "population": 8.136,
+  "areaKm2": 467916,
+  "xyz": [
+   0.393041,
+   0.669604,
+   0.630198
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "afg-1",
+   "afg-2",
+   "irn-1",
+   "irn-4",
+   "kaz-2",
+   "uzb-2",
+   "uzb-3"
+  ]
+ },
+ {
+  "id": "tls-1",
+  "name": "Aileu",
+  "nationId": "tls",
+  "lat": -8.75,
+  "lon": 125.64,
+  "population": 1.52,
+  "areaKm2": 25932,
+  "xyz": [
+   -0.575916,
+   0.80323,
+   -0.152126
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "idn-6",
+   "idn-8"
+  ]
+ },
+ {
+  "id": "tto-1",
+  "name": "Couva-Tabaquite-Talparo",
+  "nationId": "tto",
+  "lat": 10.41,
+  "lon": -61.33,
+  "population": 1.369,
+  "areaKm2": 10842,
+  "xyz": [
+   0.471911,
+   -0.862936,
+   0.180667
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "ven-1"
+  ]
+ },
+ {
+  "id": "tun-1",
+  "name": "Manubah",
+  "nationId": "tun",
+  "lat": 35.91,
+  "lon": 9.98,
+  "population": 12.628,
+  "areaKm2": 166632,
+  "xyz": [
+   0.797673,
+   0.140428,
+   0.586513
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dza-1",
+   "dza-3",
+   "lby-1"
+  ]
+ },
+ {
+  "id": "tur-1",
+  "name": "Istanbul",
+  "nationId": "tur",
+  "lat": 40.34,
+  "lon": 28.65,
+  "population": 39.855,
+  "areaKm2": 163967,
+  "xyz": [
+   0.668901,
+   0.365406,
+   0.64734
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bgr-1",
+   "grc-1",
+   "tur-3"
+  ]
+ },
+ {
+  "id": "tur-2",
+  "name": "Adana",
+  "nationId": "tur",
+  "lat": 38.33,
+  "lon": 38.51,
+  "population": 25.651,
+  "areaKm2": 358505,
+  "xyz": [
+   0.613816,
+   0.488416,
+   0.620226
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "arm-1",
+   "aze-1",
+   "geo-1",
+   "irn-5",
+   "irq-2",
+   "syr-1",
+   "tur-3"
+  ]
+ },
+ {
+  "id": "tur-3",
+  "name": "Ankara",
+  "nationId": "tur",
+  "lat": 39.27,
+  "lon": 32.78,
+  "population": 21.706,
+  "areaKm2": 296792,
+  "xyz": [
+   0.650938,
+   0.419124,
+   0.632941
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "tur-1",
+   "tur-2"
+  ]
+ },
+ {
+  "id": "twn-1",
+  "name": "Taipei City",
+  "nationId": "twn",
+  "lat": 24.38,
+  "lon": 121.15,
+  "population": 23.0,
+  "areaKm2": 51186,
+  "xyz": [
+   -0.47111,
+   0.779565,
+   0.412714
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "chn-3"
+  ]
+ },
+ {
+  "id": "tza-1",
+  "name": "Dar-Es-Salaam",
+  "nationId": "tza",
+  "lat": -7.2,
+  "lon": 39.05,
+  "population": 39.689,
+  "areaKm2": 204499,
+  "xyz": [
+   0.770525,
+   0.624967,
+   -0.125329
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "moz-2",
+   "tza-2",
+   "tza-4"
+  ]
+ },
+ {
+  "id": "tza-2",
+  "name": "Zanzibar City",
+  "nationId": "tza",
+  "lat": -4.44,
+  "lon": 37.9,
+  "population": 11.185,
+  "areaKm2": 101967,
+  "xyz": [
+   0.786752,
+   0.612401,
+   -0.077373
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ken-3",
+   "ken-4",
+   "tza-1",
+   "tza-3",
+   "tza-4"
+  ]
+ },
+ {
+  "id": "tza-3",
+  "name": "Mwanza",
+  "nationId": "tza",
+  "lat": -2.94,
+  "lon": 33.2,
+  "population": 15.093,
+  "areaKm2": 231646,
+  "xyz": [
+   0.835665,
+   0.546847,
+   -0.051211
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bdi-1",
+   "cod-2",
+   "cod-3",
+   "ken-4",
+   "rwa-1",
+   "tza-2",
+   "tza-4",
+   "uga-1"
+  ]
+ },
+ {
+  "id": "tza-4",
+  "name": "Mbeya",
+  "nationId": "tza",
+  "lat": -7.52,
+  "lon": 33.9,
+  "population": 14.946,
+  "areaKm2": 415118,
+  "xyz": [
+   0.822836,
+   0.553018,
+   -0.130812
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "cod-2",
+   "moz-2",
+   "mwi-1",
+   "tza-1",
+   "tza-2",
+   "tza-3",
+   "zmb-2"
+  ]
+ },
+ {
+  "id": "uga-1",
+  "name": "Mukono",
+  "nationId": "uga",
+  "lat": 0.43,
+  "lon": 32.74,
+  "population": 46.972,
+  "areaKm2": 154773,
+  "xyz": [
+   0.841132,
+   0.540776,
+   0.00759
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "cod-3",
+   "ken-4",
+   "rwa-1",
+   "tza-3",
+   "uga-2"
+  ]
+ },
+ {
+  "id": "uga-2",
+  "name": "Arua",
+  "nationId": "uga",
+  "lat": 2.64,
+  "lon": 32.12,
+  "population": 11.341,
+  "areaKm2": 107499,
+  "xyz": [
+   0.84605,
+   0.531116,
+   0.045999
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "cod-3",
+   "ken-4",
+   "sds-1",
+   "uga-1"
+  ]
+ },
+ {
+  "id": "ukr-1",
+  "name": "Kiev City",
+  "nationId": "ukr",
+  "lat": 50.18,
+  "lon": 29.32,
+  "population": 17.141,
+  "areaKm2": 296805,
+  "xyz": [
+   0.558345,
+   0.313574,
+   0.768064
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "blr-1",
+   "mda-1",
+   "pol-1",
+   "rou-2",
+   "rou-3",
+   "rus-1",
+   "rus-7",
+   "ukr-2",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "ukr-2",
+  "name": "Donetsk",
+  "nationId": "ukr",
+  "lat": 48.49,
+  "lon": 36.61,
+  "population": 15.929,
+  "areaKm2": 147333,
+  "xyz": [
+   0.531918,
+   0.39525,
+   0.748893
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "rus-7",
+   "ukr-1",
+   "ukr-3"
+  ]
+ },
+ {
+  "id": "ukr-3",
+  "name": "Odessa",
+  "nationId": "ukr",
+  "lat": 46.9,
+  "lon": 30.44,
+  "population": 5.284,
+  "areaKm2": 128057,
+  "xyz": [
+   0.589039,
+   0.34616,
+   0.73021
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "hun-1",
+   "mda-1",
+   "pol-1",
+   "rou-1",
+   "rou-2",
+   "rou-3",
+   "rus-2",
+   "svk-1",
+   "ukr-1",
+   "ukr-2"
+  ]
+ },
+ {
+  "id": "ury-1",
+  "name": "Montevideo",
+  "nationId": "ury",
+  "lat": -33.7,
+  "lon": -56.11,
+  "population": 3.373,
+  "areaKm2": 194986,
+  "xyz": [
+   0.463938,
+   -0.690569,
+   -0.554865
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "arg-1",
+   "bra-9"
+  ]
+ },
+ {
+  "id": "usa-1",
+  "name": "Maryland",
+  "nationId": "usa",
+  "lat": 38.93,
+  "lon": -77.1,
+  "population": 39.332,
+  "areaKm2": 490243,
+  "xyz": [
+   0.173723,
+   -0.75826,
+   0.628381
+  ],
+  "capital": true,
+  "coastal": true,
+  "launchSite": "Wallops",
+  "neighbors": [
+   "can-1",
+   "usa-13",
+   "usa-17",
+   "usa-18",
+   "usa-5",
+   "usa-9"
+  ]
+ },
+ {
+  "id": "usa-2",
+  "name": "Honolulu",
+  "nationId": "usa",
+  "lat": 19.72,
+  "lon": -158.68,
+  "population": 1.591,
+  "areaKm2": 40984,
+  "xyz": [
+   -0.876924,
+   -0.342334,
+   0.33736
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "usa-3",
+  "name": "San Juan",
+  "nationId": "usa",
+  "lat": 18.24,
+  "lon": -66.41,
+  "population": 4.354,
+  "areaKm2": 19511,
+  "xyz": [
+   0.380076,
+   -0.870396,
+   0.312974
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "gbr-6"
+  ]
+ },
+ {
+  "id": "usa-4",
+  "name": "Los Angeles",
+  "nationId": "usa",
+  "lat": 36.9,
+  "lon": -119.45,
+  "population": 58.671,
+  "areaKm2": 724250,
+  "xyz": [
+   -0.393168,
+   -0.696326,
+   0.600458
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Vandenberg",
+  "neighbors": [
+   "mex-5",
+   "usa-12",
+   "usa-16",
+   "usa-8"
+  ]
+ },
+ {
+  "id": "usa-5",
+  "name": "Boston",
+  "nationId": "usa",
+  "lat": 42.19,
+  "lon": -72.11,
+  "population": 17.577,
+  "areaKm2": 193658,
+  "xyz": [
+   0.22756,
+   -0.705158,
+   0.671542
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-10",
+   "can-2",
+   "usa-1",
+   "usa-17"
+  ]
+ },
+ {
+  "id": "usa-6",
+  "name": "Anchorage",
+  "nationId": "usa",
+  "lat": 65.36,
+  "lon": -151.6,
+  "population": 1.393,
+  "areaKm2": 1686488,
+  "xyz": [
+   -0.36674,
+   -0.198263,
+   0.908952
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-11",
+   "can-6",
+   "rus-19"
+  ]
+ },
+ {
+  "id": "usa-7",
+  "name": "New Orleans",
+  "nationId": "usa",
+  "lat": 32.27,
+  "lon": -89.9,
+  "population": 9.087,
+  "areaKm2": 534042,
+  "xyz": [
+   0.001497,
+   -0.845528,
+   0.533929
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "usa-10",
+   "usa-13",
+   "usa-14",
+   "usa-9"
+  ]
+ },
+ {
+  "id": "usa-8",
+  "name": "Seattle",
+  "nationId": "usa",
+  "lat": 45.88,
+  "lon": -119.85,
+  "population": 14.075,
+  "areaKm2": 641276,
+  "xyz": [
+   -0.346542,
+   -0.603753,
+   0.717907
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-6",
+   "usa-12",
+   "usa-4"
+  ]
+ },
+ {
+  "id": "usa-9",
+  "name": "Atlanta",
+  "nationId": "usa",
+  "lat": 34.03,
+  "lon": -83.84,
+  "population": 16.295,
+  "areaKm2": 367779,
+  "xyz": [
+   0.088878,
+   -0.823919,
+   0.559694
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "usa-1",
+   "usa-13",
+   "usa-14",
+   "usa-7"
+  ]
+ },
+ {
+  "id": "usa-10",
+  "name": "Dallas",
+  "nationId": "usa",
+  "lat": 31.56,
+  "lon": -98.61,
+  "population": 33.039,
+  "areaKm2": 881118,
+  "xyz": [
+   -0.127515,
+   -0.842505,
+   0.523378
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "mex-3",
+   "mex-4",
+   "usa-11",
+   "usa-12",
+   "usa-13",
+   "usa-16",
+   "usa-7"
+  ]
+ },
+ {
+  "id": "usa-11",
+  "name": "Minneapolis",
+  "nationId": "usa",
+  "lat": 41.23,
+  "lon": -99.32,
+  "population": 4.038,
+  "areaKm2": 777376,
+  "xyz": [
+   -0.121775,
+   -0.742133,
+   0.659097
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "can-8",
+   "can-9",
+   "usa-10",
+   "usa-12",
+   "usa-13",
+   "usa-19"
+  ]
+ },
+ {
+  "id": "usa-12",
+  "name": "Boise",
+  "nationId": "usa",
+  "lat": 39.85,
+  "lon": -107.6,
+  "population": 10.072,
+  "areaKm2": 1113057,
+  "xyz": [
+   -0.232138,
+   -0.731808,
+   0.640757
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "can-4",
+   "can-6",
+   "can-9",
+   "usa-10",
+   "usa-11",
+   "usa-16",
+   "usa-4",
+   "usa-8"
+  ]
+ },
+ {
+  "id": "usa-13",
+  "name": "Illinois",
+  "nationId": "usa",
+  "lat": 39.5,
+  "lon": -88.69,
+  "population": 36.761,
+  "areaKm2": 535050,
+  "xyz": [
+   0.017644,
+   -0.771412,
+   0.636092
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "usa-1",
+   "usa-10",
+   "usa-11",
+   "usa-18",
+   "usa-19",
+   "usa-7",
+   "usa-9"
+  ]
+ },
+ {
+  "id": "usa-14",
+  "name": "Florida",
+  "nationId": "usa",
+  "lat": 28.16,
+  "lon": -81.62,
+  "population": 27.667,
+  "areaKm2": 173076,
+  "xyz": [
+   0.128448,
+   -0.872253,
+   0.471886
+  ],
+  "capital": false,
+  "coastal": true,
+  "launchSite": "Cape Canaveral",
+  "neighbors": [
+   "usa-7",
+   "usa-9"
+  ]
+ },
+ {
+  "id": "usa-15",
+  "name": "Guam",
+  "nationId": "usa",
+  "lat": 13.89,
+  "lon": 144.98,
+  "population": 0.181,
+  "areaKm2": 11302,
+  "xyz": [
+   -0.794995,
+   0.557117,
+   0.240007
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "usa-16",
+  "name": "Arizona",
+  "nationId": "usa",
+  "lat": 34.36,
+  "lon": -110.85,
+  "population": 11.034,
+  "areaKm2": 572131,
+  "xyz": [
+   -0.293854,
+   -0.771417,
+   0.564416
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "mex-4",
+   "mex-5",
+   "usa-10",
+   "usa-12",
+   "usa-4"
+  ]
+ },
+ {
+  "id": "usa-17",
+  "name": "New York",
+  "nationId": "usa",
+  "lat": 43.2,
+  "lon": -75.32,
+  "population": 33.602,
+  "areaKm2": 149274,
+  "xyz": [
+   0.184687,
+   -0.7052,
+   0.684532
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "can-1",
+   "can-2",
+   "usa-1",
+   "usa-5"
+  ]
+ },
+ {
+  "id": "usa-18",
+  "name": "Michigan",
+  "nationId": "usa",
+  "lat": 41.92,
+  "lon": -83.88,
+  "population": 18.131,
+  "areaKm2": 355928,
+  "xyz": [
+   0.079294,
+   -0.739852,
+   0.66808
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "can-1",
+   "usa-1",
+   "usa-13",
+   "usa-19"
+  ]
+ },
+ {
+  "id": "usa-19",
+  "name": "Minnesota",
+  "nationId": "usa",
+  "lat": 44.93,
+  "lon": -91.93,
+  "population": 12.486,
+  "areaKm2": 536639,
+  "xyz": [
+   -0.023856,
+   -0.707605,
+   0.706206
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "can-1",
+   "can-8",
+   "usa-11",
+   "usa-13",
+   "usa-18"
+  ]
+ },
+ {
+  "id": "uzb-1",
+  "name": "Tashkent",
+  "nationId": "uzb",
+  "lat": 40.79,
+  "lon": 70.41,
+  "population": 25.263,
+  "areaKm2": 71929,
+  "xyz": [
+   0.253865,
+   0.713228,
+   0.653343
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "kaz-3",
+   "kgz-1",
+   "tjk-1",
+   "uzb-3"
+  ]
+ },
+ {
+  "id": "uzb-2",
+  "name": "Nukus",
+  "nationId": "uzb",
+  "lat": 42.73,
+  "lon": 60.12,
+  "population": 3.009,
+  "areaKm2": 170604,
+  "xyz": [
+   0.365949,
+   0.636867,
+   0.678589
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "kaz-2",
+   "kaz-3",
+   "tkm-1",
+   "uzb-3"
+  ]
+ },
+ {
+  "id": "uzb-3",
+  "name": "Samarkand",
+  "nationId": "uzb",
+  "lat": 39.68,
+  "lon": 65.74,
+  "population": 11.977,
+  "areaKm2": 223789,
+  "xyz": [
+   0.316271,
+   0.701682,
+   0.638448
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "afg-1",
+   "kaz-3",
+   "tjk-1",
+   "tkm-1",
+   "uzb-1",
+   "uzb-2"
+  ]
+ },
+ {
+  "id": "ven-1",
+  "name": "Distrito Capital",
+  "nationId": "ven",
+  "lat": 9.95,
+  "lon": -65.94,
+  "population": 17.921,
+  "areaKm2": 705096,
+  "xyz": [
+   0.401601,
+   -0.899364,
+   0.172805
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bra-2",
+   "col-1",
+   "guy-1",
+   "tto-1",
+   "ven-2"
+  ]
+ },
+ {
+  "id": "ven-2",
+  "name": "Zulia",
+  "nationId": "ven",
+  "lat": 9.34,
+  "lon": -71.23,
+  "population": 11.23,
+  "areaKm2": 262934,
+  "xyz": [
+   0.317515,
+   -0.934252,
+   0.162351
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "col-1",
+   "col-2",
+   "nld-1",
+   "ven-1"
+  ]
+ },
+ {
+  "id": "vnm-1",
+  "name": "Bắc Ninh",
+  "nationId": "vnm",
+  "lat": 21.11,
+  "lon": 106.09,
+  "population": 38.034,
+  "areaKm2": 147444,
+  "xyz": [
+   -0.258592,
+   0.896363,
+   0.360088
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "chn-10",
+   "chn-6",
+   "lao-1",
+   "vnm-4"
+  ]
+ },
+ {
+  "id": "vnm-2",
+  "name": "Ho Chi Minh City",
+  "nationId": "vnm",
+  "lat": 10.53,
+  "lon": 106.68,
+  "population": 46.479,
+  "areaKm2": 116863,
+  "xyz": [
+   -0.282272,
+   0.941782,
+   0.182671
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "khm-1",
+   "vnm-3"
+  ]
+ },
+ {
+  "id": "vnm-3",
+  "name": "Đà Nẵng",
+  "nationId": "vnm",
+  "lat": 15.07,
+  "lon": 108.37,
+  "population": 15.435,
+  "areaKm2": 75494,
+  "xyz": [
+   -0.304293,
+   0.916392,
+   0.260062
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "khm-1",
+   "lao-1",
+   "vnm-2",
+   "vnm-4"
+  ]
+ },
+ {
+  "id": "vnm-4",
+  "name": "Ha Tinh",
+  "nationId": "vnm",
+  "lat": 18.05,
+  "lon": 106.0,
+  "population": 4.308,
+  "areaKm2": 46929,
+  "xyz": [
+   -0.262129,
+   0.913939,
+   0.309844
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "lao-1",
+   "vnm-1",
+   "vnm-3"
+  ]
+ },
+ {
+  "id": "xkx-1",
+  "name": "Lipljan",
+  "nationId": "xkx",
+  "lat": 42.5,
+  "lon": 20.92,
+  "population": 1.566,
+  "areaKm2": 12039,
+  "xyz": [
+   0.688618,
+   0.263296,
+   0.675633
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "alb-1",
+   "mkd-1",
+   "mne-1",
+   "srb-1"
+  ]
+ },
+ {
+  "id": "yem-1",
+  "name": "Amanat Al Asimah",
+  "nationId": "yem",
+  "lat": 14.67,
+  "lon": 44.1,
+  "population": 44.014,
+  "areaKm2": 200726,
+  "xyz": [
+   0.694708,
+   0.67325,
+   0.253208
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "dji-1",
+   "eri-1",
+   "sau-1",
+   "sau-2",
+   "yem-2"
+  ]
+ },
+ {
+  "id": "yem-2",
+  "name": "Hadramawt",
+  "nationId": "yem",
+  "lat": 16.27,
+  "lon": 48.95,
+  "population": 3.653,
+  "areaKm2": 292697,
+  "xyz": [
+   0.630456,
+   0.72387,
+   0.280245
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "omn-1",
+   "sau-1",
+   "sau-3",
+   "yem-1"
+  ]
+ },
+ {
+  "id": "zaf-1",
+  "name": "Gauteng",
+  "nationId": "zaf",
+  "lat": -26.84,
+  "lon": 28.72,
+  "population": 48.086,
+  "areaKm2": 549817,
+  "xyz": [
+   0.782498,
+   0.428777,
+   -0.451494
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": [
+   "bwa-1",
+   "lso-1",
+   "moz-1",
+   "swz-1",
+   "zaf-2",
+   "zaf-3",
+   "zwe-2"
+  ]
+ },
+ {
+  "id": "zaf-2",
+  "name": "Cape Town",
+  "nationId": "zaf",
+  "lat": -29.74,
+  "lon": 21.0,
+  "population": 1.154,
+  "areaKm2": 358646,
+  "xyz": [
+   0.810606,
+   0.311099,
+   -0.496121
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "bwa-1",
+   "nam-1",
+   "zaf-1",
+   "zaf-3",
+   "zaf-4"
+  ]
+ },
+ {
+  "id": "zaf-3",
+  "name": "Eastern Cape",
+  "nationId": "zaf",
+  "lat": -32.06,
+  "lon": 26.64,
+  "population": 6.835,
+  "areaKm2": 176088,
+  "xyz": [
+   0.757495,
+   0.380015,
+   -0.53084
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "lso-1",
+   "zaf-1",
+   "zaf-2",
+   "zaf-4"
+  ]
+ },
+ {
+  "id": "zaf-4",
+  "name": "Western Cape",
+  "nationId": "zaf",
+  "lat": -33.5,
+  "lon": 20.97,
+  "population": 12.086,
+  "areaKm2": 155505,
+  "xyz": [
+   0.778601,
+   0.298479,
+   -0.551988
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "zaf-2",
+   "zaf-3"
+  ]
+ },
+ {
+  "id": "zmb-1",
+  "name": "Central",
+  "nationId": "zmb",
+  "lat": -14.2,
+  "lon": 27.82,
+  "population": 22.239,
+  "areaKm2": 507020,
+  "xyz": [
+   0.857392,
+   0.452435,
+   -0.245319
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "ago-2",
+   "cod-2",
+   "moz-2",
+   "nam-1",
+   "zmb-2",
+   "zwe-1",
+   "zwe-2"
+  ]
+ },
+ {
+  "id": "zmb-2",
+  "name": "Northern",
+  "nationId": "zmb",
+  "lat": -10.75,
+  "lon": 30.81,
+  "population": 2.786,
+  "areaKm2": 266874,
+  "xyz": [
+   0.843813,
+   0.50317,
+   -0.186548
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "cod-2",
+   "moz-2",
+   "mwi-1",
+   "tza-4",
+   "zmb-1"
+  ]
+ },
+ {
+  "id": "zwe-1",
+  "name": "Harare",
+  "nationId": "zwe",
+  "lat": -17.94,
+  "lon": 31.06,
+  "population": 12.337,
+  "areaKm2": 153483,
+  "xyz": [
+   0.814995,
+   0.490855,
+   -0.307969
+  ],
+  "capital": true,
+  "coastal": false,
+  "neighbors": [
+   "moz-1",
+   "moz-2",
+   "zmb-1",
+   "zwe-2"
+  ]
+ },
+ {
+  "id": "zwe-2",
+  "name": "Bulawayo",
+  "nationId": "zwe",
+  "lat": -19.88,
+  "lon": 28.98,
+  "population": 6.273,
+  "areaKm2": 228627,
+  "xyz": [
+   0.822623,
+   0.455638,
+   -0.340127
+  ],
+  "capital": false,
+  "coastal": false,
+  "neighbors": [
+   "bwa-1",
+   "moz-1",
+   "nam-1",
+   "zaf-1",
+   "zmb-1",
+   "zwe-1"
+  ]
+ },
+ {
+  "id": "ecs-1",
+  "name": "Grenada",
+  "nationId": "ecs",
+  "lat": 12.17,
+  "lon": -61.66,
+  "population": 0.076,
+  "areaKm2": 1859,
+  "xyz": [
+   0.463994,
+   -0.860391,
+   0.210799
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ecs-2"
+  ]
+ },
+ {
+  "id": "ecs-2",
+  "name": "St. Vin. and Gren.",
+  "nationId": "ecs",
+  "lat": 13.19,
+  "lon": -61.2,
+  "population": 0.112,
+  "areaKm2": 3705,
+  "xyz": [
+   0.469046,
+   -0.8532,
+   0.228134
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "ecs-1"
+  ]
+ },
+ {
+  "id": "ecs-3",
+  "name": "Barbados",
+  "nationId": "ecs",
+  "lat": 13.19,
+  "lon": -59.58,
+  "population": 0.429,
+  "areaKm2": 1481,
+  "xyz": [
+   0.49296,
+   -0.839602,
+   0.228163
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "ecs-4",
+  "name": "Saint Lucia",
+  "nationId": "ecs",
+  "lat": 13.88,
+  "lon": -60.98,
+  "population": 0.086,
+  "areaKm2": 1846,
+  "xyz": [
+   0.470885,
+   -0.848934,
+   0.239956
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "fra-2"
+  ]
+ },
+ {
+  "id": "ecs-5",
+  "name": "Dominica",
+  "nationId": "ecs",
+  "lat": 15.37,
+  "lon": -61.36,
+  "population": 0.053,
+  "areaKm2": 2200,
+  "xyz": [
+   0.462099,
+   -0.846302,
+   0.265025
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "ecs-6",
+  "name": "Antigua and Barb.",
+  "nationId": "ecs",
+  "lat": 17.1,
+  "lon": -61.85,
+  "population": 0.081,
+  "areaKm2": 3271,
+  "xyz": [
+   0.450888,
+   -0.842773,
+   0.293996
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "gbr-6"
+  ]
+ },
+ {
+  "id": "ecs-7",
+  "name": "St. Kitts and Nevis",
+  "nationId": "ecs",
+  "lat": 17.28,
+  "lon": -62.71,
+  "population": 0.05,
+  "areaKm2": 1816,
+  "xyz": [
+   0.43779,
+   -0.848568,
+   0.297108
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": [
+   "nld-1"
+  ]
+ },
+ {
+  "id": "pis-1",
+  "name": "Kiribati",
+  "nationId": "pis",
+  "lat": -1.65,
+  "lon": 172.78,
+  "population": 0.124,
+  "areaKm2": 23159,
+  "xyz": [
+   -0.991668,
+   0.125547,
+   -0.028847
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-2",
+  "name": "Marshall Is.",
+  "nationId": "pis",
+  "lat": 9.05,
+  "lon": 169.96,
+  "population": 0.105,
+  "areaKm2": 13178,
+  "xyz": [
+   -0.972428,
+   0.172181,
+   0.157281
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-3",
+  "name": "Tonga",
+  "nationId": "pis",
+  "lat": -20.08,
+  "lon": -174.7,
+  "population": 0.198,
+  "areaKm2": 7156,
+  "xyz": [
+   -0.935175,
+   -0.086725,
+   -0.343404
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-4",
+  "name": "Samoa",
+  "nationId": "pis",
+  "lat": -13.84,
+  "lon": -172.04,
+  "population": 0.243,
+  "areaKm2": 6281,
+  "xyz": [
+   -0.961632,
+   -0.134438,
+   -0.239143
+  ],
+  "capital": true,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-5",
+  "name": "Tuvalu",
+  "nationId": "pis",
+  "lat": -9.39,
+  "lon": 179.9,
+  "population": 0.02,
+  "areaKm2": 3396,
+  "xyz": [
+   -0.986588,
+   0.00167,
+   -0.163219
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-6",
+  "name": "Nauru",
+  "nationId": "pis",
+  "lat": -0.52,
+  "lon": 166.93,
+  "population": 0.0,
+  "areaKm2": 761,
+  "xyz": [
+   -0.974053,
+   0.226139,
+   -0.009024
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-7",
+  "name": "Micronesia",
+  "nationId": "pis",
+  "lat": 7.35,
+  "lon": 153.38,
+  "population": 0.024,
+  "areaKm2": 10942,
+  "xyz": [
+   -0.886653,
+   0.444371,
+   0.127985
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-8",
+  "name": "Vanuatu",
+  "nationId": "pis",
+  "lat": -16.49,
+  "lon": 168.05,
+  "population": 0.246,
+  "areaKm2": 43067,
+  "xyz": [
+   -0.938073,
+   0.198515,
+   -0.283921
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ },
+ {
+  "id": "pis-9",
+  "name": "Palau",
+  "nationId": "pis",
+  "lat": 7.09,
+  "lon": 134.25,
+  "population": 0.073,
+  "areaKm2": 4912,
+  "xyz": [
+   -0.692455,
+   0.710824,
+   0.12343
+  ],
+  "capital": false,
+  "coastal": true,
+  "neighbors": []
+ }
+]

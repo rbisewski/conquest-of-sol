@@ -1,0 +1,11 @@
+{
+  // The simulation must not depend on the DOM, Node or the renderer (SPEC 2.3),
+  // so it is checked with only the ES library and no ambient types.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": []
+  },
+  "include": ["src/sim/**/*.ts", "src/content/**/*.ts", "src/content/**/*.json"],
+  "exclude": ["src/sim/__tests__/**"]
+}
