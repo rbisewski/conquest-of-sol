@@ -59,10 +59,13 @@
   });
 
   // A body chosen in the Celestial Body panel (a moon in its list): the camera swings to it.
+  // A small body's orbit shows while its panel is open.
   $effect(() => {
     const id = game.selectedBodyId;
+    const view = solar;
     untrack(() => {
-      if (id && shown) solar?.focus(id);
+      if (id && shown) view?.focus(id);
+      view?.showOrbitOf(id);
     });
   });
 

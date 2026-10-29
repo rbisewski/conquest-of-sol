@@ -10,7 +10,7 @@
   import { baseContent } from "../../content/index";
   import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { drawBody, drawSun, earthMap, SUN_REACH, type MapImage } from "../solar/bodyArt";
+  import { drawBody, drawComet, drawRock, drawSun, earthMap, SUN_REACH, type MapImage } from "../solar/bodyArt";
   import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
   import { scientific } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
@@ -33,6 +33,8 @@
   const fromEarth = $derived(body && body.id !== "Earth" ? distanceFromEarth(baseContent, body.id, years) : null);
   const launch = $derived(body ? launchWindow(baseContent, body.id, years) : null);
   const moons = $derived(body ? moonsOf(baseContent, body.id) : []);
+  /** What the list holds: the Sun's are planets, asteroids and comets, not moons. */
+  const noun = $derived(body?.type === "star" ? ["Body", "Bodies"] : ["Moon", "Moons"]);
   /** The open list; kept from body to body, as in Terra Invicta. */
   let tab = $state<"moons" | null>(null);
 
@@ -40,15 +42,30 @@
   let map = $state<MapImage | null>(null);
   void earthMap().then((m) => (map = m));
 
-  /** Seconds between frames of the Sun's flames, as in the Solar System view. */
+  /** Seconds between frames of the Sun's flames, as in the Solar System view, and of a comet's tails. */
   const SUN_FRAME = 1 / 10;
+  const COMET_FRAME = 1 / 8;
+  /** The portrait's light, from the upper left. */
+  const LIGHT = { x: -0.55, y: 0.35, z: 0.76 };
 
   $effect(() => {
     if (!canvas || !body) return;
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (body.type === "asteroid" || body.type === "asteroidalMoon") {
+      drawRock(ctx, body.id, body.type, PORTRAIT_RADIUS, LIGHT);
+      return;
+    }
+    if (body.type === "comet") {
+      // The comet's tails stream on, like the Sun's flames.
+      const id = body.id;
+      const start = performance.now();
+      const timer = setInterval(() => drawComet(ctx, id, PORTRAIT_RADIUS, LIGHT, (performance.now() - start) / 1000), COMET_FRAME * 1000);
+      drawComet(ctx, id, PORTRAIT_RADIUS, LIGHT, 0);
+      return () => clearInterval(timer);
+    }
     if (body.type !== "star") {
-      drawBody(ctx, body.id, PORTRAIT_RADIUS, { x: -0.55, y: 0.35, z: 0.76 }, map);
+      drawBody(ctx, body.id, PORTRAIT_RADIUS, LIGHT, map);
       return;
     }
     // The Sun's portrait burns on, its flames reaching to the frame.
@@ -141,7 +158,7 @@
     </dl>
 
     <nav class="tabs">
-      <button class:active={tab === "moons" && moons.length > 0} disabled={moons.length === 0} onclick={() => (tab = tab === "moons" ? null : "moons")}>{moons.length} Moon{moons.length === 1 ? "" : "s"}</button>
+      <button class:active={tab === "moons" && moons.length > 0} disabled={moons.length === 0} onclick={() => (tab = tab === "moons" ? null : "moons")}>{moons.length} {moons.length === 1 ? noun[0] : noun[1]}</button>
       <button disabled title="Still to come">Orbits</button>
       <button disabled title="Still to come">Stations</button>
       <button disabled title="Still to come">Fleets</button>
@@ -150,13 +167,13 @@
     {#if tab === "moons" && moons.length > 0}
       <table class="list">
         <thead>
-          <tr><th>Moon Name</th><th>Type</th></tr>
+          <tr><th>{body.type === "star" ? "Name" : "Moon Name"}</th><th>Type</th></tr>
         </thead>
         <tbody>
           {#each moons as m (m.id)}
             <tr>
               <td><button class="name-link" onclick={() => (game.selectedBodyId = m.id)}>{m.name}</button></td>
-              <td>{m.composition ?? "Unknown"}</td>
+              <td>{m.composition ?? bodyClass(m)}</td>
             </tr>
           {/each}
         </tbody>

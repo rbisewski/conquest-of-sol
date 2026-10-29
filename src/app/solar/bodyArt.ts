@@ -279,6 +279,177 @@ export function rockAtlas(): HTMLCanvasElement {
   return canvas;
 }
 
+/** Asteroid tints by kind (carbonaceous, stony, metallic), the small dwarf planets' (icy, reddish, pale), and comets'. */
+const ROCK_TINTS = ["#9a948c", "#c4a682", "#b4b6bd"];
+const DWARF_TINTS = ["#dcd6cf", "#cfa088", "#ece8e2"];
+const COMET_TINT = "#c9d6de";
+
+/** A small body's tint, the same in the Solar System view and the Celestial Body panel. */
+export function smallBodyTint(id: string, type: string): string {
+  if (type === "comet") return COMET_TINT;
+  const look = ROCK_LOOKS[id]?.tint;
+  if (look) return look;
+  const palette = type === "dwarf" ? DWARF_TINTS : ROCK_TINTS;
+  return palette[Math.floor(seedOf(id) / SHAPES) % palette.length]!;
+}
+
+interface RockLook {
+  /** Overrides the tint by kind. */
+  tint?: string;
+  /** The outline stretched across and squashed up and down (an elongated body), and how lumpy it is, 0–1. */
+  stretch?: [number, number];
+  lumps?: number;
+  /** How pitted: the noise level above which a pixel is crater (lower, more craters), and the scale of the craters. */
+  pits?: number;
+  pitScale?: number;
+  /** One great crater: centre and radius in the outline's radii, and its rim's tint (fresher, bluer material). */
+  crater?: { u: number; v: number; r: number; rim: string };
+  /** A family of long, narrow parallel grooves: how many across, and their slope, degrees. */
+  grooves?: { count: number; angle: number };
+}
+
+/**
+ * The real moons of Mars. Phobos (27 × 22 × 18 km) is dark grey, elongated, dominated by
+ * Stickney (9 km, near one end; bluer at its rim) and scored by families of parallel grooves
+ * among many small craters. Deimos is smaller, lumpy and smooth: a blanket of regolith has
+ * filled most of its craters, leaving it nearly featureless with a few faint pits.
+ */
+const ROCK_LOOKS: Record<string, RockLook> = {
+  Phobos: { tint: "#7a736c", stretch: [1, 0.8], lumps: 0.22, pits: 0.72, pitScale: 6, crater: { u: -0.48, v: 0.06, r: 0.38, rim: "#7c8794" }, grooves: { count: 7, angle: 12 } },
+  Deimos: { tint: "#887e74", stretch: [1, 0.84], lumps: 0.4, pits: 0.86, pitScale: 3.5 },
+};
+
+/**
+ * Paints a lit, lumpy rock of art radius r centred at (cx, cy) into an image: an outline
+ * wobbling round the angle, its surface tilted by noise so it reads as knobbly inside the
+ * outline too, mottled and pitted with craters, in the discs' shade steps. A look (ROCK_LOOKS)
+ * can stretch it, smooth it, or carve a great crater and grooves into it.
+ */
+function paintRock(image: ImageData, cx: number, cy: number, r: number, id: string, light: Light, tint: string, look: RockLook = {}): void {
+  const seed = seedOf(id);
+  const [tr, tg, tb] = rgb(look.tint ?? tint);
+  const [sx, sy] = look.stretch ?? [1, 1];
+  const lumps = look.lumps ?? 1;
+  const pits = look.pits ?? 0.7;
+  const pitScale = look.pitScale ?? 4.5;
+  const rim = look.crater ? rgb(look.crater.rim) : null;
+  const groove = look.grooves ? { ca: Math.cos((look.grooves.angle * Math.PI) / 180), sa: Math.sin((look.grooves.angle * Math.PI) / 180) } : null;
+  const reach = Math.ceil(r);
+  for (let y = Math.max(0, Math.floor(cy - reach)); y < Math.min(image.height, Math.ceil(cy + reach)); y++) {
+    for (let x = Math.max(0, Math.floor(cx - reach)); x < Math.min(image.width, Math.ceil(cx + reach)); x++) {
+      // In the outline's own frame, where it is round before the wobble.
+      const ex = (x + 0.5 - cx) / sx;
+      const ey = -(y + 0.5 - cy) / sy;
+      const angle = Math.atan2(ey, ex);
+      const [ca, sa] = [Math.cos(angle), Math.sin(angle)];
+      const wobble = 0.6 * noise(ca * 1.6 + 4, sa * 1.6 + 4, 0, seed) + 0.4 * noise(ca * 4 + 9, sa * 4 + 9, 1, seed);
+      const edge = r * (1 - 0.34 * lumps * (1 - wobble));
+      const q = Math.hypot(ex, ey) / edge;
+      if (q > 1) continue;
+      const u = ex / edge;
+      const v = ey / edge;
+      // Knobbly: the ellipsoid's normal tilted by low-frequency noise.
+      let nx = u / sx + 0.45 * lumps * (noise(u * 2.2 + 3, v * 2.2 + 3, 2, seed) - 0.5);
+      let ny = v / sy + 0.45 * lumps * (noise(u * 2.2 + 7, v * 2.2 + 7, 3, seed) - 0.5);
+      let nz = Math.sqrt(Math.max(0, 1 - q * q));
+      let albedo = 0.84 + 0.16 * noise(u * 5 + 9, v * 5 + 9, 4, seed);
+      let color: RGB = [tr, tg, tb];
+      // Shading the bowl of a great crater directly, as the shade steps would flatten a tilted normal.
+      let bowl = 1;
+      const big = look.crater ? Math.hypot(u - look.crater.u, v - look.crater.v) / look.crater.r : Infinity;
+      if (big < 1.12) {
+        // Its walls face in: the wall towards the Sun is in shadow, the far one and its rim lit.
+        const toSun = big > 0 ? ((u - look.crater!.u) * light.x + (v - look.crater!.v) * light.y) / (look.crater!.r * big * Math.hypot(light.x, light.y)) : 0;
+        if (big < 1) bowl = toSun > 0.2 && big > 0.35 ? 0.62 : toSun < -0.3 && big > 0.7 ? 1.05 : 0.88;
+        else bowl = toSun > 0 ? 1.08 : 0.88;
+        // Fresher, bluer material on its rim and walls.
+        if (big > 0.55) color = rim!.map((c, i) => (c + color[i]!) / 2) as RGB;
+      } else {
+        const pit = noise(u * pitScale + 5, v * pitScale + 5, 5, seed);
+        if (pit > pits) albedo *= 0.7;
+        else if (pit > pits - 0.05) albedo *= 1.07;
+        if (groove) {
+          // Grooves: dark lines along the slope, broken up by noise.
+          const across = (u * groove.sa - v * groove.ca) * look.grooves!.count + 0.6 * noise(u * 3 + 1, v * 3 + 1, 6, seed);
+          if (across - Math.floor(across) < 0.14 && noise(u * 1.2 + 8, v * 1.2 + 8, 7, seed) > 0.35) albedo *= 0.82;
+        }
+      }
+      const n = Math.hypot(nx, ny, nz) || 1;
+      [nx, ny, nz] = [nx / n, ny / n, nz / n];
+      const k = shade(nx * light.x + ny * light.y + nz * light.z) * (q > 0.85 ? 0.9 : 1) * albedo * bowl;
+      const o = (y * image.width + x) * 4;
+      image.data[o] = Math.min(255, Math.round(color[0] * k));
+      image.data[o + 1] = Math.min(255, Math.round(color[1] * k));
+      image.data[o + 2] = Math.min(255, Math.round(color[2] * k));
+      image.data[o + 3] = 255;
+    }
+  }
+}
+
+/** Draws an asteroid's or asteroidal moon's lumpy portrait, art radius r, centred in the canvas. */
+export function drawRock(ctx: CanvasRenderingContext2D, id: string, type: string, r: number, light: Light): void {
+  const image = ctx.createImageData(ctx.canvas.width, ctx.canvas.height);
+  paintRock(image, ctx.canvas.width / 2, ctx.canvas.height / 2, r, id, light, smallBodyTint(id, type), ROCK_LOOKS[id]);
+  ctx.putImageData(image, 0, 0);
+}
+
+/**
+ * A comet's portrait at a time in seconds (redrawn a few times a second): a small lumpy
+ * nucleus in the corner towards the Sun, in a faint dithered coma, shedding a sparse stream of
+ * pixels away from the Sun: blue for the straight ion tail, whiter and fanning out for the dust.
+ * r is the canvas's art radius; the nucleus is a little under half of it.
+ */
+export function drawComet(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, t: number): void {
+  const size = ctx.canvas.width;
+  const image = ctx.createImageData(size, ctx.canvas.height);
+  const seed = seedOf(id);
+  // Away from the Sun on the canvas (y down).
+  const away = Math.hypot(light.x, light.y) || 1;
+  const ux = -light.x / away;
+  const uy = light.y / away;
+  const nucleus = r * 0.42;
+  const cx = size / 2 - ux * r * 0.42;
+  const cy = size / 2 - uy * r * 0.42;
+  const blend = (x: number, y: number, [cr, cg, cb]: RGB, a: number) => {
+    if (x < 0 || y < 0 || x >= size || y >= image.height || a <= 0) return;
+    const o = (y * size + x) * 4;
+    const prev = image.data[o + 3]! / 255;
+    const out = a + prev * (1 - a);
+    image.data[o] = Math.round((cr * a + image.data[o]! * prev * (1 - a)) / out);
+    image.data[o + 1] = Math.round((cg * a + image.data[o + 1]! * prev * (1 - a)) / out);
+    image.data[o + 2] = Math.round((cb * a + image.data[o + 2]! * prev * (1 - a)) / out);
+    image.data[o + 3] = Math.round(out * 255);
+  };
+  // Coma: a faint glow round the nucleus, ordered-dithered into a few steps.
+  const coma = rgb("#cfe4ff");
+  const comaReach = nucleus * 1.9;
+  for (let y = Math.floor(cy - comaReach); y < cy + comaReach; y++) {
+    for (let x = Math.floor(cx - comaReach); x < cx + comaReach; x++) {
+      const d = Math.hypot(x + 0.5 - cx, y + 0.5 - cy) / comaReach;
+      const glow = 0.42 * (1 - d) + 0.18 * BAYER[(y & 3) * 4 + (x & 3)]!;
+      if (glow > 0.08) blend(x, y, coma, Math.round(glow * 4) / 4);
+    }
+  }
+  // The tails: pixels streaming off the nucleus, each on its own loop along the tail.
+  const ion = rgb("#8cc4ff");
+  const dust = rgb("#eef2f6");
+  const length = r * 1.6;
+  for (let k = 0; k < 44; k++) {
+    const isIon = k % 2 === 0;
+    const speed = 0.12 + 0.1 * hash(k, 1, 0, seed);
+    const s = (hash(k, 0, 0, seed) + t * speed) % 1;
+    const along = nucleus * 0.6 + s * length;
+    // Ion pixels keep to a narrow line; dust fans out and curves off to one side.
+    const spread = (hash(k, 2, 0, seed) - 0.5) * (isIon ? 1.2 + along * 0.06 : 2 + along * 0.3);
+    const side = isIon ? spread : spread + (along * along) / (length * 3.2);
+    const x = Math.floor(cx + ux * along - uy * side);
+    const y = Math.floor(cy + uy * along + ux * side);
+    blend(x, y, isIon ? ion : dust, (1 - s) * (isIon ? 0.85 : 0.7));
+  }
+  paintRock(image, cx, cy, nucleus, id, light, COMET_TINT);
+  ctx.putImageData(image, 0, 0);
+}
+
 /** How far past its radius the Sun's flames and prominences can reach, in radii. */
 export const SUN_REACH = 1.9;
 

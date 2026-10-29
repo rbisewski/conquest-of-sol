@@ -85,6 +85,8 @@ const ORBIT_COLORS: Record<string, { color: string; opacity: number }> = {
   moon: { color: "#3d74d6", opacity: 0.4 },
   dwarf: { color: "#7d8a99", opacity: 0.3 },
 };
+/** The orbit of a small body (drawn without one), shown while it is selected. */
+const SELECTED_ORBIT = { color: "#8fa3b8", opacity: 0.65 };
 
 interface BodyView {
   def: SpaceBodyDef;
@@ -126,6 +128,8 @@ export class SolarSystem {
   private readonly dotPoints: THREE.Points;
   /** Whether each dot is drawn: asteroidal moons only once their orbits are wide enough on screen. */
   private readonly dotShown: boolean[] = [];
+  /** The selected small body's orbit, and that body. */
+  private selectedOrbit: { def: SpaceBodyDef; line: THREE.LineLoop } | null = null;
   /** Scene positions of every body, by id. */
   private readonly positions = new Map<string, THREE.Vector3>();
   private years = Number.NaN;
@@ -331,6 +335,26 @@ export class SolarSystem {
     controls._quatInverse.copy(controls._quat).invert();
   }
 
+  /** Shows the orbit of the selected body if it is a small one (whose orbit isn't otherwise drawn); null hides it. */
+  showOrbitOf(id: string | null): void {
+    if (this.selectedOrbit?.def.id === id) return;
+    if (this.selectedOrbit) {
+      this.scene.remove(this.selectedOrbit.line);
+      this.selectedOrbit.line.geometry.dispose();
+      (this.selectedOrbit.line.material as THREE.Material).dispose();
+      this.selectedOrbit = null;
+    }
+    const def = id ? this.dots.find((d) => d.id === id) : undefined;
+    if (!def?.orbit) return;
+    const line = new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints(orbitPath(def.orbit, 360).map((p) => toScene(p))),
+      new THREE.LineBasicMaterial({ color: SELECTED_ORBIT.color, transparent: true, opacity: SELECTED_ORBIT.opacity, depthTest: false, depthWrite: false }),
+    );
+    line.renderOrder = 1;
+    this.scene.add(line);
+    this.selectedOrbit = { def, line };
+  }
+
   /** Swings the camera to a body, keeping its distance and angle. */
   focus(id: string): void {
     if (id === this.focusId) return;
@@ -458,6 +482,7 @@ export class SolarSystem {
         b.label.classList.toggle("focused", focused);
       }
     }
+    if (this.selectedOrbit) this.selectedOrbit.line.position.copy(this.positions.get(this.selectedOrbit.def.parent!)!);
     // Asteroidal moons, like the moons, show when their orbits are wide enough on screen.
     this.dots.forEach((d, i) => {
       if (d.type !== "asteroidalMoon") return;

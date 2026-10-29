@@ -8,18 +8,13 @@
 
 import * as THREE from "three";
 import type { SpaceBodyDef } from "../../sim/content";
-import { ROCK_CELL, rockAtlas, rockCell } from "./bodyArt";
+import { ROCK_CELL, rockAtlas, rockCell, smallBodyTint } from "./bodyArt";
 
 /** Art pixels across a comet's sprite, room for its tails. */
 const COMET_CELL = 32;
 /** Comets have a coma and tails within this many AU of the Sun, at full length within COMET_FULL. */
 const COMET_ACTIVE = 6;
 const COMET_FULL = 1;
-
-/** Asteroid tints by kind (carbonaceous, stony, metallic), and the small dwarf planets' (icy, reddish, pale). */
-const ROCK_TINTS = ["#9a948c", "#c4a682", "#b4b6bd"];
-const DWARF_TINTS = ["#dcd6cf", "#cfa088", "#ece8e2"];
-const COMET_TINT = "#c9d6de";
 
 const vertexShader = /* glsl */ `
   uniform vec3 sun;
@@ -154,8 +149,7 @@ export function makeSmallBodies(bodies: SpaceBodyDef[], pixel: number): THREE.Po
     cells.push(cell);
     radii.push(radius);
     comets.push(comet ? 1 : 0);
-    const palette = b.type === "dwarf" ? DWARF_TINTS : ROCK_TINTS;
-    tints.push(...srgb(comet ? COMET_TINT : palette[(i * 7 + cell) % palette.length]!));
+    tints.push(...srgb(smallBodyTint(b.id, b.type)));
   });
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(bodies.length * 3), 3));
