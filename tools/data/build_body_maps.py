@@ -1105,6 +1105,166 @@ MADE_UP_ASTEROIDS = {
     "nemesis": (1175, (91.28, 71.72, 81.5), 94.08, 0.08, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
     # Bertha, about 187 km across: a C-type, dark (albedo 0.05), turning slowly; its proportions made up.
     "bertha": (1181, (104.72, 82.28, 93.5), 92.465, 0.08, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Lachesis, about 155 km across; its proportions made up: a C-type, dark (albedo 0.058).
+    "lachesis": (1200, (86.87, 68.26, 77.57), 92.0, 0.08, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.56, True),
+    # Freia, about 145 km across; its proportions made up: a P-type, very dark (albedo 0.058).
+    "freia": (1206, (81.44, 63.99, 72.71), 91.85, 0.08, 0, 53, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.56, True),
+    # Despina, 180 × 148 × 128 km: dark and neutral.
+    "despina": (1212, (90.0, 64.0, 74.0), 90.0, 0.09, 0, 47, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.57, True),
+    # 85 Io, 180 × 160 × 160 km: a B-type, dark and bluish (albedo 0.067).
+    "io85": (1218, (90.0, 80.0, 80.0), 90.0, 0.09, 0, 40, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.57, True),
+    # Ismene, about 159 km across; its proportions made up: a P-type, very dark (albedo 0.066).
+    "ismene": (1224, (89.04, 69.96, 79.5), 90.0, 0.09, 0, 43, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.57, True),
+    # Gyptis, 179 × 150 × 150 km: a C-type, dark (albedo 0.051).
+    "gyptis": (1230, (89.5, 75.0, 75.0), 89.5, 0.09, 0, 56, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.57, True),
+    # Aspasia, about 171 km across; its proportions made up: a C-type, dark (albedo 0.054).
+    "aspasia": (1236, (95.77, 75.25, 85.51), 88.165, 0.09, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.57, True),
+    # Juewa, about 151 km across; its proportions made up: a CP-type, very dark (albedo 0.052).
+    "juewa": (1242, (84.62, 66.49, 75.56), 86.0, 0.09, 0, 42, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
+    # Winchester, about 172 km across; its proportions made up: a PC-type, very dark (albedo 0.05).
+    "winchester": (1248, (96.16, 75.55, 85.86), 85.855, 0.09, 0, 49, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
+    # Hilda, about 171 km across; its proportions made up: a P-type, very dark (albedo 0.062).
+    "hilda": (1254, (95.55, 75.08, 85.31), 85.315, 0.09, 0, 40, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
+    # Praetoria, about 170 km across; its proportions made up: a P-type, very dark (albedo 0.038).
+    "praetoria": (1260, (95.41, 74.96, 85.19), 85.185, 0.09, 0, 45, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
+    # Namaka, about 150 km across; its proportions made up: bright water ice.
+    "namaka": (1266, (84.0, 66.0, 75.0), 85.0, 0.09, 0, 41, [(0, (168, 172, 176)), (0.5, (214, 218, 222)), (1, (246, 248, 250))], None, 0.58, True),
+    # Melpomene, 170 × 155 × 129 km: an S-type, bright (albedo 0.18).
+    "melpomene": (1272, (85.0, 64.5, 77.5), 85.0, 0.09, 0, 48, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.58, True),
+    # Nemausa, 170 × 136 × 136 km: a C-type, dark (albedo 0.1).
+    "nemausa": (1278, (85.0, 68.0, 68.0), 85.0, 0.09, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.58, True),
+    # Germania, about 169 km across; its proportions made up: a CP-type, very dark (albedo 0.058).
+    "germania": (1284, (94.58, 74.32, 84.45), 84.45, 0.1, 0, 44, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
+    # 106 Dione, about 147 km across (JPL's 208 km disagrees with Terra Invicta and later estimates); its proportions made up: a G-type, dark (albedo 0.044).
+    "dione106": (1290, (82.32, 64.68, 73.5), 84.36, 0.1, 0, 40, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 120, 112))], None, 0.58, True),
+    # Prokne, about 162 km across; its proportions made up: a C-type, dark (albedo 0.057).
+    "prokne": (1296, (90.53, 71.13, 80.83), 84.21, 0.1, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.58, True),
+    # Stereoskopia, about 167 km across; its proportions made up: a C-type, dark (albedo 0.039).
+    "stereoskopia": (1302, (93.73, 73.65, 83.69), 84.0, 0.1, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.58, True),
+    # Aegle, 178.7 × 148.3 × 148.3 km: a T-type, dark and reddish (albedo 0.048).
+    "aegle": (1308, (89.35, 74.15, 74.15), 83.96, 0.1, 0, 50, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.58, True),
+    # Astraea, 169 × 125 × 83 km: an S-type, bright (albedo 0.27).
+    "astraea": (1314, (84.5, 41.5, 62.5), 83.5, 0.1, 0, 51, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.59, True),
+    # Irene, 167 × 152 × 139 km: an S-type, bright (albedo 0.16).
+    "irene": (1320, (83.5, 69.5, 76.0), 83.5, 0.1, 0, 40, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.59, True),
+    # Albion, about 125 km across; its proportions made up: dark and red.
+    "albion": (1326, (70.0, 55.0, 62.5), 83.5, 0.1, 0, 42, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.59, True),
+    # Agamemnon, 190.6 × 143.8 × 143.8 km: a D-type, dark and reddish (albedo 0.072).
+    "agamemnon": (1332, (95.3, 71.9, 71.9), 83.33, 0.1, 0, 53, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.59, True),
+    # Siegena, about 165 km across; its proportions made up: a C-type, dark (albedo 0.069).
+    "siegena": (1338, (92.41, 72.6, 82.5), 82.505, 0.1, 0, 52, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.59, True),
+    # Sycorax, about 160 km across; its proportions made up: dark and red.
+    "sycorax": (1344, (89.6, 70.4, 80.0), 82.5, 0.1, 0, 45, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.59, True),
+    # Loreley, about 180 km across; its proportions made up: a C-type, dark (albedo 0.047).
+    "loreley": (1350, (100.85, 79.24, 90.04), 82.46, 0.1, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.59, True),
+    # Elpis, about 165 km across; its proportions made up: a CP-type, very dark (albedo 0.044).
+    "elpis": (1356, (92.47, 72.65, 82.56), 82.4, 0.1, 0, 50, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.59, True),
+    # Myrina, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous.
+    "myrina": (1362, (91.84, 72.16, 82.0), 82.0, 0.1, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.59, True),
+    # Klymene, 163 × 103 × 103 km: a C-type, dark (albedo 0.052).
+    "klymene": (1368, (81.5, 51.5, 51.5), 81.5, 0.1, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.59, True),
+    # Kreusa, about 168 km across; its proportions made up: a C-type, dark (albedo 0.047).
+    "kreusa": (1374, (94.15, 73.97, 84.06), 81.0, 0.1, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.59, True),
+    # Dictys, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous.
+    "dictys": (1380, (90.16, 70.84, 80.5), 80.5, 0.1, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Zelinda, about 161 km across; its proportions made up: a C-type, dark (albedo 0.027).
+    "zelinda": (1386, (90.01, 70.72, 80.37), 80.368, 0.1, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Massalia, 160 × 145 × 132 km: an S-type, bright (albedo 0.24).
+    "massalia": (1392, (80.0, 66.0, 72.5), 80.0, 0.1, 0, 40, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.6, True),
+    # Alexandra, 160 × 135 × 135 km: a C-type, dark (albedo 0.059).
+    "alexandra": (1398, (80.0, 67.5, 67.5), 80.0, 0.1, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Dido, about 179 km across; its proportions made up: a C-type, dark (albedo 0.028).
+    "dido": (1404, (100.24, 78.76, 89.5), 79.97, 0.1, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Scheila, about 160 km across; its proportions made up: a P-type, very dark (albedo 0.04).
+    "scheila": (1410, (89.45, 70.28, 79.86), 79.863, 0.1, 0, 42, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.6, True),
+    # Eunike, about 160 km across; its proportions made up: a C-type, dark (albedo 0.062).
+    "eunike": (1416, (89.86, 70.6, 80.23), 78.755, 0.1, 0, 53, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Portia, 156 × 126 × 126 km: dark and neutral.
+    "portia": (1422, (78.0, 63.0, 63.0), 78.0, 0.11, 0, 55, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.6, True),
+    # Minerva, about 154 km across; its proportions made up: a C-type, dark (albedo 0.056).
+    "minerva": (1428, (86.33, 67.83, 77.08), 78.0, 0.11, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Eleonora, about 149 km across; its proportions made up: an S-type, bright (albedo 0.2).
+    "eleonora": (1434, (83.42, 65.55, 74.48), 77.585, 0.11, 0, 51, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.6, True),
+    # Merapi, about 147 km across; its proportions made up: an X-type, very dark (albedo 0.048).
+    "merapi": (1440, (82.36, 64.71, 73.53), 76.7, 0.11, 0, 48, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.61, True),
+    # Parthenope, 156 × 152 × 138 km: an S-type, bright (albedo 0.19).
+    "parthenope": (1446, (78.0, 69.0, 76.0), 76.65, 0.11, 0, 42, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.61, True),
+    # Berbericia, about 152 km across; its proportions made up: a C-type, dark (albedo 0.065).
+    "berbericia": (1452, (84.96, 66.75, 75.86), 75.856, 0.11, 0, 57, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.61, True),
+    # Julia, 165 × 142 × 115 km: an S-type, bright (albedo 0.19).
+    "julia": (1458, (82.5, 57.5, 71.0), 75.5, 0.11, 0, 45, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.61, True),
+    # Juliet, 150 × 74 × 74 km: dark and neutral.
+    "juliet": (1464, (75.0, 37.0, 37.0), 75.0, 0.11, 0, 54, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.61, True),
+    # Pales, about 166 km across; its proportions made up: a C-type, dark (albedo 0.048).
+    "pales": (1470, (93.1, 73.15, 83.13), 74.9, 0.11, 0, 44, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.61, True),
+    # Lomia, size from Terra Invicta; its proportions made up: an XC-type, very dark (albedo 0.027).
+    "lomia": (1476, (83.28, 65.43, 74.36), 74.355, 0.11, 0, 55, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.62, True),
+    # Hypatia, about 156 km across; its proportions made up: a C-type, dark (albedo 0.039).
+    "hypatia": (1482, (87.17, 68.49, 77.83), 74.245, 0.11, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.62, True),
+    # Sibylla, about 145 km across; its proportions made up: a C-type, dark (albedo 0.056).
+    "sibylla": (1488, (81.4, 63.96, 72.68), 74.195, 0.11, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.62, True),
+    # Meliboea, about 129 km across; its proportions made up: a C-type, dark (albedo 0.065).
+    "meliboea": (1494, (72.06, 56.62, 64.34), 72.71, 0.11, 0, 52, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.62, True),
+    # Myrleia, about 100 km across; its proportions made up: nothing measured of its colour; dark, as icy-carbonaceous.
+    "myrleia": (1500, (56.0, 44.0, 50.0), 72.5, 0.11, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.62, True),
+    # Aneas, about 118 km across; its proportions made up: a D-type, dark and reddish (albedo 0.059).
+    "aneas": (1506, (66.09, 51.93, 59.01), 71.5, 0.11, 0, 46, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.62, True),
+    # Aglaja, about 168 km across; its proportions made up: a C-type, dark (albedo 0.082).
+    "aglaja": (1512, (94.18, 74.0, 84.09), 70.95, 0.12, 0, 52, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.63, True),
+    # Bononia, about 154 km across; its proportions made up: a D-type, dark and reddish (albedo 0.038).
+    "bononia": (1518, (86.43, 67.91, 77.17), 70.86, 0.12, 0, 44, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.63, True),
+    # Polyxo, about 129 km across; its proportions made up: a T-type, dark and reddish (albedo 0.047).
+    "polyxo": (1524, (72.0, 56.57, 64.29), 70.345, 0.12, 0, 55, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.63, True),
+    # Dembowska, about 140 km across; its proportions made up: an R-type, bright and reddish (albedo 0.38).
+    "dembowska": (1530, (78.27, 61.5, 69.89), 69.885, 0.12, 0, 46, [(0, (104, 70, 56)), (0.5, (178, 134, 110)), (1, (232, 196, 172))], None, 0.63, True),
+    # Pulcova, about 147 km across; its proportions made up: an F-type, dark and bluish (albedo 0.04).
+    "pulcova": (1536, (82.51, 64.83, 73.67), 68.54, 0.12, 0, 52, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.63, True),
+    # Philomela, about 145 km across; its proportions made up: an S-type, bright (albedo 0.34).
+    "philomela": (1542, (80.99, 63.64, 72.31), 68.195, 0.12, 0, 53, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.63, True),
+    # Arethusa, about 148 km across; its proportions made up: a C-type, dark (albedo 0.058).
+    "arethusa": (1548, (82.86, 65.11, 73.98), 68.02, 0.12, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.64, True),
+    # Flora, 154 × 148 × 127 km: an S-type, bright (albedo 0.23).
+    "flora": (1554, (77.0, 63.5, 74.0), 68.0, 0.12, 0, 42, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.64, True),
+    # Achilles, about 130 km across; its proportions made up: a D-type, dark and reddish (albedo 0.043).
+    "achilles": (1560, (72.86, 57.24, 65.05), 67.735, 0.12, 0, 55, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.64, True),
+    # Hesperia, about 138 km across; its proportions made up: an M-type, metal-rich (albedo 0.14).
+    "hesperia": (1566, (77.35, 60.78, 69.06), 67.5, 0.12, 0, 49, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.64, True),
+    # Arawn, about 133 km across; its proportions made up: nothing measured of its colour; dark, as common carbonaceous.
+    "arawn": (1572, (74.48, 58.52, 66.5), 66.5, 0.12, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.64, True),
+    # Lucina, about 160 km across; its proportions made up: a C-type, dark (albedo 0.036).
+    "lucina": (1578, (89.77, 70.54, 80.16), 66.105, 0.12, 0, 43, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.64, True),
+    # Liguria, about 146 km across; its proportions made up: a C-type, dark (albedo 0.065).
+    "liguria": (1584, (81.48, 64.02, 72.75), 65.63, 0.12, 0, 43, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.64, True),
+    # Lamberta, 151 × 130 × 122 km: a C-type, dark (albedo 0.044).
+    "lamberta": (1590, (75.5, 61.0, 65.0), 65.2, 0.12, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.64, True),
+    # Aurelia, about 149 km across; its proportions made up: an F-type, dark and bluish (albedo 0.034).
+    "aurelia": (1596, (83.27, 65.43, 74.35), 64.505, 0.12, 0, 41, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.65, True),
+    # Belinda, 128 × 64 × 64 km: dark and neutral.
+    "belinda": (1602, (64.0, 32.0, 32.0), 64.0, 0.13, 0, 57, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.65, True),
+    # Thule, about 127 km across; its proportions made up: a D-type, dark and reddish (albedo 0.041).
+    "thule": (1608, (70.89, 55.7, 63.3), 63.295, 0.13, 0, 48, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.65, True),
+    # Undina, about 126 km across; its proportions made up: an M-type, metal-rich (albedo 0.25).
+    "undina": (1614, (70.8, 55.62, 63.21), 63.21, 0.13, 0, 43, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.65, True),
+    # Mentor, about 126 km across; its proportions made up: an X-type, very dark (albedo 0.044).
+    "mentor": (1620, (70.72, 55.57, 63.14), 63.144, 0.13, 0, 41, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.65, True),
+    # Anchises, 170 × 121 × 121 km: a P-type, very dark (albedo 0.05).
+    "anchises": (1626, (85.0, 60.5, 60.5), 63.135, 0.13, 0, 48, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.65, True),
+    # Odysseus, about 115 km across; its proportions made up: a D-type, dark and reddish (albedo 0.05).
+    "odysseus": (1632, (64.19, 50.43, 57.31), 63.0, 0.13, 0, 44, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.65, True),
+    # Penthesilea, about 132 km across; its proportions made up: nothing measured of its colour; dark, as carbonaceous-stony.
+    "penthesilea": (1638, (73.92, 58.08, 66.0), 62.5, 0.13, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.65, True),
+    # Hestia, about 131 km across; its proportions made up: a P-type, very dark (albedo 0.046).
+    "hestia": (1644, (73.62, 57.85, 65.74), 62.05, 0.13, 0, 51, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.65, True),
+    # Euterpe, 124 × 75 × 75 km: an S-type, bright (albedo 0.21).
+    "euterpe": (1650, (62.0, 37.5, 37.5), 62.0, 0.13, 0, 57, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.65, True),
+    # Gudrun, about 146 km across; its proportions made up: a C-type, dark (albedo 0.025).
+    "gudrun": (1656, (81.58, 64.1, 72.84), 61.46, 0.13, 0, 56, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.66, True),
+    # Leto, about 123 km across; its proportions made up: an S-type, bright (albedo 0.23).
+    "leto": (1662, (68.61, 53.9, 61.25), 61.285, 0.13, 0, 41, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.66, True),
+    # Johanna, about 122 km across; its proportions made up: a C-type, dark (albedo 0.042).
+    "johanna": (1668, (68.32, 53.68, 61.0), 61.0, 0.13, 0, 56, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.66, True),
+    # Bettina, about 121 km across; its proportions made up: an M-type, metal-rich (albedo 0.11).
+    "bettina": (1674, (67.76, 53.24, 60.5), 60.498, 0.13, 0, 56, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.66, True),
 }
 
 
