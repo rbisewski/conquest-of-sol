@@ -1,6 +1,6 @@
 """Builds the pixel-art surface maps of the bodies the camera can come right down to, in public/map:
 Mercury, Luna, Mars, Ceres, Jupiter, its four great moons, seven of Saturn's, five of Uranus's,
-Triton, Pluto, Phobos and Deimos from spacecraft data; Venus, Saturn, Uranus and Neptune (their clouds) and Eris,
+Triton, Pluto, Charon, Vesta (its shape too), Phobos and Deimos from spacecraft data; Venus, Saturn, Uranus and Neptune (their clouds) and Eris,
 Haumea and Makemake (never seen close) made up.
 
 Sources (public domain; downloaded by fetch.py into tools/data/.cache):
@@ -18,6 +18,9 @@ Sources (public domain; downloaded by fetch.py into tools/data/.cache):
   Saturn's moons: USGS's Cassini (and Voyager) global mosaics, Mimas's DLR basemap inside its zip.
   Miranda, Ariel, Umbriel, Titania, Oberon: USGS's Voyager 2 mosaics at 4 px/degree, from NASA/JPL's
     Solar System Simulator (greyscale; southern hemispheres only, the rest made up from them).
+  Charon: USGS's New Horizons LORRI mosaic, greyscale (south of about 30°S made up).
+  Vesta: DLR's Dawn Framing Camera mosaic (HAMO, 74 px/degree) and DLR's HAMO shape model (48
+    px/degree, the radius in metres), both via USGS.
   Phobos: DLR's Viking mosaic at 40 px/degree (USGS; greyscale). Deimos: USGS's Viking map at
     4 px/degree, from NASA/JPL's Solar System Simulator (greyscale; its unimaged parts flat grey).
   Triton: USGS's Voyager 2 colour mosaic, gaps filled from lower-resolution views (the far north
@@ -704,8 +707,15 @@ def deimos() -> None:
     save("deimos.png", out, kmeans_palette(np.clip(out, 0, 255), 9), dither=8)
 
 
+def save_relief(name: str, radius: np.ndarray) -> None:
+    """Writes <name>_shape.png, a body's radius (in its radii) in every direction, at half the map's size: 0 to 2 radii in 16 bits, the high byte in red and the low in green (bodyArt.ts bodyRelief)."""
+    level = np.round(np.clip(radius.reshape(H // 2, 2, W // 2, 2).mean(axis=(1, 3)) / 2, 0, 1) * 65535).astype(np.uint32)
+    packed = np.stack([level >> 8, level & 255, np.zeros_like(level)], axis=-1).astype(np.uint8)
+    Image.fromarray(packed, "RGB").save(MAP_OUT / f"{name}_shape.png", optimize=True)
+
+
 def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: float, waist: float, craters: int,
-             stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]]) -> None:
+             stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]], mean: float = 1.0) -> None:
     """
     A made-up small asteroid: no spacecraft has seen it, so both its shape and its surface are
     invented, after what its light curve and spectrum say. Writes two maps: <name>.png, the
@@ -717,7 +727,8 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
     The shape: an ellipsoid of the given semi-axes (along longitude 0°, the pole and 90°W), pinched
     at the middle of its long axis for a two-lobed body (waist), made lumpy with value noise on the
     sphere at two scales, then cratered: bowls with raised rims, a few big and many small (sizes
-    by a power law). Scaled so its mean radius is 1 (Terra Invicta's radius). The surface: a
+    by a power law). Scaled so its mean radius is mean (Terra Invicta's radius, unless measured
+    dimensions say otherwise). The surface: a
     space-weathered regolith tone mottled at two scales, the youngest craters' floors and ejecta
     brighter and fresher, on a ramp of its tones, with ordered dithering.
     """
@@ -744,11 +755,9 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
         # A few are young: brighter floors and ejecta.
         if rng.random() < 0.25:
             fresh = np.maximum(fresh, np.clip(1.6 - q, 0, 1) * (0.6 + 0.4 * rng.random()))
-    radius /= radius.mean()
+    radius *= mean / radius.mean()
     print(f"{name}: shape reaches {radius.max():.3f} radii")
-    level = np.round(np.clip(radius.reshape(H // 2, 2, W // 2, 2).mean(axis=(1, 3)) / 2, 0, 1) * 65535).astype(np.uint32)
-    packed = np.stack([level >> 8, level & 255, np.zeros_like(level)], axis=-1).astype(np.uint8)
-    Image.fromarray(packed, "RGB").save(MAP_OUT / f"{name}_shape.png", optimize=True)
+    save_relief(name, radius)
     mottle = sphere_noise(seed + 3, [(2.5, 1.0), (7, 0.6), (18, 0.35)])
     value = 0.45 + (mottle - 0.5) * 0.9 + 0.35 * fresh
     save(f"{name}.png", ramp(np.clip(value, 0, 1), stops), palette, dither=8)
@@ -789,6 +798,136 @@ def arend_rigaux() -> None:
     asteroid("arendrigaux", 109, (1.45, 0.86, 1.0), 0.3, 0.06, 16,
              [(0, (22, 20, 20)), (0.45, (58, 53, 50)), (0.78, (86, 79, 74)), (1, (140, 148, 154))],
              [(22, 20, 20), (34, 31, 30), (46, 42, 40), (58, 53, 50), (72, 66, 62), (88, 80, 75), (140, 148, 154)])
+
+
+def mesh_radius(file: str, radius_km: float) -> np.ndarray:
+    """
+    A published shape model (a Wavefront OBJ of triangles, in km, in the body's own frame: x
+    towards longitude 0°, z the north pole) as a radius map in Terra Invicta's radius: how far
+    the outermost surface lies from the centre in each direction. Points are scattered over every
+    triangle (a grid of them on the small models, the vertices alone on the dense ones), each map
+    cell keeps the farthest that falls in it, and cells none fell in are filled from around them.
+    Overhangs and caves (Hyperion's) give way to the outer surface.
+    """
+    v: list[list[float]] = []
+    f: list[list[int]] = []
+    with open(CACHE / "shapes" / file) as obj:
+        for line in obj:
+            if line.startswith("v "):
+                v.append([float(x) for x in line.split()[1:4]])
+            elif line.startswith("f "):
+                f.append([int(x.split("/")[0]) - 1 for x in line.split()[1:4]])
+    verts = np.array(v)
+    faces = np.array(f)
+    if len(faces) > 400_000:
+        points = verts
+    else:
+        a, b, c = verts[faces[:, 0]], verts[faces[:, 1]], verts[faces[:, 2]]
+        n = 7
+        points = np.concatenate([a * (i / n) + b * (j / n) + c * ((n - i - j) / n) for i in range(n + 1) for j in range(n + 1 - i)])
+    r = np.linalg.norm(points, axis=1)
+    lat = np.degrees(np.arcsin(np.clip(points[:, 2] / r, -1, 1)))
+    lon = np.degrees(np.arctan2(points[:, 1], points[:, 0]))
+    h, w = H // 2, W // 2
+    y = np.clip(((90 - lat) / 180 * h).astype(int), 0, h - 1)
+    x = np.clip(((lon + 180) / 360 * w).astype(int), 0, w - 1)
+    grid = np.zeros(h * w)
+    np.maximum.at(grid, y * w + x, r)
+    grid = grid.reshape(h, w)
+    full = np.repeat(np.repeat(grid, 2, axis=0), 2, axis=1)
+    full = fill(full, full > 0)
+    return full / radius_km
+
+
+def shaped(name: str, file: str, radius_km: float, seed: int, stops: list[tuple[float, tuple[int, int, int]]],
+           palette: list[tuple[int, int, int]], hollows: float, mottle: float = 0.8) -> None:
+    """
+    A small body drawn from its published shape model (mesh_radius), saved as its relief; its
+    surface made up, as no global map of it exists, but from its real ground: a ramp of its tones,
+    mottled with value noise on the sphere, and darkened in its hollows (hollows > 0, as dust and
+    dark material gather there) or brightened in them (< 0), taken from the shape itself.
+    """
+    radius = mesh_radius(file, radius_km)
+    print(f"{name}: shape reaches {radius.max():.3f} radii, nearest {radius.min():.3f}")
+    save_relief(name, radius)
+    hollow = blur(radius, 10) - radius
+    hollow = hollow / max(1e-6, np.percentile(np.abs(hollow), 98))
+    noise = sphere_noise(seed, [(2.5, 1.0), (7, 0.6), (18, 0.35)])
+    value = 0.55 + (noise - 0.5) * mottle - hollows * 0.3 * np.clip(hollow, -1, 1)
+    save(f"{name}.png", ramp(np.clip(value, 0, 1), stops), palette, dither=8)
+
+
+def grey_steps(stops: list[tuple[float, tuple[int, int, int]]], n: int) -> list[tuple[int, int, int]]:
+    """n palette colours evenly along a ramp."""
+    out = ramp(np.linspace(0, 1, n), stops)
+    return [tuple(int(round(c)) for c in row) for row in out]
+
+
+# The bodies with published shape models (PDS Small Bodies Node: Gaskell's for Eros and Phoebe,
+# Thomas's for Saturn's small moons, the Rosetta and Deep Impact teams' for Lutetia and Tempel 1),
+# with their tones: (file, Terra Invicta's radius, seed, ramp, hollows, mottle).
+SHAPED = {
+    # NEAR's Eros: an S-type, ochre-tan, its crater walls brighter, its hollows ponded with dust.
+    "eros": ("ver64q.tab.obj", 17.0, 131, [(0, (64, 54, 42)), (0.5, (150, 130, 104)), (1, (214, 198, 170))], -0.6, 0.6),
+    # Rosetta's Lutetia: a neutral grey, faintly bluish, old and cratered.
+    "lutetia": ("lutetia_003k_cart.obj", 61.0, 137, [(0, (54, 55, 58)), (0.5, (126, 127, 130)), (1, (198, 198, 198))], 0.4, 0.6),
+    # Deep Impact's and Stardust's Tempel 1: dark, faintly red, its smooth flows and layered scarps.
+    "tempel1": ("tempel1_2012_cart.obj", 5.3, 139, [(0, (26, 23, 22)), (0.5, (66, 60, 56)), (1, (120, 116, 112))], 0.5, 0.7),
+    # Cassini's Phoebe: a dark captured body, its crater walls and ridges showing bright ice.
+    "phoebe": ("phoebe_ver512q.tab.obj", 109.5, 149, [(0, (28, 26, 24)), (0.55, (70, 64, 58)), (0.85, (104, 100, 98)), (1, (176, 182, 188))], -0.9, 0.7),
+    # Hyperion: reddish-tan sponge, its deep pits floored with dark red-brown material.
+    "hyperion": ("hyperion_30k_plt.tab.obj", 180.0, 151, [(0, (58, 40, 30)), (0.4, (122, 94, 72)), (0.7, (172, 146, 116)), (1, (216, 198, 172))], 1.6, 0.5),
+    # The co-orbitals and shepherds: bright, faintly cream ice.
+    "janus": ("janus_30k_plt.tab.obj", 101.5, 157, [(0, (92, 90, 86)), (0.5, (178, 174, 166)), (1, (236, 232, 224))], 0.5, 0.6),
+    "epimetheus": ("epimetheus_30k_plt.tab.obj", 65.0, 163, [(0, (92, 90, 86)), (0.5, (178, 174, 166)), (1, (236, 232, 224))], 0.5, 0.6),
+    "prometheus": ("prometheus_30k_plt.tab.obj", 68.0, 167, [(0, (96, 90, 84)), (0.5, (182, 172, 160)), (1, (238, 230, 218))], 0.4, 0.6),
+    "pandora": ("pandora_30k_plt.tab.obj", 52.0, 173, [(0, (96, 90, 84)), (0.5, (182, 172, 160)), (1, (238, 230, 218))], 0.4, 0.6),
+    # The ring moons, coated in ring dust: smooth, cream, faintly red; Pan's and Atlas's equatorial ridges.
+    "atlas": ("atlas_30k_plt.tab.obj", 20.5, 179, [(0, (110, 100, 90)), (0.5, (190, 178, 162)), (1, (240, 232, 220))], 0.3, 0.4),
+    "pan": ("pan_30k_plt.tab.obj", 17.0, 181, [(0, (110, 100, 90)), (0.5, (190, 178, 162)), (1, (240, 232, 220))], 0.3, 0.4),
+    "daphnis": ("daphnis_30k_plt.tab.obj", 4.9, 191, [(0, (110, 100, 90)), (0.5, (190, 178, 162)), (1, (240, 232, 220))], 0.3, 0.4),
+    # The Trojans of Tethys and Dione: among the brightest things known, smooth white ice.
+    "calypso": ("calypso_30k_plt.tab.obj", 15.1, 193, [(0, (140, 140, 140)), (0.5, (214, 214, 212)), (1, (250, 250, 248))], 0.3, 0.4),
+    "telesto": ("telesto_30k_plt.tab.obj", 16.3, 197, [(0, (140, 140, 140)), (0.5, (214, 214, 212)), (1, (250, 250, 248))], 0.3, 0.4),
+    "helene": ("helene_30k_plt.tab.obj", 21.7, 199, [(0, (130, 130, 132)), (0.5, (206, 206, 206)), (1, (246, 246, 244))], 0.3, 0.5),
+}
+
+
+def shaped_body(name: str):
+    file, radius_km, seed, stops, hollows, mottle = SHAPED[name]
+    return lambda: shaped(name, file, radius_km, seed, stops, grey_steps(stops, 9), hollows, mottle)
+
+
+# The bodies whose shape models only Stooke's collection has (or none: Nix and Hydra), made up
+# like the small asteroids but at their measured sizes: (semi-axes along longitude 0°, the pole
+# and 90°W, in Terra Invicta's radius; mean radius in it), with their tones.
+def measured(name: str, seed: int, axes_km: tuple[float, float, float], radius_km: float, lumps: float, waist: float, craters: int,
+             stops: list[tuple[float, tuple[int, int, int]]]):
+    a, c, b = axes_km
+    mean = (a * b * c) ** (1 / 3) / radius_km
+    return lambda: asteroid(name, seed, (a / radius_km, c / radius_km, b / radius_km), lumps, waist, craters, stops, grey_steps(stops, 7), mean)
+
+
+MEASURED = {
+    # NEAR's Mathilde, 66 × 48 × 44 km: coal-dark, battered by five craters as wide as itself.
+    "mathilde": measured("mathilde", 211, (33, 22, 24), 33.0, 0.35, 0.0, 44, [(0, (18, 17, 16)), (0.5, (48, 45, 42)), (1, (96, 92, 88))]),
+    # Giotto's Halley, about 15 × 8 × 7.5 km: a dark, peanut-like nucleus.
+    "halley": measured("halley", 223, (7.6, 3.75, 4.0), 7.5, 0.3, 0.12, 14, [(0, (20, 18, 17)), (0.5, (50, 46, 43)), (1, (110, 112, 116))]),
+    # Galileo's Amalthea, 250 × 146 × 128 km: the reddest thing in the Solar System, long axis to Jupiter.
+    "amalthea": measured("amalthea", 227, (125, 64, 73), 125.0, 0.3, 0.0, 28, [(0, (58, 26, 18)), (0.5, (132, 64, 42)), (1, (200, 128, 96))]),
+    # Galileo's Thebe, 116 × 98 × 84 km: dark and reddish.
+    "thebe": measured("thebe", 229, (58, 42, 49), 58.0, 0.3, 0.0, 30, [(0, (40, 26, 22)), (0.5, (102, 70, 56)), (1, (170, 132, 110))]),
+    # Voyager's Proteus, 420 × 416 × 402 km: dark grey, nearly as big as a body can be and stay unrounded.
+    "proteus": measured("proteus", 233, (210, 201, 208), 218.0, 0.22, 0.0, 34, [(0, (34, 33, 32)), (0.5, (82, 80, 78)), (1, (148, 146, 144))]),
+    # Voyager's Larissa, 216 × 204 × 168 km: dark, irregular, cratered.
+    "larissa": measured("larissa", 239, (108, 84, 102), 108.0, 0.3, 0.0, 30, [(0, (34, 33, 32)), (0.5, (82, 80, 78)), (1, (148, 146, 144))]),
+    # Voyager's Puck, about 162 km across, roughly round: dark grey, cratered.
+    "puck": measured("puck", 241, (81, 77, 79), 81.0, 0.18, 0.0, 30, [(0, (36, 36, 36)), (0.5, (86, 86, 86)), (1, (150, 150, 150))]),
+    # New Horizons' Nix, 49.8 × 33.2 × 31.1 km: bright neutral ice (albedo 0.56).
+    "nix": measured("nix", 251, (24.9, 15.55, 16.6), 25.0, 0.3, 0.0, 16, [(0, (90, 90, 92)), (0.5, (176, 176, 178)), (1, (236, 236, 236))]),
+    # New Horizons' Hydra, 50.9 × 36.1 × 30.9 km: brighter still (albedo 0.83), perhaps two-lobed.
+    "hydra": measured("hydra", 257, (25.45, 15.45, 18.05), 32.5, 0.28, 0.12, 16, [(0, (110, 110, 112)), (0.5, (196, 196, 198)), (1, (246, 246, 246))]),
+}
 
 
 def neptune() -> None:
@@ -873,6 +1012,55 @@ def pluto() -> None:
     save("pluto.png", out, kmeans_palette(np.clip(out, 0, 255), 14), dither=8)
 
 
+def vesta() -> None:
+    # Dawn's Framing Camera mosaic (DLR, from the High Altitude Mapping Orbit) for its surface, and
+    # DLR's shape model from the same orbit for its form: Vesta is no sphere but a lumpy, flattened
+    # body, 212 to 293 km from its centre, its south blasted flat by the Rheasilvia basin (with
+    # its great central peak) over the older Veneneia, its equator ringed by the Divalia Fossae
+    # troughs. The shape model gives the radius itself (metres), here in Terra Invicta's radius
+    # (286.3 km, the long semi-axis). The mosaic is lit by a low Sun, so its broad swings of
+    # brightness are halved (the shape model shades it now); its far north, in winter darkness
+    # when Dawn mapped it, is made up (unseen()) from the ground between 50°S and 40°N. Grey, a
+    # little warm, with Vesta's brighter and darker (carbonaceous) materials.
+    Image.MAX_IMAGE_PIXELS = None
+    radius = np.asarray(Image.open(CACHE / "Vesta_Dawn_HAMO_DTM_DLR_Global_48ppd.tif").resize((W, H), Image.Resampling.BOX), dtype=np.float64) / 1000 / 286.3
+    print(f"vesta: shape reaches {radius.max():.3f} radii, nearest {radius.min():.3f}")
+    save_relief("vesta", radius)
+    grey = mosaic("Vesta_Dawn_FC_HAMO_Mosaic_Global_74ppd.tif", "L")
+    lit = blur(grey, 8)
+    valid = blur(((grey > 2) & ~((LAT > 50) & (lit < np.percentile(lit[LAT > 0], 12)))).astype(np.float64), 4) > 0.995
+    value = stretch(fill(grey, valid), valid, 0.5, 99.7)
+    donor = valid & (LAT > -50) & (LAT < 40)
+    value, _ = unseen(value, valid, donor, 117, flatten=0.5, extend=True)
+    out = ramp(np.clip(value, 0, 1), [(0, (54, 51, 48)), (0.5, (150, 144, 136)), (0.8, (194, 188, 178)), (1, (230, 224, 214))])
+    save("vesta.png", out, [
+        (54, 51, 48), (76, 72, 68), (98, 94, 89), (122, 117, 111), (150, 144, 136), (172, 166, 157), (194, 188, 178), (230, 224, 214),
+    ], dither=8)
+
+
+def charon() -> None:
+    # New Horizons' greyscale mosaic: Charon's neutral grey water ice, the cratered north cut by
+    # the Serenity and Mandjet chasmata, the smooth plains of Vulcan Planitia, and the reddish-brown
+    # tholin cap of Mordor Macula round the north pole (tinted here from its darkness there, as in
+    # the MVIC colour views). The south was in polar night in 2015, so south of about 30°S is made
+    # up (unseen()) from the imaged ground between 25°S and 50°N.
+    grey = mosaic("Charon_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif", "L")
+    valid = blur((grey > 2).astype(np.float64), 4) > 0.995
+    value = stretch(fill(grey, valid), valid, 0.5, 99.8)
+    donor = valid & (LAT > -25) & (LAT < 50)
+    value, _ = unseen(value, valid, donor, 113, flatten=0.8, extend=True)
+    value = np.clip(value, 0, 1)
+    out = ramp(value, [(0, (52, 52, 54)), (0.5, (138, 138, 140)), (0.8, (190, 190, 190)), (1, (232, 232, 230))])
+    # Mordor: a soft reddish cap, strongest where darkest, its texture kept.
+    mordor = (np.clip((LAT - 55) / 20, 0, 1) ** 1.5 * np.clip((0.62 - value) / 0.35, 0, 1) * 0.75)[..., None]
+    out = out * (1 - mordor) + out * np.array([1.35, 0.9, 0.7]) * mordor
+    save("charon.png", out, [
+        (52, 52, 54), (74, 74, 76), (98, 98, 100), (122, 122, 124), (146, 146, 147), (170, 170, 170),
+        (194, 194, 193), (216, 216, 214), (234, 234, 232),       # the grey ice
+        (66, 47, 38), (92, 66, 52), (120, 92, 76),                # Mordor's tholins
+    ], dither=8)
+
+
 def eris() -> None:
     # Made up: no spacecraft has been there and no telescope resolves it. Eris is about the
     # brightest thing in the Solar System (albedo 0.96), probably fresh methane frost condensed
@@ -923,7 +1111,8 @@ BODIES = {
     "saturn": saturn, "titan": titan, "mimas": mimas, "enceladus": enceladus, "tethys": tethys,
     "dione": dione, "rhea": rhea, "iapetus": iapetus,
     "uranus": uranus, "miranda": miranda, "ariel": ariel, "umbriel": umbriel, "titania": titania, "oberon": oberon,
-    "lick": lick, "cruithne": cruithne, "khonsu": khonsu, "arendrigaux": arend_rigaux, "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "eris": eris, "haumea": haumea, "makemake": makemake,
+    "lick": lick, "cruithne": cruithne, "khonsu": khonsu, "arendrigaux": arend_rigaux, "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "charon": charon, "vesta": vesta, "eris": eris, "haumea": haumea, "makemake": makemake,
+    **{name: shaped_body(name) for name in SHAPED}, **MEASURED,
 }
 
 if __name__ == "__main__":

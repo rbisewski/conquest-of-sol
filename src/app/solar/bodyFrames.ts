@@ -5,9 +5,9 @@
 // directions of longitude 0°, the north pole and longitude 90° west, the globe's convention
 // ((cos lat cos lon, sin lat, −cos lat sin lon)) that bodyArt.ts samples maps in. The Earth's
 // frame comes from the globe instead (earthFrame.ts). The Moon, Phobos and Deimos, the great
-// moons of Jupiter, Saturn and Uranus, and Triton keep their near sides (longitude 0°) towards their planets as
-// they go round, which the IAU's mean rotations only do on average, so their meridians are set
-// from where the planet is.
+// moons of Jupiter, Saturn and Uranus, Triton and Charon keep their near sides (longitude 0°)
+// towards their planets as they go round, which the IAU's mean rotations only do on average, so
+// their meridians are set from where the planet is.
 // Display only.
 
 import * as THREE from "three";
@@ -43,6 +43,14 @@ interface Rotation {
  * out), facing Uranus. Neptune: its interior's turn, its pole nodding a little with Triton's
  * precessing orbit. Triton: its pole swings round with that orbit, by up to 32°, so its swing is
  * kept; facing Neptune. Pluto: the IAU's (the right-hand rule's north, longitude 0° facing Charon).
+ * Small bodies drawn from shape models: Eros, Lutetia, Tempel 1 and Phoebe on the IAU's elements;
+ * Saturn's small inner moons, Amalthea, Thebe, Proteus, Larissa and Puck on their mean poles,
+ * facing their planets (their long axes towards them); Mathilde's slow 17.4-day turn on an
+ * approximate pole; Hyperion, Nix and Hydra tumble chaotically in truth, and Halley's turn is
+ * complex, so they turn steadily at about their rates on made-up poles.
+ * Charon: its mean pole, facing Pluto (as Pluto faces it). Vesta: Dawn's pole and spin (the IAU's
+ * 2015 elements; the DLR maps' longitudes may sit on an older prime meridian, which only shifts
+ * which face is turned our way at a moment, on a body that turns in 5.3 hours).
  * Eris: locked to Dysnomia, so its pole is Dysnomia's orbit pole (Holler et al. 2021) and its day
  * Dysnomia's 15.79 days. Haumea: the pole of its ring and of Hi'iaka's orbit (Ortiz et al. 2017),
  * its 3.92-hour day. Makemake: its 22.83-hour day (Hromakina et al. 2019); its pole is unknown,
@@ -88,6 +96,32 @@ const ROTATIONS: Record<string, Rotation> = {
     swing: { node: [177.85, 52.316], ra: [-32.35, -6.28, -2.08, -0.74, -0.28, -0.11, -0.07, -0.02, -0.01], dec: [22.55, 2.1, 0.55, 0.16, 0.05, 0.02, 0.01] },
   },
   Pluto: { ra: [132.993, 0], dec: [-6.163, 0], w: [302.695, 56.3625225] },
+  Charon: { ra: [132.993, 0], dec: [-6.163, 0] },
+  "4Vesta": { ra: [309.031, -0.008], dec: [42.235, -0.005], w: [285.39, 1617.3329428] },
+  "433Eros": { ra: [11.35, 0], dec: [17.22, 0], w: [326.07, 1639.38864745] },
+  "21Lutetia": { ra: [52, 0], dec: [12, 0], w: [94, 1057.7515] },
+  "253Mathilde": { ra: [51, 0], dec: [-46, 0], w: [0, 20.684702] },
+  Tempel: { ra: [255, 0], dec: [64.5, 0], w: [69, 211.96] },
+  Halley: { ra: [190, 0], dec: [30, 0], w: [0, 163.636364] },
+  Phoebe: { ra: [356.9, 0], dec: [77.8, 0], w: [178.58, 931.639] },
+  Hyperion: { ra: [40, 0], dec: [60, 0], w: [0, 27.692308] },
+  Janus: { ra: [40.58, -0.036], dec: [83.52, -0.004] },
+  Epimetheus: { ra: [40.58, -0.036], dec: [83.52, -0.004] },
+  Prometheus: { ra: [40.58, -0.036], dec: [83.53, -0.004] },
+  Pandora: { ra: [40.58, -0.036], dec: [83.53, -0.004] },
+  Atlas: { ra: [40.58, -0.036], dec: [83.53, -0.004] },
+  Pan: { ra: [40.6, -0.036], dec: [83.5, -0.004] },
+  Daphnis: { ra: [40.58, -0.036], dec: [83.52, -0.004] },
+  Calypso: { ra: [36.41, -0.036], dec: [85.04, -0.004] },
+  Telesto: { ra: [50.51, -0.036], dec: [84.06, -0.004] },
+  Helene: { ra: [40.85, -0.036], dec: [83.34, -0.004] },
+  Amalthea: { ra: [268.05, -0.009], dec: [64.49, 0.003] },
+  Thebe: { ra: [268.05, -0.009], dec: [64.49, 0.003] },
+  Proteus: { ra: [299.27, 0], dec: [42.91, 0] },
+  Larissa: { ra: [299.36, 0], dec: [43.45, 0] },
+  Puck: { ra: [257.31, 0], dec: [-15.18, 0] },
+  Nix: { ra: [220, 0], dec: [30, 0], w: [0, 196.811] },
+  Hydra: { ra: [80, 0], dec: [20, 0], w: [0, 838.835] },
   Eris: { ra: [36.17, 0], dec: [44.51, 0], w: [0, 22.805163] },
   Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
   Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },

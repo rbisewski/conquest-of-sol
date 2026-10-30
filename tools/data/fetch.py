@@ -19,8 +19,12 @@ Sources (all free to use):
     Umbriel, Titania and Oberon (4 px/degree, greyscale; southern hemispheres only), for
     build_body_maps.py.
   USGS Astrogeology (public domain): Voyager 2's colour mosaic of Triton and New Horizons' mosaic
-    of Pluto, and DLR's Viking mosaic of Phobos; USGS's Viking map of Deimos via JPL's Solar System
+    of Pluto, New Horizons' of Charon, Dawn's Framing Camera mosaic of Vesta with DLR's shape
+    model of it, and DLR's Viking mosaic of Phobos; USGS's Viking map of Deimos via JPL's Solar System
     Simulator; all for build_body_maps.py.
+  PDS Small Bodies Node (public domain), the converted copies its shape-model catalogue serves:
+    Gaskell's models of Eros and Phoebe, the Rosetta team's of Lutetia, Thomas's of Tempel 1 and
+    of Saturn's small moons, into .cache/shapes, for build_body_maps.py.
 
 Run: python3 tools/data/fetch.py
 """
@@ -68,8 +72,26 @@ FILES = {
     "ura5vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura5vuu2.tif",  # Miranda
     "Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif": "https://planetarymaps.usgs.gov/mosaic/Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif",
     "Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif": "https://planetarymaps.usgs.gov/mosaic/Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif",
+    "Charon_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif": "https://planetarymaps.usgs.gov/mosaic/Charon_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif",
+    "Vesta_Dawn_FC_HAMO_Mosaic_Global_74ppd.tif": "https://planetarymaps.usgs.gov/mosaic/Vesta_Dawn_FC_HAMO_Mosaic_Global_74ppd.tif",
+    "Vesta_Dawn_HAMO_DTM_DLR_Global_48ppd.tif": "https://planetarymaps.usgs.gov/mosaic/Vesta_Dawn_HAMO_DTM_DLR_Global_48ppd.tif",
     "Phobos_Viking_Mosaic_40ppd_DLRcontrol.tif": "https://planetarymaps.usgs.gov/mosaic/Phobos_Viking_Mosaic_40ppd_DLRcontrol.tif",
     "mar2kuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/mar2kuu2.tif",  # Deimos
+    "shapes/ver64q.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/eros/ver64q.tab.obj",
+    "shapes/phoebe_ver512q.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/phoebe/phoebe_ver512q.tab.obj",
+    "shapes/lutetia_003k_cart.obj": "https://sbn.psi.edu/pds/shape-models/files/lutetia/lutetia_003k_cart.obj",
+    "shapes/tempel1_2012_cart.obj": "https://sbn.psi.edu/pds/shape-models/files/tempel1/tempel1_2012_cart.obj",
+    "shapes/hyperion_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/hyperion_30k_plt.tab.obj",
+    "shapes/janus_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/janus_30k_plt.tab.obj",
+    "shapes/epimetheus_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/epimetheus_30k_plt.tab.obj",
+    "shapes/prometheus_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/prometheus_30k_plt.tab.obj",
+    "shapes/pandora_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/pandora_30k_plt.tab.obj",
+    "shapes/atlas_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/atlas_30k_plt.tab.obj",
+    "shapes/pan_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/pan_30k_plt.tab.obj",
+    "shapes/daphnis_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/daphnis_30k_plt.tab.obj",
+    "shapes/calypso_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/calypso_30k_plt.tab.obj",
+    "shapes/telesto_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/telesto_30k_plt.tab.obj",
+    "shapes/helene_30k_plt.tab.obj": "https://sbn.psi.edu/pds/shape-models/files/SATURN_SMALL_MOONS/helene_30k_plt.tab.obj",
 }
 
 # indicator -> (date range, extra query)
@@ -85,6 +107,7 @@ WORLD_BANK = {
 
 def download(name: str, url: str) -> None:
     target = CACHE / name
+    target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists() and target.stat().st_size > 0:
         print(f"cached  {name}")
         return

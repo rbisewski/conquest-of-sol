@@ -3,12 +3,13 @@
 // the disc is a point on a sphere: its colour comes from the body's style (bands, spots, ice
 // caps, value noise) and its brightness from the Sun's direction in view space, in a few
 // steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map;
-// Mercury, Luna, Mars, Ceres, Jupiter, the great moons of Jupiter, Saturn and Uranus, Triton and
-// Pluto pixel-art maps made from spacecraft mosaics; Venus, Saturn, Uranus and Neptune made-up ones
+// Mercury, Luna, Mars, Ceres, Vesta, Jupiter, the great moons of Jupiter, Saturn and Uranus,
+// Triton, Pluto and Charon pixel-art maps made from spacecraft mosaics; Venus, Saturn, Uranus and Neptune made-up ones
 // of their cloud tops, and Eris, Haumea and Makemake, which no spacecraft has seen, made-up ones of
 // their ice (tools/data/build_body_maps.py); Phobos and Deimos from Viking's. Haumea, Phobos and
 // Deimos are drawn as the stretched ellipsoids they are; the small asteroids 1951 Lick, 3753
-// Cruithne and 52762 Khonsu, made up entirely, as lumpy shapes ray-cast from maps of their relief,
+// Cruithne and 52762 Khonsu, made up entirely, as lumpy shapes ray-cast from maps of their relief
+// (Vesta too, from its real one),
 // and the comet Arend-Rigaux's nucleus the same way, its jets, coma and tails drawn over it
 // (drawCometActivity).
 
@@ -69,6 +70,32 @@ const MAP_FILES: Record<string, string> = {
   "3753Cruithne": "cruithne.png",
   "52762Asteroid": "khonsu.png",
   ArendRigaux: "arendrigaux.png",
+  Charon: "charon.png",
+  "4Vesta": "vesta.png",
+  "433Eros": "eros.png",
+  "21Lutetia": "lutetia.png",
+  "253Mathilde": "mathilde.png",
+  Tempel: "tempel1.png",
+  Halley: "halley.png",
+  Phoebe: "phoebe.png",
+  Hyperion: "hyperion.png",
+  Janus: "janus.png",
+  Epimetheus: "epimetheus.png",
+  Prometheus: "prometheus.png",
+  Pandora: "pandora.png",
+  Atlas: "atlas.png",
+  Pan: "pan.png",
+  Daphnis: "daphnis.png",
+  Calypso: "calypso.png",
+  Telesto: "telesto.png",
+  Helene: "helene.png",
+  Amalthea: "amalthea.png",
+  Thebe: "thebe.png",
+  Proteus: "proteus.png",
+  Larissa: "larissa.png",
+  Puck: "puck.png",
+  Nix: "nix.png",
+  Hydra: "hydra.png",
 };
 const mapLoads = new Map<string, Promise<MapImage>>();
 
@@ -322,6 +349,34 @@ const STYLES: Record<string, Style> = {
   "3753Cruithne": { base: "#96938e", shape: [1.6, 0.85, 1], lumpy: { reach: 1.88 } },
   "52762Asteroid": { base: "#76695e", shape: [1.2, 0.88, 1], lumpy: { reach: 1.34 } },
   ArendRigaux: { base: "#3a3532", shape: [1.45, 0.86, 1], lumpy: { reach: 1.63 } },
+  // Vesta's relief is Dawn's real shape model; 286.3 × 278.6 × 223.2 km stands in till it loads.
+  "4Vesta": { base: "#968f86", shape: [1, 0.78, 0.973], lumpy: { reach: 1.03 } },
+  // Small bodies drawn from published shape models (or, for the last nine, their measured sizes),
+  // their relief made by build_body_maps.py; how far each reaches, for its canvas.
+  "433Eros": { base: "#8c867e", lumpy: { reach: 1.04 } },
+  "21Lutetia": { base: "#8c867e", lumpy: { reach: 1.06 } },
+  "253Mathilde": { base: "#8c867e", lumpy: { reach: 1.26 } },
+  Tempel: { base: "#8c867e", lumpy: { reach: 1.0 } },
+  Halley: { base: "#8c867e", lumpy: { reach: 1.16 } },
+  Phoebe: { base: "#8c867e", lumpy: { reach: 1.12 } },
+  Hyperion: { base: "#8c867e", lumpy: { reach: 1.03 } },
+  Janus: { base: "#8c867e", lumpy: { reach: 1.06 } },
+  Epimetheus: { base: "#8c867e", lumpy: { reach: 1.17 } },
+  Prometheus: { base: "#8c867e", lumpy: { reach: 1.08 } },
+  Pandora: { base: "#8c867e", lumpy: { reach: 1.1 } },
+  Atlas: { base: "#8c867e", lumpy: { reach: 1.18 } },
+  Pan: { base: "#8c867e", lumpy: { reach: 1.21 } },
+  Daphnis: { base: "#8c867e", lumpy: { reach: 1.15 } },
+  Calypso: { base: "#8c867e", lumpy: { reach: 1.1 } },
+  Telesto: { base: "#8c867e", lumpy: { reach: 1.05 } },
+  Helene: { base: "#8c867e", lumpy: { reach: 1.01 } },
+  Amalthea: { base: "#8c867e", lumpy: { reach: 1.16 } },
+  Thebe: { base: "#8c867e", lumpy: { reach: 1.29 } },
+  Proteus: { base: "#8c867e", lumpy: { reach: 1.21 } },
+  Larissa: { base: "#8c867e", lumpy: { reach: 1.21 } },
+  Puck: { base: "#8c867e", lumpy: { reach: 1.19 } },
+  Nix: { base: "#8c867e", lumpy: { reach: 1.23 } },
+  Hydra: { base: "#8c867e", lumpy: { reach: 0.96 } },
 };
 
 const MOON_STYLE: Style = { base: "#a39c94", spots: [{ color: "#827b74", scale: 5, threshold: 0.6 }, { color: "#c3bdb5", scale: 9, threshold: 0.72 }] };

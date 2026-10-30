@@ -57,6 +57,10 @@ const ART_RADIUS: Record<string, number> = {
   "1951Lick": 2,
   "3753Cruithne": 2,
   "52762Asteroid": 2,
+  "4Vesta": 2,
+  "433Eros": 2,
+  "21Lutetia": 2,
+  "253Mathilde": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
@@ -77,6 +81,31 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
   "3753Cruithne": 84,
   "52762Asteroid": 84,
   ArendRigaux: 84,
+  "4Vesta": 84,
+  "433Eros": 84,
+  "21Lutetia": 84,
+  "253Mathilde": 84,
+  Tempel: 84,
+  Halley: 84,
+  Phoebe: 84,
+  Hyperion: 84,
+  Janus: 84,
+  Epimetheus: 84,
+  Prometheus: 84,
+  Pandora: 84,
+  Atlas: 84,
+  Pan: 84,
+  Daphnis: 84,
+  Calypso: 84,
+  Telesto: 84,
+  Helene: 84,
+  Amalthea: 84,
+  Thebe: 84,
+  Proteus: 84,
+  Larissa: 84,
+  Puck: 84,
+  Nix: 84,
+  Hydra: 84,
 };
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
@@ -84,7 +113,7 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
     id,
     SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
@@ -127,6 +156,17 @@ const ECLIPTIC_UP = new THREE.Vector3(0, 1, 0);
 function kind(def: SpaceBodyDef): string {
   return def.type === "asteroidalMoon" && hasMap(def.id) ? "moon" : def.type;
 }
+
+/** Saturn's small (asteroidal) moons, named only when focused, as the small bodies are. */
+const isSaturnSmallMoon = (def: SpaceBodyDef) => def.type === "asteroidalMoon" && def.parent === "Saturn";
+
+/**
+ * Bodies whose orbit line isn't drawn all the time, only while they are selected (as a small
+ * body's): Saturn's many small moons, which crowd its system, and the far dwarf planets' long
+ * orbits, which cross the whole view.
+ */
+const QUIET_ORBITS = new Set(["Pluto", "Eris", "Makemake", "Haumea"]);
+const quietOrbit = (def: SpaceBodyDef) => QUIET_ORBITS.has(def.id) || isSaturnSmallMoon(def);
 
 const ORBIT_COLORS: Record<string, { color: string; opacity: number }> = {
   planet: { color: "#3d74d6", opacity: 0.6 },
@@ -289,7 +329,7 @@ export class SolarSystem {
     sprite.renderOrder = def.type === "star" ? 3 : 4;
     this.scene.add(sprite);
     let orbit: THREE.LineLoop | null = null;
-    const look = ORBIT_COLORS[kind(def)];
+    const look = quietOrbit(def) ? undefined : ORBIT_COLORS[kind(def)];
     if (def.orbit && look) {
       const points = orbitPath(def.orbit, kind(def) === "moon" ? 128 : 360).map((p) => toScene(p));
       orbit = new THREE.LineLoop(
@@ -558,8 +598,9 @@ export class SolarSystem {
       }
       // Under the globe the Earth's disc shows only as the globe fades out, and isn't named.
       const underGlobe = this.following && b.def.id === "Earth";
-      // An asteroid is named only when focused, as the small sprites are.
-      const named = b.shown && !underGlobe && (focused || (b.def.type !== "asteroid" && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS)));
+      // An asteroid or one of Saturn's small moons is named only when focused, as the small sprites are.
+      const quiet = b.def.type === "asteroid" || isSaturnSmallMoon(b.def);
+      const named = b.shown && !underGlobe && (focused || (!quiet && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS)));
       b.sprite.visible = b.shown && !(underGlobe && away < GLOBE_FADE_FROM * EARTH_RADIUS_AU);
       if (b.orbit) {
         b.orbit.visible = b.shown;
