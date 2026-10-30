@@ -51,6 +51,9 @@ interface Rotation {
  * The made-up asteroids: Pallas on its measured pole (ecliptic 42°, −15°; it lies nearly on its
  * side) and 7.81-hour turn; Ingeborg, Sisyphus, Öpik and Eric at their measured periods, Zeus,
  * Napier and 2014 MQ18 ("Awilix") at made-up ones (none is known), all on made-up poles.
+ * The lesser dwarf planets: at their measured periods where known (Varda locked to its moon
+ * Ilmarë, 5.75 days), at made-up ones for Máni, Chiminigagua, Izanagi, Farout, Gǃkúnǁʼhòmdímà,
+ * DeeDee and 2015 RR245, all on made-up poles and with their prime meridians at 0° at J2000.
  * Charon: its mean pole, facing Pluto (as Pluto faces it). Vesta: Dawn's pole and spin (the IAU's
  * 2015 elements; the DLR maps' longitudes may sit on an older prime meridian, which only shifts
  * which face is turned our way at a moment, on a body that turns in 5.3 hours).
@@ -133,6 +136,26 @@ const ROTATIONS: Record<string, Rotation> = {
   "5731Zeus": { ra: [250, 0], dec: [-20, 0], w: [0, 1183.561644] },
   "7096Napier": { ra: [80, 0], dec: [35, 0], w: [0, 1694.117647] },
   "514041Asteroid": { ra: [170, 0], dec: [-55, 0], w: [0, 900] },
+  Gonggong: { ra: [95, 0], dec: [-35, 0], w: [0, 385.714286] },
+  Quaoar: { ra: [330, 0], dec: [25, 0], w: [0, 488.687783] },
+  "208996KBO": { ra: [160, 0], dec: [50, 0], w: [0, 1272.947] },
+  "90482Orcus": { ra: [290, 0], dec: [-20, 0], w: [0, 655.141] },
+  Sedna: { ra: [40, 0], dec: [60, 0], w: [0, 841.039619] },
+  Salacia: { ra: [210, 0], dec: [15, 0], w: [0, 1418.719212] },
+  "307261KBO": { ra: [75, 0], dec: [-45, 0], w: [0, 1178.7] },
+  "55565KBO": { ra: [255, 0], dec: [35, 0], w: [0, 975.169] },
+  "532037TNO": { ra: [130, 0], dec: [-10, 0], w: [0, 864] },
+  "174567Varda": { ra: [20, 0], dec: [55, 0], w: [0, 62.6] },
+  "90568KBO": { ra: [185, 0], dec: [-60, 0], w: [0, 1474.4] },
+  "145452KBO": { ra: [310, 0], dec: [10, 0], w: [0, 1243.165] },
+  "20000Varuna": { ra: [60, 0], dec: [30, 0], w: [0, 1361.99] },
+  "2010KZ39KBO": { ra: [225, 0], dec: [-25, 0], w: [0, 960] },
+  "55637KBO": { ra: [110, 0], dec: [45, 0], w: [0, 600.751] },
+  "2018VG18TNO": { ra: [345, 0], dec: [-40, 0], w: [0, 1080] },
+  Glkunllhomdima: { ra: [170, 0], dec: [20, 0], w: [0, 782] },
+  "2014UZ224TNO": { ra: [35, 0], dec: [-15, 0], w: [0, 720] },
+  "523794TNO": { ra: [270, 0], dec: [65, 0], w: [0, 664.6] },
+  "28978Ixion": { ra: [145, 0], dec: [-30, 0], w: [0, 696.774] },
   Eris: { ra: [36.17, 0], dec: [44.51, 0], w: [0, 22.805163] },
   Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
   Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },

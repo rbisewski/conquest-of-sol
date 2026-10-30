@@ -1152,6 +1152,75 @@ def makemake() -> None:
     ], dither=7)
 
 
+# Dwarf planets no spacecraft has seen and no telescope resolves, too big to be lumpy: round globes
+# (drawn as ellipsoids in bodyArt.ts where they are measurably not), made up after their colours and
+# albedos (the tones) and water ice or tholins (the patches): (seed, tones, how patchy, craters,
+# and a great dark hollow where an occultation found one: latitude, longitude, angular radius).
+LESSER_DWARFS = {
+    # Very red (V−R 0.86), methane frost on water ice; albedo 0.14.
+    "gonggong": (401, [(0, (84, 38, 28)), (0.5, (150, 76, 52)), (1, (206, 128, 92))], 1.5, 20, None),
+    # Red, albedo 0.11: crystalline water ice under methane and ethane.
+    "quaoar": (409, [(0, (62, 40, 32)), (0.5, (128, 88, 70)), (1, (186, 144, 118))], 1.4, 40, None),
+    # Neutral grey, water ice, albedo 0.10; a depression seen by occultation (Dias-Oliveira et al. 2017).
+    "achlys": (419, [(0, (52, 52, 54)), (0.5, (112, 112, 114)), (1, (170, 170, 172))], 1.2, 50, (15, 60, 32)),
+    # Neutral, albedo 0.23: water ice and perhaps ammonia, brighter patches on grey.
+    "orcus": (421, [(0, (92, 96, 104)), (0.5, (156, 160, 166)), (1, (214, 218, 222))], 1.8, 30, None),
+    # Among the reddest things in the Solar System, tholins over methane and nitrogen ice; albedo 0.41; hardly cratered in the distant dark.
+    "sedna": (431, [(0, (120, 52, 36)), (0.5, (186, 92, 62)), (1, (234, 150, 112))], 1.2, 8, None),
+    # Very dark, albedo 0.04.
+    "salacia": (433, [(0, (22, 21, 21)), (0.5, (52, 49, 47)), (1, (92, 88, 84))], 1.1, 60, None),
+    # Dark grey, water ice, albedo 0.10; a depression some 320 km across seen by occultation (Rommel et al. 2023).
+    "mani": (439, [(0, (44, 42, 40)), (0.5, (96, 90, 84)), (1, (150, 144, 136))], 1.1, 55, (-20, 100, 25)),
+    # Moderately red, albedo 0.10.
+    "aya": (443, [(0, (60, 46, 38)), (0.5, (122, 98, 82)), (1, (178, 150, 130))], 1.3, 45, None),
+    # Moderately red and rather bright, albedo 0.17.
+    "chiminigagua": (449, [(0, (78, 60, 50)), (0.5, (144, 118, 100)), (1, (198, 174, 154))], 1.5, 35, None),
+    # Moderately red, carbon-oxide ices, albedo 0.10.
+    "varda": (457, [(0, (58, 42, 36)), (0.5, (118, 90, 76)), (1, (172, 142, 124))], 1.3, 45, None),
+    # Dark and moderately red, albedo 0.08.
+    "goibniu": (461, [(0, (44, 38, 34)), (0.5, (94, 80, 70)), (1, (146, 128, 114))], 1.2, 55, None),
+    # Moderately red, carbon-oxide ices, albedo 0.11.
+    "ritona": (463, [(0, (62, 46, 38)), (0.5, (122, 96, 80)), (1, (176, 148, 128))], 1.3, 45, None),
+    # Moderately red (V−R 0.62), water ice, albedo 0.13.
+    "varuna": (467, [(0, (62, 50, 42)), (0.5, (124, 102, 86)), (1, (180, 156, 136))], 1.3, 45, None),
+    # Nothing is measured of its colour: made up, a dull tan.
+    "izanagi": (479, [(0, (70, 62, 56)), (0.5, (130, 118, 108)), (1, (186, 174, 162))], 1.3, 40, None),
+    # Moderately red, carbon-oxide ices, albedo 0.13.
+    "uni": (487, [(0, (60, 48, 42)), (0.5, (120, 100, 90)), (1, (174, 152, 140))], 1.3, 45, None),
+    # "Farout": a pinkish hue, as its discoverers saw it (Sheppard et al. 2018).
+    "farout": (491, [(0, (110, 72, 72)), (0.5, (174, 126, 124)), (1, (224, 184, 180))], 1.2, 20, None),
+    # Red (V−I 1.8).
+    "gkun": (499, [(0, (76, 44, 36)), (0.5, (138, 90, 72)), (1, (192, 146, 124))], 1.3, 35, None),
+    # DeeDee: reddish (g−r 0.77), albedo 0.13.
+    "deedee": (503, [(0, (70, 50, 42)), (0.5, (130, 100, 84)), (1, (184, 156, 136))], 1.3, 35, None),
+    # Neutral (g−r 0.59); its albedo is only assumed.
+    "rr245": (509, [(0, (72, 72, 72)), (0.5, (128, 128, 126)), (1, (182, 182, 178))], 1.2, 40, None),
+    # Moderately red (V−R 0.61), albedo 0.11.
+    "ixion": (521, [(0, (66, 46, 36)), (0.5, (130, 98, 78)), (1, (186, 154, 130))], 1.3, 45, None),
+}
+
+
+def lesser_dwarf(name: str):
+    """A made-up round dwarf planet: a surface of its tones, mottled at two scales, with faint craters, dark floors and bright rims."""
+    seed, stops, patchy, craters, hollow = LESSER_DWARFS[name]
+
+    def build() -> None:
+        value = 0.5 + (sphere_noise(seed, [(1.6, 1.0), (4, 0.6)]) - 0.5) * patchy + (sphere_noise(seed + 1, [(10, 1.0), (20, 0.5)]) - 0.5) * 0.5
+        rng = np.random.default_rng(seed + 2)
+        la, lo = np.radians(LAT), np.radians(LON)
+        u = np.stack([np.cos(la) * np.cos(lo), np.sin(la), -np.cos(la) * np.sin(lo)], axis=-1)
+        for _ in range(craters):
+            centre = rng.normal(size=3)
+            q = np.degrees(np.arccos(np.clip(u @ (centre / np.linalg.norm(centre)), -1, 1))) / (2 + 12 * rng.random() ** 3)
+            value += np.where(q < 1, -0.16 * (1 - q * q), 0) + 0.1 * np.exp(-(((q - 1.05) / 0.2) ** 2))
+        if hollow:
+            q = np.degrees(np.arccos(np.clip(u @ sunpoint_xyz(hollow[0], hollow[1]), -1, 1))) / hollow[2]
+            value += np.where(q < 1, -0.3 * np.cos(q * np.pi / 2) ** 2, 0) + 0.14 * np.exp(-(((q - 1.03) / 0.1) ** 2))
+        save(f"{name}.png", ramp(np.clip(value, 0, 1), stops), grey_steps(stops, 7), dither=6)
+
+    return build
+
+
 BODIES = {
     "mercury": mercury, "luna": luna, "mars": mars, "ceres": ceres, "venus": venus,
     "jupiter": jupiter, "io": io, "europa": europa, "ganymede": ganymede, "callisto": callisto,
@@ -1161,6 +1230,7 @@ BODIES = {
     "lick": lick, "cruithne": cruithne, "khonsu": khonsu, "arendrigaux": arend_rigaux, "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "charon": charon, "vesta": vesta, "eris": eris, "haumea": haumea, "makemake": makemake,
     **{name: shaped_body(name) for name in SHAPED}, **MEASURED,
     **{name: made_up_asteroid(name) for name in MADE_UP_ASTEROIDS},
+    **{name: lesser_dwarf(name) for name in LESSER_DWARFS},
 }
 
 if __name__ == "__main__":

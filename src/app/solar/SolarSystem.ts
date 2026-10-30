@@ -69,6 +69,27 @@ const ART_RADIUS: Record<string, number> = {
   "5731Zeus": 2,
   "7096Napier": 2,
   "514041Asteroid": 2,
+  // The dwarf planets drawn from maps of their own, too small to show as discs at a distance.
+  Gonggong: 2,
+  Quaoar: 2,
+  "208996KBO": 2,
+  "90482Orcus": 2,
+  Sedna: 2,
+  Salacia: 2,
+  "307261KBO": 2,
+  "55565KBO": 2,
+  "532037TNO": 2,
+  "174567Varda": 2,
+  "90568KBO": 2,
+  "145452KBO": 2,
+  "20000Varuna": 2,
+  "2010KZ39KBO": 2,
+  "55637KBO": 2,
+  "2018VG18TNO": 2,
+  Glkunllhomdima: 2,
+  "2014UZ224TNO": 2,
+  "523794TNO": 2,
+  "28978Ixion": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
@@ -129,7 +150,7 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "Phobos", "Deimos"].map((id) => [
     id,
     SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
@@ -182,7 +203,9 @@ const isSaturnSmallMoon = (def: SpaceBodyDef) => def.type === "asteroidalMoon" &
  * orbits, which cross the whole view.
  */
 const QUIET_ORBITS = new Set(["Pluto", "Eris", "Makemake", "Haumea"]);
-const quietOrbit = (def: SpaceBodyDef) => QUIET_ORBITS.has(def.id) || isSaturnSmallMoon(def);
+/** The dwarf planets other than the five best known, named only when focused, as the small bodies are. */
+const isLesserDwarf = (def: SpaceBodyDef) => def.type === "dwarf" && def.id !== "Ceres" && !QUIET_ORBITS.has(def.id);
+const quietOrbit = (def: SpaceBodyDef) => QUIET_ORBITS.has(def.id) || isSaturnSmallMoon(def) || isLesserDwarf(def);
 
 const ORBIT_COLORS: Record<string, { color: string; opacity: number }> = {
   planet: { color: "#3d74d6", opacity: 0.6 },
@@ -624,8 +647,8 @@ export class SolarSystem {
       }
       // Under the globe the Earth's disc shows only as the globe fades out, and isn't named.
       const underGlobe = this.following && b.def.id === "Earth";
-      // An asteroid or one of Saturn's small moons is named only when focused, as the small sprites are.
-      const quiet = b.def.type === "asteroid" || isSaturnSmallMoon(b.def);
+      // An asteroid, a lesser dwarf planet or one of Saturn's small moons is named only when focused, as the small sprites are.
+      const quiet = b.def.type === "asteroid" || isSaturnSmallMoon(b.def) || isLesserDwarf(b.def);
       const named = b.shown && !underGlobe && (focused || (!quiet && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS)));
       b.sprite.visible = b.shown && !(underGlobe && away < GLOBE_FADE_FROM * EARTH_RADIUS_AU);
       if (b.orbit) {
