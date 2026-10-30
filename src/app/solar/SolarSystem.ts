@@ -193,6 +193,16 @@ interface BodyView {
   comet: { sprite: THREE.Sprite; canvas: HTMLCanvasElement; texture: THREE.CanvasTexture; frame: string; dot: number } | null;
 }
 
+/**
+ * A screen position rounded to a whole pixel, steadily: the focused body sits at the screen's
+ * centre, which in a window an odd number of pixels across is a half pixel, and the camera
+ * following it each frame jitters its projection by a hair either side, so plain rounding would
+ * flip its label between two pixels every frame. Snapping to a thousandth first settles it.
+ */
+function steadyPixel(v: number): number {
+  return Math.round(Math.round(v * 1000) / 1000);
+}
+
 function pixelTexture(canvas: HTMLCanvasElement): THREE.CanvasTexture {
   const texture = new THREE.CanvasTexture(canvas);
   texture.magFilter = THREE.NearestFilter;
@@ -625,7 +635,7 @@ export class SolarSystem {
         const x = ((screen.x + 1) / 2) * this.container.clientWidth;
         // Below the disc; the Sun's, below the usual reach of its flames.
         const y = ((1 - screen.y) / 2) * height + ((b.def.type === "star" ? b.r * 1.4 : b.r) * pixel + 2);
-        b.label.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px) translateX(-50%)`;
+        b.label.style.transform = `translate(${steadyPixel(x)}px, ${steadyPixel(y)}px) translateX(-50%)`;
       }
     }
     if (this.selectedOrbit) this.selectedOrbit.line.position.copy(this.positions.get(this.selectedOrbit.def.parent!)!);
