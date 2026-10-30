@@ -1425,6 +1425,272 @@ MADE_UP_ASTEROIDS = {
     "cordelia": (2148, (25.0, 18.0, 18.0), 25.0, 0.18, 0, 44, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.77, True),
     # Prospero, about 50 km across; its proportions made up: dark and neutral, assumed.
     "prospero": (2154, (28.0, 22.0, 25.0), 25.0, 0.18, 0, 49, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.77, True),
+    # Okyrhoe, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as carbonaceous-stony (albedo 0.058).
+    "okyrhoe": (2160, (27.44, 21.56, 24.5), 24.5, 0.18, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.77, True),
+    # Setebos, about 47 km across; its proportions made up: dark and neutral, assumed.
+    "setebos": (2166, (26.32, 20.68, 23.5), 24.0, 0.18, 0, 48, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.77, True),
+    # Glaukos, about 48 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.049).
+    "glaukos": (2172, (26.683, 20.966, 23.825), 23.825, 0.18, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.77, True),
+    # Carme, about 47 km across; its proportions made up: dark, assumed.
+    "carme": (2178, (26.152, 20.548, 23.35), 23.35, 0.19, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.78, True),
+    # Sao, about 38 km across; its proportions made up: dark and neutral, assumed.
+    "sao": (2184, (21.28, 16.72, 19.0), 22.0, 0.19, 0, 41, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.78, True),
+    # Aethra, about 43 km across; its proportions made up: an M-type, metal-rich (albedo 0.2).
+    "aethra": (2190, (24.007, 18.863, 21.435), 21.435, 0.19, 0, 53, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.78, True),
+    # Laomedeia, about 40 km across; its proportions made up: dark and neutral, assumed.
+    "laomedeia": (2196, (22.4, 17.6, 20.0), 21.0, 0.19, 0, 49, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.78, True),
+    # Psamathe, about 38 km across; its proportions made up: dark and neutral, assumed.
+    "psamathe": (2202, (21.28, 16.72, 19.0), 20.0, 0.19, 0, 44, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.79, True),
+    # Siarnaq, about 39 km across; its proportions made up: dark and red, assumed.
+    "siarnaq": (2208, (22.008, 17.292, 19.65), 19.65, 0.19, 0, 47, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.79, True),
+    # Kiviuq, 38.42 × 17 × 7.64 km: dark and red, assumed.
+    "kiviuq": (2214, (19.21, 3.82, 8.5), 19.21, 0.19, 0, 40, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.79, True),
+    # Sinope, about 35 km across; its proportions made up: dark, assumed.
+    "sinope": (2220, (19.6, 15.4, 17.5), 19.0, 0.19, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.79, True),
+    # Hidalgo, about 38 km across; its proportions made up: a D-type, dark and reddish (albedo 0.06).
+    "hidalgo": (2226, (21.28, 16.72, 19.0), 19.0, 0.19, 0, 42, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.79, True),
+    # Brucia, size from Terra Invicta; its proportions made up: an S-type, bright (albedo 0.29).
+    "brucia": (2232, (20.882, 16.408, 18.645), 18.645, 0.19, 0, 48, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.79, True),
+    # Lysithea, about 42 km across; its proportions made up: dark, assumed.
+    "lysithea": (2238, (23.632, 18.568, 21.1), 18.0, 0.19, 0, 38, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.79, True),
+    # Ganymed, about 38 km across; its proportions made up: an S-type, bright (albedo 0.24).
+    "ganymed": (2244, (21.098, 16.577, 18.837), 17.14, 0.19, 0, 43, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.8, True),
+    # Pons-Brooks, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "ponsbrooks": (2250, (19.04, 14.96, 17.0), 17.0, 0.19, 0, 44, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.8, True),
+    # Albiorix, about 29 km across; its proportions made up: dark and red, assumed.
+    "albiorix": (2256, (16.016, 12.584, 14.3), 16.0, 0.2, 0, 47, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.8, True),
+    # Stephano, about 32 km across; its proportions made up: dark and neutral, assumed.
+    "stephano": (2262, (17.92, 14.08, 16.0), 16.0, 0.2, 0, 46, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.8, True),
+    # Ione, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "ione": (2268, (17.36, 13.64, 15.5), 15.5, 0.2, 0, 49, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.8, True),
+    # Latreus, about 31 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous.
+    "latreus": (2274, (17.36, 13.64, 15.5), 15.5, 0.2, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.8, True),
+    # Perdita, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "perdita": (2280, (16.8, 13.2, 15.0), 15.0, 0.2, 0, 46, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.8, True),
+    # Ananke, about 29 km across; its proportions made up: dark, assumed.
+    "ananke": (2286, (16.296, 12.804, 14.55), 14.55, 0.2, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.8, True),
+    # Lyyli, about 25 km across; its proportions made up: an X-type, very dark (albedo 0.023).
+    "lyyli": (2292, (14.09, 11.07, 12.58), 13.56, 0.2, 0, 42, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.81, True),
+    # Hela, size from Terra Invicta; its proportions made up: an S-type, bright.
+    "hela": (2298, (15.12, 11.88, 13.5), 13.5, 0.2, 0, 40, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.81, True),
+    # Swift-Tuttle, about 26 km across; its proportions made up: as black as a comet nucleus is.
+    "swifttuttle": (2304, (14.56, 11.44, 13.0), 13.0, 0.2, 0, 53, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.81, True),
+    # Mab, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "mab": (2310, (14.0, 11.0, 12.5), 12.5, 0.2, 0, 47, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.81, True),
+    # Ocllo, size from Terra Invicta; its proportions made up: an X-type, very dark (albedo 0.057).
+    "ocllo": (2316, (14.0, 11.0, 12.5), 12.5, 0.2, 0, 48, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.81, True),
+    # Taurinensis, about 23 km across; its proportions made up: an S-type, bright (albedo 0.18).
+    "taurinensis": (2322, (12.93, 10.16, 11.545), 11.545, 0.2, 0, 52, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.81, True),
+    # Paaliaq, about 25 km across; its proportions made up: dark and red, assumed.
+    "paaliaq": (2328, (14.0, 11.0, 12.5), 11.0, 0.2, 0, 36, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.82, True),
+    # Francisco, about 22 km across; its proportions made up: dark and neutral, assumed.
+    "francisco": (2334, (12.32, 9.68, 11.0), 11.0, 0.2, 0, 41, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Neujmin, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "neujmin": (2340, (11.984, 9.416, 10.7), 10.7, 0.2, 0, 42, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.82, True),
+    # Protho, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "protho": (2346, (11.76, 9.24, 10.5), 10.5, 0.2, 0, 43, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Adrastea, 20 × 16 × 14 km: dark and reddish, assumed.
+    "adrastea": (2352, (10.0, 7.0, 8.0), 10.0, 0.21, 0, 44, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.82, True),
+    # Margaret, about 20 km across; its proportions made up: dark and neutral, assumed.
+    "margaret": (2358, (11.2, 8.8, 10.0), 10.0, 0.21, 0, 45, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Ferdinand, about 21 km across; its proportions made up: dark and neutral, assumed.
+    "ferdinand": (2364, (11.76, 9.24, 10.5), 10.0, 0.21, 0, 41, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Ymir, about 19 km across; its proportions made up: dark, assumed.
+    "ymir": (2370, (10.64, 8.36, 9.5), 9.5, 0.21, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.82, True),
+    # Kerberos, 19 × 10 × 9 km: bright water ice.
+    "kerberos": (2376, (9.5, 4.5, 5.0), 9.5, 0.21, 0, 40, [(0, (132, 136, 140)), (0.5, (196, 200, 204)), (1, (240, 242, 244))], None, 0.82, True),
+    # Don Quixote, about 19 km across; its proportions made up: a D-type, dark and reddish (albedo 0.03).
+    "quixote": (2382, (10.64, 8.36, 9.5), 9.2, 0.21, 0, 47, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.82, True),
+    # Cupid, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "cupid": (2388, (10.08, 7.92, 9.0), 9.0, 0.21, 0, 45, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Trinculo, about 18 km across; its proportions made up: dark and neutral, assumed.
+    "trinculo": (2394, (10.08, 7.92, 9.0), 9.0, 0.21, 0, 50, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Hippocamp, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "hippocamp": (2400, (9.744, 7.656, 8.7), 8.7, 0.21, 0, 51, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.82, True),
+    # Erriapus, 16.3 × 10 × 6.34 km: dark and red, assumed.
+    "erriapus": (2406, (8.15, 3.17, 5.0), 8.15, 0.21, 0, 44, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.82, True),
+    # Leda (Jupiter's moon), about 22 km across; its proportions made up: dark, assumed.
+    "ledamoon": (2412, (12.04, 9.46, 10.75), 8.0, 0.21, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.82, True),
+    # Styx, about 16 km across; its proportions made up: bright water ice.
+    "styx": (2418, (8.96, 7.04, 8.0), 8.0, 0.21, 0, 48, [(0, (132, 136, 140)), (0.5, (196, 200, 204)), (1, (240, 242, 244))], None, 0.82, True),
+    # Tarvos, about 15 km across; its proportions made up: dark and red, assumed.
+    "tarvos": (2424, (8.4, 6.6, 7.5), 7.5, 0.21, 0, 53, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.83, True),
+    # Thomsen, about 14 km across; its proportions made up: an S-type, oddly dark (albedo 0.055).
+    "thomsen": (2430, (7.622, 5.988, 6.805), 6.8, 0.21, 0, 47, [(0, (46, 44, 40)), (0.5, (98, 92, 84)), (1, (154, 146, 134))], None, 0.83, True),
+    # Loneos, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "loneos": (2436, (7.616, 5.984, 6.8), 6.8, 0.21, 0, 54, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.83, True),
+    # Ijiraq, about 13 km across; its proportions made up: dark and red, assumed.
+    "ijiraq": (2442, (7.28, 5.72, 6.5), 6.5, 0.21, 0, 42, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.83, True),
+    # Napir, about 13 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.041).
+    "napir": (2448, (7.196, 5.654, 6.425), 6.425, 0.21, 0, 42, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.83, True),
+    # Siva, about 10 km across; its proportions made up: an S-type, bright (albedo 0.18).
+    "siva": (2454, (5.807, 4.563, 5.185), 6.065, 0.21, 0, 40, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.83, True),
+    # Levy, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "levy": (2460, (6.496, 5.104, 5.8), 5.8, 0.21, 0, 42, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.83, True),
+    # Hungaria, about 9 km across; its proportions made up: an E-type, very bright (albedo 0.73).
+    "hungaria": (2466, (5.003, 3.931, 4.467), 5.5, 0.21, 0, 52, [(0, (130, 130, 126)), (0.5, (196, 194, 188)), (1, (244, 242, 236))], None, 0.83, True),
+    # Saggar, about 11 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.069).
+    "saggar": (2472, (6.048, 4.752, 5.4), 5.4, 0.21, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.83, True),
+    # Gunn, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "gunn": (2478, (6.048, 4.752, 5.4), 5.4, 0.21, 0, 40, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.83, True),
+    # Jarvis, about 11 km across; its proportions made up: nothing measured of its colour; dark, as common carbonaceous (albedo 0.049).
+    "jarvis": (2484, (5.896, 4.632, 5.264), 5.264, 0.21, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.83, True),
+    # Ivar, 15 × 6 × 6 km: an S-type, bright (albedo 0.15).
+    "ivar": (2490, (7.5, 3.0, 3.0), 5.1, 0.21, 0, 35, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.83, True),
+    # Kowal, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "kowal": (2496, (5.712, 4.488, 5.1), 5.1, 0.21, 0, 38, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.83, True),
+    # Beatrice, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "beatrice": (2502, (5.6, 4.4, 5.0), 5.0, 0.21, 0, 36, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.83, True),
+    # Hero, size from Terra Invicta; its proportions made up: dark and neutral, assumed.
+    "hero": (2508, (5.6, 4.4, 5.0), 5.0, 0.21, 0, 52, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.83, True),
+    # Nancita, about 10 km across; its proportions made up: an S-type, bright (albedo 0.21).
+    "nancita": (2514, (5.396, 4.24, 4.818), 4.818, 0.21, 0, 47, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.83, True),
+    # Callirrhoe, about 10 km across; its proportions made up: dark, assumed.
+    "callirrhoe": (2520, (5.376, 4.224, 4.8), 4.8, 0.21, 0, 42, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.83, True),
+    # Kodaira, about 9 km across; its proportions made up: a B-type, dark and bluish (albedo 0.15).
+    "kodaira": (2526, (5.313, 4.174, 4.744), 4.744, 0.21, 0, 41, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.84, True),
+    # Furusho, about 9 km across; its proportions made up: nothing measured of its colour; metal-rich, as metallic-stony (albedo 0.37).
+    "furusho": (2532, (5.079, 3.991, 4.535), 4.535, 0.21, 0, 53, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.84, True),
+    # Erbisbuhl, about 9 km across; its proportions made up: an Sk-type, bright (albedo 0.31).
+    "erbisbuhl": (2538, (5.078, 3.99, 4.534), 4.534, 0.21, 0, 48, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Themisto, about 9 km across; its proportions made up: dark, assumed.
+    "themisto": (2544, (5.04, 3.96, 4.5), 4.5, 0.21, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Bulan, about 9 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.06).
+    "bulan": (2550, (5.033, 3.954, 4.494), 4.494, 0.21, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Avatea, about 9 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.05).
+    "avatea": (2556, (5.027, 3.95, 4.489), 4.489, 0.21, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Leetsungdao, about 9 km across; its proportions made up: a T-type, dark and reddish (albedo 0.13).
+    "leetsungdao": (2562, (4.957, 3.895, 4.426), 4.426, 0.21, 0, 36, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.84, True),
+    # Betulia, size from Terra Invicta; its proportions made up: a C-type, dark (albedo 0.08).
+    "betulia": (2568, (4.788, 3.762, 4.275), 4.275, 0.21, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Mokosh, about 8 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.039).
+    "mokosh": (2574, (4.547, 3.573, 4.06), 4.06, 0.21, 0, 44, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Skathi, about 8 km across; its proportions made up: dark, assumed.
+    "skathi": (2580, (4.48, 3.52, 4.0), 4.0, 0.21, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Hyrrokkin, about 8 km across; its proportions made up: dark, assumed.
+    "hyrrokkin": (2586, (4.48, 3.52, 4.0), 4.0, 0.21, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Thrymr, size from Terra Invicta; its proportions made up: dark, assumed.
+    "thrymr": (2592, (4.48, 3.52, 4.0), 4.0, 0.21, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Janesick, about 7 km across; its proportions made up: an S-type, bright (albedo 0.29).
+    "janesick": (2598, (4.103, 3.223, 3.663), 3.663, 0.21, 0, 51, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Praxidike, about 7 km across; its proportions made up: dark, assumed.
+    "praxidike": (2604, (3.92, 3.08, 3.5), 3.5, 0.21, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Tarqeq, about 6 km across; its proportions made up: dark and red, assumed.
+    "tarqeq": (2610, (3.36, 2.64, 3.0), 3.5, 0.21, 0, 45, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.84, True),
+    # Mundilfari, 11.78 × 7 × 5.86 km in truth, drawn in those proportions at 89% of that, which is all the relief format holds at Terra Invicta's radius: dark, assumed.
+    "mundilfari": (2616, (5.25, 2.612, 3.12), 3.5, 0.21, 0, 52, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Narvi, size from Terra Invicta; its proportions made up: dark, assumed.
+    "narvi": (2622, (3.92, 3.08, 3.5), 3.5, 0.21, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Suttungr, about 7 km across; its proportions made up: dark, assumed.
+    "suttungr": (2628, (3.92, 3.08, 3.5), 3.5, 0.21, 0, 38, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Bestla, 15.56 × 7 × 5.98 km in truth, drawn in those proportions at 67% of that, which is all the relief format holds at Terra Invicta's radius: dark, assumed.
+    "bestla": (2634, (5.25, 2.018, 2.362), 3.5, 0.21, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Thoth, about 7 km across; its proportions made up: an X-type, very dark.
+    "thoth": (2640, (3.92, 3.08, 3.5), 3.5, 0.21, 0, 41, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.84, True),
+    # Beckman, about 7 km across; its proportions made up: an S-type, bright (albedo 0.29).
+    "beckman": (2646, (3.902, 3.066, 3.484), 3.484, 0.21, 0, 39, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Kalyke, size from Terra Invicta; its proportions made up: dark, assumed.
+    "kalyke": (2652, (3.864, 3.036, 3.45), 3.45, 0.21, 0, 52, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Ayyur, about 7 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.081).
+    "ayyur": (2658, (3.745, 2.943, 3.344), 3.35, 0.22, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Kari, about 6 km across; its proportions made up: dark, assumed.
+    "kari": (2664, (3.36, 2.64, 3.0), 3.25, 0.22, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Machholz, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "machholz": (2670, (3.584, 2.816, 3.2), 3.2, 0.22, 0, 41, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.84, True),
+    # James, about 6 km across; its proportions made up: an Sa-type, bright (albedo 0.2).
+    "james": (2676, (3.566, 2.801, 3.183), 3.183, 0.22, 0, 46, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Cadmus, about 6 km across; its proportions made up: nothing measured of its colour; dark, as dry stony (albedo 0.046).
+    "cadmus": (2682, (3.539, 2.78, 3.159), 3.15, 0.22, 0, 42, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Lovas 2, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "lovas2": (2688, (3.472, 2.728, 3.1), 3.1, 0.22, 0, 47, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.84, True),
+    # Phaethon, about 6 km across; its proportions made up: an F-type, dark and bluish (albedo 0.11).
+    "phaethon": (2694, (3.5, 2.75, 3.125), 3.05, 0.22, 0, 39, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.84, True),
+    # Megaclite, size from Terra Invicta; its proportions made up: dark, assumed.
+    "megaclite": (2700, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Bebhionn, size from Terra Invicta; its proportions made up: dark, assumed.
+    "bebhionn": (2706, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Skoll, size from Terra Invicta; its proportions made up: dark, assumed.
+    "skoll": (2712, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Greip, size from Terra Invicta; its proportions made up: dark, assumed.
+    "greip": (2718, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 36, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Jarnsaxa, size from Terra Invicta; its proportions made up: dark, assumed.
+    "jarnsaxa": (2724, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Hati, size from Terra Invicta; its proportions made up: dark, assumed.
+    "hati": (2730, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Eggther, size from Terra Invicta; its proportions made up: dark, assumed.
+    "eggther": (2736, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Aegir, size from Terra Invicta; its proportions made up: dark, assumed.
+    "aegir": (2742, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 36, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Hefring, size from Terra Invicta; its proportions made up: dark, assumed.
+    "hefring": (2748, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 38, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Surtur, size from Terra Invicta; its proportions made up: dark, assumed.
+    "surtur": (2754, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Loge, size from Terra Invicta; its proportions made up: dark, assumed.
+    "loge": (2760, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 39, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Fornjot, size from Terra Invicta; its proportions made up: dark, assumed.
+    "fornjot": (2766, (3.36, 2.64, 3.0), 3.0, 0.22, 0, 37, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Hephaistos, about 6 km across; its proportions made up: an SG-type, bright (albedo 0.16).
+    "hephaistos": (2772, (3.192, 2.508, 2.85), 3.0, 0.22, 0, 48, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Stephengould, about 6 km across; its proportions made up: nothing measured of its colour; bright, as stony (albedo 0.13).
+    "stephengould": (2778, (3.219, 2.529, 2.874), 2.874, 0.22, 0, 46, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Changxi, about 6 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.037).
+    "changxi": (2784, (3.219, 2.529, 2.874), 2.874, 0.22, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Cuyo, about 6 km across; its proportions made up: an Sl-type, bright (albedo 0.2).
+    "cuyo": (2790, (3.192, 2.508, 2.85), 2.85, 0.22, 0, 52, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Asahina, about 6 km across; its proportions made up: an S-type, bright (albedo 0.29).
+    "asahina": (2796, (3.181, 2.5, 2.841), 2.841, 0.22, 0, 43, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Khalfu, about 6 km across; its proportions made up: nothing measured of its colour; bright, as stony (albedo 0.18).
+    "khalfu": (2802, (3.182, 2.501, 2.841), 2.841, 0.22, 0, 37, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.84, True),
+    # Bendis, about 6 km across; its proportions made up: an X-type, metal-rich (albedo 0.18).
+    "bendis": (2808, (3.136, 2.464, 2.8), 2.8, 0.22, 0, 45, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.84, True),
+    # Bergelmir, size from Terra Invicta; its proportions made up: dark, assumed.
+    "bergelmir": (2814, (3.08, 2.42, 2.75), 2.75, 0.22, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Coniraya, about 5 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.042).
+    "coniraya": (2820, (3.024, 2.376, 2.7), 2.705, 0.22, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Iocaste, size from Terra Invicta; its proportions made up: dark, assumed.
+    "iocaste": (2826, (2.912, 2.288, 2.6), 2.6, 0.22, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Pons-Winnecke, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "ponswinnecke": (2832, (2.912, 2.288, 2.6), 2.6, 0.22, 0, 36, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.84, True),
+    # Mayari, about 5 km across; its proportions made up: nothing measured of its colour; dark, as dry carbonaceous (albedo 0.079).
+    "mayari": (2838, (2.838, 2.229, 2.534), 2.534, 0.22, 0, 43, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Taygete, size from Terra Invicta; its proportions made up: dark, assumed.
+    "taygete": (2844, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 42, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Pallene, size from Terra Invicta; its proportions made up: bright water ice.
+    "pallene": (2850, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 49, [(0, (132, 136, 140)), (0.5, (196, 200, 204)), (1, (240, 242, 244))], None, 0.84, True),
+    # Akna, size from Terra Invicta; its proportions made up: dark, assumed.
+    "akna": (2856, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Pinga, size from Terra Invicta; its proportions made up: dark, assumed.
+    "pinga": (2862, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 39, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Ulfrun, size from Terra Invicta; its proportions made up: dark, assumed.
+    "ulfrun": (2868, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 39, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Vali, size from Terra Invicta; its proportions made up: dark, assumed.
+    "vali": (2874, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 36, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Kolga, size from Terra Invicta; its proportions made up: dark, assumed.
+    "kolga": (2880, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Fenja, size from Terra Invicta; its proportions made up: dark, assumed.
+    "fenja": (2886, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 38, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Farbauti, about 4 km across; its proportions made up: dark, assumed.
+    "farbauti": (2892, (2.24, 1.76, 2.0), 2.5, 0.22, 0, 39, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Thiazi, size from Terra Invicta; its proportions made up: dark, assumed.
+    "thiazi": (2898, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 42, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Alvaldi, size from Terra Invicta; its proportions made up: dark, assumed.
+    "alvaldi": (2904, (2.8, 2.2, 2.5), 2.5, 0.22, 0, 37, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Encke, size from Terra Invicta; its proportions made up: as black as a comet nucleus is.
+    "encke": (2910, (2.688, 2.112, 2.4), 2.4, 0.22, 0, 49, [(0, (18, 17, 16)), (0.5, (50, 47, 45)), (1, (96, 92, 88))], None, 0.84, True),
+    # Amarok, size from Terra Invicta; its proportions made up: dark, assumed.
+    "amarok": (2916, (2.24, 1.76, 2.0), 2.0, 0.22, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Gridr, size from Terra Invicta; its proportions made up: dark, assumed.
+    "gridr": (2922, (2.24, 1.76, 2.0), 2.0, 0.22, 0, 36, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Skrymir, size from Terra Invicta; its proportions made up: dark, assumed.
+    "skrymir": (2928, (2.24, 1.76, 2.0), 2.0, 0.22, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Grendel, size from Terra Invicta; its proportions made up: dark, assumed.
+    "grendel": (2934, (2.24, 1.76, 2.0), 2.0, 0.22, 0, 44, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Gunnlod, size from Terra Invicta; its proportions made up: dark, assumed.
+    "gunnlod": (2940, (2.24, 1.76, 2.0), 2.0, 0.22, 0, 49, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.84, True),
+    # Beli, about 4 km across; its proportions made up: dark, assumed.
+    "beli": (2946, (2.24, 1.76, 2.0), 1.5, 0.22, 0, 45, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.85, True),
+    # Menja, size from Terra Invicta; its proportions made up: dark, assumed.
+    "menja": (2952, (1.68, 1.32, 1.5), 1.5, 0.22, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.85, True),
 }
 
 
