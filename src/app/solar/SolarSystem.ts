@@ -150,6 +150,46 @@ const ART_RADIUS: Record<string, number> = {
   "48Doris": 2,
   "216Kleopatra": 2,
   "523727Centaur": 2,
+  "121Hermione": 2,
+  "31Euphrosyne": 2,
+  "88Thisbe": 2,
+  "324Bamberga": 2,
+  "145453KBO": 2,
+  "309239Centaur": 2,
+  "7Iris": 2,
+  "41Daphne": 2,
+  "22Kalliope": 2,
+  "451Patientia": 2,
+  "45Eugenia": 2,
+  "95626Centaur": 2,
+  "562274Centaur": 2,
+  "19Fortuna": 2,
+  "94Aurora": 2,
+  "532Herculina": 2,
+  "9Metis": 2,
+  Leleakuhonua: 2,
+  "39Laetitia": 2,
+  "2060Chiron": 2,
+  "13Egeria": 2,
+  "375Ursula": 2,
+  "130Elektra": 2,
+  "53311Deucalion": 2,
+  "423Diotima": 2,
+  "54598Bienor": 2,
+  Himalia: 2,
+  "6Hebe": 2,
+  Galatea: 2,
+  "702Alauda": 2,
+  "316179Centaur": 2,
+  "2013KY18Centaur": 2,
+  "334Chicago": 2,
+  "24Themis": 2,
+  "447178Centaur": 2,
+  "259Aletheia": 2,
+  "5145Pholus": 2,
+  "372Palma": 2,
+  "128Nemesis": 2,
+  "154Bertha": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
@@ -228,6 +268,46 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
   "48Doris": 84,
   "216Kleopatra": 84,
   "523727Centaur": 84,
+  "121Hermione": 84,
+  "31Euphrosyne": 84,
+  "88Thisbe": 84,
+  "324Bamberga": 84,
+  "145453KBO": 84,
+  "309239Centaur": 84,
+  "7Iris": 84,
+  "41Daphne": 84,
+  "22Kalliope": 84,
+  "451Patientia": 84,
+  "45Eugenia": 84,
+  "95626Centaur": 84,
+  "562274Centaur": 84,
+  "19Fortuna": 84,
+  "94Aurora": 84,
+  "532Herculina": 84,
+  "9Metis": 84,
+  Leleakuhonua: 84,
+  "39Laetitia": 84,
+  "2060Chiron": 84,
+  "13Egeria": 84,
+  "375Ursula": 84,
+  "130Elektra": 84,
+  "53311Deucalion": 84,
+  "423Diotima": 84,
+  "54598Bienor": 84,
+  Himalia: 84,
+  "6Hebe": 84,
+  Galatea: 84,
+  "702Alauda": 84,
+  "316179Centaur": 84,
+  "2013KY18Centaur": 84,
+  "334Chicago": 84,
+  "24Themis": 84,
+  "447178Centaur": 84,
+  "259Aletheia": 84,
+  "5145Pholus": 84,
+  "372Palma": 84,
+  "128Nemesis": 84,
+  "154Bertha": 84,
 };
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
@@ -235,7 +315,7 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "84922KBO", "278361KBO", "2014WP50KBO", "19521Chaos", "512381TNO", "2014YA50KBO", "2010FX86KBO", "78799KBO", "455502KBO", "612533KBO", "2017OF69KBO", "470308KBO", "470443KBO", "559182KBO", "523645KBO", "523750KBO", "120348KBO", "523681KBO", "202421KBO", "482824KBO", "440030KBO", "472271KBO", "499514KBO", "35671KBO", "119951KBO", "556068KBO", "2012VP113TNO", "84719KBO", "578993KBO", "471288KBO", "469306KBO", "38628Huya", "469372KBO", "175113KBO", "144897KBO", "10Hygiea", "624Hektor", "87Sylvia", "52Europa", "2015QW23KBO", "556416KBO", "15Eunomia", "511Davida", "704Interamnia", "107Camilla", "Nereid", "15874TNO", "10199Chariklo", "2015AH281Centaur", "15789KBO", "523643Centaur", "3Juno", "Hiʻiaka", "65Cybele", "1437Diomedes", "16Psyche", "523695Centaur", "48Doris", "216Kleopatra", "523727Centaur", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "84922KBO", "278361KBO", "2014WP50KBO", "19521Chaos", "512381TNO", "2014YA50KBO", "2010FX86KBO", "78799KBO", "455502KBO", "612533KBO", "2017OF69KBO", "470308KBO", "470443KBO", "559182KBO", "523645KBO", "523750KBO", "120348KBO", "523681KBO", "202421KBO", "482824KBO", "440030KBO", "472271KBO", "499514KBO", "35671KBO", "119951KBO", "556068KBO", "2012VP113TNO", "84719KBO", "578993KBO", "471288KBO", "469306KBO", "38628Huya", "469372KBO", "175113KBO", "144897KBO", "10Hygiea", "624Hektor", "87Sylvia", "52Europa", "2015QW23KBO", "556416KBO", "15Eunomia", "511Davida", "704Interamnia", "107Camilla", "Nereid", "15874TNO", "10199Chariklo", "2015AH281Centaur", "15789KBO", "523643Centaur", "3Juno", "Hiʻiaka", "65Cybele", "1437Diomedes", "16Psyche", "523695Centaur", "48Doris", "216Kleopatra", "523727Centaur", "121Hermione", "31Euphrosyne", "88Thisbe", "324Bamberga", "145453KBO", "309239Centaur", "7Iris", "41Daphne", "22Kalliope", "451Patientia", "45Eugenia", "95626Centaur", "562274Centaur", "19Fortuna", "94Aurora", "532Herculina", "9Metis", "Leleakuhonua", "39Laetitia", "2060Chiron", "13Egeria", "375Ursula", "130Elektra", "53311Deucalion", "423Diotima", "54598Bienor", "Himalia", "6Hebe", "Galatea", "702Alauda", "316179Centaur", "2013KY18Centaur", "334Chicago", "24Themis", "447178Centaur", "259Aletheia", "5145Pholus", "372Palma", "128Nemesis", "154Bertha", "Phobos", "Deimos"].map((id) => [
     id,
     SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
@@ -279,12 +359,13 @@ function kind(def: SpaceBodyDef): string {
   return def.type === "asteroidalMoon" && hasMap(def.id) ? "moon" : def.type;
 }
 
-/** Saturn's small (asteroidal) moons, Nereid and Hiʻiaka, named only when focused, as the small bodies are. */
-const isQuietMoon = (def: SpaceBodyDef) => def.type === "asteroidalMoon" && (def.parent === "Saturn" || def.id === "Nereid" || def.id === "Hiʻiaka");
+/** Saturn's small (asteroidal) moons, and these others, named only when focused, as the small bodies are. */
+const QUIET_MOONS = new Set(["Nereid", "Hiʻiaka", "Himalia", "Galatea"]);
+const isQuietMoon = (def: SpaceBodyDef) => def.type === "asteroidalMoon" && (def.parent === "Saturn" || QUIET_MOONS.has(def.id));
 
 /**
  * Bodies whose orbit line isn't drawn all the time, only while they are selected (as a small
- * body's): Saturn's many small moons, which crowd its system, Nereid and Hiʻiaka, and the far dwarf planets' long
+ * body's): Saturn's many small moons, which crowd its system, the other quiet moons, and the far dwarf planets' long
  * orbits, which cross the whole view.
  */
 const QUIET_ORBITS = new Set(["Pluto", "Eris", "Makemake", "Haumea"]);

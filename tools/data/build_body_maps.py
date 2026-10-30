@@ -1025,6 +1025,86 @@ MADE_UP_ASTEROIDS = {
     "kleopatra": (937, (133.5, 24, 30.5), 138.0, 0.08, 0.45, 25, [(0, (64, 62, 60)), (0.5, (136, 132, 126)), (1, (200, 196, 188))], None, 0.5, True),
     # Eurytion (2014 NW65): nothing measured; shape made up, dark, as wet carbonaceous.
     "eurytion": (941, (148, 118, 132), 137.5, 0.2, 0, 30, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.9, True),
+    # Hermione, 268 × 186 × 183 km: a C-type, dark (albedo 0.05), two-lobed like a snowman (Descamps et al. 2009).
+    "hermione": (947, (134.1, 91.3, 93.1), 134.0, 0.08, 0.2, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.55, True),
+    # Euphrosyne, 286 × 274 × 247 km: a C-type, dark (albedo 0.05), nearly round.
+    "euphrosyne": (953, (143.0, 123.5, 137.0), 127.5, 0.05, 0, 65, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.4, True),
+    # Thisbe, 241 × 221 × 195 km: a B-type, dark and bluish (albedo 0.06).
+    "thisbe": (959, (120.5, 97.5, 110.5), 127.5, 0.06, 0, 60, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.5, True),
+    # Bamberga, about 227 km across: dark (albedo 0.06), turning slowly; its proportions made up.
+    "bamberga": (965, (127.12, 99.88, 113.5), 127.5, 0.07, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.55, True),
+    # Viracocha (2005 RR43), about 300 km: of Haumea's family, bright water ice (albedo 0.44); its proportions made up.
+    "viracocha": (971, (165.0, 135.0, 150.0), 126.0, 0.12, 0, 30, [(0, (120, 124, 128)), (0.5, (180, 184, 188)), (1, (232, 234, 236))], None, 0.6, True),
+    # Ripheus (2007 RW10), about 247 km: a water-ice centaur, albedo 0.08; shape made up.
+    "ripheus": (977, (138.32, 108.68, 123.5), 123.5, 0.14, 0, 40, [(0, (46, 44, 42)), (0.5, (98, 94, 90)), (1, (154, 150, 144))], None, 0.7, True),
+    # Iris, 260 × 225 × 150 km: an S-type, bright (albedo 0.28).
+    "iris": (983, (130.0, 75.0, 112.5), 120.0, 0.08, 0, 55, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.55, True),
+    # Daphne, 235 × 183 × 153 km: a C-type, dark (albedo 0.06).
+    "daphne": (989, (117.5, 76.5, 91.5), 119.5, 0.08, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.55, True),
+    # Kalliope, 235 × 144 × 124 km: an M-type, metal-rich (albedo 0.17).
+    "kalliope": (995, (117.5, 62.0, 72.0), 117.5, 0.08, 0, 50, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.6, True),
+    # Patientia, about 254 km across: a dark C-type (albedo 0.08); its proportions made up.
+    "patientia": (1001, (142.24, 111.76, 127.0), 117.21, 0.05, 0, 60, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.45, True),
+    # Eugenia, 232 × 193 × 161 km: an F-type, dark (albedo 0.04).
+    "eugenia": (1007, (116.0, 80.5, 96.5), 116.0, 0.08, 0, 55, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 120, 112))], None, 0.55, True),
+    # Demeleon (2002 GZ32), 366 × 306 × 120 km: a dark, flattened centaur (albedo 0.04).
+    "demeleon": (1013, (183.0, 60.0, 153.0), 115.25, 0.1, 0, 40, [(0, (40, 28, 24)), (0.5, (84, 62, 54)), (1, (136, 110, 98))], None, 0.6, True),
+    # Hippasus (2015 XW379): nothing measured; shape made up, dark, as carbonaceous.
+    "hippasus": (1019, (125.0, 90.0, 105.0), 113.0, 0.16, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.8, True),
+    # Fortuna, 242 × 203 × 192 km: a G-type, dark (albedo 0.04–0.06).
+    "fortuna": (1025, (121.0, 96.0, 101.5), 112.5, 0.06, 0, 60, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 120, 112))], None, 0.5, True),
+    # Aurora, 225 × 173 km: a CP-type, very dark (albedo 0.04).
+    "aurora": (1031, (112.5, 86.5, 86.5), 112.5, 0.07, 0, 55, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.55, True),
+    # Herculina, about 191 km across: an S-type, bright (albedo 0.29); its proportions made up.
+    "herculina": (1037, (106.96, 84.04, 95.5), 112.5, 0.07, 0, 55, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.55, True),
+    # Metis, 218 × 176 × 133 km: an S/K-type (albedo 0.12–0.18).
+    "metis": (1043, (109.0, 66.5, 88.0), 111.0, 0.08, 0, 55, [(0, (54, 48, 42)), (0.5, (116, 104, 90)), (1, (176, 162, 144))], None, 0.55, True),
+    # Leleākūhonua, about 220 km: albedo 0.21, tone and shape made up; it never comes nearer than 65 AU.
+    "leleakuhonua": (1049, (123.2, 96.8, 110.0), 110.0, 0.14, 0, 20, [(0, (74, 54, 46)), (0.5, (140, 108, 92)), (1, (194, 164, 146))], None, 0.7, True),
+    # Laetitia, 219 × 142 km: an S-type, bright (albedo 0.27–0.29).
+    "laetitia": (1055, (109.5, 71.0, 71.0), 109.5, 0.08, 0, 55, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.55, True),
+    # Chiron, 252 × 218 × 136 km: a neutral grey centaur (albedo 0.15), at times active like a comet; its possible rings left out, being still in doubt.
+    "chiron": (1061, (126.0, 68.0, 109.0), 109.0, 0.1, 0, 25, [(0, (46, 44, 42)), (0.5, (98, 94, 90)), (1, (154, 150, 144))], None, 0.6, True),
+    # Egeria, 238 × 199 × 182 km: a G-type, dark (albedo 0.05–0.09).
+    "egeria": (1067, (119.0, 91.0, 99.5), 108.5, 0.06, 0, 60, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 120, 112))], None, 0.5, True),
+    # Ursula, about 205 km across: a very dark C-type (albedo 0.04–0.05); its proportions made up.
+    "ursula": (1073, (114.8, 90.2, 102.5), 108.05, 0.07, 0, 55, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.55, True),
+    # Elektra, 262 × 205 × 164 km: a G-type, dark (albedo 0.08).
+    "elektra": (1079, (131.0, 82.0, 102.5), 107.5, 0.08, 0, 55, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 120, 112))], None, 0.55, True),
+    # Deucalion, about 130–210 km: a cold classical; nothing measured but its size; shape and tone made up.
+    "deucalion": (1085, (95.2, 74.8, 85.0), 105.5, 0.16, 0, 30, [(0, (52, 44, 40)), (0.5, (106, 92, 84)), (1, (160, 144, 134))], None, 0.8, True),
+    # Diotima, about 176 km across: a C-type, dark (albedo 0.07); its proportions made up.
+    "diotima": (1091, (98.56, 77.44, 88.0), 104.4, 0.08, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.55, True),
+    # Bienor, 254 × 110 × 90 km: a long centaur, dark (albedo 0.07).
+    "bienor": (1097, (127.0, 45.0, 55.0), 103.5, 0.1, 0, 30, [(0, (46, 44, 42)), (0.5, (98, 94, 90)), (1, (154, 150, 144))], None, 0.7, True),
+    # Himalia, 205 × 141 km as projected at an occultation: Jupiter's largest irregular moon, dark (albedo 0.05); its third axis made up. It turns freely.
+    "himalia": (1103, (102.5, 62.5, 70.5), 102.8, 0.08, 0, 45, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Hebe, 220 × 205 × 166 km: an S-type, bright (albedo 0.27).
+    "hebe": (1109, (110.0, 83.0, 102.5), 102.5, 0.06, 0, 55, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.5, True),
+    # Galatea, 204 × 184 × 144 km: one of Neptune's inner moons, dark (albedo 0.08), facing Neptune.
+    "galatea": (1115, (102.0, 72.0, 92.0), 102.0, 0.1, 0, 45, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.7, True),
+    # Alauda, about 190 km across: a B-type, dark (albedo 0.06); its proportions made up.
+    "alauda": (1121, (106.4, 83.6, 95.0), 101.0, 0.07, 0, 55, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.55, True),
+    # Sanape (2010 EN65), about 176 km at an assumed albedo: nothing else measured; shape made up, dark, as wet carbonaceous.
+    "sanape": (1127, (98.56, 77.44, 88.0), 100.0, 0.16, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.8, True),
+    # Ephesos (2013 KY18): nothing measured; shape made up, dark, as carbonaceous-stony.
+    "ephesos": (1133, (110.0, 80.0, 95.0), 100.0, 0.17, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.85, True),
+    # Chicago, about 199 km across: a Hilda, very dark (albedo 0.04); its proportions made up.
+    "chicago": (1139, (111.44, 87.56, 99.5), 99.385, 0.07, 0, 55, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.55, True),
+    # Themis, 232 × 220 × 176 km: a B/C-type, dark (albedo 0.07), with water frost found on it.
+    "themis": (1145, (116.0, 88.0, 110.0), 99.0, 0.06, 0, 55, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.5, True),
+    # Agrius (2005 RO43): nothing measured; shape made up, dark, as wet carbonaceous.
+    "agrius": (1151, (105.0, 75.0, 90.0), 97.0, 0.18, 0, 30, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.85, True),
+    # Aletheia, about 174 km across: a CP-type, very dark (albedo 0.04); its proportions made up.
+    "aletheia": (1157, (97.44, 76.56, 87.0), 95.025, 0.08, 0, 50, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.6, True),
+    # Pholus, about 99 km across (Terra Invicta's radius is near its older diameter): among the reddest bodies known; its proportions made up.
+    "pholus": (1163, (55.44, 43.56, 49.5), 95.0, 0.16, 0, 25, [(0, (70, 28, 20)), (0.5, (132, 66, 46)), (1, (190, 118, 90))], None, 0.8, True),
+    # Palma, about 174 km across: a B-type, dark (albedo 0.06); its proportions made up.
+    "palma": (1169, (97.44, 76.56, 87.0), 94.31, 0.08, 0, 50, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.6, True),
+    # Nemesis, about 163 km across: a C-type, dark (albedo 0.07), turning very slowly; its proportions made up.
+    "nemesis": (1175, (91.28, 71.72, 81.5), 94.08, 0.08, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
+    # Bertha, about 187 km across: a C-type, dark (albedo 0.05), turning slowly; its proportions made up.
+    "bertha": (1181, (104.72, 82.28, 93.5), 92.465, 0.08, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.6, True),
 }
 
 
