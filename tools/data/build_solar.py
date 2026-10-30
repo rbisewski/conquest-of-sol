@@ -15,6 +15,12 @@ A body's composition is Terra Invicta's "Type": the mining profile most of its h
 (TIHabSiteTemplate; ties go to the first listed), by its display name in
 Localization/en/TIMiningProfileTemplate.en beside Templates/. Bodies without sites have none.
 
+Moons' orbits are JPL's where it lists them (jpl_satellites.json, from build_satellites.py), as
+the game's are measured from a mix of planes; every orbit here is measured from the ecliptic, so
+a moon's plane tilts with its planet (see moon_orbit). A moon JPL doesn't list keeps the game's
+elements; if it is near its planet and nearly in the equator's plane, they are taken to be
+measured from the equator.
+
 Orbits are Keplerian elements at an epoch: semi-major axis (in AU, converted from km for
 moons), eccentricity, inclination, longitude of the ascending node, argument of periapsis and
 mean anomaly. Where the game gives the longitude of periapsis and the mean longitude instead
@@ -22,7 +28,9 @@ mean anomaly. Where the game gives the longitude of periapsis and the mean longi
 """
 
 import collections
+import datetime
 import json
+import math
 import os
 import sys
 
@@ -41,6 +49,59 @@ TYPES = {
 
 # Hypothetical, not a real body.
 LEFT_OUT = {"Planet9"}
+
+OBLIQUITY_DEG = 23.4392911
+# The poles the planets spin about (IAU, J2000), the way their moons go round: the IAU's own "north"
+# for Uranus is the opposite end, as it turns backwards.
+SPIN_POLES = {
+    "Mars": (317.681, 52.887),
+    "Jupiter": (268.057, 64.495),
+    "Saturn": (40.589, 83.537),
+    "Uranus": (77.311, 15.175),
+    "Neptune": (299.36, 43.46),
+    "Pluto": (132.993, -6.163),
+}
+# Moons whose names differ between the game and JPL (whose table misspells Megaclite).
+JPL_NAMES = {"Luna": "Moon", "Megaclite": "Magaclite"}
+# A moon JPL doesn't list counts as equatorial nearer than this and at less than this inclination.
+EQUATORIAL_KM = 1e6
+EQUATORIAL_DEG = 10
+
+
+def julian_year(date):
+    """A JPL epoch such as 2020-01-01.5, as a Julian year (2000.0 = J2000)."""
+    day, _, fraction = date.partition(".")
+    days = (datetime.date.fromisoformat(day) - datetime.date(2000, 1, 1)).days + float("0." + (fraction or "0")) - 0.5
+    return round(2000 + days / 365.25, 6)
+
+
+def moon_orbit(i, node, peri, pole):
+    """
+    Turns (i, node, argument of periapsis) in degrees, measured from the plane square to a pole
+    (right ascension, declination) with the node counted from where that plane crosses the
+    celestial equator going north, into the same measured from the ecliptic.
+    """
+    ra, dec = math.radians(pole[0]), math.radians(pole[1])
+    z = (math.cos(dec) * math.cos(ra), math.cos(dec) * math.sin(ra), math.sin(dec))
+    x = (-math.sin(ra), math.cos(ra), 0.0)
+    y = (z[1] * x[2] - z[2] * x[1], z[2] * x[0] - z[0] * x[2], z[0] * x[1] - z[1] * x[0])
+    ci, si, cn, sn, cw, sw = (f(math.radians(v)) for v, f in ((i, math.cos), (i, math.sin), (node, math.cos), (node, math.sin), (peri, math.cos), (peri, math.sin)))
+    # Towards periapsis, and the orbit's pole, in that plane's axes.
+    local_p = (cn * cw - sn * sw * ci, sn * cw + cn * sw * ci, sw * si)
+    local_h = (sn * si, -cn * si, ci)
+    ce, se = math.cos(math.radians(OBLIQUITY_DEG)), math.sin(math.radians(OBLIQUITY_DEG))
+
+    def ecliptic(v):
+        c = [v[0] * x[k] + v[1] * y[k] + v[2] * z[k] for k in range(3)]
+        return c[0], c[1] * ce + c[2] * se, -c[1] * se + c[2] * ce
+
+    p, h = ecliptic(local_p), ecliptic(local_h)
+    new_i = math.degrees(math.acos(max(-1, min(1, h[2]))))
+    new_node = math.atan2(h[0], -h[1])
+    n = (math.cos(new_node), math.sin(new_node), 0.0)
+    across = (h[1] * n[2] - h[2] * n[1], h[2] * n[0] - h[0] * n[2], h[0] * n[1] - h[1] * n[0])
+    new_peri = math.atan2(sum(p[k] * across[k] for k in range(3)), sum(p[k] * n[k] for k in range(3)))
+    return new_i, math.degrees(new_node) % 360, math.degrees(new_peri) % 360
 
 
 def radius_km(body):
@@ -97,6 +158,9 @@ def main(templates, out_dir):
             body.update({k: v for k, v in fix.items() if not k.startswith("_") and k != "epochJD"})
             if "epochJD" in fix:
                 body["epoch_floatJYears"] = round(2000 + (fix["epochJD"] - J2000_JD) / 365.25, 6)
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "jpl_satellites.json"), encoding="utf-8") as f:
+        # By name, those JPL has no name for by their provisional designations without the underscores.
+        satellites = {(m["planet"], m["name"].replace("_", "")): m for m in json.load(f)["moons"]}
     composition = compositions(templates)
     out = []
     for body in bodies:
@@ -118,6 +182,26 @@ def main(templates, out_dir):
             if orbit is None:
                 continue
             a, e, i, node, peri, mean, epoch = orbit
+            local_i = None
+            if kind in ("moon", "asteroidalMoon"):
+                parent, name = body["barycenterName"], entry["name"]
+                jpl = satellites.get((parent, JPL_NAMES.get(name, name))) or satellites.get((parent, body["dataName"]))
+                if jpl and abs(jpl["a_km"] / AU_KM - a) / a > 0.1:
+                    print(f"{name}: JPL's orbit is too unlike the game's to be the same moon; left as it is")
+                    jpl = None
+                if jpl:
+                    a, e, i, node, peri, mean = jpl["a_km"] / AU_KM, jpl["e"], jpl["i"], jpl["node"], jpl["peri"], jpl["meanAnomaly"]
+                    epoch = julian_year(jpl["epoch"])
+                    frame = jpl["frame"]
+                    pole = (jpl["poleRa"], jpl["poleDec"]) if frame == "Laplace" else SPIN_POLES.get(parent)
+                else:
+                    frame = "equatorial" if parent in SPIN_POLES and a * AU_KM < EQUATORIAL_KM and i < EQUATORIAL_DEG else "ecliptic"
+                    pole = SPIN_POLES.get(parent)
+                    print(f"{name}: not in JPL's table; the game's elements, taken as {frame}")
+                if frame != "ecliptic":
+                    local_i = i
+                    i, node, peri = moon_orbit(i, node, peri, pole)
+                    i = round(i, 6)
             entry["orbit"] = {
                 "a": round(a, 10),
                 "e": e,
@@ -127,6 +211,8 @@ def main(templates, out_dir):
                 "meanAnomaly": round(mean, 6),
                 "epoch": epoch,
             }
+            if local_i is not None:
+                entry["orbit"]["localI"] = local_i
         out.append(entry)
     # Parents before their moons, so a body's parent is always known when it is placed.
     order = {"star": 0, "planet": 1, "dwarf": 2, "moon": 3, "asteroidalMoon": 4, "asteroid": 5, "comet": 6}

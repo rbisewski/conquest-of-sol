@@ -167,7 +167,7 @@
       {/if}
       {#if body.orbit}
         <dt>Eccentricity</dt><dd>{number(body.orbit.e, 3)}</dd>
-        <dt>Inclination</dt><dd>{number(body.orbit.i, 1)}°</dd>
+        <dt>Inclination</dt><dd>{number(body.orbit.localI ?? body.orbit.i, 1)}°</dd>
       {/if}
       {#if fromEarth !== null}
         <dt>From Earth now</dt><dd>{fromEarth < 0.05 ? `${number(fromEarth * AU_KM)} km` : `${number(fromEarth, 2)} AU`} <span class="muted">· light takes {fromEarth * 499 < 120 ? `${number(fromEarth * 499, 1)} s` : `${number((fromEarth * 499) / 60, 1)} min`}</span></dd>

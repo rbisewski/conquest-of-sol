@@ -743,13 +743,15 @@ export interface OrbitDef {
   /** Semi-major axis, AU. */
   a: number;
   e: number;
-  /** Inclination, ascending node, argument of periapsis and mean anomaly at the epoch, degrees. */
+  /** Inclination, ascending node, argument of periapsis and mean anomaly at the epoch, degrees; all from the ecliptic. */
   i: number;
   node: number;
   peri: number;
   meanAnomaly: number;
   /** Julian year of the elements (2000 = J2000). */
   epoch: number;
+  /** For a moon going round its planet's equator: its inclination to that, the figure usually quoted. */
+  localI?: number;
 }
 
 /** A body of the solar system (src/content/solarSystem.json, from tools/data/build_solar.py). */
