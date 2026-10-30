@@ -619,12 +619,13 @@ export class SolarSystem {
       screen.copy(at).project(this.camera);
       const onScreen = named && screen.z < 1 && Math.abs(screen.x) < 1.1 && Math.abs(screen.y) < 1.1;
       b.label.style.display = onScreen ? "" : "none";
+      // Off screen too, so a label doesn't keep the highlight of a body no longer focused.
+      b.label.classList.toggle("focused", focused);
       if (onScreen) {
         const x = ((screen.x + 1) / 2) * this.container.clientWidth;
         // Below the disc; the Sun's, below the usual reach of its flames.
         const y = ((1 - screen.y) / 2) * height + ((b.def.type === "star" ? b.r * 1.4 : b.r) * pixel + 2);
         b.label.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px) translateX(-50%)`;
-        b.label.classList.toggle("focused", focused);
       }
     }
     if (this.selectedOrbit) this.selectedOrbit.line.position.copy(this.positions.get(this.selectedOrbit.def.parent!)!);
