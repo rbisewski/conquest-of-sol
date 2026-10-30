@@ -1265,6 +1265,166 @@ MADE_UP_ASTEROIDS = {
     "johanna": (1668, (68.32, 53.68, 61.0), 61.0, 0.13, 0, 56, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.66, True),
     # Bettina, about 121 km across; its proportions made up: an M-type, metal-rich (albedo 0.11).
     "bettina": (1674, (67.76, 53.24, 60.5), 60.498, 0.13, 0, 56, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.66, True),
+    # Bellona, about 121 km across; its proportions made up: an S-type, bright (albedo 0.18).
+    "bellona": (1680, (67.7, 53.2, 60.45), 60.0, 0.13, 0, 40, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.66, True),
+    # Antigone, about 113 km across; its proportions made up: an M-type, metal-rich (albedo 0.15).
+    "antigone": (1686, (63.28, 49.72, 56.5), 59.72, 0.13, 0, 50, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.66, True),
+    # Paris, 165 × 85 × 85 km: a T-type, dark and reddish (albedo 0.055).
+    "paris": (1692, (82.35, 42.4, 42.4), 59.395, 0.13, 0, 55, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.66, True),
+    # Deiphobus, about 118 km across; its proportions made up: a D-type, dark and reddish (albedo 0.06).
+    "deiphobus": (1698, (66.2, 52.02, 59.11), 59.11, 0.13, 0, 56, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.66, True),
+    # Rhaecus, about 118 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.046).
+    "rhaecus": (1704, (66.08, 51.92, 59.0), 59.0, 0.13, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.66, True),
+    # Amphitrite, 222 × 209 × 183 km in truth, drawn in those proportions at Terra Invicta's smaller 58 km radius, which is all the relief format can hold: an S-type, bright (albedo 0.22).
+    "amphitrite": (1710, (63.39, 52.25, 59.67), 58.25, 0.13, 0, 51, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.67, True),
+    # Ausonia, 152 × 77 × 69 km: an S-type, bright (albedo 0.12).
+    "ausonia": (1716, (76.0, 34.5, 38.5), 58.022, 0.13, 0, 44, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.67, True),
+    # Veritas, about 119 km across; its proportions made up: a C-type, dark (albedo 0.059).
+    "veritas": (1722, (66.53, 52.27, 59.4), 57.775, 0.13, 0, 56, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.67, True),
+    # Leda, about 92 km across; its proportions made up: a C-type, dark (albedo 0.055).
+    "leda": (1728, (51.66, 40.59, 46.13), 57.705, 0.13, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.67, True),
+    # Melete, about 121 km across; its proportions made up: a P-type, very dark (albedo 0.057).
+    "melete": (1734, (67.95, 53.39, 60.67), 56.6, 0.14, 0, 48, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.67, True),
+    # Circe, about 133 km across; its proportions made up: a C-type, dark (albedo 0.023).
+    "circe": (1740, (74.48, 58.52, 66.5), 56.51, 0.14, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.67, True),
+    # Mnemosyne, about 113 km across; its proportions made up: an S-type, bright (albedo 0.21).
+    "mnemosyne": (1746, (63.05, 49.54, 56.3), 56.505, 0.14, 0, 53, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.67, True),
+    # Nysa, about 75 km across; its proportions made up: an E-type, very bright (albedo 0.48).
+    "nysa": (1752, (42.0, 33.0, 37.5), 56.5, 0.14, 0, 44, [(0, (130, 130, 126)), (0.5, (196, 194, 188)), (1, (244, 242, 236))], None, 0.67, True),
+    # Patroclus, about 113 km across; its proportions made up: a P-type, very dark (albedo 0.047).
+    "patroclus": (1758, (63.28, 49.72, 56.5), 56.5, 0.14, 0, 45, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.67, True),
+    # Victoria, about 115 km across; its proportions made up: an S-type, bright (albedo 0.16).
+    "victoria": (1764, (64.45, 50.64, 57.54), 56.4, 0.14, 0, 42, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.67, True),
+    # Urania, 112 × 84 × 76 km: an S-type, bright (albedo 0.19).
+    "urania": (1770, (56.0, 38.0, 42.0), 55.5, 0.14, 0, 40, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.67, True),
+    # Pyraethus, about 110 km across; its proportions made up: nothing measured of its colour; dark grey, as icy-carbonaceous (albedo 0.12).
+    "pyraethus": (1776, (61.63, 48.43, 55.03), 55.03, 0.14, 0, 50, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.68, True),
+    # Pelion, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as carbonaceous-stony.
+    "pelion": (1782, (61.6, 48.4, 55.0), 55.0, 0.14, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.68, True),
+    # Asterope, about 100 km across; its proportions made up: a T-type, dark and reddish (albedo 0.094).
+    "asterope": (1788, (55.82, 43.86, 49.84), 54.78, 0.14, 0, 54, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.68, True),
+    # Athamantis, about 111 km across; its proportions made up: an S-type, bright (albedo 0.16).
+    "athamantis": (1794, (62.35, 48.99, 55.67), 54.495, 0.14, 0, 42, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.68, True),
+    # Fides, about 108 km across; its proportions made up: an S-type, bright (albedo 0.18).
+    "fides": (1800, (60.68, 47.67, 54.17), 54.175, 0.14, 0, 47, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.68, True),
+    # Thalassa, 108 × 100 × 52 km: dark and neutral, assumed.
+    "thalassa": (1806, (54.0, 26.0, 50.0), 54.0, 0.14, 0, 45, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.68, True),
+    # Harmonia, about 111 km across; its proportions made up: an S-type, bright (albedo 0.22).
+    "harmonia": (1812, (62.3, 48.95, 55.63), 53.8, 0.14, 0, 48, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.68, True),
+    # Thalia, about 108 km across; its proportions made up: an S-type, bright (albedo 0.25).
+    "thalia": (1818, (60.22, 47.31, 53.77), 53.75, 0.14, 0, 51, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.68, True),
+    # Atalante, size from Terra Invicta; its proportions made up: a C-type, dark (albedo 0.029).
+    "atalante": (1824, (59.14, 46.46, 52.8), 52.8, 0.14, 0, 50, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.68, True),
+    # Eos, about 95 km across; its proportions made up: an S-type, bright (albedo 0.17).
+    "eos": (1830, (53.46, 42.01, 47.73), 51.935, 0.14, 0, 53, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.69, True),
+    # Nausikaa, about 99 km across; its proportions made up: an S-type, bright (albedo 0.33).
+    "nausikaa": (1836, (55.31, 43.46, 49.39), 51.6, 0.14, 0, 41, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.69, True),
+    # Leukothea, about 103 km across; its proportions made up: a C-type, dark (albedo 0.066).
+    "leukothea": (1842, (57.71, 45.34, 51.53), 51.55, 0.14, 0, 47, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.69, True),
+    # Otrera, about 100 km across; its proportions made up: nothing measured of its colour; dark, as carbonaceous-stony.
+    "otrera": (1848, (56.0, 44.0, 50.0), 51.5, 0.14, 0, 57, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.69, True),
+    # Isis, about 111 km across; its proportions made up: an S-type, bright (albedo 0.14).
+    "isis": (1854, (62.16, 48.84, 55.5), 51.365, 0.14, 0, 47, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.69, True),
+    # Dryalos, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous.
+    "dryalos": (1860, (57.12, 44.88, 51.0), 51.0, 0.14, 0, 44, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.69, True),
+    # Amycus, about 101 km across; its proportions made up: nothing measured of its colour; dark grey, as icy (albedo 0.18).
+    "amycus": (1866, (56.5, 44.4, 50.45), 50.45, 0.15, 0, 56, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.69, True),
+    # Klotho, about 101 km across; its proportions made up: an M-type, metal-rich (albedo 0.13).
+    "klotho": (1872, (56.4, 44.32, 50.36), 50.358, 0.15, 0, 57, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.69, True),
+    # Aegea, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous.
+    "aegea": (1878, (56.0, 44.0, 50.0), 50.0, 0.15, 0, 53, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.69, True),
+    # Kassandra, about 94 km across; its proportions made up: a T-type, dark and reddish (albedo 0.089).
+    "kassandra": (1884, (52.74, 41.44, 47.09), 49.825, 0.15, 0, 57, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.69, True),
+    # Naiad, 96 × 60 × 52 km: dark and neutral, assumed.
+    "naiad": (1890, (48.0, 26.0, 30.0), 48.0, 0.15, 0, 57, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.7, True),
+    # Erato, about 107 km across; its proportions made up: a BU-type, dark and bluish (albedo 0.048).
+    "erato": (1896, (59.88, 47.05, 53.46), 47.7, 0.15, 0, 41, [(0, (26, 28, 32)), (0.5, (66, 70, 76)), (1, (118, 122, 128))], None, 0.7, True),
+    # Ariadne, about 71 km across; its proportions made up: an S-type, bright (albedo 0.23).
+    "ariadne": (1902, (39.95, 31.39, 35.67), 47.5, 0.15, 0, 43, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.7, True),
+    # Proserpina, about 95 km across; its proportions made up: an S-type, bright (albedo 0.2).
+    "proserpina": (1908, (53.09, 41.71, 47.4), 47.4, 0.15, 0, 49, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.7, True),
+    # Cressida, 92 × 74 × 74 km: dark and neutral, assumed.
+    "cressida": (1914, (46.0, 37.0, 37.0), 46.0, 0.15, 0, 50, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.7, True),
+    # Desdemona, 90 × 54 × 54 km: dark and neutral, assumed.
+    "desdemona": (1920, (45.0, 27.0, 27.0), 45.0, 0.15, 0, 50, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.71, True),
+    # Thetis, about 85 km across; its proportions made up: an S-type, bright (albedo 0.19).
+    "thetis": (1926, (47.54, 37.36, 42.45), 45.0, 0.15, 0, 43, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.71, True),
+    # Thereus, about 86 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.059).
+    "thereus": (1932, (48.44, 38.06, 43.25), 43.25, 0.16, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.71, True),
+    # Lydia, about 86 km across; its proportions made up: an M-type, metal-rich (albedo 0.18).
+    "lydia": (1938, (48.21, 37.88, 43.05), 43.045, 0.16, 0, 45, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.71, True),
+    # Elara, about 80 km across; its proportions made up: dark.
+    "elara": (1944, (44.74, 35.16, 39.95), 43.0, 0.16, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.71, True),
+    # Phocaea, size from Terra Invicta; its proportions made up: an S-type, bright (albedo 0.35).
+    "phocaea": (1950, (46.6, 36.61, 41.6), 41.605, 0.16, 0, 45, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.72, True),
+    # Lykas, about 82 km across; its proportions made up: nothing measured of its colour; dark, as carbonaceous-stony (albedo 0.072).
+    "lykas": (1956, (45.92, 36.08, 41.0), 41.0, 0.16, 0, 56, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.72, True),
+    # Weywot, 164 × 146 × 130 km in truth, drawn in those proportions at Terra Invicta's smaller 40 km radius, which is all the relief format can hold: dark grey.
+    "weywot": (1962, (44.93, 35.62, 40.0), 40.0, 0.16, 0, 51, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.72, True),
+    # Hertha, about 80 km across; its proportions made up: an M-type, metal-rich (albedo 0.14).
+    "hertha": (1968, (44.8, 35.2, 40.0), 39.62, 0.16, 0, 43, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.72, True),
+    # Asbolus, about 66 km across; its proportions made up: nothing measured of its colour; dark, as common carbonaceous (albedo 0.13).
+    "asbolus": (1974, (36.96, 29.04, 33.0), 39.0, 0.16, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.73, True),
+    # Caeneus, about 77 km across; its proportions made up: nothing measured of its colour; dark grey, as icy-carbonaceous.
+    "caeneus": (1980, (43.12, 33.88, 38.5), 38.5, 0.16, 0, 45, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.73, True),
+    # Heidelberga, about 76 km across; its proportions made up: an M-type, metal-rich (albedo 0.11).
+    "heidelberga": (1986, (42.4, 33.32, 37.86), 37.86, 0.16, 0, 44, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.73, True),
+    # Helops, about 78 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.046).
+    "helops": (1992, (43.68, 34.32, 39.0), 37.5, 0.16, 0, 54, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.73, True),
+    # Hylonome, about 72 km across; its proportions made up: nothing measured of its colour; dark, as common carbonaceous.
+    "hylonome": (1998, (40.32, 31.68, 36.0), 37.0, 0.17, 0, 45, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.73, True),
+    # Rosalind, about 72 km across; its proportions made up: dark and neutral, assumed.
+    "rosalind": (2004, (40.32, 31.68, 36.0), 36.0, 0.17, 0, 47, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.74, True),
+    # Caliban, about 42 km across; its proportions made up: dark and red.
+    "caliban": (2010, (23.52, 18.48, 21.0), 36.0, 0.17, 0, 53, [(0, (60, 34, 28)), (0.5, (116, 72, 58)), (1, (170, 122, 102))], None, 0.74, True),
+    # Cyllarus, about 62 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous.
+    "cyllarus": (2016, (34.72, 27.28, 31.0), 35.0, 0.17, 0, 52, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.74, True),
+    # 2010 TH, about 70 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.078).
+    "th2010": (2022, (39.14, 30.76, 34.95), 34.95, 0.17, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.74, True),
+    # Lacadiera, about 63 km across; its proportions made up: a D-type, dark and reddish (albedo 0.054).
+    "lacadiera": (2028, (35.48, 27.88, 31.68), 34.5, 0.17, 0, 52, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.74, True),
+    # Schubart, about 67 km across; its proportions made up: a P-type, very dark (albedo 0.035).
+    "schubart": (2034, (37.79, 29.69, 33.74), 33.738, 0.17, 0, 56, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.74, True),
+    # Lykidas, about 67 km across; its proportions made up: nothing measured of its colour; dark grey, as icy (albedo 0.062).
+    "lykidas": (2040, (37.58, 29.52, 33.55), 33.55, 0.17, 0, 46, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.74, True),
+    # 55 Pandora, size from Terra Invicta; its proportions made up: an M-type, metal-rich (albedo 0.2).
+    "pandora55": (2046, (37.35, 29.35, 33.35), 33.35, 0.17, 0, 40, [(0, (60, 58, 56)), (0.5, (132, 128, 122)), (1, (198, 194, 186))], None, 0.74, True),
+    # Cineos, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as carbonaceous.
+    "cineos": (2052, (37.06, 29.11, 33.09), 33.085, 0.17, 0, 46, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.75, True),
+    # Bianca, 64 × 46 × 46 km: dark and neutral, assumed.
+    "bianca": (2058, (32.0, 23.0, 23.0), 32.0, 0.17, 0, 50, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.75, True),
+    # Bromos, about 64 km across; its proportions made up: nothing measured of its colour; dark grey, as icy-carbonaceous (albedo 0.083).
+    "bromos": (2064, (35.67, 28.03, 31.85), 31.85, 0.17, 0, 49, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.75, True),
+    # Halimede, about 52 km across; its proportions made up: dark and neutral, assumed.
+    "halimede": (2070, (29.12, 22.88, 26.0), 31.0, 0.17, 0, 51, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.75, True),
+    # Schwassmann-Wachmann, size from Terra Invicta; its proportions made up: nothing measured of its colour; dark, as carbonaceous.
+    "schwassmannwachmann": (2076, (33.82, 26.58, 30.2), 30.2, 0.18, 0, 41, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.75, True),
+    # Asporina, about 51 km across; its proportions made up: an A-type, reddish (albedo 0.19).
+    "asporina": (2082, (28.5, 22.39, 25.45), 30.05, 0.18, 0, 55, [(0, (88, 68, 52)), (0.5, (164, 132, 104)), (1, (222, 194, 166))], None, 0.76, True),
+    # Metis (Jupiter's moon), about 43 km across; its proportions made up: dark and reddish.
+    "metismoon": (2088, (24.08, 18.92, 21.5), 30.0, 0.18, 0, 52, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.76, True),
+    # Neso, about 50 km across; its proportions made up: dark and neutral, assumed.
+    "neso": (2094, (28.0, 22.0, 25.0), 30.0, 0.18, 0, 47, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.76, True),
+    # Nessus, about 58 km across; its proportions made up: nothing measured of its colour; dark grey, as icy-carbonaceous.
+    "nessus": (2100, (32.48, 25.52, 29.0), 30.0, 0.18, 0, 44, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.76, True),
+    # Crantor, about 59 km across; its proportions made up: nothing measured of its colour; dark grey, as icy-carbonaceous.
+    "crantor": (2106, (33.04, 25.96, 29.5), 30.0, 0.18, 0, 54, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.76, True),
+    # Exadius, about 60 km across; its proportions made up: nothing measured of its colour; dark, as carbonaceous-stony.
+    "exadius": (2112, (33.6, 26.4, 30.0), 30.0, 0.18, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.76, True),
+    # Echeclus, about 59 km across; its proportions made up: nothing measured of its colour; dark grey, as icy-carbonaceous (albedo 0.077).
+    "echeclus": (2118, (33.04, 25.96, 29.5), 29.5, 0.18, 0, 41, [(0, (46, 44, 44)), (0.5, (98, 94, 92)), (1, (154, 150, 146))], None, 0.76, True),
+    # Pyretos, about 58 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.12).
+    "pyretos": (2124, (32.48, 25.52, 29.0), 29.0, 0.18, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.76, True),
+    # Pasiphae, about 58 km across; its proportions made up: dark.
+    "pasiphae": (2130, (32.37, 25.43, 28.9), 28.9, 0.18, 0, 51, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.76, True),
+    # Elatus, about 57 km across; its proportions made up: nothing measured of its colour; dark, as wet carbonaceous (albedo 0.05).
+    "elatus": (2136, (31.92, 25.08, 28.5), 28.5, 0.18, 0, 48, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.76, True),
+    # Ophelia, 54 × 38 × 38 km: dark and neutral, assumed.
+    "ophelia": (2142, (27.0, 19.0, 19.0), 27.0, 0.18, 0, 48, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.76, True),
+    # Cordelia, 50 × 36 × 36 km: dark and neutral, assumed.
+    "cordelia": (2148, (25.0, 18.0, 18.0), 25.0, 0.18, 0, 44, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.77, True),
+    # Prospero, about 50 km across; its proportions made up: dark and neutral, assumed.
+    "prospero": (2154, (28.0, 22.0, 25.0), 25.0, 0.18, 0, 49, [(0, (30, 28, 26)), (0.5, (72, 68, 62)), (1, (126, 122, 116))], None, 0.77, True),
 }
 
 
