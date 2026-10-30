@@ -15,6 +15,8 @@ import type { GameState, Mission, Policy } from "./state";
 
 export type Command =
   | { type: "assignMission"; factionId: string; councilorId: string; mission: Mission | null }
+  /** Turns auto-repeat of the councilor's current mission on or off. */
+  | { type: "setMissionRepeat"; factionId: string; councilorId: string; repeat: boolean }
   | { type: "setPriorityWeights"; factionId: string; nationId: string; weights: Record<string, number> }
   | { type: "endCouncilPhase"; factionId: string }
   | { type: "abandonControlPoint"; factionId: string; nationId: string; cpIndex: number }
@@ -75,6 +77,15 @@ export function applyCommand(state: GameState, content: Content, command: Comman
         if (!cost.ok) return reject(cost.reason);
       }
       councilor.mission = command.mission;
+      // A repeating councilor repeats whatever they were last given; cancelling stops it.
+      if (councilor.repeatMission) councilor.repeatMission = command.mission;
+      return { ok: true };
+    }
+    case "setMissionRepeat": {
+      const councilor = findCouncilor(state, faction.id, command.councilorId);
+      if (!councilor) return reject(`Unknown councilor "${command.councilorId}"`);
+      if (command.repeat && !councilor.mission) return reject("The councilor has no mission to repeat");
+      councilor.repeatMission = command.repeat ? councilor.mission : null;
       return { ok: true };
     }
     case "choosePolicy": {

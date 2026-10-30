@@ -11,6 +11,9 @@ import {
   detLn,
   detPow,
   closeCouncilPhase,
+  deserialize,
+  serialize,
+  startCouncilPhase,
   resolveAllScheduledMissions,
   rollChance,
   rollOutcome,
@@ -593,5 +596,90 @@ describe("Increase Unrest", () => {
     expect(regionOwner(s, "mda-1")).toBe("mda");
     expect(mda.controlPoints.every((cp) => cp.owner === "aegis")).toBe(true);
     expect(s.breakaways["mda"]).toBe("rou");
+  });
+});
+
+describe("auto-repeat", () => {
+  const nextPhase = (sim: Simulation) => {
+    closeCouncilPhase(sim.state, content);
+    resolveAllScheduledMissions(sim.state, content);
+    startCouncilPhase(sim.state, content);
+  };
+  const aegis = (sim: Simulation) => sim.state.factions.find((f) => f.id === "aegis")!;
+  const assign = (sim: Simulation, mission: Mission | null) =>
+    applyCommand(sim.state, content, { type: "assignMission", factionId: "aegis", councilorId: aegis(sim).councilors[0]!.id, mission });
+  const repeat = (sim: Simulation, on: boolean) =>
+    applyCommand(sim.state, content, { type: "setMissionRepeat", factionId: "aegis", councilorId: aegis(sim).councilors[0]!.id, repeat: on });
+  const advise: Mission = { type: "advise", nationId: "nga" };
+
+  it("gives version 27 saves councilors with nothing to repeat", () => {
+    const old = JSON.parse(serialize(freshGame().state));
+    old.version = 27;
+    for (const f of old.state.factions) for (const c of f.councilors) delete c.repeatMission;
+    const state = deserialize(JSON.stringify(old), content);
+    expect(state.factions[0]!.councilors[0]!.repeatMission).toBeNull();
+  });
+
+  it("needs a mission to repeat", () => {
+    expect(repeat(freshGame(), true).ok).toBe(false);
+  });
+
+  it("takes the mission up again at the next council phases, until turned off", () => {
+    const sim = freshGame();
+    expect(assign(sim, advise).ok).toBe(true);
+    expect(repeat(sim, true).ok).toBe(true);
+    nextPhase(sim);
+    expect(aegis(sim).councilors[0]!.mission).toEqual(advise);
+    nextPhase(sim);
+    expect(aegis(sim).councilors[0]!.mission).toEqual(advise);
+    repeat(sim, false);
+    nextPhase(sim);
+    expect(aegis(sim).councilors[0]!.mission).toBeNull();
+  });
+
+  it("follows a new mission, and stops when the mission is cancelled", () => {
+    const sim = freshGame();
+    assign(sim, advise);
+    repeat(sim, true);
+    const other: Mission = { type: "publicCampaign", nationId: "nga" };
+    assign(sim, other);
+    expect(aegis(sim).councilors[0]!.repeatMission).toEqual(other);
+    assign(sim, null);
+    expect(aegis(sim).councilors[0]!.repeatMission).toBeNull();
+  });
+
+  it("lowers the spend to what can be afforded, and skips a phase it can't pay for", () => {
+    const sim = freshGame();
+    const faction = aegis(sim);
+    const councilor = faction.councilors[0]!;
+    faction.resources.influence = 1000;
+    assign(sim, { type: "controlNation", nationId: "nga", spend: 64 });
+    repeat(sim, true);
+    councilor.mission = null;
+    faction.resources.influence = 20;
+    startCouncilPhase(sim.state, content);
+    const repeated = aegis(sim).councilors[0]!.mission;
+    const spend = repeated?.spend ?? 0;
+    expect(repeated?.type).toBe("controlNation");
+    expect(spend).toBeLessThanOrEqual(20);
+    expect(spend).toBeGreaterThan(0);
+    expect(councilor.repeatMission?.spend).toBe(64);
+  });
+
+  it("waits out detention, and ends the repeat when the mission is no longer possible", () => {
+    const sim = freshGame();
+    const councilor = aegis(sim).councilors[0]!;
+    assign(sim, { type: "controlNation", nationId: "nga" });
+    repeat(sim, true);
+    councilor.detainedPhases = 2;
+    startCouncilPhase(sim.state, content);
+    expect(councilor.mission).toBeNull();
+    expect(councilor.repeatMission).not.toBeNull();
+    councilor.detainedPhases = 0;
+    setOwners(sim.state, "nga", sim.state.nations.find((n) => n.id === "nga")!.controlPoints.map(() => "aegis"));
+    startCouncilPhase(sim.state, content);
+    expect(councilor.mission).toBeNull();
+    expect(councilor.repeatMission).toBeNull();
+    expect(sim.state.log.some((l) => l.text.includes("stopped repeating"))).toBe(true);
   });
 });

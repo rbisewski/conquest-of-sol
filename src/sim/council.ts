@@ -5,11 +5,12 @@
 import type { Content } from "./content";
 import { abandonOverCap } from "./ai";
 import { dateOfDay } from "./calendar";
-import { factionState } from "./lookup";
-import { assessMission, payForMissions, resolveMission, startTurnIntel } from "./missions";
+import { addLog, factionState } from "./lookup";
+import { assessMission, checkMissionCost, MISSION_NAMES, payForMissions, resolveMission, startTurnIntel } from "./missions";
+import { spendSteps } from "./research";
 import { nextInt } from "./rng";
 import { currentMinute, MINUTES_PER_DAY } from "./time";
-import type { Councilor, GameState, Mission } from "./state";
+import type { Councilor, FactionState, GameState, Mission } from "./state";
 
 /** Stops time and opens a council phase. */
 export function startCouncilPhase(state: GameState, content: Content): void {
@@ -24,7 +25,32 @@ export function startCouncilPhase(state: GameState, content: Content): void {
       councilor.mission = null;
       if (councilor.detainedPhases > 0) councilor.detainedPhases -= 1;
     }
+    for (const councilor of faction.councilors) repeatMission(state, content, faction, councilor);
   }
+}
+
+/**
+ * Gives a repeating councilor their mission again, at the largest spend still affordable. A
+ * detained councilor or an empty purse only skips this phase; a mission no longer possible (the
+ * nation already controlled, say) ends the repeat, with a note in the log.
+ */
+function repeatMission(state: GameState, content: Content, faction: FactionState, councilor: Councilor): void {
+  const mission = councilor.repeatMission;
+  if (!mission || councilor.detainedPhases > 0) return;
+  const assessment = assessMission(state, content, faction.id, councilor, mission);
+  if (!assessment.ok) {
+    councilor.repeatMission = null;
+    addLog(state, { factionId: faction.id, kind: "mission", mission: mission.type, tone: "bad", text: `${councilor.name} stopped repeating ${MISSION_NAMES[mission.type]}: ${assessment.reason}.` });
+    return;
+  }
+  const spends = [mission.spend ?? 0, ...spendSteps(state, content, faction.id).filter((s) => s < (mission.spend ?? 0)).reverse()];
+  for (const spend of spends) {
+    const attempt: Mission = spend === (mission.spend ?? 0) ? { ...mission } : { ...mission, spend };
+    if (!checkMissionCost(state, content, faction, councilor.id, attempt).ok) continue;
+    councilor.mission = attempt;
+    return;
+  }
+  addLog(state, { factionId: faction.id, kind: "mission", mission: mission.type, tone: "bad", text: `${councilor.name} can't afford to repeat ${MISSION_NAMES[mission.type]} this phase.` });
 }
 
 export function allFactionsDone(state: GameState): boolean {

@@ -2,7 +2,7 @@ import type { Attribute, ClaimDef, DifficultyId, Gender } from "./content";
 import type { RngState } from "./rng";
 
 /** Bump when the shape of GameState changes, and add a migration in save.ts. */
-export const STATE_VERSION = 27;
+export const STATE_VERSION = 28;
 
 export const UNDECIDED = "undecided";
 
@@ -211,6 +211,8 @@ export interface Councilor {
   apparentLoyalty: number;
   xp: number;
   mission: Mission | null;
+  /** The mission to take up again at each council phase, if auto-repeat is on. */
+  repeatMission: Mission | null;
   /** Council phases left in detention; a detained councilor cannot take missions. */
   detainedPhases: number;
 }

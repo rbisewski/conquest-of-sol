@@ -6,6 +6,7 @@
   import { baseContent } from "../../content/index";
   import { assessMission, ATTRIBUTES, committedResources, factionDef, MISSION_NAMES, missionCost, nationDef, professionDef, regionDef, spendSteps, type Mission } from "../../sim/index";
   import { game } from "../game.svelte";
+  import { Repeat } from "@lucide/svelte";
   import { describeTarget, shownLocation } from "../missionTargets";
   import Emblem from "../ui/Emblem.svelte";
   import Icon from "../ui/Icon.svelte";
@@ -118,6 +119,18 @@
         {/if}
       {:else}
         <span class="muted">{world.phase === "council" ? "Choose a mission below" : "No mission"}</span>
+      {/if}
+      {#if faction && (councilor.mission || councilor.repeatMission)}
+        <button
+          class="repeat small"
+          class:on={councilor.repeatMission !== null}
+          aria-pressed={councilor.repeatMission !== null}
+          title={councilor.repeatMission ? "Stop repeating this mission" : "Take this mission up again at every council phase"}
+          onclick={() => void game.command({ type: "setMissionRepeat", factionId: faction.id, councilorId: councilor.id, repeat: councilor.repeatMission === null })}
+        >
+          <Repeat size={13} strokeWidth={1.75} />
+          {#if councilor.repeatMission && !councilor.mission}Repeats {MISSION_NAMES[councilor.repeatMission.type]} next phase{:else}Auto-repeat{/if}
+        </button>
       {/if}
     </div>
   </section>
@@ -241,6 +254,21 @@
     text-align: center;
     background: var(--cell);
     border: 1px solid var(--border-soft);
+  }
+  .repeat {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+    padding: 1px 6px;
+    color: var(--muted, inherit);
+    background: none;
+    border: 1px solid var(--border-soft);
+    cursor: pointer;
+  }
+  .repeat.on {
+    color: var(--accent);
+    border-color: var(--accent);
   }
   .mission-name {
     display: inline-flex;

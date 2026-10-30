@@ -214,6 +214,7 @@ export function generateCouncilor(state: GameState, content: Content): Councilor
     apparentLoyalty: attributes.loyalty,
     xp: 0,
     mission: null,
+    repeatMission: null,
     detainedPhases: 0,
   };
 }

@@ -44,6 +44,14 @@ const migrations: Record<number, (state: Record<string, unknown>, content: Conte
     ...state,
     factions: (state.factions as Record<string, unknown>[]).map((f) => ({ ...f, research: { ...(f.research as object), choosing: [] } })),
   }),
+  // Councilors can repeat a mission.
+  27: (state) => ({
+    ...state,
+    factions: (state.factions as Record<string, unknown>[]).map((f) => ({
+      ...f,
+      councilors: (f.councilors as Record<string, unknown>[]).map((c) => ({ ...c, repeatMission: null })),
+    })),
+  }),
 };
 
 export function serialize(state: GameState): string {
