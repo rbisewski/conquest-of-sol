@@ -722,7 +722,7 @@ def sunpoint_xyz(lat: float, lon: float) -> np.ndarray:
 
 def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: float, waist: float, craters: int,
              stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]], mean: float = 1.0,
-             basin: tuple[float, float, float, float] | None = None, depth: float = 1.0) -> None:
+             basin: tuple[float, float, float, float] | None = None, depth: float = 1.0, by_volume: bool = False) -> None:
     """
     A made-up small asteroid: no spacecraft has seen it, so both its shape and its surface are
     invented, after what its light curve and spectrum say. Writes two maps: <name>.png, the
@@ -737,7 +737,9 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
     by a power law). Scaled so its mean radius is mean (Terra Invicta's radius, unless measured
     dimensions say otherwise), with a great basin if given (latitude, longitude, angular radius in
     degrees, depth in radii) flattening one side; depth scales the craters' (a big body's are far
-    shallower for its size than a small rubble pile's). The surface: a
+    shallower for its size than a small rubble pile's). by_volume takes mean as the radius of a sphere of
+    the same volume, which keeps a long, thin body to its measured length (the plain mean of a map's radii
+    is pulled low by the many directions across it, and stretches it). The surface: a
     space-weathered regolith tone mottled at two scales, the youngest craters' floors and ejecta
     brighter and fresher, on a ramp of its tones, with ordered dithering.
     """
@@ -768,7 +770,10 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
         # A few are young: brighter floors and ejecta.
         if rng.random() < 0.25:
             fresh = np.maximum(fresh, np.clip(1.6 - q, 0, 1) * (0.6 + 0.4 * rng.random()))
-    radius *= mean / radius.mean()
+    if by_volume:
+        radius *= mean / np.average(radius ** 3, weights=np.cos(lat)) ** (1 / 3)
+    else:
+        radius *= mean / radius.mean()
     print(f"{name}: shape reaches {radius.max():.3f} radii")
     save_relief(name, radius)
     mottle = sphere_noise(seed + 3, [(2.5, 1.0), (7, 0.6), (18, 0.35)])
@@ -946,7 +951,7 @@ MEASURED = {
 # Main-belt and near-Earth asteroids with no shape model or map, made up at their measured sizes
 # (JPL's Small-Body Database: diameter, albedo, spectral type), as elongated as their light
 # curves suggest where known: (seed, semi-axes in km along longitude 0°, the pole and 90°W,
-# Terra Invicta's radius, lumps, waist, craters, tones, basin, and optionally crater depth).
+# Terra Invicta's radius, lumps, waist, craters, tones, basin, and optionally crater depth and by_volume).
 DARK = [(0, (18, 17, 17)), (0.5, (52, 49, 47)), (1, (104, 100, 97))]
 S_TYPE = [(0, (58, 50, 42)), (0.5, (138, 122, 102)), (1, (204, 190, 166))]
 MADE_UP_ASTEROIDS = {
@@ -968,13 +973,65 @@ MADE_UP_ASTEROIDS = {
     "zeus": (307, (3.1, 2.1, 2.5), 2.615, 0.32, 0.05, 18, DARK, None),
     "napier": (311, (3.2, 2.4, 2.8), 2.795, 0.3, 0.0, 20, DARK, None),
     "awilix": (313, (3.3, 2.2, 2.4), 2.636, 0.34, 0.1, 16, DARK, None),
+    # Larger main-belt asteroids, Trojans, centaurs, smaller trans-Neptunian objects and two small
+    # moons, at their measured sizes where known.
+    # Hygiea, 450 × 430 × 424 km, all but round (Vernazza et al. 2020): a C-type, dark (albedo 0.07).
+    "hygiea": (757, (225, 212, 215), 225.0, 0.03, 0, 70, [(0, (28, 28, 28)), (0.5, (70, 70, 70)), (1, (124, 124, 122))], None, 0.3, True),
+    # Hektor, about 403 km long: the largest Trojan, two-lobed, a D-type, dark and reddish (albedo 0.03).
+    "hektor": (761, (201, 85, 100), 201.5, 0.1, 0.3, 40, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.5, True),
+    # Sylvia, 363 × 249 × 191 km: a P-type, very dark (albedo 0.05).
+    "sylvia": (769, (181.5, 95.5, 124.5), 192.0, 0.1, 0, 60, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.5, True),
+    # 52 Europa, 378 × 336 × 255 km: a C-type, dark (albedo 0.06).
+    "europa52": (773, (189, 127.5, 168), 190.0, 0.07, 0, 70, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.45, True),
+    # Nanabohzo (2015 QW23): nothing measured; shape made up, dark, as wet carbonaceous.
+    "nanabohzo": (787, (200, 165, 180), 184.0, 0.14, 0, 40, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.7, True),
+    # Nzambi (2014 OE394): moderately red (V−R 0.63, estimated); shape made up.
+    "nzambi": (797, (198, 160, 182), 182.0, 0.14, 0, 40, [(0, (62, 48, 40)), (0.5, (120, 98, 84)), (1, (174, 150, 132))], None, 0.7, True),
+    # Eunomia, 340 × 248 × 229 km: a bright S-type (albedo 0.19–0.25).
+    "eunomia": (809, (170, 114.5, 124), 178.5, 0.08, 0, 60, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.5, True),
+    # Davida, 357 × 294 × 231 km: a C-type, dark (albedo 0.08).
+    "davida": (821, (178.5, 115.5, 147), 178.5, 0.07, 0, 65, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.45, True),
+    # Interamnia, 354 × 343 × 303 km: an F/B-type, dark and faintly blue (albedo 0.07).
+    "interamnia": (827, (177, 151.5, 171.5), 175.15, 0.04, 0, 70, [(0, (30, 30, 32)), (0.5, (76, 76, 80)), (1, (132, 132, 136))], None, 0.35, True),
+    # Camilla, 340 × 249 × 197 km: an X-type, very dark (albedo 0.06).
+    "camilla": (829, (170, 98.5, 124.5), 172.0, 0.1, 0, 55, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.55, True),
+    # Nereid, about 340 km across: neutral grey, water ice (albedo 0.26); its proportions made up. It turns freely, unlike the great moons.
+    "nereid": (839, (178, 165, 168), 170.0, 0.06, 0, 50, [(0, (66, 68, 70)), (0.5, (132, 134, 134)), (1, (198, 200, 198))], None, 0.5, True),
+    # 1996 TL66: neutral, water ice; shape made up.
+    "tl66": (853, (182, 155, 172), 169.5, 0.14, 0, 40, [(0, (52, 52, 54)), (0.5, (106, 106, 108)), (1, (162, 162, 162))], None, 0.7, True),
+    # Chariklo, 288 × 270 × 198 km, the largest centaur: dark and reddish (albedo 0.04), with two rings drawn in bodyArt.ts.
+    "chariklo": (857, (143.8, 99.1, 135.2), 167.0, 0.1, 0, 45, [(0, (26, 20, 18)), (0.5, (62, 48, 42)), (1, (112, 92, 82))], None, 0.6, True),
+    # Pylenor (2015 AH281): nothing measured; shape made up, dark, as icy-carbonaceous.
+    "pylenor": (859, (178, 145, 160), 167.0, 0.18, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.8, True),
+    # Anguta (1993 SC): very red, very dark (albedo 0.02); shape made up.
+    "anguta": (863, (176, 142, 158), 164.0, 0.18, 0, 35, [(0, (42, 20, 16)), (0.5, (92, 50, 38)), (1, (146, 92, 72))], None, 0.8, True),
+    # Pisenor (2010 TY53): nothing measured; shape made up, dark, as carbonaceous-stony.
+    "pisenor": (877, (172, 140, 155), 160.5, 0.18, 0, 35, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.8, True),
+    # Juno, 288 × 250 × 225 km: an S-type, bright (albedo 0.21).
+    "juno": (881, (144, 112.5, 125), 160.0, 0.08, 0, 55, [(0, (70, 60, 50)), (0.5, (150, 132, 110)), (1, (214, 198, 172))], None, 0.55, True),
+    # Hiʻiaka, about 370 km across: bright, nearly pure water ice (albedo 0.74); its proportions made up. It turns freely.
+    "hiiaka": (883, (205, 170, 185), 155.0, 0.05, 0, 35, [(0, (168, 172, 176)), (0.5, (214, 218, 222)), (1, (246, 248, 250))], None, 0.4, True),
+    # Cybele, 297 × 291 × 213 km: a P-type, very dark (albedo 0.06).
+    "cybele": (887, (148.5, 106.5, 145.5), 151.0, 0.08, 0, 55, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.55, True),
+    # Diomedes, 284 × 126 × 65 km: a Trojan, a long splinter, dark and reddish (albedo 0.03–0.06).
+    "diomedes": (907, (142, 32.5, 63), 142.0, 0.14, 0.1, 30, [(0, (30, 20, 17)), (0.5, (72, 50, 42)), (1, (124, 92, 78))], None, 0.8, True),
+    # Psyche, 278 × 238 × 171 km: an M-type, metal-rich, a bright steel grey (albedo 0.16).
+    "psyche": (911, (139, 85.5, 119), 139.5, 0.08, 0, 50, [(0, (62, 60, 58)), (0.5, (138, 134, 128)), (1, (206, 202, 194))], None, 0.6, True),
+    # Medon (2014 GS53): nothing measured; shape made up, dark, as wet carbonaceous.
+    "medon": (919, (150, 120, 135), 139.5, 0.2, 0, 30, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.9, True),
+    # Doris, 257 × 211 × 185 km: a C-type, dark (albedo 0.07), turning slowly.
+    "doris": (929, (128.5, 92.5, 105.5), 139.0, 0.08, 0, 55, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.55, True),
+    # Kleopatra, 267 × 61 × 48 km: the dog-bone, an M-type, metal-rich (albedo 0.12–0.17); its radar shape model is in the PDS archive, which refuses scripted downloads, so its shape is made up to match.
+    "kleopatra": (937, (133.5, 24, 30.5), 138.0, 0.08, 0.45, 25, [(0, (64, 62, 60)), (0.5, (136, 132, 126)), (1, (200, 196, 188))], None, 0.5, True),
+    # Eurytion (2014 NW65): nothing measured; shape made up, dark, as wet carbonaceous.
+    "eurytion": (941, (148, 118, 132), 137.5, 0.2, 0, 30, [(0, (24, 23, 22)), (0.5, (62, 59, 56)), (1, (112, 108, 104))], None, 0.9, True),
 }
 
 
 def made_up_asteroid(name: str):
-    seed, (a, c, b), radius_km, lumps, waist, craters, stops, basin, *depth = MADE_UP_ASTEROIDS[name]
+    seed, (a, c, b), radius_km, lumps, waist, craters, stops, basin, *rest = MADE_UP_ASTEROIDS[name]
     mean = (a * b * c) ** (1 / 3) / radius_km
-    return lambda: asteroid(name, seed, (a / radius_km, c / radius_km, b / radius_km), lumps, waist, craters, stops, grey_steps(stops, 7), mean, basin, *depth)
+    return lambda: asteroid(name, seed, (a / radius_km, c / radius_km, b / radius_km), lumps, waist, craters, stops, grey_steps(stops, 7), mean, basin, *rest)
 
 
 def neptune() -> None:
@@ -1237,6 +1294,36 @@ LESSER_DWARFS = {
     "unkulunkulu": (643, [(0, (96, 50, 36)), (0.5, (164, 96, 70)), (1, (218, 150, 118))], 1.3, 25, None),
     # Agudar (2013 XC26): nothing measured of its colour; reddish, as volatile-rich.
     "agudar": (647, [(0, (68, 50, 44)), (0.5, (128, 100, 88)), (1, (182, 154, 140))], 1.3, 35, None),
+    # Kuterastan: nothing measured (its number in Terra Invicta belongs to a main-belt asteroid); reddish, as volatile-rich.
+    "kuterastan": (653, [(0, (72, 50, 40)), (0.5, (134, 100, 82)), (1, (188, 152, 132))], 1.3, 35, None),
+    # Katonda (2014 UM33): nothing measured of its colour; reddish, as volatile-rich.
+    "katonda": (659, [(0, (66, 50, 44)), (0.5, (126, 100, 88)), (1, (180, 152, 140))], 1.3, 35, None),
+    # Eskeri (2010 OO127): nothing measured of its colour; reddish, as volatile-rich.
+    "eskeri": (661, [(0, (74, 52, 42)), (0.5, (136, 102, 84)), (1, (190, 154, 134))], 1.4, 35, None),
+    # Tawa (1998 SN165): tone made up, reddish, as volatile-rich.
+    "tawa": (673, [(0, (60, 48, 42)), (0.5, (118, 98, 88)), (1, (172, 150, 138))], 1.2, 40, None),
+    # Nuwa (2002 KX14): albedo 0.12; pale grey, as icy.
+    "nuwa": (677, [(0, (72, 74, 78)), (0.5, (134, 136, 138)), (1, (190, 192, 192))], 1.3, 40, None),
+    # Whiro (2014 JR80): nothing measured; dark, as wet carbonaceous.
+    "whiro": (683, [(0, (42, 38, 34)), (0.5, (90, 80, 72)), (1, (142, 130, 118))], 1.2, 50, None),
+    # 2012 VP113: moderately red, irradiated water, methane and carbon dioxide ices.
+    "biden": (691, [(0, (72, 50, 42)), (0.5, (134, 100, 84)), (1, (188, 152, 134))], 1.3, 20, None),
+    # Ankou (2002 VR128): dark, albedo 0.05.
+    "ankou": (701, [(0, (30, 28, 26)), (0.5, (68, 62, 58)), (1, (116, 110, 104))], 1.1, 55, None),
+    # Xargi (2014 JP80): nothing measured; dark, as carbonaceous-stony.
+    "xargi": (709, [(0, (40, 36, 34)), (0.5, (86, 78, 72)), (1, (138, 128, 120))], 1.2, 50, None),
+    # Cagn (2011 GM27): estimated albedo 0.06–0.09; dull reddish, as volatile-rich.
+    "cagn": (719, [(0, (54, 42, 36)), (0.5, (106, 88, 78)), (1, (160, 138, 126))], 1.2, 45, None),
+    # Numbakulla (1999 CD158): moderately red, albedo above 0.13.
+    "numbakulla": (727, [(0, (68, 52, 44)), (0.5, (128, 102, 88)), (1, (182, 156, 140))], 1.3, 40, None),
+    # Huya: moderately red with organics, albedo 0.08.
+    "huya": (733, [(0, (54, 40, 34)), (0.5, (108, 84, 72)), (1, (162, 134, 118))], 1.2, 45, None),
+    # Maximon (2001 QF298): neutral or slightly red, albedo 0.07.
+    "maximon": (739, [(0, (44, 42, 40)), (0.5, (92, 88, 84)), (1, (144, 138, 132))], 1.2, 50, None),
+    # Shingon (2004 PF115): albedo 0.11; dull reddish, as volatile-rich.
+    "shingon": (743, [(0, (62, 50, 44)), (0.5, (120, 102, 92)), (1, (174, 154, 144))], 1.3, 40, None),
+    # Erlik (2004 UX10): moderately red, carbon-oxide ices, albedo 0.14.
+    "erlik": (751, [(0, (70, 52, 44)), (0.5, (130, 104, 90)), (1, (184, 158, 142))], 1.3, 40, None),
 }
 
 

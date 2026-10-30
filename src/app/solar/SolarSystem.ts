@@ -110,6 +110,46 @@ const ART_RADIUS: Record<string, number> = {
   "523681KBO": 2,
   "202421KBO": 2,
   "482824KBO": 2,
+  "440030KBO": 2,
+  "472271KBO": 2,
+  "499514KBO": 2,
+  "35671KBO": 2,
+  "119951KBO": 2,
+  "556068KBO": 2,
+  "2012VP113TNO": 2,
+  "84719KBO": 2,
+  "578993KBO": 2,
+  "471288KBO": 2,
+  "469306KBO": 2,
+  "38628Huya": 2,
+  "469372KBO": 2,
+  "175113KBO": 2,
+  "144897KBO": 2,
+  "10Hygiea": 2,
+  "624Hektor": 2,
+  "87Sylvia": 2,
+  "52Europa": 2,
+  "2015QW23KBO": 2,
+  "556416KBO": 2,
+  "15Eunomia": 2,
+  "511Davida": 2,
+  "704Interamnia": 2,
+  "107Camilla": 2,
+  Nereid: 2,
+  "15874TNO": 2,
+  "10199Chariklo": 2,
+  "2015AH281Centaur": 2,
+  "15789KBO": 2,
+  "523643Centaur": 2,
+  "3Juno": 2,
+  "Hiʻiaka": 2,
+  "65Cybele": 2,
+  "1437Diomedes": 2,
+  "16Psyche": 2,
+  "523695Centaur": 2,
+  "48Doris": 2,
+  "216Kleopatra": 2,
+  "523727Centaur": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
@@ -163,6 +203,31 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
   "5731Zeus": 84,
   "7096Napier": 84,
   "514041Asteroid": 84,
+  "10Hygiea": 84,
+  "624Hektor": 84,
+  "87Sylvia": 84,
+  "52Europa": 84,
+  "2015QW23KBO": 84,
+  "556416KBO": 84,
+  "15Eunomia": 84,
+  "511Davida": 84,
+  "704Interamnia": 84,
+  "107Camilla": 84,
+  Nereid: 84,
+  "15874TNO": 84,
+  "10199Chariklo": 84,
+  "2015AH281Centaur": 84,
+  "15789KBO": 84,
+  "523643Centaur": 84,
+  "3Juno": 84,
+  "Hiʻiaka": 84,
+  "65Cybele": 84,
+  "1437Diomedes": 84,
+  "16Psyche": 84,
+  "523695Centaur": 84,
+  "48Doris": 84,
+  "216Kleopatra": 84,
+  "523727Centaur": 84,
 };
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
@@ -170,7 +235,7 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "84922KBO", "278361KBO", "2014WP50KBO", "19521Chaos", "512381TNO", "2014YA50KBO", "2010FX86KBO", "78799KBO", "455502KBO", "612533KBO", "2017OF69KBO", "470308KBO", "470443KBO", "559182KBO", "523645KBO", "523750KBO", "120348KBO", "523681KBO", "202421KBO", "482824KBO", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "84922KBO", "278361KBO", "2014WP50KBO", "19521Chaos", "512381TNO", "2014YA50KBO", "2010FX86KBO", "78799KBO", "455502KBO", "612533KBO", "2017OF69KBO", "470308KBO", "470443KBO", "559182KBO", "523645KBO", "523750KBO", "120348KBO", "523681KBO", "202421KBO", "482824KBO", "440030KBO", "472271KBO", "499514KBO", "35671KBO", "119951KBO", "556068KBO", "2012VP113TNO", "84719KBO", "578993KBO", "471288KBO", "469306KBO", "38628Huya", "469372KBO", "175113KBO", "144897KBO", "10Hygiea", "624Hektor", "87Sylvia", "52Europa", "2015QW23KBO", "556416KBO", "15Eunomia", "511Davida", "704Interamnia", "107Camilla", "Nereid", "15874TNO", "10199Chariklo", "2015AH281Centaur", "15789KBO", "523643Centaur", "3Juno", "Hiʻiaka", "65Cybele", "1437Diomedes", "16Psyche", "523695Centaur", "48Doris", "216Kleopatra", "523727Centaur", "Phobos", "Deimos"].map((id) => [
     id,
     SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
@@ -214,18 +279,18 @@ function kind(def: SpaceBodyDef): string {
   return def.type === "asteroidalMoon" && hasMap(def.id) ? "moon" : def.type;
 }
 
-/** Saturn's small (asteroidal) moons, named only when focused, as the small bodies are. */
-const isSaturnSmallMoon = (def: SpaceBodyDef) => def.type === "asteroidalMoon" && def.parent === "Saturn";
+/** Saturn's small (asteroidal) moons, Nereid and Hiʻiaka, named only when focused, as the small bodies are. */
+const isQuietMoon = (def: SpaceBodyDef) => def.type === "asteroidalMoon" && (def.parent === "Saturn" || def.id === "Nereid" || def.id === "Hiʻiaka");
 
 /**
  * Bodies whose orbit line isn't drawn all the time, only while they are selected (as a small
- * body's): Saturn's many small moons, which crowd its system, and the far dwarf planets' long
+ * body's): Saturn's many small moons, which crowd its system, Nereid and Hiʻiaka, and the far dwarf planets' long
  * orbits, which cross the whole view.
  */
 const QUIET_ORBITS = new Set(["Pluto", "Eris", "Makemake", "Haumea"]);
 /** The dwarf planets other than the five best known, named only when focused, as the small bodies are. */
 const isLesserDwarf = (def: SpaceBodyDef) => def.type === "dwarf" && def.id !== "Ceres" && !QUIET_ORBITS.has(def.id);
-const quietOrbit = (def: SpaceBodyDef) => QUIET_ORBITS.has(def.id) || isSaturnSmallMoon(def) || isLesserDwarf(def);
+const quietOrbit = (def: SpaceBodyDef) => QUIET_ORBITS.has(def.id) || isQuietMoon(def) || isLesserDwarf(def);
 
 const ORBIT_COLORS: Record<string, { color: string; opacity: number }> = {
   planet: { color: "#3d74d6", opacity: 0.6 },
@@ -667,8 +732,8 @@ export class SolarSystem {
       }
       // Under the globe the Earth's disc shows only as the globe fades out, and isn't named.
       const underGlobe = this.following && b.def.id === "Earth";
-      // An asteroid, a lesser dwarf planet or one of Saturn's small moons is named only when focused, as the small sprites are.
-      const quiet = b.def.type === "asteroid" || isSaturnSmallMoon(b.def) || isLesserDwarf(b.def);
+      // An asteroid, a lesser dwarf planet or a quiet moon is named only when focused, as the small sprites are.
+      const quiet = b.def.type === "asteroid" || isQuietMoon(b.def) || isLesserDwarf(b.def);
       const named = b.shown && !underGlobe && (focused || (!quiet && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS)));
       b.sprite.visible = b.shown && !(underGlobe && away < GLOBE_FADE_FROM * EARTH_RADIUS_AU);
       if (b.orbit) {
