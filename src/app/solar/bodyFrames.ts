@@ -48,6 +48,9 @@ interface Rotation {
  * facing their planets (their long axes towards them); Mathilde's slow 17.4-day turn on an
  * approximate pole; Hyperion, Nix and Hydra tumble chaotically in truth, and Halley's turn is
  * complex, so they turn steadily at about their rates on made-up poles.
+ * The made-up asteroids: Pallas on its measured pole (ecliptic 42°, −15°; it lies nearly on its
+ * side) and 7.81-hour turn; Ingeborg, Sisyphus, Öpik and Eric at their measured periods, Zeus,
+ * Napier and 2014 MQ18 ("Awilix") at made-up ones (none is known), all on made-up poles.
  * Charon: its mean pole, facing Pluto (as Pluto faces it). Vesta: Dawn's pole and spin (the IAU's
  * 2015 elements; the DLR maps' longitudes may sit on an older prime meridian, which only shifts
  * which face is turned our way at a moment, on a body that turns in 5.3 hours).
@@ -122,6 +125,14 @@ const ROTATIONS: Record<string, Rotation> = {
   Puck: { ra: [257.31, 0], dec: [-15.18, 0] },
   Nix: { ra: [220, 0], dec: [30, 0], w: [0, 196.811] },
   Hydra: { ra: [80, 0], dec: [20, 0], w: [0, 838.835] },
+  "2Pallas": { ra: [44.1, 0], dec: [1.1, 0], w: [0, 1105.81789] },
+  "391Ingeborg": { ra: [120, 0], dec: [40, 0], w: [0, 327.384336] },
+  "1866Sisyphus": { ra: [300, 0], dec: [55, 0], w: [0, 3600] },
+  "2099Öpik": { ra: [200, 0], dec: [-30, 0], w: [0, 1340.990222] },
+  "4954Eric": { ra: [15, 0], dec: [62, 0], w: [0, 716.655607] },
+  "5731Zeus": { ra: [250, 0], dec: [-20, 0], w: [0, 1183.561644] },
+  "7096Napier": { ra: [80, 0], dec: [35, 0], w: [0, 1694.117647] },
+  "514041Asteroid": { ra: [170, 0], dec: [-55, 0], w: [0, 900] },
   Eris: { ra: [36.17, 0], dec: [44.51, 0], w: [0, 22.805163] },
   Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
   Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },

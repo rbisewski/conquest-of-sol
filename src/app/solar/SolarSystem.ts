@@ -61,6 +61,14 @@ const ART_RADIUS: Record<string, number> = {
   "433Eros": 2,
   "21Lutetia": 2,
   "253Mathilde": 2,
+  "2Pallas": 2,
+  "391Ingeborg": 2,
+  "1866Sisyphus": 2,
+  "2099Öpik": 2,
+  "4954Eric": 2,
+  "5731Zeus": 2,
+  "7096Napier": 2,
+  "514041Asteroid": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
@@ -106,6 +114,14 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
   Puck: 84,
   Nix: 84,
   Hydra: 84,
+  "2Pallas": 84,
+  "391Ingeborg": 84,
+  "1866Sisyphus": 84,
+  "2099Öpik": 84,
+  "4954Eric": 84,
+  "5731Zeus": 84,
+  "7096Napier": 84,
+  "514041Asteroid": 84,
 };
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
@@ -113,7 +129,7 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
     id,
     SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),

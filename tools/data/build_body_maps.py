@@ -714,8 +714,15 @@ def save_relief(name: str, radius: np.ndarray) -> None:
     Image.fromarray(packed, "RGB").save(MAP_OUT / f"{name}_shape.png", optimize=True)
 
 
+def sunpoint_xyz(lat: float, lon: float) -> np.ndarray:
+    """A direction from latitude and longitude in degrees, in the maps' frame (cos lat cos lon, sin lat, −cos lat sin lon)."""
+    la, lo = np.radians(lat), np.radians(lon)
+    return np.array([np.cos(la) * np.cos(lo), np.sin(la), -np.cos(la) * np.sin(lo)])
+
+
 def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: float, waist: float, craters: int,
-             stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]], mean: float = 1.0) -> None:
+             stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]], mean: float = 1.0,
+             basin: tuple[float, float, float, float] | None = None, depth: float = 1.0) -> None:
     """
     A made-up small asteroid: no spacecraft has seen it, so both its shape and its surface are
     invented, after what its light curve and spectrum say. Writes two maps: <name>.png, the
@@ -728,7 +735,9 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
     at the middle of its long axis for a two-lobed body (waist), made lumpy with value noise on the
     sphere at two scales, then cratered: bowls with raised rims, a few big and many small (sizes
     by a power law). Scaled so its mean radius is mean (Terra Invicta's radius, unless measured
-    dimensions say otherwise). The surface: a
+    dimensions say otherwise), with a great basin if given (latitude, longitude, angular radius in
+    degrees, depth in radii) flattening one side; depth scales the craters' (a big body's are far
+    shallower for its size than a small rubble pile's). The surface: a
     space-weathered regolith tone mottled at two scales, the youngest craters' floors and ejecta
     brighter and fresher, on a ramp of its tones, with ordered dithering.
     """
@@ -741,6 +750,10 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
     big = sphere_noise(seed + 1, [(1.2, 1.0), (2.2, 0.5)])
     small = sphere_noise(seed + 2, [(5, 1.0), (9, 0.5)])
     radius *= 1 + lumps * (big - 0.5) + 0.06 * (small - 0.5)
+    if basin:
+        lat0, lon0, size, sink = basin
+        q = np.degrees(np.arccos(np.clip(u @ sunpoint_xyz(lat0, lon0), -1, 1))) / size
+        radius *= 1 - sink * np.where(q < 1, np.cos(q * np.pi / 2) ** 2, 0) + 0.25 * sink * np.exp(-(((q - 1.05) / 0.12) ** 2))
     fresh = np.zeros((H, W))
     for k in range(craters):
         centre = rng.normal(size=3)
@@ -749,8 +762,8 @@ def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: floa
         rho = np.radians(4 + 34 * rng.random() ** 3.2)
         theta = np.arccos(np.clip(u @ centre, -1, 1))
         q = theta / rho
-        bowl = np.where(q < 1, -(1 - q * q), 0) * 0.32 * rho
-        rim = 0.1 * rho * np.exp(-(((q - 1.05) / 0.22) ** 2))
+        bowl = np.where(q < 1, -(1 - q * q), 0) * 0.32 * rho * depth
+        rim = 0.1 * rho * depth * np.exp(-(((q - 1.05) / 0.22) ** 2))
         radius *= 1 + bowl + rim
         # A few are young: brighter floors and ejecta.
         if rng.random() < 0.25:
@@ -928,6 +941,40 @@ MEASURED = {
     # New Horizons' Hydra, 50.9 × 36.1 × 30.9 km: brighter still (albedo 0.83), perhaps two-lobed.
     "hydra": measured("hydra", 257, (25.45, 15.45, 18.05), 32.5, 0.28, 0.12, 16, [(0, (110, 110, 112)), (0.5, (196, 196, 198)), (1, (246, 246, 246))]),
 }
+
+
+# Main-belt and near-Earth asteroids with no shape model or map, made up at their measured sizes
+# (JPL's Small-Body Database: diameter, albedo, spectral type), as elongated as their light
+# curves suggest where known: (seed, semi-axes in km along longitude 0°, the pole and 90°W,
+# Terra Invicta's radius, lumps, waist, craters, tones, basin, and optionally crater depth).
+DARK = [(0, (18, 17, 17)), (0.5, (52, 49, 47)), (1, (104, 100, 97))]
+S_TYPE = [(0, (58, 50, 42)), (0.5, (138, 122, 102)), (1, (204, 190, 166))]
+MADE_UP_ASTEROIDS = {
+    # Pallas, 568 × 532 × 448 km: a B-type, bluish grey (albedo 0.155), so battered by large
+    # craters (Marsset et al. 2020) that it looks like a golf ball, its south flattened as if by
+    # an old basin, like Vesta's Rheasilvia.
+    "pallas": (271, (284, 224, 266), 284.0, 0.05, 0.0, 90, [(0, (50, 54, 60)), (0.5, (118, 124, 132)), (1, (186, 192, 198))], (-75, 30, 55, 0.07), 0.4),
+    # Ingeborg, about 16 km: a bright S-type (albedo 0.29), turning slowly (26.4 hours).
+    "ingeborg": (277, (9.0, 6.8, 7.8), 9.815, 0.3, 0.0, 30, [(0, (70, 62, 52)), (0.5, (156, 140, 118)), (1, (222, 210, 188))], None),
+    # Sisyphus, about 8.5 km, a fast rotator (2.4 hours) with a light curve hardly varying: nearly
+    # round, a little squat, perhaps with a small moon.
+    "sisyphus": (281, (4.4, 3.9, 4.35), 4.45, 0.16, 0.0, 26, S_TYPE, None),
+    # Eric, about 11 km: an S-type, turning in 12.06 hours (Hanuš et al. 2013's model period).
+    "eric": (283, (6.4, 4.4, 5.0), 5.4, 0.3, 0.0, 30, S_TYPE, None),
+    # Öpik, about 5 km: dark (albedo 0.056), carbonaceous, turning in 6.44 hours.
+    "opik": (293, (3.0, 2.2, 2.6), 2.59, 0.3, 0.0, 22, [(0, (22, 21, 20)), (0.5, (60, 57, 54)), (1, (116, 112, 108))], None),
+    # Zeus, Napier and 2014 MQ18 (Terra Invicta's "Awilix"), each about 5 km, on long,
+    # comet-like orbits: as dark as coal (albedo 0.03–0.04), perhaps spent comets.
+    "zeus": (307, (3.1, 2.1, 2.5), 2.615, 0.32, 0.05, 18, DARK, None),
+    "napier": (311, (3.2, 2.4, 2.8), 2.795, 0.3, 0.0, 20, DARK, None),
+    "awilix": (313, (3.3, 2.2, 2.4), 2.636, 0.34, 0.1, 16, DARK, None),
+}
+
+
+def made_up_asteroid(name: str):
+    seed, (a, c, b), radius_km, lumps, waist, craters, stops, basin, *depth = MADE_UP_ASTEROIDS[name]
+    mean = (a * b * c) ** (1 / 3) / radius_km
+    return lambda: asteroid(name, seed, (a / radius_km, c / radius_km, b / radius_km), lumps, waist, craters, stops, grey_steps(stops, 7), mean, basin, *depth)
 
 
 def neptune() -> None:
@@ -1113,6 +1160,7 @@ BODIES = {
     "uranus": uranus, "miranda": miranda, "ariel": ariel, "umbriel": umbriel, "titania": titania, "oberon": oberon,
     "lick": lick, "cruithne": cruithne, "khonsu": khonsu, "arendrigaux": arend_rigaux, "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "charon": charon, "vesta": vesta, "eris": eris, "haumea": haumea, "makemake": makemake,
     **{name: shaped_body(name) for name in SHAPED}, **MEASURED,
+    **{name: made_up_asteroid(name) for name in MADE_UP_ASTEROIDS},
 }
 
 if __name__ == "__main__":

@@ -96,6 +96,14 @@ const MAP_FILES: Record<string, string> = {
   Puck: "puck.png",
   Nix: "nix.png",
   Hydra: "hydra.png",
+  "2Pallas": "pallas.png",
+  "391Ingeborg": "ingeborg.png",
+  "1866Sisyphus": "sisyphus.png",
+  "2099Öpik": "opik.png",
+  "4954Eric": "eric.png",
+  "5731Zeus": "zeus.png",
+  "7096Napier": "napier.png",
+  "514041Asteroid": "awilix.png",
 };
 const mapLoads = new Map<string, Promise<MapImage>>();
 
@@ -377,6 +385,15 @@ const STYLES: Record<string, Style> = {
   Puck: { base: "#8c867e", lumpy: { reach: 1.19 } },
   Nix: { base: "#8c867e", lumpy: { reach: 1.23 } },
   Hydra: { base: "#8c867e", lumpy: { reach: 0.96 } },
+  // Asteroids with no shape model or map at all, made up at their measured sizes.
+  "2Pallas": { base: "#8c867e", lumpy: { reach: 1.15 } },
+  "391Ingeborg": { base: "#8c867e", lumpy: { reach: 1.13 } },
+  "1866Sisyphus": { base: "#8c867e", lumpy: { reach: 1.1 } },
+  "2099Öpik": { base: "#8c867e", lumpy: { reach: 1.33 } },
+  "4954Eric": { base: "#8c867e", lumpy: { reach: 1.33 } },
+  "5731Zeus": { base: "#8c867e", lumpy: { reach: 1.41 } },
+  "7096Napier": { base: "#8c867e", lumpy: { reach: 1.34 } },
+  "514041Asteroid": { base: "#8c867e", lumpy: { reach: 1.46 } },
 };
 
 const MOON_STYLE: Style = { base: "#a39c94", spots: [{ color: "#827b74", scale: 5, threshold: 0.6 }, { color: "#c3bdb5", scale: 9, threshold: 0.72 }] };

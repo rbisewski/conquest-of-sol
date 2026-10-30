@@ -165,5 +165,9 @@
   "argPeriapsis_Deg": 43.88301576978012,
   "meanAnomalyAtEpoch_Deg": 182.1324439296505,
   "epochJD": 2461200.5
+ },
+ "5731Zeus": {
+  "_source": "the game names it 5371 Zeus; it is (5731) Zeus (JPL SBDB, its own data name)",
+  "friendlyName": "5731 Zeus"
  }
 }
