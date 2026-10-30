@@ -29,7 +29,8 @@ interface Rotation {
 }
 
 /**
- * Mercury: MESSENGER's pole and spin (the small librations are left out). Venus: its pole, but
+ * Sol: the IAU's pole and Carrington's turn (about 25.4 days; drawSun turns its sunspots at their
+ * own latitudes' rates against it). Mercury: MESSENGER's pole and spin (the small librations are left out). Venus: its pole, but
  * the cloud tops' turn, not the surface's: they race round westward in about four days. Luna:
  * its mean pole, facing the Earth. Mars: the 2009 elements (the small periodic terms left out).
  * Ceres: Dawn's. Jupiter: System III, the turn of its magnetic field (its clouds have no fixed
@@ -48,9 +49,14 @@ interface Rotation {
  * so it is put square to our line of sight (its moon's orbit is seen edge-on) as near the
  * ecliptic's pole as that allows. Eris's, Haumea's and Makemake's prime meridians are unknown
  * and set at 0° at J2000. Phobos and Deimos: their mean poles with the largest periodic terms
- * (1.8° and 3.1°), facing Mars (the IAU's own meridians add librations as small).
+ * (1.8° and 3.1°), facing Mars (the IAU's own meridians add librations as small). The asteroids
+ * 1951 Lick (5.30 hours, its light curve database period), 3753 Cruithne (27.31 hours; Larsen
+ * 2014) and 52762 Khonsu (12.08 hours) turn at their measured rates, but their poles are unknown
+ * and made up, and their prime meridians set at 0° at J2000. So is the comet Arend-Rigaux's
+ * nucleus, turning backwards (W falls) in 13.45 hours (Eisner et al. 2017).
  */
 const ROTATIONS: Record<string, Rotation> = {
+  Sol: { ra: [286.13, 0], dec: [63.87, 0], w: [84.176, 14.1844] },
   Mercury: { ra: [281.0103, -0.0328], dec: [61.4155, -0.0049], w: [329.5988, 6.1385108] },
   Venus: { ra: [272.76, 0], dec: [67.16, 0], w: [0, -90] },
   Luna: { ra: [269.9949, 0.0031], dec: [66.5392, 0.013] },
@@ -86,6 +92,10 @@ const ROTATIONS: Record<string, Rotation> = {
   Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
   Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },
   Phobos: { ra: [317.67071657, -0.10844326], dec: [52.88627266, -0.06134706], swing: { node: [190.72646643, 15917.10818695], ra: [-1.78428399], dec: [-1.07516537] } },
+  "1951Lick": { ra: [62, 0], dec: [38, 0], w: [0, 1629.696695] },
+  "3753Cruithne": { ra: [214, 0], dec: [-47, 0], w: [0, 316.368789] },
+  "52762Asteroid": { ra: [331, 0], dec: [21, 0], w: [0, 715.231788] },
+  ArendRigaux: { ra: [118, 0], dec: [-28, 0], w: [0, -642.379182] },
   Deimos: { ra: [316.65705808, -0.10518014], dec: [53.50992033, -0.05979094], swing: { node: [121.46893664, 660.22803474], ra: [3.09217726], dec: [1.83936004] } },
 };
 

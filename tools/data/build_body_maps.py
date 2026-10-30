@@ -704,6 +704,93 @@ def deimos() -> None:
     save("deimos.png", out, kmeans_palette(np.clip(out, 0, 255), 9), dither=8)
 
 
+def asteroid(name: str, seed: int, axes: tuple[float, float, float], lumps: float, waist: float, craters: int,
+             stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]]) -> None:
+    """
+    A made-up small asteroid: no spacecraft has seen it, so both its shape and its surface are
+    invented, after what its light curve and spectrum say. Writes two maps: <name>.png, the
+    surface's colour, and <name>_shape.png, how far the surface lies from the centre in each
+    direction, at half the size: 0 to 2 radii in 16 bits, the high byte in red and the low in
+    green (a browser reads only 8 bits a channel, and 8 would terrace the slopes); bodyArt.ts
+    ray-casts it.
+
+    The shape: an ellipsoid of the given semi-axes (along longitude 0°, the pole and 90°W), pinched
+    at the middle of its long axis for a two-lobed body (waist), made lumpy with value noise on the
+    sphere at two scales, then cratered: bowls with raised rims, a few big and many small (sizes
+    by a power law). Scaled so its mean radius is 1 (Terra Invicta's radius). The surface: a
+    space-weathered regolith tone mottled at two scales, the youngest craters' floors and ejecta
+    brighter and fresher, on a ramp of its tones, with ordered dithering.
+    """
+    rng = np.random.default_rng(seed)
+    lat, lon = np.radians(LAT), np.radians(LON)
+    u = np.stack([np.cos(lat) * np.cos(lon), np.sin(lat), -np.cos(lat) * np.sin(lon)], axis=-1)
+    a, c, b = axes
+    radius = 1 / np.sqrt((u[..., 0] / a) ** 2 + (u[..., 1] / c) ** 2 + (u[..., 2] / b) ** 2)
+    radius *= 1 - waist * np.exp(-((u[..., 0] / 0.32) ** 2))
+    big = sphere_noise(seed + 1, [(1.2, 1.0), (2.2, 0.5)])
+    small = sphere_noise(seed + 2, [(5, 1.0), (9, 0.5)])
+    radius *= 1 + lumps * (big - 0.5) + 0.06 * (small - 0.5)
+    fresh = np.zeros((H, W))
+    for k in range(craters):
+        centre = rng.normal(size=3)
+        centre /= np.linalg.norm(centre)
+        # Sizes by a power law: angular radius 4° to 38°, most of them small.
+        rho = np.radians(4 + 34 * rng.random() ** 3.2)
+        theta = np.arccos(np.clip(u @ centre, -1, 1))
+        q = theta / rho
+        bowl = np.where(q < 1, -(1 - q * q), 0) * 0.32 * rho
+        rim = 0.1 * rho * np.exp(-(((q - 1.05) / 0.22) ** 2))
+        radius *= 1 + bowl + rim
+        # A few are young: brighter floors and ejecta.
+        if rng.random() < 0.25:
+            fresh = np.maximum(fresh, np.clip(1.6 - q, 0, 1) * (0.6 + 0.4 * rng.random()))
+    radius /= radius.mean()
+    print(f"{name}: shape reaches {radius.max():.3f} radii")
+    level = np.round(np.clip(radius.reshape(H // 2, 2, W // 2, 2).mean(axis=(1, 3)) / 2, 0, 1) * 65535).astype(np.uint32)
+    packed = np.stack([level >> 8, level & 255, np.zeros_like(level)], axis=-1).astype(np.uint8)
+    Image.fromarray(packed, "RGB").save(MAP_OUT / f"{name}_shape.png", optimize=True)
+    mottle = sphere_noise(seed + 3, [(2.5, 1.0), (7, 0.6), (18, 0.35)])
+    value = 0.45 + (mottle - 0.5) * 0.9 + 0.35 * fresh
+    save(f"{name}.png", ramp(np.clip(value, 0, 1), stops), palette, dither=8)
+
+
+def lick() -> None:
+    # 1951 Lick: about 5.6 km across, turning in 5.30 hours; its light curve (0.25–0.33 mag) says
+    # about 1.35 times as long as it is wide. An A-type: olivine-rich, a reddish grey-tan, darkish
+    # (albedo about 0.09).
+    asteroid("lick", 101, (1.35, 0.82, 1.0), 0.32, 0.0, 34,
+             [(0, (52, 42, 36)), (0.45, (112, 92, 78)), (0.75, (150, 128, 110)), (1, (196, 178, 160))],
+             [(52, 42, 36), (72, 59, 50), (92, 76, 64), (112, 92, 78), (132, 110, 94), (156, 136, 118), (196, 178, 160)])
+
+
+def cruithne() -> None:
+    # 3753 Cruithne, the Earth's quasi-satellite: about 2 km across, turning in 27.31 hours; its
+    # large light-curve swing (0.67 mag) says nearly twice as long as wide, so it is made two-
+    # lobed. A Q-type, fresh and unweathered, bright for an asteroid (albedo about 0.37): light grey.
+    asteroid("cruithne", 103, (1.85, 0.85, 1.0), 0.26, 0.22, 26,
+             [(0, (78, 76, 74)), (0.45, (150, 147, 142)), (0.75, (186, 183, 178)), (1, (226, 224, 220))],
+             [(78, 76, 74), (102, 100, 97), (126, 123, 119), (150, 147, 142), (170, 167, 162), (190, 187, 182), (226, 224, 220)])
+
+
+def khonsu() -> None:
+    # 52762 Khonsu (1998 MT24): about 6.7 km across, turning in 12.08 hours, on a comet-like orbit
+    # out to 4 AU. Its shape and make-up are unknown: a blocky, lumpy stony body, S-type grey-brown.
+    asteroid("khonsu", 107, (1.2, 0.88, 1.0), 0.42, 0.0, 40,
+             [(0, (50, 46, 42)), (0.45, (118, 108, 96)), (0.75, (154, 142, 128)), (1, (202, 192, 178))],
+             [(50, 46, 42), (70, 64, 58), (94, 86, 77), (118, 108, 96), (138, 127, 114), (160, 148, 134), (202, 192, 178)])
+
+
+def arend_rigaux() -> None:
+    # 49P/Arend-Rigaux, a nearly spent comet: a nucleus about 8.5 km across, turning backwards in
+    # 13.45 hours (Eisner et al. 2017); its light curve (up to 0.4 mag) says about 1.45 times as long
+    # as wide. One of the darkest things in the Solar System (albedo 0.028): coal-black, faintly
+    # reddish, pitted rather than cratered, with a few paler patches of exposed ice. A little
+    # lighter than life, so its shape still reads in the game's shade steps.
+    asteroid("arendrigaux", 109, (1.45, 0.86, 1.0), 0.3, 0.06, 16,
+             [(0, (22, 20, 20)), (0.45, (58, 53, 50)), (0.78, (86, 79, 74)), (1, (140, 148, 154))],
+             [(22, 20, 20), (34, 31, 30), (46, 42, 40), (58, 53, 50), (72, 66, 62), (88, 80, 75), (140, 148, 154)])
+
+
 def neptune() -> None:
     # Made up, as Uranus: no public-domain global map exists. After Voyager 2's, Hubble's and
     # JWST's views: a deeper, bluer globe than Uranus (true colour, as Irwin et al. 2024 rebalanced
@@ -836,7 +923,7 @@ BODIES = {
     "saturn": saturn, "titan": titan, "mimas": mimas, "enceladus": enceladus, "tethys": tethys,
     "dione": dione, "rhea": rhea, "iapetus": iapetus,
     "uranus": uranus, "miranda": miranda, "ariel": ariel, "umbriel": umbriel, "titania": titania, "oberon": oberon,
-    "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "eris": eris, "haumea": haumea, "makemake": makemake,
+    "lick": lick, "cruithne": cruithne, "khonsu": khonsu, "arendrigaux": arend_rigaux, "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "eris": eris, "haumea": haumea, "makemake": makemake,
 }
 
 if __name__ == "__main__":

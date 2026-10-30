@@ -7,7 +7,10 @@
 // Pluto pixel-art maps made from spacecraft mosaics; Venus, Saturn, Uranus and Neptune made-up ones
 // of their cloud tops, and Eris, Haumea and Makemake, which no spacecraft has seen, made-up ones of
 // their ice (tools/data/build_body_maps.py); Phobos and Deimos from Viking's. Haumea, Phobos and
-// Deimos are drawn as the stretched ellipsoids they are.
+// Deimos are drawn as the stretched ellipsoids they are; the small asteroids 1951 Lick, 3753
+// Cruithne and 52762 Khonsu, made up entirely, as lumpy shapes ray-cast from maps of their relief,
+// and the comet Arend-Rigaux's nucleus the same way, its jets, coma and tails drawn over it
+// (drawCometActivity).
 
 /** Light direction in view space: x right, y up, z towards the viewer. */
 export interface Light {
@@ -17,6 +20,8 @@ export interface Light {
 }
 
 type RGB = [number, number, number];
+type Vec3 = [number, number, number];
+const dot3 = (a: Vec3, b: Vec3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 
 /** The Earth's pixel map, sampled for its disc once loaded. */
 export interface MapImage {
@@ -60,6 +65,10 @@ const MAP_FILES: Record<string, string> = {
   Makemake: "makemake.png",
   Phobos: "phobos.png",
   Deimos: "deimos.png",
+  "1951Lick": "lick.png",
+  "3753Cruithne": "cruithne.png",
+  "52762Asteroid": "khonsu.png",
+  ArendRigaux: "arendrigaux.png",
 };
 const mapLoads = new Map<string, Promise<MapImage>>();
 
@@ -78,19 +87,114 @@ export function bodyMap(id: string): Promise<MapImage> | null {
   if (!file) return null;
   let load = mapLoads.get(id);
   if (load) return load;
-  load = (async () => {
-    const image = new Image();
-    image.src = `${import.meta.env.BASE_URL}map/${file}`;
-    await image.decode();
-    const canvas = document.createElement("canvas");
-    canvas.width = image.width;
-    canvas.height = image.height;
-    const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
-    ctx.drawImage(image, 0, 0);
-    return { width: image.width, height: image.height, data: ctx.getImageData(0, 0, image.width, image.height).data };
-  })();
+  load = loadImage(file);
   mapLoads.set(id, load);
   return load;
+}
+
+async function loadImage(file: string): Promise<MapImage> {
+  const image = new Image();
+  image.src = `${import.meta.env.BASE_URL}map/${file}`;
+  await image.decode();
+  const canvas = document.createElement("canvas");
+  canvas.width = image.width;
+  canvas.height = image.height;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
+  ctx.drawImage(image, 0, 0);
+  return { width: image.width, height: image.height, data: ctx.getImageData(0, 0, image.width, image.height).data };
+}
+
+/**
+ * A lumpy body's relief: how far its surface lies from its centre (in its radii) in each
+ * direction, on a cube map (six faces of size × size, x+, x−, y+, y−, z+, z−, in its frame), so a
+ * direction is looked up with a division rather than trigonometry; and the farthest it reaches.
+ */
+export interface Relief {
+  size: number;
+  data: Float32Array;
+  reach: number;
+}
+
+const reliefLoads = new Map<string, Promise<Relief>>();
+
+export function hasRelief(id: string): boolean {
+  return !!STYLES[id]?.lumpy;
+}
+
+/** A lumpy body's relief, loaded once from <map>_shape.png (16 bits, high byte red, low green, 0 to 2 radii) and laid on a cube map; null for any other body. */
+export function bodyRelief(id: string): Promise<Relief> | null {
+  if (!hasRelief(id)) return null;
+  let load = reliefLoads.get(id);
+  if (load) return load;
+  load = loadImage(MAP_FILES[id]!.replace(".png", "_shape.png")).then((map) => {
+    const size = 96;
+    const data = new Float32Array(6 * size * size);
+    const at = (x: number, y: number) => {
+      const o = (y * map.width + x) * 4;
+      return ((map.data[o]! * 256 + map.data[o + 1]!) / 65535) * 2;
+    };
+    let reach = 0;
+    for (let f = 0; f < 6; f++) {
+      for (let j = 0; j < size; j++) {
+        for (let i = 0; i < size; i++) {
+          const u = ((i + 0.5) / size) * 2 - 1;
+          const v = ((j + 0.5) / size) * 2 - 1;
+          const s = f & 1 ? -1 : 1;
+          const [x, y, z] = f < 2 ? [s, u, v] : f < 4 ? [u, s, v] : [u, v, s];
+          const lat = Math.atan2(y, Math.hypot(x, z));
+          const lon = Math.atan2(-z, x);
+          // Bilinear in the map, wrapping in longitude.
+          const fx = ((lon + Math.PI) / (2 * Math.PI)) * map.width - 0.5;
+          const fy = Math.min(map.height - 1, Math.max(0, ((Math.PI / 2 - lat) / Math.PI) * map.height - 0.5));
+          const x0 = Math.floor(fx);
+          const y0 = Math.floor(fy);
+          const y1 = Math.min(map.height - 1, y0 + 1);
+          const [tx, ty] = [fx - x0, fy - y0];
+          const wrap = (n: number) => ((n % map.width) + map.width) % map.width;
+          const r =
+            (at(wrap(x0), y0) * (1 - tx) + at(wrap(x0 + 1), y0) * tx) * (1 - ty) + (at(wrap(x0), y1) * (1 - tx) + at(wrap(x0 + 1), y1) * tx) * ty;
+          data[(f * size + j) * size + i] = r;
+          reach = Math.max(reach, r);
+        }
+      }
+    }
+    return { size, data, reach };
+  });
+  reliefLoads.set(id, load);
+  return load;
+}
+
+/** The relief's radius in a direction (any length), bilinear on its cube face. Called millions of times a frame, so written plainly (no arrays made). */
+function reliefAt(relief: Relief, x: number, y: number, z: number): number {
+  const ax = Math.abs(x);
+  const ay = Math.abs(y);
+  const az = Math.abs(z);
+  let f: number;
+  let u: number;
+  let v: number;
+  if (ax >= ay && ax >= az) {
+    f = x > 0 ? 0 : 1;
+    u = y / ax;
+    v = z / ax;
+  } else if (ay >= az) {
+    f = y > 0 ? 2 : 3;
+    u = x / ay;
+    v = z / ay;
+  } else {
+    f = z > 0 ? 4 : 5;
+    u = x / az;
+    v = y / az;
+  }
+  const n = relief.size;
+  const fi = Math.min(n - 1.001, Math.max(0, (u + 1) * 0.5 * n - 0.5));
+  const fj = Math.min(n - 1.001, Math.max(0, (v + 1) * 0.5 * n - 0.5));
+  const i = fi | 0;
+  const j = fj | 0;
+  const ti = fi - i;
+  const tj = fj - j;
+  const o = (f * n + j) * n + i;
+  const d = relief.data;
+  return (d[o]! * (1 - ti) + d[o + 1]! * ti) * (1 - tj) + (d[o + n]! * (1 - ti) + d[o + n + 1]! * ti) * tj;
 }
 
 interface Style {
@@ -111,6 +215,8 @@ interface Style {
   glow?: { color: string; reach: number };
   /** An ellipsoid's semi-axes in the body's radii, along longitude 0°, the north pole and longitude 90° west (its frame's axes); a sphere without. */
   shape?: [number, number, number];
+  /** A lumpy body, ray-cast from its relief (bodyRelief) once loaded, reaching this far out in its radii (the ellipsoid shape stands in till then). */
+  lumpy?: { reach: number };
 }
 
 interface RingBand {
@@ -212,6 +318,10 @@ const STYLES: Record<string, Style> = {
   Makemake: { base: "#b57d5c", spots: [{ color: "#d8b393", scale: 5, threshold: 0.62 }] },
   Phobos: { base: "#6c6560", shape: PHOBOS_SHAPE },
   Deimos: { base: "#787068", shape: DEIMOS_SHAPE },
+  "1951Lick": { base: "#706055", shape: [1.35, 0.82, 1], lumpy: { reach: 1.62 } },
+  "3753Cruithne": { base: "#96938e", shape: [1.6, 0.85, 1], lumpy: { reach: 1.88 } },
+  "52762Asteroid": { base: "#76695e", shape: [1.2, 0.88, 1], lumpy: { reach: 1.34 } },
+  ArendRigaux: { base: "#3a3532", shape: [1.45, 0.86, 1], lumpy: { reach: 1.63 } },
 };
 
 const MOON_STYLE: Style = { base: "#a39c94", spots: [{ color: "#827b74", scale: 5, threshold: 0.6 }, { color: "#c3bdb5", scale: 9, threshold: 0.72 }] };
@@ -307,10 +417,16 @@ function glowReach(style: Style, r: number): number {
   return style.glow ? Math.max(2, Math.ceil(r * style.glow.reach)) : 0;
 }
 
-/** How far a body's drawing reaches, in its radii: its rings' outer edge, or its longest axis (1 for a sphere). */
-export function bodyReach(id: string): number {
+/** How far a body's surface reaches, in its radii: its farthest lump, its longest axis, or 1 for a sphere. */
+export function surfaceReach(id: string): number {
   const style = STYLES[id] ?? MOON_STYLE;
-  return Math.max(style.ring ? style.ring[style.ring.length - 1]!.to : 1, ...(style.shape ?? [1]));
+  return Math.max(style.lumpy?.reach ?? 1, ...(style.shape ?? [1]));
+}
+
+/** How far a body's drawing reaches, in its radii: its rings' outer edge, or its surface's. */
+export function bodyReach(id: string): number {
+  const ring = (STYLES[id] ?? MOON_STYLE).ring;
+  return Math.max(ring ? ring[ring.length - 1]!.to : 1, surfaceReach(id));
 }
 
 /** Canvas size for a body of art radius r (pixels), leaving room for Saturn's rings or an atmosphere's glow. */
@@ -360,14 +476,99 @@ function hitEllipsoid(dx: number, dy: number, s: [number, number, number], r: Or
 }
 
 /**
+ * How far to step along a ray from a lumpy surface's gap: a fraction of it (its slopes are steep
+ * in places, so a full step could pass through a lump), never less than LUMPY_MIN_STEP radii (a
+ * ray grazing the outline would otherwise creep along it; only slivers thinner than that are
+ * missed, and halving the last step finds the surface exactly), and at most LUMPY_STEPS of them.
+ */
+const LUMPY_STRIDE = 0.6;
+const LUMPY_MIN_STEP = 0.03;
+const LUMPY_STEPS = 64;
+
+/**
+ * Where a view ray (from the pixel at dx, dy towards the viewer) first meets a lumpy surface: it
+ * steps in from the front of the bounding sphere, each step a part of the gap between the point's
+ * distance from the centre and the relief's radius there (long strides through empty space,
+ * short ones near the surface) till it is inside, then halves its last step to the surface. The
+ * normal is the slope of the relief there (the gradient of distance less radius); shadowed is
+ * whether a lump stands between that point and the Sun (light, in the body's frame), found the
+ * same way. r and rt take view space to the body's frame and back.
+ */
+function hitLumpy(dx: number, dy: number, relief: Relief, r: Orient, rt: Orient, light: Vec3): { z: number; normal: Vec3; dir: Vec3; shadowed: boolean } | null {
+  const reach = relief.reach * 1.01;
+  const d2 = dx * dx + dy * dy;
+  if (d2 >= reach * reach) return null;
+  const top = Math.sqrt(reach * reach - d2);
+  const o = r([dx, dy, 0]);
+  const w = r([0, 0, 1]);
+  const gap = (x: number, y: number, z: number) => Math.sqrt(x * x + y * y + z * z) - reliefAt(relief, x, y, z);
+  const gapAt = (t: number) => gap(o[0] + t * w[0], o[1] + t * w[1], o[2] + t * w[2]);
+  let out = top;
+  let t = top;
+  let found = false;
+  for (let k = 0; k < LUMPY_STEPS && t > -top; k++) {
+    const g = gapAt(t);
+    if (g < 0) {
+      found = true;
+      break;
+    }
+    out = t;
+    t -= Math.max(g * LUMPY_STRIDE, LUMPY_MIN_STEP);
+  }
+  if (!found) return null;
+  for (let k = 0; k < 4; k++) {
+    const mid = (out + t) / 2;
+    if (gapAt(mid) < 0) t = mid;
+    else out = mid;
+  }
+  const p: Vec3 = [o[0] + t * w[0], o[1] + t * w[1], o[2] + t * w[2]];
+  // One-sided differences: the gap at the surface itself is nearly nothing.
+  const e = 0.02;
+  const g0 = gap(p[0], p[1], p[2]);
+  const g: Vec3 = [gap(p[0] + e, p[1], p[2]) - g0, gap(p[0], p[1] + e, p[2]) - g0, gap(p[0], p[1], p[2] + e) - g0];
+  const n = rt(g);
+  const nl = Math.hypot(...n) || 1;
+  const pl = Math.hypot(...p);
+  // Towards the Sun from just off the surface, till clear of the bounding sphere.
+  let shadowed = false;
+  if (dot3(g, light) < 0) shadowed = true;
+  else {
+    let s = 0.04;
+    for (let k = 0; k < LUMPY_STEPS && s < 2 * reach; k++) {
+      const x = p[0] + light[0] * s;
+      const y = p[1] + light[1] * s;
+      const z = p[2] + light[2] * s;
+      if (x * x + y * y + z * z > reach * reach) break;
+      const h = gap(x, y, z);
+      if (h < 0) {
+        shadowed = true;
+        break;
+      }
+      s += Math.max(h * LUMPY_STRIDE, LUMPY_MIN_STEP);
+    }
+  }
+  return { z: t, normal: [n[0] / nl, n[1] / nl, n[2] / nl], dir: rt([p[0] / pl, p[1] / pl, p[2] / pl]), shadowed };
+}
+
+/**
  * Draws a lit body of art radius r into a canvas of canvasSize(id, r), from its surface map when
  * given (the body's own; orient turns view space into the map's frame). Rings lie in the plane
  * square to the pole (view space): each pixel's ray meets that plane, and the ring there shows
  * where it is in front of the planet or clear of it, lit on whichever face the Sun is, darkened
  * in the planet's shadow; the rings shadow the planet in turn. An ellipsoid (Haumea) is ray-cast
- * in its own frame, lit by its true normals.
+ * in its own frame, lit by its true normals; a lumpy body (once its relief is given) ray-marched
+ * the same way, its lumps and crater walls shadowing it.
  */
-export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, map: MapImage | null = null, orient: Orient | null = null, pole: [number, number, number] = DEFAULT_POLE): void {
+export function drawBody(
+  ctx: CanvasRenderingContext2D,
+  id: string,
+  r: number,
+  light: Light,
+  map: MapImage | null = null,
+  orient: Orient | null = null,
+  pole: [number, number, number] = DEFAULT_POLE,
+  relief: Relief | null = null,
+): void {
   const style = STYLES[id] ?? MOON_STYLE;
   const size = ctx.canvas.width;
   const c = size / 2;
@@ -389,18 +590,19 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
   const glow = style.glow ? rgb(style.glow.color) : null;
   const glowPixels = glowReach(style, r);
   const shape = style.shape;
-  // For an ellipsoid: view space to its frame (the portrait's own if none is given) and back.
-  const toBody = shape ? (orient ?? PORTRAIT_ORIENT) : null;
+  // For an ellipsoid or a lumpy body: view space to its frame (the portrait's own if none is given) and back.
+  const toBody = shape || relief ? (orient ?? PORTRAIT_ORIENT) : null;
   const columns = toBody ? [toBody([1, 0, 0]), toBody([0, 1, 0]), toBody([0, 0, 1])] : null;
   const toView: Orient | null = columns
     ? (p) => columns.map((col) => col[0]! * p[0] + col[1]! * p[1] + col[2]! * p[2]) as [number, number, number]
     : null;
+  const sunInBody = relief ? toBody!([light.x, light.y, light.z]) : null;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const dx = (x + 0.5 - c) / r;
       const dy = -(y + 0.5 - c) / r;
       const d2 = dx * dx + dy * dy;
-      const hit = toBody ? hitEllipsoid(dx, dy, shape!, toBody, toView!) : null;
+      const hit = relief ? hitLumpy(dx, dy, relief, toBody!, toView!, sunInBody!) : toBody ? hitEllipsoid(dx, dy, shape!, toBody, toView!) : null;
       const sphereZ = toBody ? (hit ? hit.z : -Infinity) : d2 <= 1 ? Math.sqrt(1 - d2) : -Infinity;
       // The ring where this pixel's ray crosses the ring plane, if it is in front of the planet.
       let band: RingBand | null = null;
@@ -437,10 +639,13 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
       const z = sphereZ;
       // The surface's normal: the point itself on a unit sphere.
       const [mx, my, mz] = hit ? hit.normal : [dx, dy, z];
-      const lambert = mx * light.x + my * light.y + mz * light.z;
+      const lambert = hit && "shadowed" in hit && hit.shadowed ? -1 : mx * light.x + my * light.y + mz * light.z;
       // A slightly darker limb rounds the disc off (not under an atmosphere's soft haze).
       const limb = mz < 0.35 && !glow ? 0.88 : 1;
       let k = (glow ? hazeShade(lambert) : shade(lambert)) * limb;
+      // A lumpy body's lumps would flatten out in the brightest step under a high Sun: shade
+      // them a little more by their slope, still in steps.
+      if (relief && lambert > 0) k *= 0.7 + 0.3 * (Math.round(Math.min(1, lambert) * 10) / 10);
       if (ring && lambert > 0 && sunOnRing !== 0) {
         // The rings' shadow: follow the light from this point to the ring plane.
         const t = -(dx * nx + dy * ny + z * nz) / sunOnRing;
@@ -583,9 +788,10 @@ export function drawRock(ctx: CanvasRenderingContext2D, id: string, type: string
  * A comet's portrait at a time in seconds (redrawn a few times a second): a small lumpy
  * nucleus in the corner towards the Sun, in a faint dithered coma, shedding a sparse stream of
  * pixels away from the Sun: blue for the straight ion tail, whiter and fanning out for the dust.
- * r is the canvas's art radius; the nucleus is a little under half of it.
+ * r is the canvas's art radius; the nucleus is a little under half of it, a lumpy rock unless one
+ * drawn from its maps is given (centred on the nucleus's place).
  */
-export function drawComet(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, t: number): void {
+export function drawComet(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, t: number, nucleusArt: HTMLCanvasElement | null = null): void {
   const size = ctx.canvas.width;
   const image = ctx.createImageData(size, ctx.canvas.height);
   const seed = seedOf(id);
@@ -632,8 +838,142 @@ export function drawComet(ctx: CanvasRenderingContext2D, id: string, r: number, 
     const y = Math.floor(cy + uy * along + ux * side);
     blend(x, y, isIon ? ion : dust, (1 - s) * (isIon ? 0.85 : 0.7));
   }
-  paintRock(image, cx, cy, nucleus, id, light, COMET_TINT);
+  if (!nucleusArt) paintRock(image, cx, cy, nucleus, id, light, COMET_TINT);
   ctx.putImageData(image, 0, 0);
+  if (nucleusArt) ctx.drawImage(nucleusArt, Math.round(cx - nucleusArt.width / 2), Math.round(cy - nucleusArt.height / 2));
+}
+
+/** How far a comet's close-up tails reach on their canvas, in its nucleus's radii. */
+export const COMET_TAIL_REACH = 9;
+
+/** The canvas for a comet's activity drawn over a nucleus of art radius r. */
+export function cometCanvasSize(r: number): number {
+  return 2 * Math.ceil(r * COMET_TAIL_REACH) + 2;
+}
+
+/** The close-up tails' colours, brightest first: the ion tail's blues and the dust's creams (as the sprites'), and the coma's and jets' pale blue-white. */
+const ION_STEPS: RGB[] = ["#e6f6ff", "#9ed3ff", "#4f88c6"].map(rgb);
+const DUST_STEPS: RGB[] = ["#fff7e0", "#dbd1b8", "#8c8475"].map(rgb);
+const COMA = rgb("#cfe4ff");
+const JET_STEPS: RGB[] = [COMA, ION_STEPS[1]!, ION_STEPS[2]!];
+
+/** The coma last drawn, kept as long as its size, activity and the Sun's direction hold. */
+let comaCache: { key: string; image: ImageData; x: number; y: number } | null = null;
+
+/**
+ * A comet's activity close up at a time in seconds, drawn on its own canvas (cometCanvasSize)
+ * over its nucleus of art radius r, centred: activity 0–1 (smallBodies.ts cometActivity), light
+ * the Sun's direction in view space, orient view space to the nucleus's frame. All in single art
+ * pixels and ordered-dithered steps, as the far sprite's tails:
+ * - a coma, a faint dithered haze brighter towards the Sun, thinned over the nucleus so it shows;
+ * - jets from a few fixed vents on the nucleus that turn with it, erupting while their ground is
+ *   in sunlight, their grains flung out and then swept back away from the Sun;
+ * - the ion tail, blue pixels streaming fast and straight away from the Sun, rippling a little;
+ * - the dust tail, cream pixels drifting slower, fanning out and curving off to one side.
+ * The tails are shortened as the far sprite's are when the Sun is behind or in front, and hidden
+ * where they pass behind the nucleus. A faint comet still shows them all, fainter and shorter,
+ * so it reads as a comet close up as it does far away.
+ */
+export function drawCometActivity(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, activity: number, t: number, orient: Orient | null = null): void {
+  const size = ctx.canvas.width;
+  const c = size / 2;
+  ctx.clearRect(0, 0, size, size);
+  if (activity <= 0) return;
+  const seed = seedOf(id);
+  const across = Math.hypot(light.x, light.y);
+  const [ax, ay] = across > 1e-4 ? [-light.x / across, -light.y / across] : [0, -1];
+  const tail = (COMET_TAIL_REACH - 1) * Math.min(1, Math.max(0.5, across * 1.6)) * (0.35 + 0.65 * activity);
+  // Faint or not, a comet close up shows its activity.
+  const shown = 0.35 + 0.65 * activity;
+  // A tail pixel along the tail (radii; the tail runs away from the Sun, into the view when the Sun is in front) hides behind the nucleus.
+  const behind = (x: number, y: number, along: number) => light.z > 0 && x * x + y * y < 1.3 && along * light.z > 0.2;
+  const px = (x: number, y: number, color: RGB, alpha: number) => {
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
+    ctx.fillRect(Math.floor(c + x * r), Math.floor(c - y * r), 1, 1);
+  };
+  const step = (v: number, steps: RGB[]) => steps[v > 0.66 ? 0 : v > 0.33 ? 1 : 2]!;
+
+  // The coma: dithered into three steps of a pale haze, off-centre towards the Sun.
+  const reach = 1.8 + 2.2 * activity;
+  const key = `${r}:${Math.round(activity * 20)}:${Math.round(light.x * 20)},${Math.round(light.y * 20)}`;
+  if (comaCache?.key !== key) {
+    const half = Math.ceil(reach * r) + 2;
+    const image = new ImageData(2 * half, 2 * half);
+    const [ox, oy] = [light.x * 0.35, light.y * 0.35];
+    for (let y = 0; y < 2 * half; y++) {
+      for (let x = 0; x < 2 * half; x++) {
+        const qx = (x + 0.5 - half) / r;
+        const qy = -(y + 0.5 - half) / r;
+        const d = Math.hypot(qx - ox, qy - oy) / reach;
+        if (d >= 1) continue;
+        // Thin over the nucleus, so its shape shows through.
+        const over = Math.hypot(qx, qy) < 1.1 ? 0.35 : 1;
+        const level = Math.floor(((1 - d) ** 2 * 0.9 * shown * over + 0.35 * (BAYER[(y & 3) * 4 + (x & 3)]! + 0.5)) * 3) / 3;
+        if (level <= 0.34) continue;
+        const o = (y * 2 * half + x) * 4;
+        image.data[o] = COMA[0];
+        image.data[o + 1] = COMA[1];
+        image.data[o + 2] = COMA[2];
+        image.data[o + 3] = Math.round((level - 0.33) * 190);
+      }
+    }
+    comaCache = { key, image, x: Math.round(c - half), y: Math.round(c - half) };
+  }
+  ctx.putImageData(comaCache.image, comaCache.x, comaCache.y);
+
+  // Jets: vents fixed on the nucleus, erupting while the Sun is on them.
+  const toBody = orient ?? PORTRAIT_ORIENT;
+  const columns = [toBody([1, 0, 0]), toBody([0, 1, 0]), toBody([0, 0, 1])];
+  const toView = (p: Vec3): Vec3 => [dot3(columns[0]!, p), dot3(columns[1]!, p), dot3(columns[2]!, p)];
+  const sunward: Vec3 = [light.x, light.y, light.z];
+  for (let v = 0; v < 3; v++) {
+    const vent = sunPoint((hash(v, 0, 0, seed) - 0.5) * 140, hash(v, 1, 0, seed) * 360);
+    const out = toView(vent);
+    const sunlit = dot3(out, sunward);
+    if (sunlit < 0.1) continue;
+    const strength = Math.min(1, sunlit * 1.5) * shown;
+    for (let k = 0; k < 46; k++) {
+      const age = (hash(k, v, 2, seed) + t * (0.35 + 0.2 * hash(k, v, 3, seed))) % 1;
+      // Flung out along the vent's normal in a narrow cone, then swept back from the Sun.
+      const spread = 0.18 * (hash(k, v, 4, seed) - 0.5);
+      const fly = 0.3 + age * 2.4;
+      const sweep = age * age * 2.2;
+      const x = out[0] * (1.05 + fly) + spread * out[1] - sunward[0] * sweep;
+      const y = out[1] * (1.05 + fly) - spread * out[0] - sunward[1] * sweep;
+      const z = out[2] * (1.05 + fly) - sunward[2] * sweep;
+      // Hidden behind the nucleus.
+      if (z < 0 && x * x + y * y < 1.2) continue;
+      const alpha = (1 - age) * strength;
+      if (alpha < 0.12) continue;
+      px(x, y, step(alpha, JET_STEPS), Math.min(1, alpha * 1.3));
+    }
+  }
+
+  // The ion tail: fast, straight, a little rippling.
+  for (let k = 0; k < 150; k++) {
+    const s = (hash(k, 0, 5, seed) + t * (0.22 + 0.1 * hash(k, 1, 5, seed))) % 1;
+    const along = 1 + s * tail;
+    const side = (hash(k, 2, 5, seed) - 0.5) * (0.25 + along * 0.05) + 0.12 * Math.sin(along * 1.3 - t * 2.5);
+    const fade = (1 - s) * (0.55 + 0.45 * activity);
+    const [x, y] = [ax * along - ay * side, ay * along + ax * side];
+    if (fade < 0.1 || behind(x, y, along)) continue;
+    px(x, y, step(fade, ION_STEPS), Math.min(1, fade * 1.2));
+  }
+
+  // The dust tail: slower, wider, curving off to one side of the ion tail.
+  const [bx, by] = [ax * 0.94 - ay * 0.34, ax * 0.34 + ay * 0.94];
+  const dustLength = tail * 0.7;
+  for (let k = 0; k < 230; k++) {
+    const s = (hash(k, 0, 6, seed) + t * (0.07 + 0.05 * hash(k, 1, 6, seed))) % 1;
+    const along = 1 + s * dustLength;
+    const side = (hash(k, 2, 6, seed) - 0.5) * (0.35 + along * 0.32) - (along * along) / (dustLength * 4 + 1);
+    const fade = (1 - s) * 0.85;
+    const [x, y] = [bx * along - by * side, by * along + bx * side];
+    if (fade < 0.1 || behind(x, y, along)) continue;
+    px(x, y, step(fade, DUST_STEPS), Math.min(1, fade * 1.1));
+  }
+  ctx.globalAlpha = 1;
 }
 
 /** How far past its radius the Sun's flames and prominences can reach, in radii. */
@@ -677,21 +1017,137 @@ function sunEvents(t: number, period: number, life: [number, number], chance: nu
   return events;
 }
 
+/** The rate the Sun's frame turns (the IAU's, Carrington's), degrees a day. */
+const CARRINGTON = 14.1844;
+
+/** The Sun's turn at a latitude (its sine), degrees a day (Snodgrass & Ulrich 1990): the equator in about 25 days, the poles in about 35. */
+function sunSpin(latSin: number): number {
+  const s2 = latSin * latSin;
+  return 14.713 - 2.396 * s2 - 1.787 * s2 * s2;
+}
+
 /**
- * The Sun at a time in seconds (it is redrawn a few times a second): a churning disc, darker
- * and redder at the limb, with a sunspot or two; tongues of flame licking up off the limb;
- * flares, a white flash on the disc that throws the flames near it high; and prominences,
- * arches of glowing plasma that rise from the limb, hang and fade. Canvas sized by sunCanvasSize.
+ * The 11-year sunspot cycle at a time (Julian years after J2000): activity 0–1, rising over
+ * about four years to maximum and falling over seven, and the latitude new spot groups appear
+ * at, drifting from 30° towards the equator through each cycle (Spörer's law; the butterfly
+ * diagram). Cycle 25 began in December 2019.
  */
-export function drawSun(ctx: CanvasRenderingContext2D, r: number, t = 0): void {
+export function solarCycle(years: number): { activity: number; latitude: number } {
+  const phase = ((((years + 2000 - 2019.95) / 11) % 1) + 1) % 1;
+  const activity = phase < 0.4 ? Math.sin(((phase / 0.4) * Math.PI) / 2) ** 2 : Math.cos((((phase - 0.4) / 0.6) * Math.PI) / 2) ** 2;
+  return { activity, latitude: 30 - 23 * phase };
+}
+
+
+/** A point of the Sun's frame (the globe's convention, as the maps'), from latitude and longitude in degrees. */
+function sunPoint(lat: number, lon: number): Vec3 {
+  const [la, lo] = [(lat * Math.PI) / 180, (lon * Math.PI) / 180];
+  return [Math.cos(la) * Math.cos(lo), Math.sin(la), -Math.cos(la) * Math.sin(lo)];
+}
+
+interface Sunspot {
+  at: Vec3;
+  /** Squared angular radii (radians²) of the dark umbra and the penumbra round it. */
+  umbra: number;
+  penumbra: number;
+}
+
+interface SunspotGroup {
+  at: Vec3;
+  /** The cosine of the angle out to which it has spots, and out to which its bright faculae reach. */
+  spotReach: number;
+  faculaReach: number;
+  spots: Sunspot[];
+}
+
+const SPOT_SEED = 53;
+
+/**
+ * The sunspot groups on the Sun at a time (Julian years after J2000; game time, not the
+ * animation's). Time is cut into slots a day and a half long; each may start a group, more often
+ * the more active the cycle, at its latitude in either hemisphere, which lives 8 to 50 days,
+ * growing quickly and fading slowly. A group is a big leading spot, a smaller following one
+ * further from the equator (Joy's law) and a few pores between, drifting with the Sun's turn at
+ * their latitude against its frame. Their sizes are made a little larger than life, to show.
+ */
+function sunspotGroups(years: number): SunspotGroup[] {
+  const days = years * 365.25;
+  const period = 1.5;
+  const longest = 50;
+  const groups: SunspotGroup[] = [];
+  for (let k = Math.floor((days - longest) / period) - 1; k <= Math.floor(days / period); k++) {
+    const born = (k + hash(k, 1, 0, SPOT_SEED)) * period;
+    const cycle = solarCycle(born / 365.25);
+    if (hash(k, 0, 0, SPOT_SEED) > 0.08 + 0.8 * cycle.activity) continue;
+    const life = 8 + (longest - 8) * hash(k, 2, 0, SPOT_SEED) ** 1.5;
+    const u = (days - born) / life;
+    if (u < 0 || u >= 1) continue;
+    const grown = u < 0.15 ? u / 0.15 : (1 - u) / 0.85;
+    const size = (0.6 + 0.8 * hash(k, 3, 0, SPOT_SEED)) * Math.sqrt(grown);
+    const side = hash(k, 4, 0, SPOT_SEED) < 0.5 ? 1 : -1;
+    const lat = side * (cycle.latitude + (hash(k, 5, 0, SPOT_SEED) - 0.5) * 10);
+    const lon = hash(k, 6, 0, SPOT_SEED) * 360 + (sunSpin(Math.sin((lat * Math.PI) / 180)) - CARRINGTON) * (days - born);
+    const spread = 2 + 3 * hash(k, 7, 0, SPOT_SEED);
+    const tilt = side * 0.25 * spread;
+    // (east, poleward offset in degrees, umbra radius in degrees): leader, follower, pores.
+    const parts: [number, number, number][] = [
+      [spread, -tilt, 1.6 * size],
+      [-spread, tilt, 1.1 * size],
+      [0.6 * (hash(k, 8, 0, SPOT_SEED) - 0.5) * spread, 0.5 * tilt, 0.45 * size],
+      [-0.5 * spread, 1.6 * tilt, 0.35 * size],
+    ];
+    const rad2 = (deg: number) => ((deg * Math.PI) / 180) ** 2;
+    groups.push({
+      at: sunPoint(lat, lon),
+      spotReach: Math.cos(((spread + 4.2 * size + 1) * Math.PI) / 180),
+      faculaReach: Math.cos(((spread + 4.2 * size + 7) * Math.PI) / 180),
+      spots: parts.map(([e, n, umbra]) => ({ at: sunPoint(lat + n, lon + e), umbra: rad2(umbra), penumbra: rad2(umbra * 2.3) })),
+    });
+  }
+  return groups;
+}
+
+
+/** The portrait's Sun frame: its pole up, turning as the IAU's prime meridian does. */
+function sunPortraitOrient(years: number): Orient {
+  const w = (((84.176 + CARRINGTON * years * 365.25) % 360) * Math.PI) / 180;
+  const [c, s] = [Math.cos(w), Math.sin(w)];
+  return ([x, y, z]) => [x * c - z * s, y, x * s + z * c];
+}
+
+/**
+ * The Sun at a time in seconds (it is redrawn a few times a second), on its own turning globe:
+ * game time (Julian years after J2000) sets its turn and its sunspots, orient turns view space
+ * into its frame (bodyFrames.ts; the portrait's own if none is given). The disc churns with
+ * granulation, darker and redder at the limb, with sunspot groups (dark umbrae in lighter
+ * penumbrae, bright faculae round them towards the limb) as many as the cycle brings; tongues of
+ * flame lick up off the limb; flares, a white flash in an active region that throws the flames
+ * near it high when it is near the limb; and prominences, arches of glowing plasma that rise from
+ * the limb, hang and fade. All in the palette's steps with ordered dithering, as pixel art.
+ * Canvas sized by sunCanvasSize.
+ */
+export function drawSun(ctx: CanvasRenderingContext2D, r: number, t = 0, years = 30, orient: Orient | null = null): void {
   const size = ctx.canvas.width;
   const c = size / 2;
   const image = ctx.createImageData(size, size);
   const data = image.data;
-  const flares = sunEvents(t, 2.6, [1.4, 2.6], 0.6, 77);
-  const flareAt = flares.map((f) => {
-    const at = 0.55 + 0.4 * f.size;
-    return { x: Math.cos(f.angle) * at, y: Math.sin(f.angle) * at, glow: Math.sin(Math.PI * f.u) };
+  const toBody = orient ?? sunPortraitOrient(years);
+  const columns = [toBody([1, 0, 0]), toBody([0, 1, 0]), toBody([0, 0, 1])];
+  const toView = (p: Vec3): Vec3 => [dot3(columns[0]!, p), dot3(columns[1]!, p), dot3(columns[2]!, p)];
+  const groups = sunspotGroups(years);
+  // Flares go off in the active regions we can see (or just past the limb), else anywhere.
+  const shown = groups.map((g) => toView(g.at)).filter((v) => v[2] > -0.35);
+  const flares = sunEvents(t, 2.6, [1.4, 2.6], 0.6, 77).map((f) => {
+    let at: Vec3;
+    if (shown.length) at = shown[Math.floor(f.spread * shown.length)]!;
+    else {
+      const rim = 0.55 + 0.4 * f.size;
+      at = [Math.cos(f.angle) * rim, Math.sin(f.angle) * rim, Math.sqrt(1 - rim * rim)];
+    }
+    const glow = Math.sin(Math.PI * f.u);
+    // Flames thrown up where the flare is near the limb (seen from the side), none from mid-disc.
+    const limb = Math.max(0, Math.min(1, 1 - at[2] / 0.7)) * Math.max(0, Math.min(1, (at[2] + 0.35) / 0.35));
+    return { x: at[0], y: at[1], z: at[2], angle: Math.atan2(at[1], at[0]), glow, throw: (0.3 + 0.35 * f.size) * glow * limb };
   });
   const prominences = sunEvents(t, 3.4, [4.5, 8], 0.85, 91).map((p) => {
     const rise = Math.min(1, p.u / 0.35);
@@ -707,6 +1163,22 @@ export function drawSun(ctx: CanvasRenderingContext2D, r: number, t = 0): void {
   });
   // At least a pixel and a half thick, so a small Sun's prominences still show as arches.
   const tube = Math.max(0.06, 1.5 / r);
+  // Nothing reaches past this (in radii): the flames' tallest outline with their tallest tongue,
+  // or a prominence's top; the rest of the canvas is skipped.
+  const flameTop = 0.44 + Math.max(0, ...flares.map((f) => f.throw));
+  const reach = 1 + Math.max(flameTop * 1.65, flameTop + 0.2, ...prominences.map((p) => p.top * 1.2 + tube * 1.5));
+  // Granulation churns: two layouts of the noise blended as time slides from one to the next.
+  // Finer cells join in on a big, close disc, so its pixels stay busy.
+  const churn = t * 0.7;
+  const slice = Math.floor(churn);
+  const blend = churn - slice;
+  const fine = Math.max(0, Math.min(1, (r - 30) / 90));
+  const cells = (p: Vec3, k: number) =>
+    noise(p[0] * 5 + k * 17.3, p[1] * 5 + k * 5.1, p[2] * 5 + k * 9.7, 42) * 0.65 +
+    noise(p[0] * 11 + k * 7.7, p[1] * 11 + k * 3.3, p[2] * 11 + k * 1.9, 43) * 0.35 +
+    (fine > 0 ? fine * 0.3 * (noise(p[0] * 26 + k * 2.9, p[1] * 26 + k * 6.1, p[2] * 26 + k * 4.3, 47) - 0.5) : 0);
+  // Flames grow finer tongues on a big disc too.
+  const tongueFine = Math.max(0, Math.min(0.35, (r - 30) / 260));
   const set = (o: number, color: RGB, alpha: number) => {
     data[o] = color[0];
     data[o + 1] = color[1];
@@ -718,18 +1190,30 @@ export function drawSun(ctx: CanvasRenderingContext2D, r: number, t = 0): void {
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const dx = (x + 0.5 - c) / r;
-      const dy = (y + 0.5 - c) / r;
+      const dy = -(y + 0.5 - c) / r;
       const d = Math.hypot(dx, dy);
+      if (d > reach) continue;
       const dither = BAYER[(y & 3) * 4 + (x & 3)]!;
       const o = (y * size + x) * 4;
       if (d < 1) {
-        // Granulation churning at two scales, darker towards the limb.
-        const granules = noise(dx * 5 + 9, dy * 5 + 9, t * 0.7, 42) * 0.65 + noise(dx * 11 + 3, dy * 11 + 3, t * 1.3, 43) * 0.35;
+        const mu = Math.sqrt(1 - d * d);
+        const p = toBody([dx, dy, mu]);
+        const granules = cells(p, slice) * (1 - blend) + cells(p, slice + 1) * blend;
         let heat = 0.84 - 0.45 * d * d * d + (granules - 0.5) * 0.3;
-        // Small sunspots drifting slowly across: a dark core in a lighter ring.
-        const spot = noise(dx * 6 + t * 0.02, dy * 6, 5, 44);
-        if (spot > 0.87) heat -= spot > 0.91 ? 0.55 : 0.25;
-        for (const f of flareAt) {
+        for (const g of groups) {
+          const near = dot3(p, g.at);
+          if (near < g.faculaReach) continue;
+          // Faculae: bright, showing towards the limb.
+          heat += 0.2 * (1 - mu) * (0.6 + 0.4 * noise(p[0] * 30, p[1] * 30, p[2] * 30, 48));
+          if (near < g.spotReach) continue;
+          for (const spot of g.spots) {
+            const chord = 2 * (1 - dot3(p, spot.at));
+            if (chord < spot.umbra) heat -= 0.75;
+            else if (chord < spot.penumbra) heat -= 0.3;
+          }
+        }
+        for (const f of flares) {
+          if (f.z <= 0) continue;
           const near = 1 - Math.hypot(dx - f.x, dy - f.y) / (0.08 + 0.12 * f.glow);
           if (near > 0) heat += 0.9 * f.glow * near;
         }
@@ -761,10 +1245,12 @@ export function drawSun(ctx: CanvasRenderingContext2D, r: number, t = 0): void {
       const sa = Math.sin(angle);
       let height = 0.12 + 0.32 * noise(ca * 3 + 20, sa * 3 + 20, t * 0.35, 45);
       for (const f of flares) {
+        if (f.throw <= 0) continue;
         const off = Math.atan2(Math.sin(angle - f.angle), Math.cos(angle - f.angle));
-        height += (0.3 + 0.35 * f.size) * Math.exp(-((off / 0.2) ** 2)) * Math.sin(Math.PI * f.u);
+        height += f.throw * Math.exp(-((off / 0.2) ** 2));
       }
-      const tongue = noise(ca * 9 + 40, sa * 9 + 40, (d - 1) * 5 - t * 1.6, 46);
+      let tongue = noise(ca * 9 + 40, sa * 9 + 40, (d - 1) * 5 - t * 1.6, 46);
+      if (tongueFine > 0) tongue = tongue * (1 - tongueFine) + tongueFine * noise(ca * 23 + 60, sa * 23 + 60, (d - 1) * 12 - t * 2.4, 49);
       const q = (d - 1) / (height * (0.35 + 1.3 * tongue));
       if (q < 1) {
         const i = step(3.4 + q * 4.4 + dither * 1.5, 3, 7);

@@ -16,6 +16,11 @@ const COMET_CELL = 32;
 const COMET_ACTIVE = 6;
 const COMET_FULL = 1;
 
+/** How active a comet is at a distance from the Sun (AU), 0–1: as the sprites' tails, and a comet drawn close up (bodyArt.ts drawCometActivity). */
+export function cometActivity(sunDistance: number): number {
+  return Math.min(1, Math.max(0, (COMET_ACTIVE - sunDistance) / (COMET_ACTIVE - COMET_FULL)));
+}
+
 const vertexShader = /* glsl */ `
   uniform vec3 sun;
   uniform float pixel;

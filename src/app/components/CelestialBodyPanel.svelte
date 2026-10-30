@@ -7,10 +7,11 @@
   // the next launch window from the Earth (bodyFacts.ts). Below, Terra Invicta's four lists:
   // Moons (name and type; a name opens that moon here), Orbits, Stations and Fleets (still to
   // come). Opened by clicking a body.
+  import { untrack } from "svelte";
   import { baseContent } from "../../content/index";
   import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { bodyMap, bodyReach, drawBody, drawComet, drawRock, drawSun, hasMap, SUN_REACH, type MapImage } from "../solar/bodyArt";
+  import { bodyMap, bodyReach, bodyRelief, canvasSize, drawBody, drawComet, drawRock, drawSun, hasMap, SUN_REACH, type MapImage, type Relief } from "../solar/bodyArt";
   import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
   import { scientific } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
@@ -41,9 +42,12 @@
   let canvas = $state<HTMLCanvasElement>();
   /** Surface maps of the bodies shown so far, by id, once loaded. */
   let maps = $state<Record<string, MapImage>>({});
+  /** And the lumpy bodies' relief. */
+  let reliefs = $state<Record<string, Relief>>({});
   $effect(() => {
     const id = body?.id;
     if (id && !maps[id]) void bodyMap(id)?.then((m) => (maps = { ...maps, [id]: m }));
+    if (id && !reliefs[id]) void bodyRelief(id)?.then((r) => (reliefs = { ...reliefs, [id]: r }));
   });
 
   /** Seconds between frames of the Sun's flames, as in the Solar System view, and of a comet's tails. */
@@ -56,28 +60,38 @@
     if (!canvas || !body) return;
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Small bodies are lumpy rocks, but for the moons of Mars, drawn from their maps.
+    // Small bodies are lumpy rocks, but for those drawn from maps of their own (the moons of Mars, a few asteroids).
     if ((body.type === "asteroid" || body.type === "asteroidalMoon") && !hasMap(body.id)) {
       drawRock(ctx, body.id, body.type, PORTRAIT_RADIUS, LIGHT);
       return;
     }
     if (body.type === "comet") {
-      // The comet's tails stream on, like the Sun's flames.
+      // The comet's tails stream on, like the Sun's flames; its nucleus drawn from its maps once
+      // they are loaded, if it has them (a little larger than the rock, for its lumps reach out).
       const id = body.id;
+      let nucleus: HTMLCanvasElement | null = null;
+      if (maps[id] && reliefs[id]) {
+        const r = Math.floor((PORTRAIT_RADIUS * 0.42) / 1.3);
+        nucleus = document.createElement("canvas");
+        nucleus.width = nucleus.height = canvasSize(id, r);
+        drawBody(nucleus.getContext("2d")!, id, r, LIGHT, maps[id], null, undefined, reliefs[id]);
+      }
       const start = performance.now();
-      const timer = setInterval(() => drawComet(ctx, id, PORTRAIT_RADIUS, LIGHT, (performance.now() - start) / 1000), COMET_FRAME * 1000);
-      drawComet(ctx, id, PORTRAIT_RADIUS, LIGHT, 0);
+      const timer = setInterval(() => drawComet(ctx, id, PORTRAIT_RADIUS, LIGHT, (performance.now() - start) / 1000, nucleus), COMET_FRAME * 1000);
+      drawComet(ctx, id, PORTRAIT_RADIUS, LIGHT, 0, nucleus);
       return () => clearInterval(timer);
     }
     if (body.type !== "star") {
       // A ringed planet is drawn smaller, so its rings fit the frame.
-      drawBody(ctx, body.id, Math.floor(PORTRAIT_RADIUS / bodyReach(body.id)), LIGHT, maps[body.id] ?? null);
+      drawBody(ctx, body.id, Math.floor(PORTRAIT_RADIUS / bodyReach(body.id)), LIGHT, maps[body.id] ?? null, null, undefined, reliefs[body.id] ?? null);
       return;
     }
     // The Sun's portrait burns on, its flames reaching to the frame.
     const start = performance.now();
-    const timer = setInterval(() => drawSun(ctx, (PORTRAIT_RADIUS + 1) / SUN_REACH, (performance.now() - start) / 1000), SUN_FRAME * 1000);
-    drawSun(ctx, (PORTRAIT_RADIUS + 1) / SUN_REACH, 0);
+    // Turned and spotted as at the game's date, read as each frame is drawn (the clock ticking
+    // mustn't restart the animation).
+    const timer = setInterval(() => drawSun(ctx, (PORTRAIT_RADIUS + 1) / SUN_REACH, (performance.now() - start) / 1000, years), SUN_FRAME * 1000);
+    drawSun(ctx, (PORTRAIT_RADIUS + 1) / SUN_REACH, 0, untrack(() => years));
     return () => clearInterval(timer);
   });
 

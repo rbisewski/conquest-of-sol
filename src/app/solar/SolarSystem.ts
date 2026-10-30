@@ -20,10 +20,10 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { Content, SpaceBodyDef } from "../../sim/content";
 import { orbitPath, solarPositions, type Vec3 } from "../../sim/orbits";
 import { GLOBE_FADE_FROM, GLOBE_FARTHEST } from "../globe/Globe";
-import { bodyMap, canvasSize, drawBody, drawSun, hasMap, hasStyle, sunCanvasSize, type Light, type MapImage, type Orient } from "./bodyArt";
+import { bodyMap, bodyRelief, canvasSize, cometCanvasSize, drawBody, drawCometActivity, drawSun, hasMap, hasStyle, sunCanvasSize, surfaceReach, type Light, type MapImage, type Orient, type Relief } from "./bodyArt";
 import { bodyToScene, hasFrame } from "./bodyFrames";
 import { EARTH_POLE, globeToScene } from "./earthFrame";
-import { disposeSmallBodies, makeSmallBodies, setSmallBodiesSun, setSmallBodyShown } from "./smallBodies";
+import { cometActivity, disposeSmallBodies, makeSmallBodies, setSmallBodiesSun, setSmallBodyShown } from "./smallBodies";
 
 /** Ecliptic coordinates (z north) to the scene's (y up). */
 const toScene = (p: Vec3, out = new THREE.Vector3()) => out.set(p.x, p.z, -p.y);
@@ -53,21 +53,40 @@ const ART_RADIUS: Record<string, number> = {
   Ceres: 2,
   Haumea: 2,
   Makemake: 2,
+  // The asteroids drawn from maps of their own; the rest are small sprites.
+  "1951Lick": 2,
+  "3753Cruithne": 2,
+  "52762Asteroid": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
 const MAX_ART_RADIUS = 80;
-/** Ringed bodies' close art radii: smaller, as their rings make their canvases two to two and a half times as wide. */
-const RINGED_CLOSE_ART_RADIUS: Record<string, number> = { Saturn: 160, Uranus: 180, Neptune: 144, Haumea: 152 };
+/**
+ * Close art radii smaller than the rule: ringed bodies', as their rings make their canvases two to
+ * two and a half times as wide; the Sun's, as it is redrawn several times a second with its flames
+ * reaching nearly another radius out, and its pixels are best kept chunky.
+ */
+const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
+  Saturn: 160,
+  Uranus: 180,
+  Neptune: 144,
+  Haumea: 152,
+  Sol: 112,
+  // The lumpy asteroids: their lumps reach out to nearly twice their radius, and every pixel is ray-marched.
+  "1951Lick": 84,
+  "3753Cruithne": 84,
+  "52762Asteroid": 84,
+  ArendRigaux: 84,
+};
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
  * of the map's width, so the middle of the disc shows each map pixel as one art pixel (less for
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
     id,
-    RINGED_CLOSE_ART_RADIUS[id] ?? 256,
+    SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
 );
 /** How close the camera can come to such a body, in its radii (as the globe does the Earth). */
@@ -88,6 +107,14 @@ const LABEL_MIN_PIXELS = 30;
 const ORBIT_FADE: [number, number] = [0.003, 0.05];
 /** Seconds between redraws of the Sun's flames: a few a second, like hand-drawn animation frames; fewer close up, where each costs more. */
 const SUN_FRAME = 1 / 10;
+/** Seconds between frames of a comet's close-up jets and tails. */
+const COMET_FRAME = 1 / 8;
+/**
+ * A comet drawn from its maps is the small sprite, tails and all, till its nucleus would be this
+ * many art pixels in radius at its true size; then its lumpy nucleus, with its jets and tails
+ * drawn over it.
+ */
+const COMET_CLOSE_RADIUS = 3;
 const SUN_FRAME_CLOSE = 1 / 6;
 /** Seconds the camera takes to swing to a newly focused body, and to fly home to the Earth. */
 const FOCUS_SECONDS = 0.6;
@@ -122,6 +149,8 @@ interface BodyView {
   /** The size, light direction (and, for the Earth, the turn) the disc was last drawn with, rounded. */
   lightKey: string;
   shown: boolean;
+  /** A comet drawn close up: its jets, coma and tails, on a sprite over the nucleus, the frame they were last drawn at, and its index among the small sprites, one of which stands in for it far away. */
+  comet: { sprite: THREE.Sprite; canvas: HTMLCanvasElement; texture: THREE.CanvasTexture; frame: string; dot: number } | null;
 }
 
 function pixelTexture(canvas: HTMLCanvasElement): THREE.CanvasTexture {
@@ -160,6 +189,8 @@ export class SolarSystem {
   private readonly clock = new THREE.Clock();
   /** Surface maps of the bodies that have one (bodyArt.ts), once loaded. */
   private readonly maps = new Map<string, MapImage>();
+  /** The lumpy bodies' relief, once loaded. */
+  private readonly reliefs = new Map<string, Relief>();
   /** While the globe has the camera, this view follows it (followGlobe) instead of drawing on its own. */
   private following = false;
   /** A flight home to the Earth, from a distance in AU. */
@@ -205,6 +236,12 @@ export class SolarSystem {
 
     for (const def of content.solarSystem) {
       this.positions.set(def.id, new THREE.Vector3());
+      // A comet drawn from its maps is both: the small sprite far away, its nucleus and tails close up.
+      if (def.type === "comet" && hasMap(def.id)) {
+        this.dots.push(def);
+        this.addBody(def, COMET_CLOSE_RADIUS, this.dots.length - 1);
+        continue;
+      }
       const r = def.type === "star" || def.type === "planet" ? (ART_RADIUS[def.id] ?? 4) : kind(def) === "moon" ? (ART_RADIUS[def.id] ?? MOON_RADIUS) : ART_RADIUS[def.id];
       if (r === undefined || (def.type === "dwarf" && !hasStyle(def.id))) {
         this.dots.push(def);
@@ -223,6 +260,11 @@ export class SolarSystem {
         const view = this.byId.get(def.id);
         if (view) view.lightKey = "";
       });
+      void bodyRelief(def.id)?.then((relief) => {
+        this.reliefs.set(def.id, relief);
+        const view = this.byId.get(def.id);
+        if (view) view.lightKey = "";
+      });
     }
 
     const canvas = this.renderer.domElement;
@@ -238,7 +280,7 @@ export class SolarSystem {
     this.animate();
   }
 
-  private addBody(def: SpaceBodyDef, r: number): void {
+  private addBody(def: SpaceBodyDef, r: number, dot = -1): void {
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = def.type === "star" ? sunCanvasSize(r) : canvasSize(def.id, r);
     const texture = pixelTexture(canvas);
@@ -261,7 +303,16 @@ export class SolarSystem {
     label.className = `solar-label ${def.type}`;
     label.textContent = def.name;
     this.labels.appendChild(label);
-    const view: BodyView = { def, baseR: r, r, sprite, canvas, texture, orbit, label, lightKey: "", shown: true };
+    let comet: BodyView["comet"] = null;
+    if (dot >= 0) {
+      const tails = document.createElement("canvas");
+      tails.width = tails.height = cometCanvasSize(r);
+      const tailTexture = pixelTexture(tails);
+      const tailSprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tailTexture, sizeAttenuation: false, depthTest: false, depthWrite: false, transparent: true }));
+      this.scene.add(tailSprite);
+      comet = { sprite: tailSprite, canvas: tails, texture: tailTexture, frame: "", dot };
+    }
+    const view: BodyView = { def, baseR: r, r, sprite, canvas, texture, orbit, label, lightKey: "", shown: true, comet };
     this.bodies.push(view);
     this.byId.set(def.id, view);
   }
@@ -315,7 +366,7 @@ export class SolarSystem {
     const body = this.content.solarSystem.find((b) => b.id === id)!;
     // A body drawn from its map comes right down to CLOSE_RADII, however small (Phobos, Deimos);
     // the camera stays a little way off the rest.
-    if (id in CLOSE_ART_RADIUS) return CLOSE_RADII * (body.radiusKm / AU_KM);
+    if (id in CLOSE_ART_RADIUS) return CLOSE_RADII * surfaceReach(id) * (body.radiusKm / AU_KM);
     return Math.max(3 * (body.radiusKm / AU_KM), 2e-6);
   }
 
@@ -373,7 +424,9 @@ export class SolarSystem {
       (this.selectedOrbit.line.material as THREE.Material).dispose();
       this.selectedOrbit = null;
     }
-    const def = id ? this.dots.find((d) => d.id === id) : undefined;
+    // A small sprite, or a body drawn from its maps that has no orbit line of its own (the asteroids).
+    const view = id ? this.byId.get(id) : undefined;
+    const def = id ? (this.dots.find((d) => d.id === id) ?? (view && !view.orbit ? view.def : undefined)) : undefined;
     if (!def?.orbit) return;
     const line = new THREE.LineLoop(
       new THREE.BufferGeometry().setFromPoints(orbitPath(def.orbit, 360).map((p) => toScene(p))),
@@ -489,9 +542,24 @@ export class SolarSystem {
       const spread = parent ? b.def.orbit!.a * this.pixelsPerUnit(parent) : Infinity;
       const focused = b.def.id === this.focusId;
       b.shown = focused || spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : PLANET_MIN_PIXELS);
+      if (b.comet) {
+        // Far away, the small sprite with its tails; close up, the nucleus with its own.
+        const close = truePixels / PIXEL >= COMET_CLOSE_RADIUS;
+        b.shown &&= close;
+        const dot = b.comet.dot;
+        if (this.dotShown[dot] === close) {
+          this.dotShown[dot] = !close;
+          setSmallBodyShown(this.dotPoints, dot, !close);
+        }
+        b.comet.sprite.position.copy(at);
+        b.comet.sprite.renderOrder = b.sprite.renderOrder + 1e-9;
+        b.comet.sprite.scale.set(b.comet.canvas.width * pixel * unit, b.comet.canvas.width * pixel * unit, 1);
+        b.comet.sprite.visible = b.shown;
+      }
       // Under the globe the Earth's disc shows only as the globe fades out, and isn't named.
       const underGlobe = this.following && b.def.id === "Earth";
-      const named = b.shown && !underGlobe && (focused || spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS));
+      // An asteroid is named only when focused, as the small sprites are.
+      const named = b.shown && !underGlobe && (focused || (b.def.type !== "asteroid" && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS)));
       b.sprite.visible = b.shown && !(underGlobe && away < GLOBE_FADE_FROM * EARTH_RADIUS_AU);
       if (b.orbit) {
         b.orbit.visible = b.shown;
@@ -503,8 +571,9 @@ export class SolarSystem {
         material.opacity = (focused ? Math.min(1, look.opacity + 0.35) : look.opacity) * fade;
       }
       if (b.shown) {
-        if (b.def.type === "star") this.flicker(b);
+        if (b.def.type === "star") this.flicker(b, at);
         else this.relight(b, sun, at, view);
+        if (b.comet) this.stir(b, sun, at, view);
       }
       screen.copy(at).project(this.camera);
       const onScreen = named && screen.z < 1 && Math.abs(screen.x) < 1.1 && Math.abs(screen.y) < 1.1;
@@ -545,17 +614,49 @@ export class SolarSystem {
     b.texture = pixelTexture(b.canvas);
     b.sprite.material.map = b.texture;
     b.lightKey = "";
+    if (b.comet) {
+      b.comet.canvas = document.createElement("canvas");
+      b.comet.canvas.width = b.comet.canvas.height = cometCanvasSize(r);
+      b.comet.texture.dispose();
+      b.comet.texture = pixelTexture(b.comet.canvas);
+      b.comet.sprite.material.map = b.comet.texture;
+      b.comet.frame = "";
+    }
   }
 
-  /** Redraws the Sun's next animation frame, when it is due (or its size has changed). */
-  private flicker(b: BodyView): void {
+  /** Redraws the Sun's next animation frame, when it is due (or its size has changed), turned to the game's time. */
+  private flicker(b: BodyView, at: THREE.Vector3): void {
     const every = b.r > 40 ? SUN_FRAME_CLOSE : SUN_FRAME;
     const frame = Math.floor(this.clock.getElapsedTime() / every);
     const key = `${b.r}:${every}:${frame}`;
     if (key === b.lightKey) return;
     b.lightKey = key;
-    drawSun(b.canvas.getContext("2d")!, b.r, frame * every);
+    // Before the game's time is set (the first frame), drawn as the portrait is, unturned.
+    const timed = !Number.isNaN(this.years);
+    drawSun(b.canvas.getContext("2d")!, b.r, frame * every, timed ? this.years : 30, timed ? (this.orientOf(b, at)?.orient ?? null) : null);
     b.texture.needsUpdate = true;
+  }
+
+  /** Redraws a close-up comet's jets, coma and tails when their next frame is due, as active as its distance from the Sun has it. */
+  private stir(b: BodyView, sun: THREE.Vector3, at: THREE.Vector3, view: THREE.Matrix4): void {
+    const comet = b.comet!;
+    const frame = Math.floor(this.clock.getElapsedTime() / COMET_FRAME);
+    const key = `${b.r}:${frame}`;
+    if (key === comet.frame) return;
+    comet.frame = key;
+    const dir = sun.clone().sub(at).normalize().transformDirection(view);
+    drawCometActivity(comet.canvas.getContext("2d")!, b.def.id, b.r, { x: dir.x, y: dir.y, z: dir.z }, cometActivity(at.distanceTo(sun)), frame * COMET_FRAME, this.orientOf(b, at)?.orient ?? null);
+    comet.texture.needsUpdate = true;
+  }
+
+  /** View space to a body's own frame (the globe's, for the Earth), and that turn's matrix elements; null for a body with no frame. */
+  private orientOf(b: BodyView, at: THREE.Vector3): { orient: Orient; e: number[] } | null {
+    const toParent = b.def.parent ? this.positions.get(b.def.parent)!.clone().sub(at) : new THREE.Vector3(1, 0, 0);
+    const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years, toParent) : null;
+    if (!frame) return null;
+    // Camera to scene, then scene to body.
+    const e = frame.clone().transpose().multiply(new THREE.Matrix4().extractRotation(this.camera.matrixWorld)).elements;
+    return { orient: ([x, y, z]) => [e[0]! * x + e[4]! * y + e[8]! * z, e[1]! * x + e[5]! * y + e[9]! * z, e[2]! * x + e[6]! * y + e[10]! * z], e };
   }
 
   /** Redraws a disc when its size or the Sun's direction (as seen from the camera) has changed enough, or the Earth has turned. */
@@ -567,25 +668,23 @@ export class SolarSystem {
     // Finer steps on a big disc, where a jump in the terminator would show.
     const steps = b.r > 12 ? 40 : 8;
     const map = this.maps.get(b.def.id) ?? null;
-    let key = `${b.r}:${Math.round(light.x * steps)},${Math.round(light.y * steps)},${Math.round(light.z * steps)}${map ? "m" : ""}`;
+    const relief = this.reliefs.get(b.def.id) ?? null;
+    let key = `${b.r}:${Math.round(light.x * steps)},${Math.round(light.y * steps)},${Math.round(light.z * steps)}${map ? "m" : ""}${relief ? "s" : ""}`;
     let orient: Orient | null = null;
     let pole: [number, number, number] | undefined;
-    const toParent = b.def.parent ? this.positions.get(b.def.parent)!.clone().sub(at) : new THREE.Vector3(1, 0, 0);
-    const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years, toParent) : null;
-    if (frame) {
-      // View space to the body's own frame (the globe's, for the Earth): camera to scene, then scene to body.
-      const m = frame.clone().transpose().multiply(new THREE.Matrix4().extractRotation(this.camera.matrixWorld));
-      const e = m.elements;
+    const turned = this.orientOf(b, at);
+    if (turned) {
+      const e = turned.e;
       // Finer on a big close-up disc, where a coarse step would make it jump as it turns.
       const turnSteps = b.r > MAX_ART_RADIUS ? 1200 : 60;
       key += `|${[0, 1, 2, 4, 5, 6].map((i) => Math.round(e[i]! * turnSteps)).join(",")}`;
-      orient = ([x, y, z]) => [e[0]! * x + e[4]! * y + e[8]! * z, e[1]! * x + e[5]! * y + e[9]! * z, e[2]! * x + e[6]! * y + e[10]! * z];
+      orient = turned.orient;
       // The body's north pole in view space (for its rings).
       pole = [e[1]!, e[5]!, e[9]!];
     }
     if (key === b.lightKey) return;
     b.lightKey = key;
-    drawBody(b.canvas.getContext("2d")!, b.def.id, b.r, light, map, orient, pole);
+    drawBody(b.canvas.getContext("2d")!, b.def.id, b.r, light, map, orient, pole, relief);
     b.texture.needsUpdate = true;
   }
 

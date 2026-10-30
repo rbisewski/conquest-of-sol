@@ -1,5 +1,5 @@
 {
- "_about": "Fills in Terra Invicta bodies whose orbits are incomplete in TISpaceBodyTemplate, in the template's own field names; build_solar.py merges each entry over the body. Heliocentric orbits are JPL Small-Body Database solutions (J2000 ecliptic, retrieved 2026-10-29). Masses marked 'estimate' are Terra Invicta's diameter at an assumed density (1.0 g/cm3 for trans-Neptunian objects, 0.5 for comet nuclei).",
+ "_about": "Fills in Terra Invicta bodies whose orbits are incomplete (or, for 3753 Cruithne, wrong) in TISpaceBodyTemplate, in the template's own field names; build_solar.py merges each entry over the body. Heliocentric orbits are JPL Small-Body Database solutions (J2000 ecliptic, retrieved 2026-10-29). Masses marked 'estimate' are Terra Invicta's diameter at an assumed density (1.0 g/cm3 for trans-Neptunian objects, 0.5 for comet nuclei).",
  "PonsWinnecke": {
   "_source": "JPL SBDB 7P/Pons-Winnecke; mass estimate",
   "friendlyName": "Pons-Winnecke",
@@ -155,5 +155,15 @@
   "argPeriapsis_Deg": 97,
   "meanAnomalyAtEpoch_Deg": 79,
   "epochJD": 2454000.0
+ },
+ "3753Cruithne": {
+  "_source": "JPL SBDB 3753 Cruithne (solution of 2026-10-22); the game's epoch is a typo (207.616712), and its mean anomaly matches no epoch near 2017",
+  "semiMajorAxis_AU": 0.9977971735230374,
+  "eccentricity": 0.5149036012470138,
+  "inclination_Deg": 19.80238133556275,
+  "longAscendingNode_Deg": 126.1886918392074,
+  "argPeriapsis_Deg": 43.88301576978012,
+  "meanAnomalyAtEpoch_Deg": 182.1324439296505,
+  "epochJD": 2461200.5
  }
 }
