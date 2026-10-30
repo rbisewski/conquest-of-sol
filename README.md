@@ -1,6 +1,6 @@
 # Conquest of Sol
 
-An HD-2D grand strategy game inspired by *Terra Invicta*. The design is in [SPEC.md](SPEC.md).
+Strategy game inspired by *Terra Invicta*. The design is in [SPEC.md](SPEC.md)
 
 ## Stack
 
@@ -29,7 +29,6 @@ pnpm selfplay --seed 42 --years 10 --difficulty normal
 pnpm tauri dev           # desktop app (needs the Tauri system packages, below)
 
 # Regenerate nations, regions and map textures (needs Python with numpy and Pillow).
-# The breakaway, claims and research steps read Terra Invicta's game files (docs/data-sources.md).
 python3 tools/data/fetch.py
 python3 -I tools/data/build_breakaways.py <game StreamingAssets>
 python3 tools/data/build_world.py
