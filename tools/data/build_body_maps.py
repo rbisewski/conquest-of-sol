@@ -1197,6 +1197,46 @@ LESSER_DWARFS = {
     "rr245": (509, [(0, (72, 72, 72)), (0.5, (128, 128, 126)), (1, (182, 182, 178))], 1.2, 40, None),
     # Moderately red (V−R 0.61), albedo 0.11.
     "ixion": (521, [(0, (66, 46, 36)), (0.5, (130, 98, 78)), (1, (186, 154, 130))], 1.3, 45, None),
+    # Veles (2003 VS2): moderately red, albedo 0.13.
+    "veles": (523, [(0, (58, 44, 36)), (0.5, (122, 98, 82)), (1, (178, 150, 130))], 1.3, 45, None),
+    # Marduk (2007 JJ43): moderately red (V−R 0.59).
+    "marduk": (541, [(0, (60, 46, 40)), (0.5, (120, 96, 84)), (1, (174, 148, 134))], 1.3, 45, None),
+    # Huracan (2014 WP509): nothing measured of its colour; reddish, as volatile-rich in Terra Invicta.
+    "huracan": (547, [(0, (66, 44, 36)), (0.5, (128, 92, 76)), (1, (182, 142, 122))], 1.4, 35, None),
+    # Chaos: moderately red (V−R 0.63), albedo about 0.1.
+    "chaos": (557, [(0, (60, 44, 38)), (0.5, (122, 94, 80)), (1, (176, 146, 128))], 1.3, 45, None),
+    # 2008 ST291: nothing measured of its colour; made up, a far, dull grey-brown.
+    "st291": (563, [(0, (68, 58, 54)), (0.5, (124, 110, 104)), (1, (176, 162, 154))], 1.2, 30, None),
+    # Nareau (2014 YA50): nothing measured; pale grey, as icy in Terra Invicta.
+    "nareau": (569, [(0, (80, 84, 88)), (0.5, (142, 146, 150)), (1, (198, 202, 204))], 1.5, 30, None),
+    # Olorun (2010 FX86): nothing measured of its colour; reddish, as volatile-rich.
+    "olorun": (571, [(0, (72, 48, 38)), (0.5, (136, 98, 78)), (1, (190, 150, 126))], 1.4, 35, None),
+    # Xewioso: nothing measured; pale grey, as icy.
+    "xewioso": (577, [(0, (76, 78, 80)), (0.5, (136, 138, 140)), (1, (192, 194, 194))], 1.4, 35, None),
+    # Luison (2003 UZ413): blue-neutral, water ice, albedo 0.08–0.15.
+    "luison": (587, [(0, (54, 56, 60)), (0.5, (112, 114, 118)), (1, (170, 172, 176))], 1.3, 45, None),
+    # Chernobog (2002 XV93): dark grey, water ice and some carbon dioxide; albedo about 0.04.
+    "chernobog": (593, [(0, (30, 30, 32)), (0.5, (68, 68, 70)), (1, (116, 116, 118))], 1.1, 55, None),
+    # Meng Po (2017 OF69): nothing measured; pale grey, as icy.
+    "mengpo": (599, [(0, (70, 76, 82)), (0.5, (132, 138, 144)), (1, (190, 196, 200))], 1.4, 35, None),
+    # Volturnus (2007 JH43): neutral and dark, its albedo only assumed.
+    "volturnus": (601, [(0, (38, 38, 38)), (0.5, (84, 82, 80)), (1, (136, 134, 130))], 1.2, 50, None),
+    # Tagaloa (2007 XV50): nothing measured of its colour; reddish, as volatile-rich.
+    "tagaloa": (607, [(0, (70, 52, 42)), (0.5, (132, 104, 86)), (1, (186, 156, 136))], 1.3, 35, None),
+    # Enki (2015 BZ518): nothing measured; dark grey-brown, as rocky in Terra Invicta.
+    "enki": (613, [(0, (48, 46, 44)), (0.5, (102, 96, 90)), (1, (156, 150, 142))], 1.2, 55, None),
+    # Mbombo (2010 VK201): nothing measured of its colour; dark grey-brown, as rocky.
+    "mbombo": (617, [(0, (52, 48, 44)), (0.5, (106, 98, 90)), (1, (160, 150, 140))], 1.2, 55, None),
+    # Anansi (2014 US224): nothing measured; dark grey, as rocky.
+    "anansi": (619, [(0, (44, 44, 46)), (0.5, (98, 96, 96)), (1, (150, 148, 146))], 1.2, 55, None),
+    # Xolas (2004 TY364): carbon-oxide ices, albedo 0.11.
+    "xolas": (631, [(0, (64, 52, 46)), (0.5, (124, 106, 96)), (1, (178, 158, 146))], 1.3, 40, None),
+    # Coatlicue (2014 BV64): nothing measured of its colour; reddish, as volatile-rich.
+    "coatlicue": (641, [(0, (78, 50, 40)), (0.5, (142, 100, 80)), (1, (196, 152, 130))], 1.4, 30, None),
+    # Unkulunkulu (2005 UQ513): very red, albedo 0.20.
+    "unkulunkulu": (643, [(0, (96, 50, 36)), (0.5, (164, 96, 70)), (1, (218, 150, 118))], 1.3, 25, None),
+    # Agudar (2013 XC26): nothing measured of its colour; reddish, as volatile-rich.
+    "agudar": (647, [(0, (68, 50, 44)), (0.5, (128, 100, 88)), (1, (182, 154, 140))], 1.3, 35, None),
 }
 
 

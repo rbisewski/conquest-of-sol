@@ -90,6 +90,26 @@ const ART_RADIUS: Record<string, number> = {
   "2014UZ224TNO": 2,
   "523794TNO": 2,
   "28978Ixion": 2,
+  "84922KBO": 2,
+  "278361KBO": 2,
+  "2014WP50KBO": 2,
+  "19521Chaos": 2,
+  "512381TNO": 2,
+  "2014YA50KBO": 2,
+  "2010FX86KBO": 2,
+  "78799KBO": 2,
+  "455502KBO": 2,
+  "612533KBO": 2,
+  "2017OF69KBO": 2,
+  "470308KBO": 2,
+  "470443KBO": 2,
+  "559182KBO": 2,
+  "523645KBO": 2,
+  "523750KBO": 2,
+  "120348KBO": 2,
+  "523681KBO": 2,
+  "202421KBO": 2,
+  "482824KBO": 2,
 };
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
@@ -150,7 +170,7 @@ const SMALLER_CLOSE_ART_RADIUS: Record<string, number> = {
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "Phobos", "Deimos"].map((id) => [
+  ["Sol", "1951Lick", "3753Cruithne", "52762Asteroid", "ArendRigaux", "4Vesta", "Charon", "433Eros", "21Lutetia", "253Mathilde", "Tempel", "Halley", "Phoebe", "Hyperion", "Janus", "Epimetheus", "Prometheus", "Pandora", "Atlas", "Pan", "Daphnis", "Calypso", "Telesto", "Helene", "Amalthea", "Thebe", "Proteus", "Larissa", "Puck", "Nix", "Hydra", "2Pallas", "391Ingeborg", "1866Sisyphus", "2099Öpik", "4954Eric", "5731Zeus", "7096Napier", "514041Asteroid", "Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Gonggong", "Quaoar", "208996KBO", "90482Orcus", "Sedna", "Salacia", "307261KBO", "55565KBO", "532037TNO", "174567Varda", "90568KBO", "145452KBO", "20000Varuna", "2010KZ39KBO", "55637KBO", "2018VG18TNO", "Glkunllhomdima", "2014UZ224TNO", "523794TNO", "28978Ixion", "84922KBO", "278361KBO", "2014WP50KBO", "19521Chaos", "512381TNO", "2014YA50KBO", "2010FX86KBO", "78799KBO", "455502KBO", "612533KBO", "2017OF69KBO", "470308KBO", "470443KBO", "559182KBO", "523645KBO", "523750KBO", "120348KBO", "523681KBO", "202421KBO", "482824KBO", "Phobos", "Deimos"].map((id) => [
     id,
     SMALLER_CLOSE_ART_RADIUS[id] ?? 256,
   ]),

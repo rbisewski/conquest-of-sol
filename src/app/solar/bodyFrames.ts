@@ -53,7 +53,8 @@ interface Rotation {
  * Napier and 2014 MQ18 ("Awilix") at made-up ones (none is known), all on made-up poles.
  * The lesser dwarf planets: at their measured periods where known (Varda locked to its moon
  * Ilmarë, 5.75 days), at made-up ones for Máni, Chiminigagua, Izanagi, Farout, Gǃkúnǁʼhòmdímà,
- * DeeDee and 2015 RR245, all on made-up poles and with their prime meridians at 0° at J2000.
+ * DeeDee, 2015 RR245, Huracan, Chaos, 2008 ST291, Nareau, Xewioso, Chernobog, Meng Po, Volturnus,
+ * Tagaloa, Enki, Anansi, Coatlicue and Agudar (Marduk's measured one is ambiguous), all on made-up poles and with their prime meridians at 0° at J2000.
  * Charon: its mean pole, facing Pluto (as Pluto faces it). Vesta: Dawn's pole and spin (the IAU's
  * 2015 elements; the DLR maps' longitudes may sit on an older prime meridian, which only shifts
  * which face is turned our way at a moment, on a body that turns in 5.3 hours).
@@ -156,6 +157,26 @@ const ROTATIONS: Record<string, Rotation> = {
   "2014UZ224TNO": { ra: [35, 0], dec: [-15, 0], w: [0, 720] },
   "523794TNO": { ra: [270, 0], dec: [65, 0], w: [0, 664.6] },
   "28978Ixion": { ra: [145, 0], dec: [-30, 0], w: [0, 696.774] },
+  "84922KBO": { ra: [205, 0], dec: [40, 0], w: [0, 1164.808467] },
+  "278361KBO": { ra: [320, 0], dec: [-20, 0], w: [0, 1430.463576] },
+  "2014WP50KBO": { ra: [55, 0], dec: [25, 0], w: [0, 909.473684] },
+  "19521Chaos": { ra: [240, 0], dec: [-50, 0], w: [0, 785.454545] },
+  "512381TNO": { ra: [100, 0], dec: [15, 0], w: [0, 617.142857] },
+  "2014YA50KBO": { ra: [15, 0], dec: [-30, 0], w: [0, 1016.470588] },
+  "2010FX86KBO": { ra: [280, 0], dec: [50, 0], w: [0, 546.835443] },
+  "78799KBO": { ra: [165, 0], dec: [-15, 0], w: [0, 822.857143] },
+  "455502KBO": { ra: [70, 0], dec: [-60, 0], w: [0, 2092.009685] },
+  "612533KBO": { ra: [335, 0], dec: [35, 0], w: [0, 691.2] },
+  "2017OF69KBO": { ra: [125, 0], dec: [55, 0], w: [0, 1152.0] },
+  "470308KBO": { ra: [215, 0], dec: [-35, 0], w: [0, 664.615385] },
+  "470443KBO": { ra: [30, 0], dec: [10, 0], w: [0, 960.0] },
+  "559182KBO": { ra: [190, 0], dec: [45, 0], w: [0, 751.304348] },
+  "523645KBO": { ra: [300, 0], dec: [-10, 0], w: [0, 1138.339921] },
+  "523750KBO": { ra: [85, 0], dec: [-45, 0], w: [0, 1080.0] },
+  "120348KBO": { ra: [255, 0], dec: [20, 0], w: [0, 738.461538] },
+  "523681KBO": { ra: [150, 0], dec: [30, 0], w: [0, 864.0] },
+  "202421KBO": { ra: [45, 0], dec: [-25, 0], w: [0, 1229.018492] },
+  "482824KBO": { ra: [345, 0], dec: [60, 0], w: [0, 720.0] },
   Eris: { ra: [36.17, 0], dec: [44.51, 0], w: [0, 22.805163] },
   Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
   Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },
