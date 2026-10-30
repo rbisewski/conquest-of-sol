@@ -1,5 +1,5 @@
 {
- "_about": "Fills in Terra Invicta bodies whose orbits are incomplete (or, for 3753 Cruithne, wrong) in TISpaceBodyTemplate, in the template's own field names; build_solar.py merges each entry over the body. Heliocentric orbits are JPL Small-Body Database solutions (J2000 ecliptic, retrieved 2026-10-29). Masses marked 'estimate' are Terra Invicta's diameter at an assumed density (1.0 g/cm3 for trans-Neptunian objects, 0.5 for comet nuclei).",
+ "_about": "Fills in Terra Invicta bodies whose orbits are incomplete, and corrects those that are wrong or misnamed (each entry's _source says how), in TISpaceBodyTemplate, in the template's own field names; build_solar.py merges each entry over the body. Heliocentric orbits are JPL Small-Body Database solutions (J2000 ecliptic, retrieved 2026-10-29). Masses marked 'estimate' are Terra Invicta's diameter at an assumed density (1.0 g/cm3 for trans-Neptunian objects, 0.5 for comet nuclei).",
  "PonsWinnecke": {
   "_source": "JPL SBDB 7P/Pons-Winnecke; mass estimate",
   "friendlyName": "Pons-Winnecke",
@@ -10,7 +10,7 @@
   "argPeriapsis_Deg": 172.5056606661706,
   "meanAnomalyAtEpoch_Deg": 18.31245228732157,
   "epochJD": 2457170.5,
-  "mass_kg": 3.7e13
+  "mass_kg": 37000000000000.0
  },
  "Lovas2": {
   "_source": "JPL SBDB 184P/Lovas 2; mass estimate",
@@ -22,7 +22,7 @@
   "argPeriapsis_Deg": 78.06092118768561,
   "meanAnomalyAtEpoch_Deg": 353.8181897927012,
   "epochJD": 2456460.5,
-  "mass_kg": 6.2e13
+  "mass_kg": 62000000000000.0
  },
  "Glkunllhomdima": {
   "_source": "JPL SBDB 229762 (2007 UK126); system mass from Grundy et al. 2019, Icarus 334",
@@ -34,7 +34,7 @@
   "argPeriapsis_Deg": 346.0576265153255,
   "meanAnomalyAtEpoch_Deg": 348.9992237037756,
   "epochJD": 2461200.5,
-  "mass_kg": 1.361e20
+  "mass_kg": 1.361e+20
  },
  "Leleakuhonua": {
   "_source": "JPL SBDB 541132 (2015 TG387); mass estimate",
@@ -45,7 +45,7 @@
   "argPeriapsis_Deg": 118.2293603285907,
   "meanAnomalyAtEpoch_Deg": 359.6185683300886,
   "epochJD": 2461200.5,
-  "mass_kg": 5.6e18
+  "mass_kg": 5.6e+18
  },
  "15874TNO": {
   "_source": "JPL SBDB 15874 (1996 TL66); mass estimate",
@@ -57,7 +57,7 @@
   "argPeriapsis_Deg": 185.1373827636416,
   "meanAnomalyAtEpoch_Deg": 11.4275870702862,
   "epochJD": 2461200.5,
-  "mass_kg": 2.0e19
+  "mass_kg": 2e+19
  },
  "2018VG18TNO": {
   "_source": "JPL SBDB 2018 VG18; mass estimate",
@@ -68,7 +68,7 @@
   "argPeriapsis_Deg": 16.86247974986922,
   "meanAnomalyAtEpoch_Deg": 161.3294098759746,
   "epochJD": 2461200.5,
-  "mass_kg": 1.48e20
+  "mass_kg": 1.48e+20
  },
  "2014UZ224TNO": {
   "_source": "JPL SBDB 2014 UZ224; mass estimate",
@@ -79,7 +79,7 @@
   "argPeriapsis_Deg": 28.7337719132435,
   "meanAnomalyAtEpoch_Deg": 323.7361509881111,
   "epochJD": 2461200.5,
-  "mass_kg": 1.34e20
+  "mass_kg": 1.34e+20
  },
  "2012VP113TNO": {
   "_source": "JPL SBDB 2012 VP113; mass estimate",
@@ -90,7 +90,7 @@
   "argPeriapsis_Deg": 294.2852296107872,
   "meanAnomalyAtEpoch_Deg": 3.834281215098069,
   "epochJD": 2461200.5,
-  "mass_kg": 4.8e19
+  "mass_kg": 4.8e+19
  },
  "512381TNO": {
   "_source": "JPL SBDB 528381 (2008 ST291): Terra Invicta's number is a typo (512381 is a main-belt asteroid) but its orbit and size match; mass estimate",
@@ -102,19 +102,19 @@
   "argPeriapsis_Deg": 324.9535357133591,
   "meanAnomalyAtEpoch_Deg": 26.12696288690283,
   "epochJD": 2461200.5,
-  "mass_kg": 1.04e20
+  "mass_kg": 1.04e+20
  },
  "523794TNO": {
   "_source": "JPL SBDB 523794 (2015 RR245); mass estimate",
   "friendlyName": "2015 RR245",
-  "semiMajorAxis_AU": 82.47906418202849,
+  "semiMajorAxis_AU": 82.4790641820285,
   "eccentricity": 0.5892596593956771,
   "inclination_Deg": 7.542120117674791,
   "longAscendingNode_Deg": 211.7902332096181,
   "argPeriapsis_Deg": 260.6185817136269,
   "meanAnomalyAtEpoch_Deg": 328.2339850585061,
   "epochJD": 2461200.5,
-  "mass_kg": 1.3e20
+  "mass_kg": 1.3e+20
  },
  "Styx": {
   "_source": "JPL mean elements (PLU060; Brozovic & Jacobson 2024, AJ 167:256), Pluto's equator like the game's other Pluto moons",
@@ -129,7 +129,7 @@
  "Kerberos": {
   "_source": "JPL mean elements (PLU060; Brozovic & Jacobson 2024, AJ 167:256), Pluto's equator like the game's other Pluto moons",
   "semiMajorAxis_km": 58300,
-  "eccentricity": 0.010,
+  "eccentricity": 0.01,
   "inclination_Deg": 0.4,
   "longAscendingNode_Deg": 314.3,
   "argPeriapsis_Deg": 32.1,
@@ -169,5 +169,263 @@
  "5731Zeus": {
   "_source": "the game names it 5371 Zeus; it is (5731) Zeus (JPL SBDB, its own data name)",
   "friendlyName": "5731 Zeus"
+ },
+ "523750KBO": {
+  "_source": "JPL SBDB 523750 (2014 US224) (solution of 2026-03-14); the game's semi-major axis 41.65 AU",
+  "semiMajorAxis_AU": 47.0120254322059,
+  "eccentricity": 0.1189497769549487,
+  "inclination_Deg": 11.03395472061738,
+  "longAscendingNode_Deg": 318.2382454899247,
+  "argPeriapsis_Deg": 174.7266173678821,
+  "meanAnomalyAtEpoch_Deg": 294.4568359150323,
+  "epochJD": 2461200.5
+ },
+ "2Pallas": {
+  "_source": "JPL SBDB 2 Pallas (A802 FA) (solution of 2026-06-05); the game's elements look right but its mean anomaly and epoch put it 5.2 AU away in 2026",
+  "semiMajorAxis_AU": 2.769559010737709,
+  "eccentricity": 0.2307000995648547,
+  "inclination_Deg": 34.93279321851542,
+  "longAscendingNode_Deg": 172.8866193357694,
+  "argPeriapsis_Deg": 310.9699161652136,
+  "meanAnomalyAtEpoch_Deg": 254.2496521742734,
+  "epochJD": 2461200.5
+ },
+ "13Egeria": {
+  "_source": "JPL SBDB 13 Egeria (A850 VA) (solution of 2026-06-05); the game's eccentricity 0.0085",
+  "semiMajorAxis_AU": 2.576363568548756,
+  "eccentricity": 0.08460495953667801,
+  "inclination_Deg": 16.52511410028056,
+  "longAscendingNode_Deg": 43.17725602001575,
+  "argPeriapsis_Deg": 79.11880563511185,
+  "meanAnomalyAtEpoch_Deg": 88.61668291669723,
+  "epochJD": 2461200.5
+ },
+ "22Kalliope": {
+  "_source": "JPL SBDB 22 Kalliope (A852 WA) (solution of 2026-06-05); the game's elements look right but its mean anomaly and epoch put it 0.89 AU away in 2026",
+  "semiMajorAxis_AU": 2.909165783133826,
+  "eccentricity": 0.0988424401654017,
+  "inclination_Deg": 13.70212718634476,
+  "longAscendingNode_Deg": 65.96536371272761,
+  "argPeriapsis_Deg": 358.3124076298034,
+  "meanAnomalyAtEpoch_Deg": 350.3284069622562,
+  "epochJD": 2461200.5
+ },
+ "23Thalia": {
+  "_source": "JPL SBDB 23 Thalia (A852 XA) (solution of 2026-03-11); the game's elements look right but its mean anomaly and epoch put it 3.6 AU away in 2026",
+  "semiMajorAxis_AU": 2.628661689016325,
+  "eccentricity": 0.2313134694258691,
+  "inclination_Deg": 10.10773332538056,
+  "longAscendingNode_Deg": 66.47953992678453,
+  "argPeriapsis_Deg": 61.67082422213203,
+  "meanAnomalyAtEpoch_Deg": 216.4025307348911,
+  "epochJD": 2461200.5
+ },
+ "24Themis": {
+  "_source": "JPL SBDB 24 Themis (A853 GA) (solution of 2026-06-05); the game's eccentricity 0.131",
+  "semiMajorAxis_AU": 3.143997721720467,
+  "eccentricity": 0.115379978796777,
+  "inclination_Deg": 0.7366196417446064,
+  "longAscendingNode_Deg": 36.39075346960584,
+  "argPeriapsis_Deg": 109.2217643897621,
+  "meanAnomalyAtEpoch_Deg": 92.01695639431603,
+  "epochJD": 2461200.5
+ },
+ "30Urania": {
+  "_source": "JPL SBDB 30 Urania (A854 OA) (solution of 2026-06-05); the game's eccentricity 0.0126",
+  "semiMajorAxis_AU": 2.365359113065851,
+  "eccentricity": 0.1266409983482966,
+  "inclination_Deg": 2.093694210980174,
+  "longAscendingNode_Deg": 307.3953466216514,
+  "argPeriapsis_Deg": 87.22809491859155,
+  "meanAnomalyAtEpoch_Deg": 13.67314014299938,
+  "epochJD": 2461200.5
+ },
+ "35Leukothea": {
+  "_source": "JPL SBDB 35 Leukothea (A855 HA) (solution of 2026-06-05); the game's eccentricity 0.228",
+  "semiMajorAxis_AU": 3.00436132400982,
+  "eccentricity": 0.2170340666686376,
+  "inclination_Deg": 7.86770566253476,
+  "longAscendingNode_Deg": 352.9043947467441,
+  "argPeriapsis_Deg": 215.5297020075532,
+  "meanAnomalyAtEpoch_Deg": 346.8812120591826,
+  "epochJD": 2461200.5
+ },
+ "37Fides": {
+  "_source": "JPL SBDB 37 Fides (A855 TB) (solution of 2026-06-05); the game's elements look right but its mean anomaly and epoch put it 0.33 AU away in 2026",
+  "semiMajorAxis_AU": 2.643361553217296,
+  "eccentricity": 0.1745520583093035,
+  "inclination_Deg": 3.067489043572028,
+  "longAscendingNode_Deg": 7.227158380353335,
+  "argPeriapsis_Deg": 62.33002350439912,
+  "meanAnomalyAtEpoch_Deg": 218.7162975546603,
+  "epochJD": 2461200.5
+ },
+ "54Alexandra": {
+  "_source": "JPL SBDB 54 Alexandra (A858 RA) (solution of 2026-06-05); the game's semi-major axis 2.758 AU, eccentricity 0.145, inclination 7.185°",
+  "semiMajorAxis_AU": 2.710240261287695,
+  "eccentricity": 0.1991501923934585,
+  "inclination_Deg": 11.83625848344951,
+  "longAscendingNode_Deg": 313.0133765796272,
+  "argPeriapsis_Deg": 346.3581435508511,
+  "meanAnomalyAtEpoch_Deg": 230.7782180299525,
+  "epochJD": 2461200.5
+ },
+ "62Erato": {
+  "_source": "JPL SBDB 62 Erato (A860 RD) (solution of 2026-03-11); the game's eccentricity 0.178",
+  "semiMajorAxis_AU": 3.128789114233331,
+  "eccentricity": 0.1678029183592395,
+  "inclination_Deg": 2.237001436096142,
+  "longAscendingNode_Deg": 125.1035081684732,
+  "argPeriapsis_Deg": 277.8011363368901,
+  "meanAnomalyAtEpoch_Deg": 341.1148349370408,
+  "epochJD": 2461200.5
+ },
+ "117Lomia": {
+  "_source": "JPL SBDB 117 Lomia (A871 RB) (solution of 2026-06-05); the game's semi-major axis 2.908 AU, eccentricity 0.002805",
+  "semiMajorAxis_AU": 2.991791191632208,
+  "eccentricity": 0.02280794189566914,
+  "inclination_Deg": 14.92314414350751,
+  "longAscendingNode_Deg": 348.6117604547705,
+  "argPeriapsis_Deg": 53.35358047898985,
+  "meanAnomalyAtEpoch_Deg": 282.3691763457521,
+  "epochJD": 2461200.5
+ },
+ "279Thule": {
+  "_source": "JPL SBDB 279 Thule (A888 UA) (solution of 2026-06-05); the game's semi-major axis 4.349 AU, eccentricity 0.0259",
+  "semiMajorAxis_AU": 4.269638832272351,
+  "eccentricity": 0.04387596035811547,
+  "inclination_Deg": 2.334603979566649,
+  "longAscendingNode_Deg": 71.88838189239925,
+  "argPeriapsis_Deg": 29.39614150288576,
+  "meanAnomalyAtEpoch_Deg": 116.4622238151535,
+  "epochJD": 2461200.5
+ },
+ "391Ingeborg": {
+  "_source": "JPL SBDB 391 Ingeborg (A894 VB) (solution of 2026-06-05); the game's eccentricity 0.0352",
+  "semiMajorAxis_AU": 2.321002806804432,
+  "eccentricity": 0.3054011753427854,
+  "inclination_Deg": 23.20070808755693,
+  "longAscendingNode_Deg": 212.7985951829268,
+  "argPeriapsis_Deg": 147.1589707168701,
+  "meanAnomalyAtEpoch_Deg": 104.4755516242395,
+  "epochJD": 2461200.5
+ },
+ "3353Jarvis": {
+  "_source": "JPL SBDB 3353 Jarvis (1981 YC) (solution of 2026-06-05); the game's elements look right but its mean anomaly and epoch put it 1.9 AU away in 2026",
+  "semiMajorAxis_AU": 1.862930494587958,
+  "eccentricity": 0.08482238023021324,
+  "inclination_Deg": 21.80558994365117,
+  "longAscendingNode_Deg": 245.5495822919165,
+  "argPeriapsis_Deg": 34.97614226219789,
+  "meanAnomalyAtEpoch_Deg": 319.0733962594391,
+  "epochJD": 2461200.5
+ },
+ "3552DonQuixote": {
+  "_source": "JPL SBDB 3552 Don Quixote (1983 SA) (solution of 2026-06-26); the game's elements look right but its mean anomaly and epoch put it 0.52 AU away in 2026",
+  "semiMajorAxis_AU": 4.270699442924407,
+  "eccentricity": 0.7074018380419645,
+  "inclination_Deg": 31.05272514571933,
+  "longAscendingNode_Deg": 349.967252592082,
+  "argPeriapsis_Deg": 316.4915649809392,
+  "meanAnomalyAtEpoch_Deg": 330.6201460958141,
+  "epochJD": 2461200.5
+ },
+ "5145Pholus": {
+  "_source": "JPL SBDB 5145 Pholus (1992 AD) (solution of 2024-10-11); the game's elements look right but its mean anomaly and epoch put it 11 AU away in 2026",
+  "semiMajorAxis_AU": 20.28965436859272,
+  "eccentricity": 0.574687297345862,
+  "inclination_Deg": 24.76068786783861,
+  "longAscendingNode_Deg": 119.2863897155665,
+  "argPeriapsis_Deg": 354.7809055877317,
+  "meanAnomalyAtEpoch_Deg": 136.5004029381056,
+  "epochJD": 2461200.5
+ },
+ "35671KBO": {
+  "_source": "JPL SBDB 35671 (1998 SN165) (solution of 2026-03-12); the game's mean anomaly repeats its node (192.11°)",
+  "semiMajorAxis_AU": 38.02851133555644,
+  "eccentricity": 0.04633043663538625,
+  "inclination_Deg": 4.60180509781471,
+  "longAscendingNode_Deg": 192.0939041633895,
+  "argPeriapsis_Deg": 262.4701049388205,
+  "meanAnomalyAtEpoch_Deg": 305.2314662742443,
+  "epochJD": 2461200.5
+ },
+ "53311Deucalion": {
+  "_source": "JPL SBDB 53311 Deucalion (1999 HU11) (solution of 2021-04-13); the game's inclination 0.03674°",
+  "semiMajorAxis_AU": 43.94077327901066,
+  "eccentricity": 0.0591422664570426,
+  "inclination_Deg": 0.3659807179417289,
+  "longAscendingNode_Deg": 51.29401344040225,
+  "argPeriapsis_Deg": 242.8062405432325,
+  "meanAnomalyAtEpoch_Deg": 310.4171186694513,
+  "epochJD": 2461200.5
+ },
+ "54598Bienor": {
+  "_source": "JPL SBDB 54598 Bienor (2000 QC243) (solution of 2026-06-06); the game's semi-major axis 15.51 AU, eccentricity 0.2204",
+  "semiMajorAxis_AU": 16.60279962411079,
+  "eccentricity": 0.2056400817638726,
+  "inclination_Deg": 20.71952894460205,
+  "longAscendingNode_Deg": 337.8122874820367,
+  "argPeriapsis_Deg": 152.5796331724681,
+  "meanAnomalyAtEpoch_Deg": 351.637907370447,
+  "epochJD": 2461200.5
+ },
+ "97514Asteroid": {
+  "_source": "JPL SBDB 97514 (2000 DL1) (solution of 2026-06-06); the game's inclination 43.64°",
+  "semiMajorAxis_AU": 2.01724165196029,
+  "eccentricity": 0.2720233945101279,
+  "inclination_Deg": 35.37620187248125,
+  "longAscendingNode_Deg": 4.225328288358367,
+  "argPeriapsis_Deg": 119.1781143351233,
+  "meanAnomalyAtEpoch_Deg": 74.46647685423609,
+  "epochJD": 2461200.5
+ },
+ "119951KBO": {
+  "_source": "JPL SBDB 119951 (2002 KX14) (solution of 2025-07-02); the game's elements look right but its mean anomaly and epoch put it 23 AU away in 2026",
+  "semiMajorAxis_AU": 38.63924886110163,
+  "eccentricity": 0.04404977733848694,
+  "inclination_Deg": 0.4065245763308826,
+  "longAscendingNode_Deg": 286.6705296865229,
+  "argPeriapsis_Deg": 78.47316362861086,
+  "meanAnomalyAtEpoch_Deg": 270.267423675814,
+  "epochJD": 2461200.5
+ },
+ "145453KBO": {
+  "_source": "JPL SBDB 145453 (2005 RR43) (solution of 2026-06-06); the game's eccentricity 0.01364",
+  "semiMajorAxis_AU": 43.47406741180404,
+  "eccentricity": 0.1399092836503716,
+  "inclination_Deg": 28.44638313669937,
+  "longAscendingNode_Deg": 85.86508326753632,
+  "argPeriapsis_Deg": 281.5974619812788,
+  "meanAnomalyAtEpoch_Deg": 54.70315135869533,
+  "epochJD": 2461200.5
+ },
+ "405058Asteroid": {
+  "_source": "JPL SBDB 405058 (2001 TX16) (solution of 2026-06-07); the game's inclination 0.6008°",
+  "semiMajorAxis_AU": 3.573056418857063,
+  "eccentricity": 0.6007978957511491,
+  "inclination_Deg": 8.13403804583048,
+  "longAscendingNode_Deg": 69.28640194728551,
+  "argPeriapsis_Deg": 53.61028050039733,
+  "meanAnomalyAtEpoch_Deg": 215.6783721723696,
+  "epochJD": 2461200.5
+ },
+ "Tempel": {
+  "_source": "JPL SBDB 9P/Tempel 1 (solution of 2025-12-29); the game's semi-major axis 3.065 AU, eccentricity 0.5364, inclination 12.03°",
+  "semiMajorAxis_AU": 3.146133758958915,
+  "eccentricity": 0.5097028326964878,
+  "inclination_Deg": 10.4734281543904,
+  "longAscendingNode_Deg": 68.75357468050096,
+  "argPeriapsis_Deg": 179.1972753698572,
+  "meanAnomalyAtEpoch_Deg": 336.5854438553629,
+  "epochJD": 2457470.5
+ },
+ "790Praetoria": {
+  "_source": "the game misspells (790) Pretoria (JPL SBDB)",
+  "friendlyName": "790 Pretoria"
+ },
+ "2010THCentaur": {
+  "_source": "the game shows its data name; it is 2010 TH (JPL SBDB 728840)",
+  "friendlyName": "2010 TH"
  }
 }

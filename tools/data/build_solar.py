@@ -7,8 +7,8 @@ https://github.com/Pzixel/terra-invicta-techtree-update (public/gamefiles/stable
 
 Kept: every body with a full set of orbital elements: the Sun, the planets, their moons (large
 and asteroidal), the dwarf planets and their moons, asteroids and comets. Bodies whose elements
-are incomplete in the game are filled in from published orbits in solar_overrides.json (each
-entry names its source); the rest are left out (most moons of asteroids and dwarf planets),
+are incomplete in the game, and those it gets wrong, take published orbits from solar_overrides.json
+(each entry names its source); the rest are left out (most moons of asteroids and dwarf planets),
 as is Terra Invicta's hypothetical Planet Nine.
 
 A body's composition is Terra Invicta's "Type": the mining profile most of its hab sites have

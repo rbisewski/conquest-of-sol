@@ -1125,7 +1125,7 @@ MADE_UP_ASTEROIDS = {
     "winchester": (1248, (96.16, 75.55, 85.86), 85.855, 0.09, 0, 49, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
     # Hilda, about 171 km across; its proportions made up: a P-type, very dark (albedo 0.062).
     "hilda": (1254, (95.55, 75.08, 85.31), 85.315, 0.09, 0, 40, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
-    # Praetoria, about 170 km across; its proportions made up: a P-type, very dark (albedo 0.038).
+    # Pretoria, about 170 km across; its proportions made up: a P-type, very dark (albedo 0.038).
     "praetoria": (1260, (95.41, 74.96, 85.19), 85.185, 0.09, 0, 45, [(0, (24, 22, 21)), (0.5, (60, 55, 52)), (1, (108, 100, 94))], None, 0.58, True),
     # Namaka, about 150 km across; its proportions made up: bright water ice.
     "namaka": (1266, (84.0, 66.0, 75.0), 85.0, 0.09, 0, 41, [(0, (168, 172, 176)), (0.5, (214, 218, 222)), (1, (246, 248, 250))], None, 0.58, True),
