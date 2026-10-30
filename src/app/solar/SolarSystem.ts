@@ -65,7 +65,7 @@ const RINGED_CLOSE_ART_RADIUS: Record<string, number> = { Saturn: 160, Uranus: 1
  * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake"].map((id) => [
+  ["Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake", "Phobos", "Deimos"].map((id) => [
     id,
     RINGED_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
@@ -95,6 +95,11 @@ const HOME_SECONDS = 1.4;
 /** Between these distances from the Earth (AU) the camera's up turns from the Earth's axis to the ecliptic's. */
 const UP_TURN: [number, number] = [HANDOFF, 0.05];
 const ECLIPTIC_UP = new THREE.Vector3(0, 1, 0);
+
+/** How a body is shown: an asteroidal moon with a map of its own (Phobos, Deimos) as a moon, a lit globe on its orbit, not a small sprite. */
+function kind(def: SpaceBodyDef): string {
+  return def.type === "asteroidalMoon" && hasMap(def.id) ? "moon" : def.type;
+}
 
 const ORBIT_COLORS: Record<string, { color: string; opacity: number }> = {
   planet: { color: "#3d74d6", opacity: 0.6 },
@@ -200,7 +205,7 @@ export class SolarSystem {
 
     for (const def of content.solarSystem) {
       this.positions.set(def.id, new THREE.Vector3());
-      const r = def.type === "star" || def.type === "planet" ? (ART_RADIUS[def.id] ?? 4) : def.type === "moon" ? (ART_RADIUS[def.id] ?? MOON_RADIUS) : ART_RADIUS[def.id];
+      const r = def.type === "star" || def.type === "planet" ? (ART_RADIUS[def.id] ?? 4) : kind(def) === "moon" ? (ART_RADIUS[def.id] ?? MOON_RADIUS) : ART_RADIUS[def.id];
       if (r === undefined || (def.type === "dwarf" && !hasStyle(def.id))) {
         this.dots.push(def);
         continue;
@@ -238,12 +243,13 @@ export class SolarSystem {
     canvas.width = canvas.height = def.type === "star" ? sunCanvasSize(r) : canvasSize(def.id, r);
     const texture = pixelTexture(canvas);
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, sizeAttenuation: false, depthTest: false, depthWrite: false, transparent: true }));
-    sprite.renderOrder = def.type === "star" ? 3 : def.type === "moon" ? 4 : 5;
+    // The Sun beneath the other bodies; they are put in order of distance as they are drawn.
+    sprite.renderOrder = def.type === "star" ? 3 : 4;
     this.scene.add(sprite);
     let orbit: THREE.LineLoop | null = null;
-    const look = ORBIT_COLORS[def.type];
+    const look = ORBIT_COLORS[kind(def)];
     if (def.orbit && look) {
-      const points = orbitPath(def.orbit, def.type === "moon" ? 128 : 360).map((p) => toScene(p));
+      const points = orbitPath(def.orbit, kind(def) === "moon" ? 128 : 360).map((p) => toScene(p));
       orbit = new THREE.LineLoop(
         new THREE.BufferGeometry().setFromPoints(points),
         new THREE.LineBasicMaterial({ color: look.color, transparent: true, opacity: look.opacity, depthTest: false, depthWrite: false }),
@@ -307,7 +313,10 @@ export class SolarSystem {
   private closest(id: string): number {
     if (id === "Earth") return HANDOFF * 0.98;
     const body = this.content.solarSystem.find((b) => b.id === id)!;
-    return Math.max((id in CLOSE_ART_RADIUS ? CLOSE_RADII : 3) * (body.radiusKm / AU_KM), 2e-6);
+    // A body drawn from its map comes right down to CLOSE_RADII, however small (Phobos, Deimos);
+    // the camera stays a little way off the rest.
+    if (id in CLOSE_ART_RADIUS) return CLOSE_RADII * (body.radiusKm / AU_KM);
+    return Math.max(3 * (body.radiusKm / AU_KM), 2e-6);
   }
 
   /** Takes over from the globe: focused on the Earth, the camera where the globe's was (direction in the globe's frame, distance in Earth radii). */
@@ -463,6 +472,12 @@ export class SolarSystem {
     for (const b of this.bodies) {
       const at = this.positions.get(b.def.id)!;
       b.sprite.position.copy(at);
+      // The sprites skip the depth test, so the nearer of two overlapping bodies is drawn last
+      // (between 4 and 5, nearest highest): a moon passing in front of its planet covers it.
+      if (b.def.type !== "star") {
+        const d = this.camera.position.distanceTo(at);
+        b.sprite.renderOrder = 5 - d / (d + 1);
+      }
       // Close up, a body is drawn at its true size.
       const truePixels = (b.def.radiusKm / AU_KM) * this.pixelsPerUnit(at);
       this.resizeArt(b, Math.max(b.baseR, Math.min(CLOSE_ART_RADIUS[b.def.id] ?? MAX_ART_RADIUS, Math.ceil(truePixels / PIXEL))));
@@ -473,18 +488,18 @@ export class SolarSystem {
       const parent = b.def.parent ? this.positions.get(b.def.parent)! : null;
       const spread = parent ? b.def.orbit!.a * this.pixelsPerUnit(parent) : Infinity;
       const focused = b.def.id === this.focusId;
-      b.shown = focused || spread > (b.def.type === "moon" ? MOON_MIN_PIXELS : PLANET_MIN_PIXELS);
+      b.shown = focused || spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : PLANET_MIN_PIXELS);
       // Under the globe the Earth's disc shows only as the globe fades out, and isn't named.
       const underGlobe = this.following && b.def.id === "Earth";
-      const named = b.shown && !underGlobe && (focused || spread > (b.def.type === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS));
+      const named = b.shown && !underGlobe && (focused || spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS));
       b.sprite.visible = b.shown && !(underGlobe && away < GLOBE_FADE_FROM * EARTH_RADIUS_AU);
       if (b.orbit) {
         b.orbit.visible = b.shown;
         if (parent) b.orbit.position.copy(parent);
-        const look = ORBIT_COLORS[b.def.type]!;
+        const look = ORBIT_COLORS[kind(b.def)]!;
         const material = b.orbit.material as THREE.LineBasicMaterial;
         const [near, far] = ORBIT_FADE;
-        const fade = b.def.type === "moon" ? 1 : THREE.MathUtils.clamp(Math.log(away / near) / Math.log(far / near), 0, 1);
+        const fade = kind(b.def) === "moon" ? 1 : THREE.MathUtils.clamp(Math.log(away / near) / Math.log(far / near), 0, 1);
         material.opacity = (focused ? Math.min(1, look.opacity + 0.35) : look.opacity) * fade;
       }
       if (b.shown) {

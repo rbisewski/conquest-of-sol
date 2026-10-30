@@ -10,7 +10,7 @@
   import { baseContent } from "../../content/index";
   import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { bodyMap, bodyReach, drawBody, drawComet, drawRock, drawSun, SUN_REACH, type MapImage } from "../solar/bodyArt";
+  import { bodyMap, bodyReach, drawBody, drawComet, drawRock, drawSun, hasMap, SUN_REACH, type MapImage } from "../solar/bodyArt";
   import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
   import { scientific } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
@@ -56,7 +56,8 @@
     if (!canvas || !body) return;
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (body.type === "asteroid" || body.type === "asteroidalMoon") {
+    // Small bodies are lumpy rocks, but for the moons of Mars, drawn from their maps.
+    if ((body.type === "asteroid" || body.type === "asteroidalMoon") && !hasMap(body.id)) {
       drawRock(ctx, body.id, body.type, PORTRAIT_RADIUS, LIGHT);
       return;
     }

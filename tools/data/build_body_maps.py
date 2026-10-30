@@ -1,6 +1,6 @@
 """Builds the pixel-art surface maps of the bodies the camera can come right down to, in public/map:
 Mercury, Luna, Mars, Ceres, Jupiter, its four great moons, seven of Saturn's, five of Uranus's,
-Triton and Pluto from spacecraft data; Venus, Saturn, Uranus and Neptune (their clouds) and Eris,
+Triton, Pluto, Phobos and Deimos from spacecraft data; Venus, Saturn, Uranus and Neptune (their clouds) and Eris,
 Haumea and Makemake (never seen close) made up.
 
 Sources (public domain; downloaded by fetch.py into tools/data/.cache):
@@ -18,6 +18,8 @@ Sources (public domain; downloaded by fetch.py into tools/data/.cache):
   Saturn's moons: USGS's Cassini (and Voyager) global mosaics, Mimas's DLR basemap inside its zip.
   Miranda, Ariel, Umbriel, Titania, Oberon: USGS's Voyager 2 mosaics at 4 px/degree, from NASA/JPL's
     Solar System Simulator (greyscale; southern hemispheres only, the rest made up from them).
+  Phobos: DLR's Viking mosaic at 40 px/degree (USGS; greyscale). Deimos: USGS's Viking map at
+    4 px/degree, from NASA/JPL's Solar System Simulator (greyscale; its unimaged parts flat grey).
   Triton: USGS's Voyager 2 colour mosaic, gaps filled from lower-resolution views (the far north
     made up). Pluto: USGS's New Horizons LORRI mosaic, greyscale, 0° to 360° east (south of about
     30°S made up).
@@ -671,6 +673,37 @@ def oberon() -> None:
                  gamma=0.9)
 
 
+def phobos() -> None:
+    # DLR's Viking mosaic (USGS, controlled to their shape model): dark grey, heavily cratered,
+    # scored by long grooves, Stickney's great crater on the leading face. Coloured along a ramp of
+    # Phobos's dark, slightly reddish grey; the bluer unit round Stickney (Mars Express's and MRO's
+    # colour views) a cooler grey.
+    grey = mosaic("Phobos_Viking_Mosaic_40ppd_DLRcontrol.tif", "L")
+    valid = grey > 2
+    value = stretch(fill(grey, valid), valid, 0.5, 99.7)
+    out = ramp(value, [(0, (40, 36, 34)), (0.5, (104, 97, 92)), (1, (178, 171, 164))])
+    # Stickney (1°N, 49.7°W) and the blue unit round it.
+    d = np.degrees(np.arccos(np.clip(np.sin(np.radians(LAT)) * np.sin(np.radians(1.0))
+                                     + np.cos(np.radians(LAT)) * np.cos(np.radians(1.0)) * np.cos(np.radians(LON + 49.7)), -1, 1)))
+    blue = np.clip(1 - (d - 18) / 16, 0, 1)[..., None]
+    out = out * (1 - 0.35 * blue) + (out.mean(axis=2, keepdims=True) * np.array([0.9, 0.98, 1.12])) * 0.35 * blue
+    save("phobos.png", out, kmeans_palette(np.clip(out, 0, 255), 10), dither=8)
+
+
+def deimos() -> None:
+    # USGS's Viking map (from JPL's Solar System Simulator): smooth, its craters half buried under
+    # a blanket of regolith, bright streaks down its slopes. Its unimaged parts are flat grey in
+    # the map, much lighter than any ground, so they are found by that (smoothed, so bright streaks
+    # stay) and made up (unseen()) from the imaged ground. A little warmer and redder than Phobos.
+    grey = mosaic("mar2kuu2.tif", "L")
+    valid = blur((blur(grey, 3) < 140).astype(np.float64), 4) > 0.98
+    value = stretch(grey, valid, 0.5, 99.7)
+    donor = valid & (np.abs(LAT) < 60)
+    value, _ = unseen(value, valid, donor, 97, flatten=0.7, extend=True)
+    out = ramp(np.clip(value, 0, 1), [(0, (48, 42, 38)), (0.5, (116, 106, 98)), (1, (186, 178, 168))])
+    save("deimos.png", out, kmeans_palette(np.clip(out, 0, 255), 9), dither=8)
+
+
 def neptune() -> None:
     # Made up, as Uranus: no public-domain global map exists. After Voyager 2's, Hubble's and
     # JWST's views: a deeper, bluer globe than Uranus (true colour, as Irwin et al. 2024 rebalanced
@@ -803,7 +836,7 @@ BODIES = {
     "saturn": saturn, "titan": titan, "mimas": mimas, "enceladus": enceladus, "tethys": tethys,
     "dione": dione, "rhea": rhea, "iapetus": iapetus,
     "uranus": uranus, "miranda": miranda, "ariel": ariel, "umbriel": umbriel, "titania": titania, "oberon": oberon,
-    "neptune": neptune, "triton": triton, "pluto": pluto, "eris": eris, "haumea": haumea, "makemake": makemake,
+    "phobos": phobos, "deimos": deimos, "neptune": neptune, "triton": triton, "pluto": pluto, "eris": eris, "haumea": haumea, "makemake": makemake,
 }
 
 if __name__ == "__main__":

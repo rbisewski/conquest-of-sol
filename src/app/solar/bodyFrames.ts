@@ -4,8 +4,8 @@
 // equator's ascending node on the celestial (ICRF) equator. A frame's columns are the scene
 // directions of longitude 0°, the north pole and longitude 90° west, the globe's convention
 // ((cos lat cos lon, sin lat, −cos lat sin lon)) that bodyArt.ts samples maps in. The Earth's
-// frame comes from the globe instead (earthFrame.ts). The Moon, the great moons of Jupiter,
-// Saturn and Uranus, and Triton keep their near sides (longitude 0°) towards their planets as
+// frame comes from the globe instead (earthFrame.ts). The Moon, Phobos and Deimos, the great
+// moons of Jupiter, Saturn and Uranus, and Triton keep their near sides (longitude 0°) towards their planets as
 // they go round, which the IAU's mean rotations only do on average, so their meridians are set
 // from where the planet is.
 // Display only.
@@ -47,7 +47,8 @@ interface Rotation {
  * its 3.92-hour day. Makemake: its 22.83-hour day (Hromakina et al. 2019); its pole is unknown,
  * so it is put square to our line of sight (its moon's orbit is seen edge-on) as near the
  * ecliptic's pole as that allows. Eris's, Haumea's and Makemake's prime meridians are unknown
- * and set at 0° at J2000.
+ * and set at 0° at J2000. Phobos and Deimos: their mean poles with the largest periodic terms
+ * (1.8° and 3.1°), facing Mars (the IAU's own meridians add librations as small).
  */
 const ROTATIONS: Record<string, Rotation> = {
   Mercury: { ra: [281.0103, -0.0328], dec: [61.4155, -0.0049], w: [329.5988, 6.1385108] },
@@ -84,6 +85,8 @@ const ROTATIONS: Record<string, Rotation> = {
   Eris: { ra: [36.17, 0], dec: [44.51, 0], w: [0, 22.805163] },
   Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
   Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },
+  Phobos: { ra: [317.67071657, -0.10844326], dec: [52.88627266, -0.06134706], swing: { node: [190.72646643, 15917.10818695], ra: [-1.78428399], dec: [-1.07516537] } },
+  Deimos: { ra: [316.65705808, -0.10518014], dec: [53.50992033, -0.05979094], swing: { node: [121.46893664, 660.22803474], ra: [3.09217726], dec: [1.83936004] } },
 };
 
 /** ICRF (equatorial) to the scene: equatorial to ecliptic, then the scene's y up (x, z, −y). */

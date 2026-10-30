@@ -19,7 +19,8 @@ Sources (all free to use):
     Umbriel, Titania and Oberon (4 px/degree, greyscale; southern hemispheres only), for
     build_body_maps.py.
   USGS Astrogeology (public domain): Voyager 2's colour mosaic of Triton and New Horizons' mosaic
-    of Pluto, for build_body_maps.py.
+    of Pluto, and DLR's Viking mosaic of Phobos; USGS's Viking map of Deimos via JPL's Solar System
+    Simulator; all for build_body_maps.py.
 
 Run: python3 tools/data/fetch.py
 """
@@ -67,6 +68,8 @@ FILES = {
     "ura5vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura5vuu2.tif",  # Miranda
     "Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif": "https://planetarymaps.usgs.gov/mosaic/Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif",
     "Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif": "https://planetarymaps.usgs.gov/mosaic/Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif",
+    "Phobos_Viking_Mosaic_40ppd_DLRcontrol.tif": "https://planetarymaps.usgs.gov/mosaic/Phobos_Viking_Mosaic_40ppd_DLRcontrol.tif",
+    "mar2kuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/mar2kuu2.tif",  # Deimos
 }
 
 # indicator -> (date range, extra query)
