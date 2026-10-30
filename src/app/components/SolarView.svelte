@@ -7,7 +7,7 @@
   import { untrack } from "svelte";
   import * as THREE from "three";
   import { baseContent } from "../../content/index";
-  import { dateOfDay, dayOfDate, yearsSinceJ2000 } from "../../sim/index";
+  import { clockRuns, dateOfDay, dayOfDate, yearsSinceJ2000 } from "../../sim/index";
   import { game } from "../game.svelte";
   import { sunDirection } from "../globe/Globe";
   import { handoff } from "../solar/handoff";
@@ -67,6 +67,12 @@
       if (id && shown) view?.focus(id);
       view?.showOrbitOf(id);
     });
+  });
+
+  // The Hide Objects setting applies only while the clock actually runs.
+  $effect(() => {
+    const state = game.state;
+    solar?.setHideBackground(game.settings.hideObjectsWhenUnpaused && game.speed > 0 && state !== null && clockRuns(state, baseContent));
   });
 
   // The bodies move with the game clock.

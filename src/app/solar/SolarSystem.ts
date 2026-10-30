@@ -930,6 +930,8 @@ const SUN_FRAME_CLOSE = 1 / 6;
 const ALWAYS_MAPPED_RADIUS = 3;
 const MAP_LOAD_AHEAD = 0.5;
 const MAPS_KEPT = 32;
+/** A body counts as zoomed into, for the Hide Objects setting, once its radius spans this share of the view's height. */
+const ZOOMED_IN_SHARE = 0.05;
 /** Seconds the camera takes to swing to a newly focused body, and to fly home to the Earth. */
 const FOCUS_SECONDS = 0.6;
 const HOME_SECONDS = 1.4;
@@ -1033,6 +1035,8 @@ export class SolarSystem {
   private readonly alwaysMapped = new Set<string>();
   private readonly recentMaps = new Recency();
   private mapTick = 0;
+  /** Whether to show only the stars behind a body zoomed into (the Hide Objects setting, while the clock runs). */
+  private hideBackground = false;
   /** While the globe has the camera, this view follows it (followGlobe) instead of drawing on its own. */
   private following = false;
   /** A flight home to the Earth, from a distance in AU. */
@@ -1307,6 +1311,10 @@ export class SolarSystem {
     this.controls.minDistance = this.closest(id);
   }
 
+  setHideBackground(hide: boolean): void {
+    this.hideBackground = hide;
+  }
+
   /** Moves every body to the current time. */
   private place(): void {
     if (this.years === this.placedYears || Number.isNaN(this.years)) return;
@@ -1386,6 +1394,10 @@ export class SolarSystem {
     const screen = new THREE.Vector3();
     this.mapTick++;
     const placed = !Number.isNaN(this.placedYears);
+    const focusRadiusKm = this.byId.get(this.focusId)?.def.radiusKm ?? 0;
+    const backgroundHidden = this.hideBackground && (focusRadiusKm / AU_KM) * this.pixelsPerUnit(this.positions.get(this.focusId)!) >= ZOOMED_IN_SHARE * height;
+    this.dotPoints.visible = !backgroundHidden;
+    if (this.selectedOrbit) this.selectedOrbit.line.visible = !backgroundHidden;
     for (const b of this.bodies) {
       const at = this.positions.get(b.def.id)!;
       b.sprite.position.copy(at);
@@ -1406,10 +1418,10 @@ export class SolarSystem {
       const spread = parent ? b.def.orbit!.a * this.pixelsPerUnit(parent) : Infinity;
       const focused = b.def.id === this.focusId;
       // Not before the clock has placed the bodies: till then they all sit at the camera, and look huge.
-      if (placed && hasMap(b.def.id) && !this.alwaysMapped.has(b.def.id) && (focused || truePixels / PIXEL >= b.baseR * MAP_LOAD_AHEAD)) {
+      if (placed && (focused || !backgroundHidden) && hasMap(b.def.id) && !this.alwaysMapped.has(b.def.id) && (focused || truePixels / PIXEL >= b.baseR * MAP_LOAD_AHEAD)) {
         if (this.recentMaps.touch(b.def.id, this.mapTick)) this.loadMaps(b.def.id);
       }
-      b.shown = focused || spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : PLANET_MIN_PIXELS);
+      b.shown = focused || (!backgroundHidden && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : PLANET_MIN_PIXELS));
       if (b.comet) {
         // Far away, the small sprite with its tails; close up, the nucleus with its own.
         const close = truePixels / PIXEL >= COMET_CLOSE_RADIUS;
@@ -1431,7 +1443,7 @@ export class SolarSystem {
       const named = b.shown && !underGlobe && (focused || (!quiet && spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : LABEL_MIN_PIXELS)));
       b.sprite.visible = b.shown && !(underGlobe && away < GLOBE_FADE_FROM * EARTH_RADIUS_AU);
       if (b.orbit) {
-        b.orbit.visible = b.shown;
+        b.orbit.visible = b.shown && !backgroundHidden;
         if (parent) b.orbit.position.copy(parent);
         const look = ORBIT_COLORS[kind(b.def)]!;
         const material = b.orbit.material as THREE.LineBasicMaterial;
@@ -1574,7 +1586,7 @@ export class SolarSystem {
       if (d <= reach && d < bestDistance) [best, bestDistance] = [id, d];
     };
     for (const b of this.bodies) if (b.shown) consider(b.def.id, Math.max(8, (b.sprite.scale.y / 2) * (rect.height * this.camera.projectionMatrix.elements[5]! / 2) * 0.85));
-    this.dots.forEach((d, i) => this.dotShown[i] && consider(d.id, 6));
+    if (this.dotPoints.visible) this.dots.forEach((d, i) => this.dotShown[i] && consider(d.id, 6));
     return best;
   }
 

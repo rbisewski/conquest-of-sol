@@ -26,6 +26,7 @@
   import ResearchPanel from "./components/ResearchPanel.svelte";
   import RivalCouncilorPanel from "./components/RivalCouncilorPanel.svelte";
   import SolarView from "./components/SolarView.svelte";
+  import SettingsPanel from "./components/SettingsPanel.svelte";
   import TitleMenu from "./components/TitleMenu.svelte";
   import TopBar from "./components/TopBar.svelte";
   import { game } from "./game.svelte";
@@ -59,6 +60,7 @@
     <ForeignRelations />
     <PolicyDialog />
     <ClimateEventDialog />
+    {#if game.settingsOpen}<SettingsPanel />{/if}
     {#if game.summaryCouncilorId}<CouncilorSummary />{:else if game.researchOpen || mustChoose}<ResearchPanel />{:else if game.recruitingOpen}<RecruitScreen />{/if}
   </div>
 {:else}

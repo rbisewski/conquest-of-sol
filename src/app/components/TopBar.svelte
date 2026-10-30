@@ -118,6 +118,7 @@
         <button onclick={() => void save(saveName(`${def?.name ?? "Save"}, ${date}`))}>Save Game</button>
         <button onclick={() => void save(QUICKSAVE)}>Quicksave</button>
         <button onclick={() => void quickload()}>Quickload</button>
+        <button onclick={() => { menuOpen = false; game.settingsOpen = true; }}>Settings</button>
         <button onclick={mainMenu}>Main Menu</button>
       </div>
     {/if}

@@ -61,6 +61,17 @@ function startDay(state: GameState, content: Content): void {
   if (content.rules.councilPhaseDays.includes(date.day)) openCouncilPhase(state, content);
 }
 
+/** A council phase, or a player picking the next global tech or project, a national policy or an answer to a climate event, stops the clock. */
+export function clockRuns(state: GameState, content: Content): boolean {
+  return (
+    state.phase === "running" &&
+    !awaitingTechChoice(state) &&
+    !awaitingProjectChoice(state, content) &&
+    !awaitingPolicyChoice(state) &&
+    !awaitingClimateChoice(state)
+  );
+}
+
 /**
  * Advances up to `minutes` minutes of game time, resolving scheduled missions and landing
  * moving armies on the way. Stops early when a council phase opens. Returns the minutes
@@ -68,14 +79,7 @@ function startDay(state: GameState, content: Content): void {
  */
 export function advanceMinutes(state: GameState, content: Content, minutes: number): number {
   let passed = 0;
-  // A player picking the next global tech or project, a national policy or an answer to a climate event stops the clock, as in Terra Invicta.
-  while (
-    state.phase === "running" &&
-    !awaitingTechChoice(state) &&
-    !awaitingProjectChoice(state, content) &&
-    !awaitingPolicyChoice(state) &&
-    !awaitingClimateChoice(state)
-  ) {
+  while (clockRuns(state, content)) {
     const now = currentMinute(state);
     const midnight = (state.dayIndex + 1) * MINUTES_PER_DAY;
     const mission = Math.max(now, state.scheduledMissions[0]?.at ?? Infinity);

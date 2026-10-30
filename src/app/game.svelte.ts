@@ -3,6 +3,7 @@
 import type { Command, CommandResult, GameState, MissionType, NewGameOptions } from "../sim/index";
 import type { FromWorker, Speed, ToWorker } from "../worker/protocol";
 import type { MissionTarget } from "./missionTargets";
+import { loadSettings, saveSettings, type Settings } from "./settings";
 
 /** Which screen is up: the title menu, faction choice, save list, or the game itself. */
 export type Screen = "title" | "newGame" | "load" | "game";
@@ -20,6 +21,9 @@ class GameClient {
   selectedCouncilorId = $state<string | null>(null);
   /** Whether the Recruiting screen is open. */
   recruitingOpen = $state(false);
+  /** The player's settings, and whether their panel is open. */
+  settings = $state.raw<Settings>(loadSettings());
+  settingsOpen = $state(false);
   /** Whether the Climate panel is open. */
   climateOpen = $state(false);
   /** The nation whose Foreign Relations window is open (one whose executive we hold), if any. */
@@ -109,6 +113,11 @@ class GameClient {
       this.pending.set(id, resolve);
       this.send({ type: "command", id, command });
     });
+  }
+
+  updateSettings(changes: Partial<Settings>): void {
+    this.settings = { ...this.settings, ...changes };
+    saveSettings(this.settings);
   }
 
   setSpeed(speed: Speed): void {
