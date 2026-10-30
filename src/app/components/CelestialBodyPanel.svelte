@@ -40,14 +40,14 @@
   let tab = $state<"moons" | null>(null);
 
   let canvas = $state<HTMLCanvasElement>();
-  /** Surface maps of the bodies shown so far, by id, once loaded. */
+  /** The surface map of the body shown, by id, once loaded (only that one, so the others' memory can go). */
   let maps = $state<Record<string, MapImage>>({});
-  /** And the lumpy bodies' relief. */
+  /** And a lumpy body's relief. */
   let reliefs = $state<Record<string, Relief>>({});
   $effect(() => {
     const id = body?.id;
-    if (id && !maps[id]) void bodyMap(id)?.then((m) => (maps = { ...maps, [id]: m }));
-    if (id && !reliefs[id]) void bodyRelief(id)?.then((r) => (reliefs = { ...reliefs, [id]: r }));
+    if (id && !maps[id]) void bodyMap(id)?.then((m) => { if (body?.id === id) maps = { [id]: m }; });
+    if (id && !reliefs[id]) void bodyRelief(id)?.then((r) => { if (body?.id === id) reliefs = { [id]: r }; });
   });
 
   /** Seconds between frames of the Sun's flames, as in the Solar System view, and of a comet's tails. */

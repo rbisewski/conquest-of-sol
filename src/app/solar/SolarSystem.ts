@@ -20,7 +20,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { Content, SpaceBodyDef } from "../../sim/content";
 import { orbitPath, solarPositions, type Vec3 } from "../../sim/orbits";
 import { GLOBE_FADE_FROM, GLOBE_FARTHEST } from "../globe/Globe";
-import { bodyMap, bodyRelief, canvasSize, cometCanvasSize, drawBody, drawCometActivity, drawSun, hasMap, hasStyle, sunCanvasSize, surfaceReach, type Light, type MapImage, type Orient, type Relief } from "./bodyArt";
+import { Recency } from "./recency";
+import { bodyMap, bodyRelief, canvasSize, cometCanvasSize, drawBody, drawCometActivity, drawSun, hasMap, hasStyle, releaseBodyMaps, sunCanvasSize, surfaceReach, type Light, type MapImage, type Orient, type Relief } from "./bodyArt";
 import { bodyToScene, hasFrame } from "./bodyFrames";
 import { EARTH_POLE, globeToScene } from "./earthFrame";
 import { cometActivity, disposeSmallBodies, makeSmallBodies, setSmallBodiesSun, setSmallBodyShown } from "./smallBodies";
@@ -507,6 +508,15 @@ const COMET_FRAME = 1 / 8;
  */
 const COMET_CLOSE_RADIUS = 3;
 const SUN_FRAME_CLOSE = 1 / 6;
+/**
+ * A map takes about 2 MB decoded, so only bodies whose discs are big even far away (the planets and
+ * great moons) keep theirs. The others load theirs when focused, or when their true size nears their
+ * disc's (at this fraction of it, so the map is there as they grow past it), and show their plain
+ * style till then; the MAPS_KEPT most recently wanted of those stay loaded.
+ */
+const ALWAYS_MAPPED_RADIUS = 3;
+const MAP_LOAD_AHEAD = 0.5;
+const MAPS_KEPT = 32;
 /** Seconds the camera takes to swing to a newly focused body, and to fly home to the Earth. */
 const FOCUS_SECONDS = 0.6;
 const HOME_SECONDS = 1.4;
@@ -606,6 +616,10 @@ export class SolarSystem {
   private readonly maps = new Map<string, MapImage>();
   /** The lumpy bodies' relief, once loaded. */
   private readonly reliefs = new Map<string, Relief>();
+  /** The bodies that keep their maps loaded, and those that load them when wanted. */
+  private readonly alwaysMapped = new Set<string>();
+  private readonly recentMaps = new Recency();
+  private mapTick = 0;
   /** While the globe has the camera, this view follows it (followGlobe) instead of drawing on its own. */
   private following = false;
   /** A flight home to the Earth, from a distance in AU. */
@@ -668,18 +682,10 @@ export class SolarSystem {
     this.dotShown.push(...this.dots.map(() => true));
     this.scene.add(this.dotPoints);
 
-    for (const def of content.solarSystem) {
-      if (!hasMap(def.id)) continue;
-      void bodyMap(def.id)!.then((map) => {
-        this.maps.set(def.id, map);
-        const view = this.byId.get(def.id);
-        if (view) view.lightKey = "";
-      });
-      void bodyRelief(def.id)?.then((relief) => {
-        this.reliefs.set(def.id, relief);
-        const view = this.byId.get(def.id);
-        if (view) view.lightKey = "";
-      });
+    for (const b of this.bodies) {
+      if (b.baseR < ALWAYS_MAPPED_RADIUS || b.comet || !hasMap(b.def.id)) continue;
+      this.alwaysMapped.add(b.def.id);
+      this.loadMaps(b.def.id);
     }
 
     const canvas = this.renderer.domElement;
@@ -693,6 +699,34 @@ export class SolarSystem {
     this.resizeObserver.observe(container);
     this.resize();
     this.animate();
+  }
+
+  /** Loads a body's map and relief, and has it redrawn from them, unless it has been let go by then. */
+  private loadMaps(id: string): void {
+    const kept = () => this.alwaysMapped.has(id) || this.recentMaps.has(id);
+    const redraw = () => {
+      const view = this.byId.get(id);
+      if (view) view.lightKey = "";
+    };
+    void bodyMap(id)?.then((map) => {
+      if (!kept()) return;
+      this.maps.set(id, map);
+      redraw();
+    });
+    void bodyRelief(id)?.then((relief) => {
+      if (!kept()) return;
+      this.reliefs.set(id, relief);
+      redraw();
+    });
+  }
+
+  /** Lets go of a body's map and relief; it goes back to its plain style. */
+  private forgetMaps(id: string): void {
+    this.maps.delete(id);
+    this.reliefs.delete(id);
+    releaseBodyMaps(id);
+    const view = this.byId.get(id);
+    if (view) view.lightKey = "";
   }
 
   private addBody(def: SpaceBodyDef, r: number, dot = -1): void {
@@ -937,6 +971,8 @@ export class SolarSystem {
     setSmallBodiesSun(this.dotPoints, sun);
     const view = this.camera.matrixWorldInverse;
     const screen = new THREE.Vector3();
+    this.mapTick++;
+    const placed = !Number.isNaN(this.placedYears);
     for (const b of this.bodies) {
       const at = this.positions.get(b.def.id)!;
       b.sprite.position.copy(at);
@@ -956,6 +992,10 @@ export class SolarSystem {
       const parent = b.def.parent ? this.positions.get(b.def.parent)! : null;
       const spread = parent ? b.def.orbit!.a * this.pixelsPerUnit(parent) : Infinity;
       const focused = b.def.id === this.focusId;
+      // Not before the clock has placed the bodies: till then they all sit at the camera, and look huge.
+      if (placed && hasMap(b.def.id) && !this.alwaysMapped.has(b.def.id) && (focused || truePixels / PIXEL >= b.baseR * MAP_LOAD_AHEAD)) {
+        if (this.recentMaps.touch(b.def.id, this.mapTick)) this.loadMaps(b.def.id);
+      }
       b.shown = focused || spread > (kind(b.def) === "moon" ? MOON_MIN_PIXELS : PLANET_MIN_PIXELS);
       if (b.comet) {
         // Far away, the small sprite with its tails; close up, the nucleus with its own.
@@ -1003,6 +1043,7 @@ export class SolarSystem {
         b.label.style.transform = `translate(${steadyPixel(x)}px, ${steadyPixel(y)}px) translateX(-50%)`;
       }
     }
+    for (const id of this.recentMaps.evict(MAPS_KEPT, this.mapTick)) this.forgetMaps(id);
     if (this.selectedOrbit) this.selectedOrbit.line.position.copy(this.positions.get(this.selectedOrbit.def.parent!)!);
     // Asteroidal moons, like the moons, show when their orbits are wide enough on screen.
     this.dots.forEach((d, i) => {
@@ -1176,6 +1217,7 @@ export class SolarSystem {
   }
 
   dispose(): void {
+    for (const id of this.recentMaps.clear()) releaseBodyMaps(id);
     cancelAnimationFrame(this.frame);
     this.resizeObserver.disconnect();
     const canvas = this.renderer.domElement;

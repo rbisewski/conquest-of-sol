@@ -327,6 +327,12 @@ export function bodyMap(id: string): Promise<MapImage> | null {
   return load;
 }
 
+/** Forgets a body's loaded map and relief, so their memory can go once no one else holds them; asking again loads them afresh. */
+export function releaseBodyMaps(id: string): void {
+  mapLoads.delete(id);
+  reliefLoads.delete(id);
+}
+
 async function loadImage(file: string): Promise<MapImage> {
   const image = new Image();
   image.src = `${import.meta.env.BASE_URL}map/${file}`;
