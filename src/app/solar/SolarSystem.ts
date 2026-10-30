@@ -930,6 +930,40 @@ const SUN_FRAME_CLOSE = 1 / 6;
 const ALWAYS_MAPPED_RADIUS = 3;
 const MAP_LOAD_AHEAD = 0.5;
 const MAPS_KEPT = 32;
+/**
+ * With the globe's camera the sky turns with the Earth, in the clock's steps. The stars glide
+ * behind it (STAR_GLIDE seconds) and, the faster it turns, trail soft streaks of up to
+ * STAR_TRAIL_MAX degrees (STAR_TRAIL seconds long), taking over from their dots between
+ * STAR_TRAIL_SHOWS degrees. Only the clock's turning counts, not the player's dragging.
+ */
+const STAR_GLIDE = 0.1;
+const STAR_TRAIL = 0.02;
+const STAR_TRAIL_MAX = 0.5;
+const STAR_TRAIL_SHOWS: [number, number] = [0.1, 0.5];
+const STAR_COLOR = 0xc8d0ff;
+/** A streak's opacity at its head; it fades to nothing at its tail. */
+const STAR_TRAIL_OPACITY = 0.55;
+const STAR_VERTEX = /* glsl */ `
+  uniform mat3 head;
+  uniform mat3 tail;
+  uniform float size;
+  attribute float end;
+  varying float vFade;
+  void main() {
+    vFade = 1.0 - end;
+    gl_PointSize = size;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4((end > 0.5 ? tail : head) * position, 1.0);
+  }
+`;
+const STAR_FRAGMENT = /* glsl */ `
+  uniform vec3 color;
+  uniform float opacity;
+  varying float vFade;
+  void main() {
+    gl_FragColor = vec4(color, opacity * vFade);
+    #include <colorspace_fragment>
+  }
+`;
 /** A body counts as zoomed into, for the Hide Objects setting, once its radius spans this share of the view's height. */
 const ZOOMED_IN_SHARE = 0.05;
 /** Seconds the camera takes to swing to a newly focused body, and to fly home to the Earth. */
@@ -1011,6 +1045,14 @@ export class SolarSystem {
   private readonly labels: HTMLDivElement;
   private readonly tooltip: HTMLDivElement;
   private readonly stars: THREE.Points;
+  /** The stars' streaks, and how far behind the sky the stars' heads and tails are (see moveStars). */
+  private readonly starTrails: THREE.LineSegments;
+  private readonly starHead = new THREE.Quaternion();
+  private readonly starTail = new THREE.Quaternion();
+  private starsTrailing = false;
+  private starsAt = 0;
+  /** Whether the stars may trail streaks at all (the Blur Stars setting). */
+  private blurStars = true;
   private readonly bodies: BodyView[] = [];
   private readonly byId = new Map<string, BodyView>();
   /** Bodies drawn as small sprites, and their points. */
@@ -1077,8 +1119,8 @@ export class SolarSystem {
     this.controls.rotateSpeed = 0.5;
     this.scene.background = new THREE.Color("#05060d");
 
-    this.stars = this.makeStars();
-    this.scene.add(this.stars);
+    [this.stars, this.starTrails] = this.makeStars();
+    this.scene.add(this.stars, this.starTrails);
 
     for (const def of content.solarSystem) {
       this.positions.set(def.id, new THREE.Vector3());
@@ -1183,7 +1225,7 @@ export class SolarSystem {
     this.byId.set(def.id, view);
   }
 
-  private makeStars(): THREE.Points {
+  private makeStars(): [THREE.Points, THREE.LineSegments] {
     // Fixed pseudo-random layout on a unit sphere, kept around the camera at any zoom.
     const positions: number[] = [];
     let s = 7654321;
@@ -1192,11 +1234,76 @@ export class SolarSystem {
       const v = new THREE.Vector3(rand(), rand(), rand()).normalize();
       positions.push(v.x, v.y, v.z);
     }
+    const shared = {
+      head: { value: new THREE.Matrix3() },
+      tail: { value: new THREE.Matrix3() },
+      color: { value: new THREE.Color(STAR_COLOR) },
+      size: { value: 2 * Math.min(window.devicePixelRatio, 2) },
+    };
+    const material = (opacity: number) =>
+      new THREE.ShaderMaterial({
+        uniforms: { ...shared, opacity: { value: opacity } },
+        vertexShader: STAR_VERTEX,
+        fragmentShader: STAR_FRAGMENT,
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
+      });
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-    const points = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0xc8d0ff, size: 2, sizeAttenuation: false, depthTest: false, depthWrite: false }));
+    geometry.setAttribute("end", new THREE.Float32BufferAttribute(new Float32Array(positions.length / 3), 1));
+    const points = new THREE.Points(geometry, material(1));
     points.renderOrder = 0;
-    return points;
+    // Each star's streak: the same point twice, one end at its head and the other at its tail.
+    const trail = new THREE.BufferGeometry();
+    trail.setAttribute("position", new THREE.Float32BufferAttribute(positions.flatMap((_, k) => (k % 3 === 2 ? [positions[k - 2]!, positions[k - 1]!, positions[k]!, positions[k - 2]!, positions[k - 1]!, positions[k]!] : [])), 3));
+    trail.setAttribute("end", new THREE.Float32BufferAttribute(positions.flatMap((_, k) => (k % 3 === 0 ? [0, 1] : [])), 1));
+    const trails = new THREE.LineSegments(trail, material(0));
+    trails.renderOrder = 0;
+    trails.visible = false;
+    trails.frustumCulled = points.frustumCulled = false;
+    return [points, trails];
+  }
+
+  /**
+   * Places the stars for this frame. Under the globe's camera the sky turns with the clock: the
+   * stars are drawn where they were a moment ago in the Earth's frame, which smooths out the clock's
+   * steps, and their tails where they were a moment before that. In this view's own camera the
+   * sky keeps still.
+   */
+  private moveStars(): void {
+    const head = (this.stars.material as THREE.ShaderMaterial).uniforms;
+    const trail = (this.starTrails.material as THREE.ShaderMaterial).uniforms;
+    if (!this.following) {
+      this.starsTrailing = false;
+      head.head!.value.identity();
+      head.tail!.value.identity();
+      head.opacity!.value = 1;
+      this.starTrails.visible = false;
+      return;
+    }
+    const sky = new THREE.Quaternion().setFromRotationMatrix(this.earthToScene);
+    const now = performance.now();
+    if (!this.starsTrailing) {
+      this.starHead.copy(sky);
+      this.starTail.copy(sky);
+      this.starsTrailing = true;
+    } else {
+      const elapsed = Math.min(0.25, (now - this.starsAt) / 1000);
+      this.starHead.slerp(sky, 1 - Math.exp(-elapsed / STAR_GLIDE));
+      this.starTail.slerp(this.starHead, 1 - Math.exp(-elapsed / STAR_TRAIL));
+      const excess = this.starTail.angleTo(this.starHead) - THREE.MathUtils.degToRad(STAR_TRAIL_MAX);
+      if (excess > 0) this.starTail.rotateTowards(this.starHead, excess);
+    }
+    this.starsAt = now;
+    const matrix = new THREE.Matrix4();
+    const relative = new THREE.Quaternion();
+    head.head!.value.setFromMatrix4(matrix.makeRotationFromQuaternion(relative.copy(sky).multiply(this.starHead.clone().invert())));
+    head.tail!.value.setFromMatrix4(matrix.makeRotationFromQuaternion(relative.copy(sky).multiply(this.starTail.clone().invert())));
+    const streak = this.blurStars ? THREE.MathUtils.smoothstep(THREE.MathUtils.radToDeg(this.starTail.angleTo(this.starHead)), STAR_TRAIL_SHOWS[0], STAR_TRAIL_SHOWS[1]) : 0;
+    head.opacity!.value = 1 - streak;
+    trail.opacity!.value = streak * STAR_TRAIL_OPACITY;
+    this.starTrails.visible = streak > 0;
   }
 
   /** The game's time, in Julian years since J2000, and the Sun's direction in the globe's frame then (Globe.ts sunDirection). */
@@ -1315,6 +1422,10 @@ export class SolarSystem {
     this.hideBackground = hide;
   }
 
+  setBlurStars(blur: boolean): void {
+    this.blurStars = blur;
+  }
+
   /** Moves every body to the current time. */
   private place(): void {
     if (this.years === this.placedYears || Number.isNaN(this.years)) return;
@@ -1385,6 +1496,9 @@ export class SolarSystem {
     this.camera.updateProjectionMatrix();
     this.stars.position.copy(this.camera.position);
     this.stars.scale.setScalar(distance * 100);
+    this.starTrails.position.copy(this.stars.position);
+    this.starTrails.scale.copy(this.stars.scale);
+    this.moveStars();
 
     const height = this.container.clientHeight;
     const unit = 2 / (Math.max(1, height) * this.camera.projectionMatrix.elements[5]!);

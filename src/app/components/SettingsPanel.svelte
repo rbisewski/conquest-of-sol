@@ -25,6 +25,17 @@
         <small>While the game runs and you are zoomed into a celestial body, only that body and the stars are shown, as others racing past can cause motion sickness.</small>
       </span>
     </label>
+    <label class="option">
+      <input
+        type="checkbox"
+        checked={game.settings.blurStars}
+        onchange={(e) => game.updateSettings({ blurStars: e.currentTarget.checked })}
+      />
+      <span>
+        Blur Stars in 3D view
+        <small>While the game runs, the stars behind the Earth stretch into soft streaks, the longer the faster it goes. Turned off, they stay points.</small>
+      </span>
+    </label>
   </section>
 </div>
 

@@ -75,6 +75,10 @@
     solar?.setHideBackground(game.settings.hideObjectsWhenUnpaused && game.speed > 0 && state !== null && clockRuns(state, baseContent));
   });
 
+  $effect(() => {
+    solar?.setBlurStars(game.settings.blurStars);
+  });
+
   // The bodies move with the game clock.
   $effect(() => {
     void game.state?.dayIndex;

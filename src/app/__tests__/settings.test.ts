@@ -11,10 +11,16 @@ describe("settings", () => {
     expect(loadSettings(store()).hideObjectsWhenUnpaused).toBe(true);
   });
 
+  it("blurs the stars by default", () => {
+    expect(loadSettings(store()).blurStars).toBe(true);
+    expect(loadSettings(store('{"hideObjectsWhenUnpaused":false}')).blurStars).toBe(true);
+  });
+
   it("keeps what was saved", () => {
     const s = store();
-    saveSettings({ hideObjectsWhenUnpaused: false }, s);
+    saveSettings({ hideObjectsWhenUnpaused: false, blurStars: false }, s);
     expect(loadSettings(s).hideObjectsWhenUnpaused).toBe(false);
+    expect(loadSettings(s).blurStars).toBe(false);
   });
 
   it("falls back to the defaults on anything unreadable", () => {
