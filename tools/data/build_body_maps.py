@@ -1,6 +1,7 @@
 """Builds the pixel-art surface maps of the bodies the camera can come right down to, in public/map:
-mercury.png, luna.png, mars.png, ceres.png, jupiter.png, io.png, europa.png, ganymede.png and
-callisto.png from spacecraft data, venus.png (its clouds) made up.
+Mercury, Luna, Mars, Ceres, Jupiter, its four great moons, seven of Saturn's, five of Uranus's,
+Triton and Pluto from spacecraft data; Venus, Saturn, Uranus and Neptune (their clouds) and Eris,
+Haumea and Makemake (never seen close) made up.
 
 Sources (public domain; downloaded by fetch.py into tools/data/.cache):
   Mercury: USGS Astrogeology's MESSENGER MDIS global colour mosaic, 665 m/px (Denevi et al.; the
@@ -14,6 +15,12 @@ Sources (public domain; downloaded by fetch.py into tools/data/.cache):
   Jupiter: NASA/JPL/Space Science Institute's Cassini cylindrical colour map, PIA07782.
   Io, Europa, Ganymede, Callisto: USGS's Voyager–Galileo SSI global mosaics (Io's and Ganymede's
     in colour; west-positive longitudes from −180° to 180°, drawn east to the right as ours are).
+  Saturn's moons: USGS's Cassini (and Voyager) global mosaics, Mimas's DLR basemap inside its zip.
+  Miranda, Ariel, Umbriel, Titania, Oberon: USGS's Voyager 2 mosaics at 4 px/degree, from NASA/JPL's
+    Solar System Simulator (greyscale; southern hemispheres only, the rest made up from them).
+  Triton: USGS's Voyager 2 colour mosaic, gaps filled from lower-resolution views (the far north
+    made up). Pluto: USGS's New Horizons LORRI mosaic, greyscale, 0° to 360° east (south of about
+    30°S made up).
   Venus: no source; its cloud tops after Mariner 10's view (NASA/JPL-Caltech PIA23791): cream
     white, a mottled peach band across the low latitudes, white streaks sweeping poleward in
     chevrons, brighter towards the poles.
@@ -271,6 +278,30 @@ def fbm(seed: int, scales: list[tuple[int, int, float]]) -> np.ndarray:
     return total / weights
 
 
+def sphere_noise(seed: int, scales: list[tuple[float, float]]) -> np.ndarray:
+    """Value noise on the sphere, 0–1, so it neither pinches at the poles nor seams at 180°: random 3D lattices sampled (trilinear, smoothed) at each map point's direction times a frequency, summed by (frequency, weight)."""
+    rng = np.random.default_rng(seed)
+    lat, lon = np.radians(LAT), np.radians(LON)
+    xyz = np.stack([np.cos(lat) * np.cos(lon), np.sin(lat), np.cos(lat) * np.sin(lon)], axis=-1)
+    total = np.zeros((H, W))
+    weights = 0.0
+    for freq, weight in scales:
+        n = int(2 * freq) + 3
+        grid = rng.random((n, n, n))
+        q = (xyz + 1) * freq
+        i = np.floor(q).astype(int)
+        f = q - i
+        f = f * f * (3 - 2 * f)
+        acc = np.zeros((H, W))
+        for corner in range(8):
+            o = [(corner >> k) & 1 for k in range(3)]
+            w = np.prod([f[..., k] if o[k] else 1 - f[..., k] for k in range(3)], axis=0)
+            acc += w * grid[i[..., 0] + o[0], i[..., 1] + o[1], i[..., 2] + o[2]]
+        total += acc * weight
+        weights += weight
+    return total / weights
+
+
 def venus() -> None:
     # Cloud tops as Mariner 10 saw them: a cream-white globe, a soft, mottled peach haze across
     # the low latitudes, white wisps sweeping poleward in chevrons (mirrored across the equator)
@@ -490,11 +521,289 @@ def iapetus() -> None:
              [(38, 26, 20), (56, 38, 28), (76, 54, 40), (98, 74, 56), (126, 108, 92), (156, 144, 130), (188, 182, 172), (216, 214, 208), (238, 236, 230)])
 
 
+def uranus() -> None:
+    # No public-domain global map of Uranus exists either, and there is little to map: made up
+    # after Voyager 2's, Hubble's and JWST's views of its northern summer. A pale cyan globe
+    # (methane soaking up the red), faint bands, a bright, whitish north polar cap edged by a thin
+    # darker lane near 60°N, a fainter bright collar round the south pole (as Voyager saw it), and
+    # a few small bright methane-ice clouds at northern mid-latitudes.
+    ripple = fbm(51, [(48, 96, 1.0), (96, 192, 0.4)])
+    swirl = fbm(53, [(12, 24, 1.0), (32, 64, 0.5)])
+    lat = LAT + (swirl - 0.5) * 1.6
+    profile = [
+        (90, (214, 238, 240)), (72, (206, 234, 237)), (64, (190, 226, 230)), (60, (150, 198, 206)),
+        (56, (166, 212, 218)), (45, (176, 220, 225)), (32, (170, 214, 220)), (20, (176, 219, 224)),
+        (8, (164, 208, 215)), (0, (160, 205, 213)), (-8, (164, 208, 215)), (-22, (170, 214, 220)),
+        (-40, (174, 216, 222)), (-62, (172, 214, 220)), (-70, (186, 224, 228)), (-76, (172, 214, 220)),
+        (-90, (178, 218, 224)),
+    ]
+    xs = [-p[0] for p in profile]
+    out = np.stack([np.interp(-lat, xs, [p[1][i] for p in profile]) for i in range(3)], axis=-1)
+    out *= (0.975 + 0.05 * ripple)[..., None]
+    # Bright clouds: small patches where fine noise peaks, only at 25°–50°N, stretched east–west.
+    clouds = fbm(57, [(96, 48, 1.0), (192, 96, 0.5)])
+    belt = np.clip(1 - np.abs(LAT - 37) / 13, 0, 1)
+    cloud = np.clip((clouds - 0.76) / 0.06, 0, 1) * belt
+    out = out * (1 - cloud[..., None]) + np.array([236, 248, 248]) * cloud[..., None]
+    save("uranus.png", out, [
+        (146, 194, 202), (156, 202, 210), (164, 208, 215), (170, 213, 219), (176, 218, 223),
+        (184, 223, 227), (196, 230, 233), (208, 236, 238), (222, 243, 244), (236, 248, 248),
+    ], dither=5)
+
+
+def quilt(detail: np.ndarray, donor: np.ndarray, rows: int, cols: int, rng: np.random.Generator, wrap: bool) -> np.ndarray:
+    """
+    New terrain of rows × cols from a map's detail: square patches from wholly donor ground,
+    picked at random and laid overlapping by half, each under a raised-cosine window (the windows
+    sum to one), the overlaps' dulling (unrelated patches averaged) given back. Wrapping in
+    columns when asked, as a map does in longitude.
+    """
+    size, step = 48, 24
+    clear = blur(donor.astype(np.float64), size / 4) > 0.999
+    ys, xs = np.where(clear[size // 2:H - size // 2, size // 2:W - size // 2])
+    window = np.outer(*[np.sin(np.pi * (np.arange(size) + 0.5) / size) ** 2] * 2)
+    out = np.zeros((rows + 2 * size, cols + (0 if wrap else 2 * size)))
+    for top in range(-step, rows, step):
+        for left in range(-step if not wrap else 0, cols, step):
+            i = rng.integers(len(ys))
+            patch = detail[ys[i]:ys[i] + size, xs[i]:xs[i] + size]
+            at = np.arange(left, left + size) % cols if wrap else np.arange(left + size, left + 2 * size)
+            out[top + size:top + 2 * size, at] += patch * window
+    out = out[size:size + rows]
+    return (out if wrap else out[:, size:size + cols]) * 1.25
+
+
+def unseen(value: np.ndarray, valid: np.ndarray, donor: np.ndarray, seed: int, flatten: float = 0.5,
+           extend: bool = False) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Makes up the ground a spacecraft never saw: the body's average tone with terrain borrowed from
+    its own donor ground (its broad tone taken out, so no landmark is copied whole), quilted from
+    random patches (fixed seed); round the poles, where the map squeezes them, the patches are
+    laid on polar maps instead. The imaged part's broad swings of brightness are scaled by flatten
+    (lighting more than ground, in old mosaics), and its edge is feathered into the made-up part.
+    With extend, the made-up ground starts from the tone along that edge, easing to the average
+    over some 20°, for a body whose edge is far from its average.
+    Returns the whole map and the made-up layer alone.
+    """
+    average = np.median(value[valid])
+    broad = blur(value, 14)
+    detail = value - broad
+    value = average + (broad - average) * flatten + detail
+    rng = np.random.default_rng(seed)
+    base = average
+    if extend:
+        near = blur(valid.astype(np.float64), 24)
+        base = fill(average + (broad - average) * flatten, valid) * near + average * (1 - near)
+    made_up = base + quilt(detail, donor, H, W, rng, wrap=True)
+    # The polar caps, on polar maps (azimuthal equidistant, the map's own scale at the equator)
+    # out to 28° from each pole, blended in from 62° to 70°.
+    reach = int(28 * W / 360) + 2
+    cap = np.clip((np.abs(LAT) - 62) / 8, 0, 1)
+    rho = (90 - np.abs(LAT)) * W / 360
+    for pole in (1, -1):
+        polar_map = quilt(detail, donor, 2 * reach, 2 * reach, rng, wrap=False)
+        px = np.clip(reach + rho * np.cos(np.radians(LON)), 0, 2 * reach - 1).astype(int)
+        py = np.clip(reach + rho * np.sin(np.radians(LON)), 0, 2 * reach - 1).astype(int)
+        here = cap * (np.sign(LAT) == pole)
+        made_up = made_up * (1 - here) + (base + polar_map[py, px]) * here
+    weight = blur(valid.astype(np.float64), 6) * valid
+    return value * weight + made_up * (1 - weight), made_up
+
+
+def voyager_moon(file: str, out_name: str, stops: list[tuple[float, tuple[int, int, int]]], palette: list[tuple[int, int, int]],
+                 gamma: float = 1.0) -> None:
+    """
+    A greyscale Voyager 2 mosaic of a moon of Uranus, coloured along a ramp of its real tones.
+    Voyager flew by in 1986 with the system's south pole towards the Sun, so only the southern
+    hemispheres were imaged: the rest is made up (unseen()) from the moon's best-imaged ground,
+    62°S to 18°S. The mosaics' broad swings of brightness (lighting, not ground) are halved. The
+    shadowed edge of the imaged part is trimmed; the smeared south pole fades into the made-up
+    ground beyond 78°S.
+    """
+    grey = mosaic(file, "L")
+    valid = blur((grey > 2).astype(np.float64), 4) > 0.995
+    value = stretch(fill(grey, valid), valid, 1, 99.7) ** gamma
+    donor = valid & (LAT > -62) & (LAT < -18) & (np.abs(LON) < 176)
+    value, made_up = unseen(value, valid, donor, 61)
+    polar = np.clip((-LAT - 78) / 8, 0, 1)
+    value = value * (1 - polar) + made_up * polar
+    save(out_name, ramp(np.clip(value, 0, 1), stops), palette, dither=9)
+
+
+def miranda() -> None:
+    # Neutral grey, a patchwork: old cratered rolling terrain and the three great grooved coronae
+    # (Arden, Elsinore and the chevron of Inverness), the cliffs of Verona Rupes.
+    voyager_moon("ura5vuu2.tif", "miranda.png",
+                 [(0, (46, 46, 48)), (0.5, (138, 138, 138)), (1, (230, 230, 228))],
+                 [(46, 46, 48), (68, 68, 70), (92, 92, 93), (115, 115, 116), (138, 138, 138), (162, 162, 161), (186, 186, 185), (208, 208, 207), (230, 230, 228)])
+
+
+def ariel() -> None:
+    # The brightest of Uranus's moons: grey-white ice, a little bluish, cut by long fault valleys
+    # (chasmata) with smooth floors, and bright young craters.
+    voyager_moon("ura1vuu2.tif", "ariel.png",
+                 [(0, (66, 70, 74)), (0.5, (158, 162, 166)), (1, (242, 244, 244))],
+                 [(66, 70, 74), (88, 92, 96), (112, 116, 120), (135, 139, 143), (158, 162, 166), (182, 186, 189), (206, 209, 211), (226, 228, 229), (242, 244, 244)])
+
+
+def umbriel() -> None:
+    # The darkest: an even, sooty grey, old and cratered, but for Wunda's bright ring near the
+    # equator and the bright-centred crater Vuver.
+    voyager_moon("ura2vuu2.tif", "umbriel.png",
+                 [(0, (24, 24, 26)), (0.45, (70, 70, 72)), (0.85, (112, 111, 110)), (1, (208, 204, 196))],
+                 [(24, 24, 26), (38, 38, 40), (52, 52, 54), (66, 66, 68), (80, 80, 81), (96, 95, 95), (114, 113, 112), (150, 148, 144), (208, 204, 196)])
+
+
+def titania() -> None:
+    # The largest: grey with a faint warm tint, cratered, crossed by huge canyons (Messina
+    # Chasmata) and with Ursula's and Gertrude's great craters.
+    voyager_moon("ura3vuu2.tif", "titania.png",
+                 [(0, (50, 46, 44)), (0.5, (146, 140, 134)), (1, (236, 232, 226))],
+                 [(50, 46, 44), (72, 68, 65), (96, 91, 87), (120, 115, 110), (146, 140, 134), (170, 165, 159), (194, 190, 184), (216, 212, 207), (236, 232, 226)])
+
+
+def oberon() -> None:
+    # Darker and a little redder: old, heavily cratered, many craters (Hamlet, Othello) floored
+    # with dark material, with bright ray craters.
+    voyager_moon("ura4vuu2.tif", "oberon.png",
+                 [(0, (34, 30, 28)), (0.5, (112, 104, 97)), (1, (222, 216, 208))],
+                 [(34, 30, 28), (52, 47, 44), (72, 66, 62), (92, 85, 80), (112, 104, 97), (136, 128, 121), (162, 156, 149), (192, 186, 179), (222, 216, 208)],
+                 gamma=0.9)
+
+
+def neptune() -> None:
+    # Made up, as Uranus: no public-domain global map exists. After Voyager 2's, Hubble's and
+    # JWST's views: a deeper, bluer globe than Uranus (true colour, as Irwin et al. 2024 rebalanced
+    # Voyager's, not Voyager's published royal blue), faint bands, a darker collar round the south
+    # pole near 60°–70°S, a dark spot at 22°N (as Hubble saw in 2018) with bright methane clouds at
+    # its poleward edge, white cloud streaks at 20°–30°S and 25°–45°N, and the small bright
+    # "Scooter" at 42°S.
+    ripple = fbm(71, [(48, 96, 1.0), (96, 192, 0.4)])
+    swirl = fbm(73, [(12, 24, 1.0), (32, 64, 0.5)])
+    lat = LAT + (swirl - 0.5) * 2.0
+    profile = [
+        (90, (112, 150, 208)), (70, (104, 144, 206)), (50, (96, 136, 204)), (35, (104, 146, 210)),
+        (20, (96, 138, 206)), (8, (110, 152, 214)), (0, (114, 156, 216)), (-8, (110, 152, 214)),
+        (-22, (98, 140, 208)), (-38, (104, 146, 210)), (-55, (90, 128, 198)), (-63, (70, 104, 178)),
+        (-70, (74, 108, 182)), (-78, (100, 140, 204)), (-90, (116, 156, 212)),
+    ]
+    xs = [-q[0] for q in profile]
+    out = np.stack([np.interp(-lat, xs, [q[1][i] for q in profile]) for i in range(3)], axis=-1)
+    out *= (0.97 + 0.06 * ripple)[..., None]
+    # The dark spot, and its companion clouds on the poleward side.
+    spot = ((LAT - 22) / 5.5) ** 2 + (((LON + 40 + 180) % 360 - 180) / 13) ** 2
+    out = np.where((spot < 1)[..., None], out * 0.62 + np.array([20, 34, 80]) * 0.38, out)
+    companion = ((LAT - 29) / 2.2) ** 2 + (((LON + 36 + 180) % 360 - 180) / 11) ** 2
+    # White streaks: noise peaks in two belts, stretched east–west, and the Scooter.
+    clouds = fbm(77, [(128, 64, 1.0), (256, 128, 0.5)])
+    belts = np.clip(1 - np.abs(LAT + 25) / 6, 0, 1) + np.clip(1 - np.abs(LAT - 35) / 10, 0, 1)
+    cloud = np.clip((clouds - 0.7) / 0.07, 0, 1) * np.clip(belts, 0, 1)
+    cloud = np.maximum(cloud, (companion < 1).astype(float))
+    scooter = ((LAT + 42) / 2) ** 2 + (((LON - 70 + 180) % 360 - 180) / 4) ** 2
+    cloud = np.maximum(cloud, (scooter < 1).astype(float))
+    out = out * (1 - cloud[..., None]) + np.array([236, 244, 250]) * cloud[..., None]
+    save("neptune.png", out, [
+        (52, 82, 154), (70, 104, 178), (84, 120, 192), (94, 134, 202), (102, 144, 208),
+        (110, 152, 214), (120, 160, 218), (160, 190, 230), (236, 244, 250),
+    ], dither=5)
+
+
+def triton() -> None:
+    # Voyager 2's colour mosaic, its gaps filled from lower-resolution views ("GlobalFill"); the
+    # pinkish south polar cap with its dark wind streaks, the "cantaloupe" terrain to the west and
+    # the frozen smooth plains. Voyager's filters give it a green cast, so its brightness goes on
+    # a ramp of Triton's real tones (greyish to pale peach-pink), with a little of the mosaic's
+    # own colour, the cast taken out. Voyager came by in 1989 with the south pole towards the
+    # Sun, so the north beyond the coverage, roughly 10°–45°N, is made up (unseen()) from the
+    # imaged ground between 35°S and 25°N.
+    rgb = mosaic("Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif")
+    valid = blur((rgb.max(axis=2) > 4).astype(np.float64), 4) > 0.995
+    for k in range(3):
+        rgb[..., k] = fill(rgb[..., k], valid)
+    lum = rgb.mean(axis=2)
+    chroma = rgb - lum[..., None]
+    chroma -= chroma[valid].mean(axis=0)
+    value = stretch(lum, valid, 1, 99.7)
+    donor = valid & (LAT > -35) & (LAT < 25)
+    value, _ = unseen(value, valid, donor, 79, flatten=0.8, extend=True)
+    weight = blur(valid.astype(np.float64), 6) * valid
+    out = ramp(np.clip(value, 0, 1), [(0, (84, 76, 76)), (0.45, (178, 160, 154)), (0.8, (226, 212, 204)), (1, (248, 240, 234))])
+    out += chroma * 0.5 * weight[..., None]
+    save("triton.png", out, kmeans_palette(np.clip(out, 0, 255), 12), dither=8)
+
+
+def pluto() -> None:
+    # New Horizons' greyscale mosaic (LORRI, with the far side from lower-resolution approach
+    # views), coloured along a ramp of Pluto's tones in its MVIC colour views: the tholin-dark,
+    # reddish-brown Cthulhu, tan-orange uplands, and the pale cream nitrogen ice of Sputnik
+    # Planitia; the north polar Lowell Regio greyer. Its longitudes run 0° to 360° east, so it is
+    # turned half a turn. New Horizons came by in 2015 with the south in polar night, so south of
+    # about 30°S is made up (unseen()) from the imaged ground between 20°S and 55°N.
+    grey = np.roll(mosaic("Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif", "L"), W // 2, axis=1)
+    valid = blur((grey > 2).astype(np.float64), 4) > 0.995
+    value = stretch(fill(grey, valid), valid, 0.5, 99.8)
+    donor = valid & (LAT > -20) & (LAT < 55) & (np.abs(LON) > 4)
+    value, _ = unseen(value, valid, donor, 83, flatten=1.0, extend=True)
+    out = ramp(np.clip(value, 0, 1), [
+        (0, (66, 38, 28)), (0.22, (108, 64, 44)), (0.45, (170, 122, 88)), (0.62, (206, 170, 132)),
+        (0.8, (230, 212, 186)), (1, (248, 242, 230)),
+    ])
+    north = np.clip((LAT - 60) / 15, 0, 1)[..., None] * 0.35
+    out = out * (1 - north) + out.mean(axis=2, keepdims=True) * np.array([1.0, 1.0, 1.02]) * north
+    save("pluto.png", out, kmeans_palette(np.clip(out, 0, 255), 14), dither=8)
+
+
+def eris() -> None:
+    # Made up: no spacecraft has been there and no telescope resolves it. Eris is about the
+    # brightest thing in the Solar System (albedo 0.96), probably fresh methane frost condensed
+    # from its atmosphere as it fell towards aphelion, and its light hardly varies as it turns:
+    # an almost white globe with the faintest grey-cream mottling.
+    mottle = sphere_noise(87, [(2.5, 1.0), (6, 0.6), (15, 0.3)])
+    value = 0.5 + (mottle - 0.5) * 2.2
+    out = ramp(np.clip(value, 0, 1), [(0, (204, 202, 196)), (0.5, (232, 231, 226)), (1, (250, 250, 248))])
+    save("eris.png", out, [(204, 202, 196), (216, 214, 209), (228, 227, 222), (238, 237, 233), (248, 248, 246)], dither=6)
+
+
+def haumea() -> None:
+    # Made up. Haumea is coated with crystalline water ice, bright and faintly bluish white, and
+    # its light curve shows a darker, redder region (Lacerda et al. 2008's "dark red spot"), put
+    # here on the equator at 0°, on the long axis.
+    mottle = sphere_noise(89, [(2.5, 1.0), (6, 0.6), (15, 0.3)])
+    value = 0.5 + (mottle - 0.5) * 2.0
+    out = ramp(np.clip(value, 0, 1), [(0, (182, 186, 190)), (0.5, (216, 220, 224)), (1, (244, 246, 248))])
+    # The spot: soft, its edge ragged with noise.
+    d = np.degrees(np.arccos(np.clip(np.cos(np.radians(LAT)) * np.cos(np.radians(LON)), -1, 1)))
+    ragged = sphere_noise(90, [(5, 1.0), (12, 0.5)])
+    spot = np.clip(1 - (d + (ragged - 0.5) * 22 - 10) / 18, 0, 1)[..., None]
+    out = out * (1 - spot * 0.7) + np.array([150, 100, 88]) * spot * 0.7
+    save("haumea.png", out, [
+        (150, 100, 88), (168, 122, 110), (188, 152, 144), (182, 186, 190), (198, 202, 206), (214, 218, 222),
+        (228, 231, 234), (242, 244, 246),
+    ], dither=6)
+
+
+def makemake() -> None:
+    # Made up. Bright (albedo 0.82) methane and ethane ice tinged reddish-tan by tholins, patchy
+    # (its light curve varies a little), with a few redder, darker regions.
+    broad = sphere_noise(91, [(1.6, 1.0), (4, 0.6)])
+    fine = sphere_noise(93, [(10, 1.0), (20, 0.5)])
+    value = 0.6 + (broad - 0.5) * 1.6 + (fine - 0.5) * 0.4
+    out = ramp(np.clip(value, 0, 1), [
+        (0, (148, 92, 64)), (0.3, (190, 134, 98)), (0.55, (222, 178, 140)), (0.8, (238, 214, 186)), (1, (250, 244, 234)),
+    ])
+    save("makemake.png", out, [
+        (148, 92, 64), (172, 114, 82), (194, 140, 104), (212, 164, 126), (226, 186, 150),
+        (236, 206, 176), (244, 226, 204), (250, 244, 234),
+    ], dither=7)
+
+
 BODIES = {
     "mercury": mercury, "luna": luna, "mars": mars, "ceres": ceres, "venus": venus,
     "jupiter": jupiter, "io": io, "europa": europa, "ganymede": ganymede, "callisto": callisto,
     "saturn": saturn, "titan": titan, "mimas": mimas, "enceladus": enceladus, "tethys": tethys,
     "dione": dione, "rhea": rhea, "iapetus": iapetus,
+    "uranus": uranus, "miranda": miranda, "ariel": ariel, "umbriel": umbriel, "titania": titania, "oberon": oberon,
+    "neptune": neptune, "triton": triton, "pluto": pluto, "eris": eris, "haumea": haumea, "makemake": makemake,
 }
 
 if __name__ == "__main__":

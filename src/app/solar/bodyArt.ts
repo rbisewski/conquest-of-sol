@@ -3,9 +3,10 @@
 // the disc is a point on a sphere: its colour comes from the body's style (bands, spots, ice
 // caps, value noise) and its brightness from the Sun's direction in view space, in a few
 // steps, so planets show phases as Terra Invicta's do. The Earth uses the globe's own map;
-// Mercury, Luna, Mars, Ceres, Jupiter and the great moons of Jupiter and Saturn pixel-art maps
-// made from spacecraft mosaics, and Venus and Saturn made-up ones of their cloud tops
-// (tools/data/build_body_maps.py).
+// Mercury, Luna, Mars, Ceres, Jupiter, the great moons of Jupiter, Saturn and Uranus, Triton and
+// Pluto pixel-art maps made from spacecraft mosaics; Venus, Saturn, Uranus and Neptune made-up ones
+// of their cloud tops, and Eris, Haumea and Makemake, which no spacecraft has seen, made-up ones of
+// their ice (tools/data/build_body_maps.py). Haumea is drawn as the stretched ellipsoid it is.
 
 /** Light direction in view space: x right, y up, z towards the viewer. */
 export interface Light {
@@ -44,6 +45,18 @@ const MAP_FILES: Record<string, string> = {
   Rhea: "rhea.png",
   Titan: "titan.png",
   Iapetus: "iapetus.png",
+  Uranus: "uranus.png",
+  Miranda: "miranda.png",
+  Ariel: "ariel.png",
+  Umbriel: "umbriel.png",
+  Titania: "titania.png",
+  Oberon: "oberon.png",
+  Neptune: "neptune.png",
+  Triton: "triton.png",
+  Pluto: "pluto.png",
+  Eris: "eris.png",
+  Haumea: "haumea.png",
+  Makemake: "makemake.png",
 };
 const mapLoads = new Map<string, Promise<MapImage>>();
 
@@ -93,6 +106,8 @@ interface Style {
   ring?: RingBand[];
   /** A glowing atmosphere just past the limb, this far out in radii (at least two pixels), brighter on the sunward side. */
   glow?: { color: string; reach: number };
+  /** An ellipsoid's semi-axes in the body's radii, along longitude 0°, the north pole and longitude 90° west (its frame's axes); a sphere without. */
+  shape?: [number, number, number];
 }
 
 interface RingBand {
@@ -115,6 +130,38 @@ const SATURN_RINGS: RingBand[] = [
   { from: 2.217, to: 2.269, color: "#c2b28c", alpha: 0.55 },
 ];
 
+/**
+ * Uranus's rings at their real radii (its equatorial radius is 25,559 km): narrow and nearly
+ * black, so only faint; rings 6, 5 and 4, then α and β, then η, γ and δ drawn as three soft
+ * bands, and the ε ring, the brightest and widest (widened a little, to show as pixels).
+ */
+const URANUS_RINGS: RingBand[] = [
+  { from: 1.632, to: 1.67, color: "#56524e", alpha: 0.1 },
+  { from: 1.745, to: 1.793, color: "#5a5652", alpha: 0.14 },
+  { from: 1.843, to: 1.894, color: "#5a5652", alpha: 0.16 },
+  { from: 1.99, to: 2.012, color: "#78736c", alpha: 0.4 },
+];
+
+/**
+ * Neptune's rings at their real radii (its equatorial radius is 24,764 km), dark and faint: the
+ * broad Galle ring, the narrow Le Verrier ring, the faint sheet of Lassell out to Arago, and the
+ * narrow Adams ring (its bright arcs left out), the narrow ones widened a little to show as pixels.
+ */
+const NEPTUNE_RINGS: RingBand[] = [
+  { from: 1.652, to: 1.732, color: "#5e5650", alpha: 0.06 },
+  { from: 2.142, to: 2.156, color: "#6e6660", alpha: 0.22 },
+  { from: 2.156, to: 2.306, color: "#5e5650", alpha: 0.04 },
+  { from: 2.306, to: 2.316, color: "#5e5650", alpha: 0.12 },
+  { from: 2.533, to: 2.549, color: "#6e6660", alpha: 0.3 },
+];
+
+/**
+ * Haumea, from the 2017 stellar occultation (Ortiz et al.): an ellipsoid of 1,161 × 852 × 513 km,
+ * in its 960 km mean radius, and a ring 70 km wide at 2,287 km, half opaque, in its equator.
+ */
+const HAUMEA_SHAPE: [number, number, number] = [1161 / 960, 513 / 960, 852 / 960];
+const HAUMEA_RING: RingBand[] = [{ from: 2.346, to: 2.419, color: "#8f8a84", alpha: 0.45 }];
+
 const STYLES: Record<string, Style> = {
   Mercury: { base: "#9a948e", spots: [{ color: "#76716c", scale: 5, threshold: 0.62 }, { color: "#b8b2aa", scale: 9, threshold: 0.7 }] },
   Venus: { base: "#e6cf9a", bands: { colors: ["#e6cf9a", "#d9bd84", "#efdcb0"], count: 5, wobble: 0.8 }, glow: { color: "#f7ecd8", reach: 0.03 } },
@@ -131,11 +178,12 @@ const STYLES: Record<string, Style> = {
     bands: { colors: ["#ead9a8", "#cdb27a", "#e3cf9a", "#d6bf88"], count: 7, wobble: 0.4 },
     ring: SATURN_RINGS,
   },
-  Uranus: { base: "#9fd8de", bands: { colors: ["#9fd8de", "#a9e0e4", "#93cdd5"], count: 3, wobble: 0.3 } },
+  Uranus: { base: "#9fd8de", bands: { colors: ["#9fd8de", "#a9e0e4", "#93cdd5"], count: 3, wobble: 0.3 }, ring: URANUS_RINGS },
   Neptune: {
     base: "#3e64c9",
     bands: { colors: ["#3e64c9", "#355ab8", "#4a71d4"], count: 5, wobble: 0.5 },
     storm: { color: "#26408c", lat: -20, lon: -30, dLat: 6, dLon: 12 },
+    ring: NEPTUNE_RINGS,
   },
   Io: { base: "#e6d36a", spots: [{ color: "#c8812f", scale: 6, threshold: 0.65 }, { color: "#4a3a26", scale: 10, threshold: 0.8 }] },
   Europa: { base: "#ddd0b6", spots: [{ color: "#a77d55", scale: 8, threshold: 0.7 }] },
@@ -149,7 +197,7 @@ const STYLES: Record<string, Style> = {
   Charon: { base: "#9a948f", caps: { color: "#7a4f3e", from: 65 } },
   Ceres: { base: "#6e6a66", spots: [{ color: "#e6e2dc", scale: 12, threshold: 0.86 }] },
   Eris: { base: "#e7e5e2" },
-  Haumea: { base: "#e1e0dc", spots: [{ color: "#9b6a5c", scale: 6, threshold: 0.82 }] },
+  Haumea: { base: "#e1e0dc", spots: [{ color: "#9b6a5c", scale: 6, threshold: 0.82 }], ring: HAUMEA_RING, shape: HAUMEA_SHAPE },
   Makemake: { base: "#b57d5c", spots: [{ color: "#d8b393", scale: 5, threshold: 0.62 }] },
 };
 
@@ -246,10 +294,10 @@ function glowReach(style: Style, r: number): number {
   return style.glow ? Math.max(2, Math.ceil(r * style.glow.reach)) : 0;
 }
 
-/** How far a body's drawing reaches, in its radii: its rings' outer edge, or 1. */
+/** How far a body's drawing reaches, in its radii: its rings' outer edge, or its longest axis (1 for a sphere). */
 export function bodyReach(id: string): number {
-  const ring = (STYLES[id] ?? MOON_STYLE).ring;
-  return ring ? ring[ring.length - 1]!.to : 1;
+  const style = STYLES[id] ?? MOON_STYLE;
+  return Math.max(style.ring ? style.ring[style.ring.length - 1]!.to : 1, ...(style.shape ?? [1]));
 }
 
 /** Canvas size for a body of art radius r (pixels), leaving room for Saturn's rings or an atmosphere's glow. */
@@ -267,12 +315,44 @@ function ringBand(ring: RingBand[], d: number): RingBand | null {
 /** Where a pole points in view space when none is given (the panel's portrait): tilted 27° towards the viewer, so rings are seen from a little above. */
 const DEFAULT_POLE: [number, number, number] = [0, Math.cos((27 * Math.PI) / 180), Math.sin((27 * Math.PI) / 180)];
 
+/** The portrait's frame for an ellipsoid: its pole along DEFAULT_POLE, its long axis across. */
+const PORTRAIT_ORIENT: Orient = ([x, y, z]) => [x, DEFAULT_POLE[1] * y + DEFAULT_POLE[2] * z, -DEFAULT_POLE[2] * y + DEFAULT_POLE[1] * z];
+
+/**
+ * Where a view ray (from the pixel at dx, dy towards the viewer) first meets an ellipsoid of
+ * semi-axes s in the body's frame: the hit's view z, the surface normal in view space, and the
+ * direction of the hit from the centre in view space (for the map). r and rt take view space to
+ * the body's frame and back.
+ */
+function hitEllipsoid(dx: number, dy: number, s: [number, number, number], r: Orient, rt: Orient): { z: number; normal: [number, number, number]; dir: [number, number, number] } | null {
+  const o = r([dx, dy, 0]);
+  const d = r([0, 0, 1]);
+  let a = 0;
+  let b = 0;
+  let c = -1;
+  for (let i = 0; i < 3; i++) {
+    const k = 1 / (s[i]! * s[i]!);
+    a += d[i]! * d[i]! * k;
+    b += 2 * o[i]! * d[i]! * k;
+    c += o[i]! * o[i]! * k;
+  }
+  const disc = b * b - 4 * a * c;
+  if (disc < 0) return null;
+  const t = (-b + Math.sqrt(disc)) / (2 * a);
+  const p = [0, 1, 2].map((i) => o[i]! + t * d[i]!) as [number, number, number];
+  const n = rt(p.map((v, i) => v / (s[i]! * s[i]!)) as [number, number, number]);
+  const nl = Math.hypot(...n);
+  const pl = Math.hypot(...p);
+  return { z: t, normal: [n[0] / nl, n[1] / nl, n[2] / nl], dir: rt([p[0] / pl, p[1] / pl, p[2] / pl]) };
+}
+
 /**
  * Draws a lit body of art radius r into a canvas of canvasSize(id, r), from its surface map when
  * given (the body's own; orient turns view space into the map's frame). Rings lie in the plane
  * square to the pole (view space): each pixel's ray meets that plane, and the ring there shows
  * where it is in front of the planet or clear of it, lit on whichever face the Sun is, darkened
- * in the planet's shadow; the rings shadow the planet in turn.
+ * in the planet's shadow; the rings shadow the planet in turn. An ellipsoid (Haumea) is ray-cast
+ * in its own frame, lit by its true normals.
  */
 export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, light: Light, map: MapImage | null = null, orient: Orient | null = null, pole: [number, number, number] = DEFAULT_POLE): void {
   const style = STYLES[id] ?? MOON_STYLE;
@@ -295,12 +375,20 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
   const ringFace = sunOnRing * nz > 0 ? 1 : 0.55;
   const glow = style.glow ? rgb(style.glow.color) : null;
   const glowPixels = glowReach(style, r);
+  const shape = style.shape;
+  // For an ellipsoid: view space to its frame (the portrait's own if none is given) and back.
+  const toBody = shape ? (orient ?? PORTRAIT_ORIENT) : null;
+  const columns = toBody ? [toBody([1, 0, 0]), toBody([0, 1, 0]), toBody([0, 0, 1])] : null;
+  const toView: Orient | null = columns
+    ? (p) => columns.map((col) => col[0]! * p[0] + col[1]! * p[1] + col[2]! * p[2]) as [number, number, number]
+    : null;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const dx = (x + 0.5 - c) / r;
       const dy = -(y + 0.5 - c) / r;
       const d2 = dx * dx + dy * dy;
-      const sphereZ = d2 <= 1 ? Math.sqrt(1 - d2) : -Infinity;
+      const hit = toBody ? hitEllipsoid(dx, dy, shape!, toBody, toView!) : null;
+      const sphereZ = toBody ? (hit ? hit.z : -Infinity) : d2 <= 1 ? Math.sqrt(1 - d2) : -Infinity;
       // The ring where this pixel's ray crosses the ring plane, if it is in front of the planet.
       let band: RingBand | null = null;
       let ringShade = ringFace;
@@ -313,7 +401,7 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
           if (band && towardSun < 0 && d2 + rz * rz - towardSun * towardSun < 1) ringShade *= 0.22;
         }
       }
-      if (d2 > 1) {
+      if (sphereZ === -Infinity) {
         if (band) {
           put(x, y, rgb(band.color), ringShade, band.alpha);
           continue;
@@ -334,9 +422,11 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
         continue;
       }
       const z = sphereZ;
-      const lambert = dx * light.x + dy * light.y + z * light.z;
+      // The surface's normal: the point itself on a unit sphere.
+      const [mx, my, mz] = hit ? hit.normal : [dx, dy, z];
+      const lambert = mx * light.x + my * light.y + mz * light.z;
       // A slightly darker limb rounds the disc off (not under an atmosphere's soft haze).
-      const limb = z < 0.35 && !glow ? 0.88 : 1;
+      const limb = mz < 0.35 && !glow ? 0.88 : 1;
       let k = (glow ? hazeShade(lambert) : shade(lambert)) * limb;
       if (ring && lambert > 0 && sunOnRing !== 0) {
         // The rings' shadow: follow the light from this point to the ring plane.
@@ -349,7 +439,7 @@ export function drawBody(ctx: CanvasRenderingContext2D, id: string, r: number, l
           if (shadow) k *= 1 - 0.65 * shadow.alpha;
         }
       }
-      const ground = surface(style, id, [dx, dy, z], map, orient);
+      const ground = hit ? surface(style, id, hit.dir, map, toBody) : surface(style, id, [dx, dy, z], map, orient);
       if (band) {
         // The ring in front, over the planet.
         const bc = rgb(band.color);

@@ -57,15 +57,17 @@ const ART_RADIUS: Record<string, number> = {
 const MOON_RADIUS = 2;
 /** The largest art radius a close-up disc is drawn at; past that its pixels grow instead. */
 const MAX_ART_RADIUS = 80;
+/** Ringed bodies' close art radii: smaller, as their rings make their canvases two to two and a half times as wide. */
+const RINGED_CLOSE_ART_RADIUS: Record<string, number> = { Saturn: 160, Uranus: 180, Neptune: 144, Haumea: 152 };
 /**
  * Larger for a body drawn from its own map, that the camera can come right down to: a quarter
- * of the map's width, so the middle of the disc shows each map pixel as one art pixel. Saturn's
- * is smaller, as its rings make its canvas more than twice as wide.
+ * of the map's width, so the middle of the disc shows each map pixel as one art pixel (less for
+ * a ringed one).
  */
 const CLOSE_ART_RADIUS: Record<string, number> = Object.fromEntries(
-  ["Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus"].map((id) => [
+  ["Mercury", "Venus", "Luna", "Mars", "Ceres", "Jupiter", "Io", "Europa", "Ganymede", "Callisto", "Saturn", "Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iapetus", "Uranus", "Miranda", "Ariel", "Umbriel", "Titania", "Oberon", "Neptune", "Triton", "Pluto", "Eris", "Haumea", "Makemake"].map((id) => [
     id,
-    id === "Saturn" ? 160 : 256,
+    RINGED_CLOSE_ART_RADIUS[id] ?? 256,
   ]),
 );
 /** How close the camera can come to such a body, in its radii (as the globe does the Earth). */

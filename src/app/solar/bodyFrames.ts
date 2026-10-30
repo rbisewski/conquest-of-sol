@@ -4,9 +4,10 @@
 // equator's ascending node on the celestial (ICRF) equator. A frame's columns are the scene
 // directions of longitude 0°, the north pole and longitude 90° west, the globe's convention
 // ((cos lat cos lon, sin lat, −cos lat sin lon)) that bodyArt.ts samples maps in. The Earth's
-// frame comes from the globe instead (earthFrame.ts). The Moon and the great moons of Jupiter and
-// Saturn keep their near sides (longitude 0°) towards their planets as they go round, which the
-// IAU's mean rotations only do on average, so their meridians are set from where the planet is.
+// frame comes from the globe instead (earthFrame.ts). The Moon, the great moons of Jupiter,
+// Saturn and Uranus, and Triton keep their near sides (longitude 0°) towards their planets as
+// they go round, which the IAU's mean rotations only do on average, so their meridians are set
+// from where the planet is.
 // Display only.
 
 import * as THREE from "three";
@@ -20,6 +21,11 @@ interface Rotation {
   dec: [number, number];
   /** Prime meridian at J2000 (degrees) and its turn per day; absent for a body facing its parent. */
   w?: [number, number];
+  /**
+   * The pole's swing with a precessing node N (degrees at J2000 and per Julian century): the
+   * right ascension gains ra[k] sin((k+1)N) and the declination dec[k] cos((k+1)N), degrees.
+   */
+  swing?: { node: [number, number]; ra: number[]; dec: number[] };
 }
 
 /**
@@ -30,6 +36,18 @@ interface Rotation {
  * longitudes). Io, Europa, Ganymede, Callisto: their mean poles (the small periodic terms left
  * out), facing Jupiter. Saturn: System III, as Jupiter (its pole also sets the rings' plane).
  * Mimas, Enceladus, Tethys, Dione, Rhea, Titan, Iapetus: their mean poles, facing Saturn.
+ * Uranus: its interior's turn (Voyager's radio period). Its pole lies almost in its orbit, and
+ * the IAU's north is the one on the north side of the Solar System, so it turns backwards (W
+ * falls). Miranda, Ariel, Umbriel, Titania, Oberon: their mean poles (Miranda's 4° wobble left
+ * out), facing Uranus. Neptune: its interior's turn, its pole nodding a little with Triton's
+ * precessing orbit. Triton: its pole swings round with that orbit, by up to 32°, so its swing is
+ * kept; facing Neptune. Pluto: the IAU's (the right-hand rule's north, longitude 0° facing Charon).
+ * Eris: locked to Dysnomia, so its pole is Dysnomia's orbit pole (Holler et al. 2021) and its day
+ * Dysnomia's 15.79 days. Haumea: the pole of its ring and of Hi'iaka's orbit (Ortiz et al. 2017),
+ * its 3.92-hour day. Makemake: its 22.83-hour day (Hromakina et al. 2019); its pole is unknown,
+ * so it is put square to our line of sight (its moon's orbit is seen edge-on) as near the
+ * ecliptic's pole as that allows. Eris's, Haumea's and Makemake's prime meridians are unknown
+ * and set at 0° at J2000.
  */
 const ROTATIONS: Record<string, Rotation> = {
   Mercury: { ra: [281.0103, -0.0328], dec: [61.4155, -0.0049], w: [329.5988, 6.1385108] },
@@ -50,6 +68,22 @@ const ROTATIONS: Record<string, Rotation> = {
   Rhea: { ra: [40.38, -0.036], dec: [83.55, -0.004] },
   Titan: { ra: [39.4827, 0], dec: [83.4279, 0] },
   Iapetus: { ra: [318.16, -3.949], dec: [75.03, -1.143] },
+  Uranus: { ra: [257.311, 0], dec: [-15.175, 0], w: [203.81, -501.1600928] },
+  Miranda: { ra: [257.43, 0], dec: [-15.08, 0] },
+  Ariel: { ra: [257.43, 0], dec: [-15.1, 0] },
+  Umbriel: { ra: [257.43, 0], dec: [-15.1, 0] },
+  Titania: { ra: [257.43, 0], dec: [-15.1, 0] },
+  Oberon: { ra: [257.43, 0], dec: [-15.1, 0] },
+  Neptune: { ra: [299.36, 0], dec: [43.46, 0], w: [249.978, 541.1397757], swing: { node: [357.85, 52.316], ra: [0.7], dec: [-0.51] } },
+  Triton: {
+    ra: [299.36, 0],
+    dec: [41.17, 0],
+    swing: { node: [177.85, 52.316], ra: [-32.35, -6.28, -2.08, -0.74, -0.28, -0.11, -0.07, -0.02, -0.01], dec: [22.55, 2.1, 0.55, 0.16, 0.05, 0.02, 0.01] },
+  },
+  Pluto: { ra: [132.993, 0], dec: [-6.163, 0], w: [302.695, 56.3625225] },
+  Eris: { ra: [36.17, 0], dec: [44.51, 0], w: [0, 22.805163] },
+  Haumea: { ra: [285.1, 0], dec: [-10.6, 0], w: [0, 2206.704346] },
+  Makemake: { ra: [325.9, 0], dec: [56.2, 0], w: [0, 378.505778] },
 };
 
 /** ICRF (equatorial) to the scene: equatorial to ecliptic, then the scene's y up (x, z, −y). */
@@ -70,8 +104,15 @@ export function hasFrame(id: string): boolean {
 export function bodyToScene(id: string, years: number, toParent: THREE.Vector3, target = new THREE.Matrix4()): THREE.Matrix4 {
   const r = ROTATIONS[id]!;
   const centuries = years / 100;
-  const ra = (r.ra[0] + r.ra[1] * centuries) * DEG;
-  const dec = (r.dec[0] + r.dec[1] * centuries) * DEG;
+  let raDeg = r.ra[0] + r.ra[1] * centuries;
+  let decDeg = r.dec[0] + r.dec[1] * centuries;
+  if (r.swing) {
+    const node = (r.swing.node[0] + r.swing.node[1] * centuries) * DEG;
+    r.swing.ra.forEach((a, k) => (raDeg += a * Math.sin((k + 1) * node)));
+    r.swing.dec.forEach((a, k) => (decDeg += a * Math.cos((k + 1) * node)));
+  }
+  const ra = raDeg * DEG;
+  const dec = decDeg * DEG;
   // In the ICRF: the pole, the ascending node of the body's equator (90° east of the pole's RA)
   // and the direction 90° on from the node along the equator.
   const pole = new THREE.Vector3(Math.cos(dec) * Math.cos(ra), Math.cos(dec) * Math.sin(ra), Math.sin(dec));

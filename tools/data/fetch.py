@@ -15,6 +15,11 @@ Sources (all free to use):
     Ganymede (colour) and Callisto, and NASA/JPL's Cassini colour map of Jupiter (PIA07782); the
     Cassini (and Voyager) global mosaics of Mimas (DLR), Enceladus, Tethys, Dione, Rhea, Titan
     (ISS near-infrared, the surface through the haze) and Iapetus; all for build_body_maps.py.
+  NASA/JPL Solar System Simulator (public domain): USGS's Voyager 2 mosaics of Miranda, Ariel,
+    Umbriel, Titania and Oberon (4 px/degree, greyscale; southern hemispheres only), for
+    build_body_maps.py.
+  USGS Astrogeology (public domain): Voyager 2's colour mosaic of Triton and New Horizons' mosaic
+    of Pluto, for build_body_maps.py.
 
 Run: python3 tools/data/fetch.py
 """
@@ -55,6 +60,13 @@ FILES = {
     "Rhea_Cassini_Voyager_mosaic_global_417m.tif": "https://planetarymaps.usgs.gov/mosaic/Rhea_Cassini_Voyager_mosaic_global_417m.tif",
     "Titan_ISS_P19658_Mosaic_Global_4km.tif": "https://planetarymaps.usgs.gov/mosaic/Titan_ISS_P19658_Mosaic_Global_4km.tif",
     "Iapetus_Cassini_Voyager_mosaic_global_783m.tif": "https://planetarymaps.usgs.gov/mosaic/Iapetus_Cassini_Voyager_mosaic_global_783m.tif",
+    "ura1vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura1vuu2.tif",  # Ariel
+    "ura2vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura2vuu2.tif",  # Umbriel
+    "ura3vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura3vuu2.tif",  # Titania
+    "ura4vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura4vuu2.tif",  # Oberon
+    "ura5vuu2.tif": "https://space.jpl.nasa.gov/tmaps/pix/ura5vuu2.tif",  # Miranda
+    "Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif": "https://planetarymaps.usgs.gov/mosaic/Triton_Voyager2_ClrMosaic_GlobalFill_600m.tif",
+    "Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif": "https://planetarymaps.usgs.gov/mosaic/Pluto_NewHorizons_Global_Mosaic_300m_Jul2017_8bit.tif",
 }
 
 # indicator -> (date range, extra query)
