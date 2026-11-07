@@ -16,11 +16,11 @@
     formatTimeOfDay,
     monthlyInfluence,
     monthlyResearch,
+    missionControlUsed,
     mustChooseResearch,
     perDay,
     SPACE_RESOURCES,
     temperatureAnomaly,
-    type SpaceResource,
   } from "../../sim/index";
   import { SPEED_LABELS, type Speed } from "../../worker/protocol";
   import { game } from "../game.svelte";
@@ -28,18 +28,10 @@
   import Emblem from "../ui/Emblem.svelte";
   import { compact } from "../ui/format";
   import Icon from "../ui/Icon.svelte";
+  import { SPACE_RESOURCE_NAMES } from "../ui/resourceNames";
   import Num from "./Num.svelte";
 
   const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-  const SPACE_NAMES: Record<SpaceResource, string> = {
-    water: "Water",
-    volatiles: "Volatiles",
-    metals: "Base Metals",
-    nobleMetals: "Noble Metals",
-    fissiles: "Fissiles",
-    antimatter: "Antimatter",
-    exotics: "Exotics",
-  };
 
   const world = $derived(game.state!);
   const faction = $derived(world.factions.find((f) => f.id === game.playerFactionId) ?? null);
@@ -62,6 +54,7 @@
   /** Resources committed to missions not yet paid for (paid when the council phase closes). */
   const committed = $derived(faction && world.phase === "council" ? committedResources(baseContent, faction) : { money: 0, influence: 0, ops: 0 });
   const mustChoose = $derived(faction ? mustChooseResearch(world, baseContent, faction.id) : false);
+  const mcUsed = $derived(faction ? missionControlUsed(world, baseContent, faction.id) : 0);
   const tip = (name: string, amount: number) => `${name}, with its change per day${amount > 0 ? ` (${amount} committed to missions)` : ""}`;
   const date = $derived.by(() => {
     const d = dateOfDay(baseContent.rules.startYear, world.dayIndex);
@@ -155,9 +148,9 @@
       <Icon name="boost" size={18} />
       <span>{compact(faction.resources.boost)} <span class="rate"><Num breakdown={income.boost} signed digits={3} /></span></span>
     </span>
-    <span class="cell-item" title="Mission Control: used / available">
+    <span class="cell-item" class:over={mcUsed > faction.resources.missionControl} title="Mission Control: used by our habs / available from our nations">
       <Icon name="missionControl" size={18} />
-      <span><span class="mc">0</span>/{compact(faction.resources.missionControl)}</span>
+      <span><span class="mc">{mcUsed}</span>/{compact(faction.resources.missionControl)}</span>
     </span>
     <button class="cell-item research" class:alert={mustChoose} title={mustChoose ? "Research: pick the next global tech or project" : "Research (open the Research panel)"} onclick={() => (game.researchOpen = !game.researchOpen)}>
       <Icon name="research" size={18} />
@@ -169,7 +162,7 @@
     </span>
     {#each SPACE_RESOURCES as resource (resource)}
       <!-- Antimatter comes in fractions of a ton. -->
-      <span class="cell-item" title={SPACE_NAMES[resource]}>
+      <span class="cell-item" title={SPACE_RESOURCE_NAMES[resource]}>
         <Icon name={resource} size={18} />
         <span>{compact(faction.resources[resource], resource === "antimatter" ? 3 : 1)}</span>
       </span>

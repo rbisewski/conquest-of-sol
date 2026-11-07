@@ -1,8 +1,8 @@
-import type { Attribute, ClaimDef, DifficultyId, Gender } from "./content";
+import type { Attribute, ClaimDef, DifficultyId, Gender, MinedResource } from "./content";
 import type { RngState } from "./rng";
 
 /** Bump when the shape of GameState changes, and add a migration in save.ts. */
-export const STATE_VERSION = 29;
+export const STATE_VERSION = 31;
 
 export const UNDECIDED = "undecided";
 
@@ -247,6 +247,18 @@ export interface FactionState {
   /** Councilors this faction can hire, refreshed monthly. */
   recruits: Councilor[];
   research: FactionResearch;
+  /** Bodies whose hab sites the faction has prospected, so it knows their yields and can build bases there. */
+  prospected: string[];
+  /** Prospecting probes on their way, in launch order. */
+  probes: Probe[];
+}
+
+/** A prospecting probe launched from Earth (space.ts). */
+export interface Probe {
+  bodyId: string;
+  launchedDay: number;
+  /** It prospects the body at the start of this day. */
+  arrivesDay: number;
 }
 
 /** One of the global research slots (Terra Invicta researches three techs at once). */
@@ -302,11 +314,13 @@ export interface LogEntry {
   kind?: LogKind;
   /** The mission an entry of kind "mission" reports. */
   mission?: Mission["type"];
+  /** The space body an entry of kind "space" is about. */
+  bodyId?: string;
   /** Whether it went well or badly for the faction it belongs to. */
   tone?: "good" | "bad";
 }
 
-export type LogKind = "mission" | "intel" | "council" | "research" | "war" | "nation" | "diplomacy" | "territory" | "climate";
+export type LogKind = "mission" | "intel" | "council" | "research" | "war" | "nation" | "diplomacy" | "territory" | "climate" | "space";
 
 export interface GameState {
   version: number;
@@ -373,7 +387,38 @@ export interface GameState {
   climateChoices: ClimateChoice[];
   /** The latest nuclear strikes, oldest first (at most STRIKE_LIMIT), for the globe's missiles. */
   strikes: NuclearStrike[];
+  /**
+   * Each hab site's monthly yield, rolled when the world is made (space.ts); a faction learns a
+   * body's by prospecting it.
+   */
+  siteYields: Record<string, Record<MinedResource, number>>;
+  /** Every faction's habs: bases on hab sites and stations in orbits (habs.ts). */
+  habs: HabState[];
   log: LogEntry[];
+}
+
+/** A hab: a base on a hab site or a station in an orbit, owned by a faction (habs.ts). */
+export interface HabState {
+  id: string;
+  factionId: string;
+  name: string;
+  /** Where it is: a hab site for a base, an orbit for a station. */
+  siteId: string | null;
+  orbitId: string | null;
+  /** The core first, then the module slots its tier gives (4, 12 or 20); null where a slot is empty. */
+  modules: (HabModuleState | null)[];
+  foundedDay: number;
+}
+
+/** A module in a hab's slot. It works from the day it is built. */
+export interface HabModuleState {
+  moduleId: string;
+  /** The day its materials reach the hab (boost from the Earth takes the transfer; space resources are there at once). */
+  arrivesDay: number;
+  /** The day it is built. */
+  doneDay: number;
+  /** An upgrade being built in its place; the module keeps working until the upgrade is done. */
+  upgrade: { moduleId: string; arrivesDay: number; doneDay: number } | null;
 }
 
 /** A climate event a player faction must answer (Terra Invicta's narrative events). */

@@ -1,7 +1,7 @@
 // Content definitions (SPEC 2.18): everything the simulation reads from JSON.
 // The simulation never imports JSON itself; callers pass a validated Content object in.
 
-import type { MissionType, Resources } from "./state";
+import type { MissionType, Resources, SpaceResource } from "./state";
 
 export const ATTRIBUTES = [
   "persuasion",
@@ -192,8 +192,29 @@ export interface Rules {
   claims: ClaimRules;
   diplomacy: DiplomacyRules;
   climate: ClimateRules;
-  difficulty: Record<DifficultyId, { researchCost: number; aiBonus: number }>;
+  difficulty: Record<DifficultyId, { researchCost: number; aiBonus: number; miningRate: number }>;
   research: ResearchRules;
+  space: SpaceRules;
+}
+
+/** The space layer (SPEC 2.10; docs/formulas.md, "Space"). */
+export interface SpaceRules {
+  /** What a prospecting probe costs to launch (**inferred**: the game's files don't give it). */
+  probeCost: ResourceAmounts;
+  /**
+   * The most a launch from Earth outside its Hohmann window adds to the transfer time, as a share
+   * of it, just after a window has closed; it falls to nothing as the next opens (**inferred**).
+   */
+  offWindowPenalty: number;
+  /** Module slots besides the core, by the hab's tier (1–3). */
+  slotsByTier: [number, number, number];
+  /** Share of a module's cost and build time paid to upgrade the module in its slot. */
+  upgradeShare: number;
+  /** Crew a planetary system's habs need for modules that ask for a colonized (or inhabited) body. */
+  colonizedPopulation: number;
+  inhabitedPopulation: number;
+  /** Habs factions start with: the faction, its orbit, its name, and its modules slot by slot (the core first). */
+  startingHabs: { faction: string; orbit: string; name: string; modules: (string | null)[] }[];
 }
 
 /** Research (Terra Invicta's Technology page and national research formula). See docs/formulas.md. */
@@ -264,7 +285,12 @@ export type ModifierContext =
   | "MaxAvailableOrgs"
   | "Corruption"
   | "SpoilsOutput"
-  | "Economy_BasePCGDPIncrease";
+  | "Economy_BasePCGDPIncrease"
+  | "ProbeTransferTime"
+  /** Boost deliveries' travel time. */
+  | "GenericModuleTransferTime"
+  /** The extra time of a launch from Earth outside its window, for deliveries and probes. */
+  | "GenericTransfer_OffDate_PCT";
 
 /** Who a lasting effect applies to: the faction that completed it, or every faction. */
 export type EffectScope = "faction" | "global";
@@ -285,7 +311,9 @@ export type ResearchEffect =
   /** On completion: re-rolls the faction's failed project unlocks. */
   | { kind: "reviewFailed" }
   /** On completion: raises the highest Miltech any nation can reach. */
-  | { kind: "maxMiltech"; amount: number };
+  | { kind: "maxMiltech"; amount: number }
+  /** The exhaust velocity (km/s) of the rockets the faction's boost deliveries use beyond low Earth orbit; the best one counts. */
+  | { kind: "exhaustVelocity"; kps: number; scope: EffectScope };
 
 /**
  * A nation's claim on a region, from Terra Invicta (tools/data/build_claims.py). Claims say which
@@ -767,6 +795,139 @@ export interface SpaceBodyDef {
   composition?: string;
   /** Absent for the Sun. */
   orbit?: OrbitDef;
+  /** The rest only for bodies with hab sites or station orbits. The largest hab tier it can hold. */
+  maxHabTier?: 1 | 2 | 3;
+  /** The global tech that opens it to exploration; absent for the Earth, open from the start. */
+  exploreTech?: string;
+  /** Terra Invicta's density, g/cm³, which scales small bodies' mining yields. */
+  densityGcm3?: number;
+  /** Radiation multiplier on the mass of modules built there (Mercury's 2); absent when 1. */
+  irradiation?: number;
+  /** Absent for an airless body. */
+  atmosphere?: "trace" | "thin" | "standard" | "thick" | "massive";
+}
+
+/** A surface site for a base (src/content/habSites.json, from tools/data/build_space.py). */
+export interface HabSiteDef {
+  id: string;
+  name: string;
+  body: string;
+  /** Its mining profile: what a mine here can yield. */
+  profile: string;
+  /** Where it is on the body, degrees (east longitude); absent for small bodies. */
+  lat?: number;
+  lon?: number;
+}
+
+/** The resources a hab site can be mined for. */
+export type MinedResource = Exclude<SpaceResource, "antimatter" | "exotics">;
+
+/** How a site's monthly yield of a resource is rolled, as in Terra Invicta (docs/data-sources.md, "Space economy"). */
+export interface MiningRoll {
+  /** The yield the roll centres on. */
+  mean: number;
+  /** The size of each step away from the mean, and of the even spread around it. */
+  width: number;
+  /** The least a roll gives. */
+  min: number;
+  /** The chance of each further step away from the mean. */
+  jump: number;
+}
+
+export interface MiningProfileDef {
+  id: string;
+  name: string;
+  /** Whether a small body's mass and density scale the rolls (asteroids, comets and small moons). */
+  scaleBySize: boolean;
+  resources: Record<MinedResource, MiningRoll>;
+}
+
+/** An orbit stations are built in (src/content/orbits.json), around a body or one of its Lagrange points. */
+export interface HabOrbitDef {
+  id: string;
+  name: string;
+  /** The body it goes round; for a Lagrange point, the smaller body of the pair (Luna for the Earth–Moon L4). */
+  body: string;
+  /** The Lagrange point (1–5) of the body and its parent it goes round, if any. */
+  lagrange?: 1 | 2 | 3 | 4 | 5;
+  /**
+   * Height above the body's surface, km; or, for a Lagrange point's orbit, its radius round the
+   * point, and for a few body orbits the distance from the body's centre. A body's parking orbit
+   * and some low orbits have neither (taken as a tenth of the body's radius up, transfers.ts).
+   */
+  altitudeKm?: number;
+  semiMajorAxisKm?: number;
+  synchronous?: boolean;
+  inclinationDeg: number;
+  nodeDeg: number;
+  /** How many stations it holds. */
+  capacity: number;
+  /** Radiation multiplier on the mass of modules built there; absent when 1. */
+  irradiation?: number;
+  /** A body's interface orbit, where fleets meet its surface; the Earth's give some modules bonuses on Earth. */
+  interface?: boolean;
+  /** One of the Earth's low orbits, where a few modules must be built. */
+  earthLeo?: boolean;
+  /** Natural antimatter, micrograms a year, that antimatter traps collect. */
+  antimatterUgPerYear?: number;
+  /** The global tech that opens it; absent for the Earth's orbits, open from the start. */
+  exploreTech?: string;
+}
+
+/** Faction resources by name; only the non-zero ones are listed. */
+export type ResourceAmounts = Partial<Record<Exclude<keyof Resources, "missionControl"> | "research", number>>;
+
+/** A hab module, cores included (src/content/habModules.json), from Terra Invicta's TIHabModuleTemplate. */
+export interface HabModuleDef {
+  id: string;
+  name: string;
+  summary: string;
+  /** Which habs can have it: bases, stations or either. */
+  type: "base" | "station" | "any";
+  tier: 1 | 2 | 3;
+  /** The faction project that unlocks it. */
+  project: string;
+  /** Sets the hab's tier, and its slots. */
+  core?: boolean;
+  /** The module it replaces when built in the same slot. */
+  upgradesFrom?: string;
+  onePerHab?: boolean;
+  /** Needs no crew. */
+  automated?: boolean;
+  /** Goes in a base's mining slot and works its site. */
+  mine?: boolean;
+  /** Builds ships, and resupplies them. */
+  shipyard?: boolean;
+  resupply?: boolean;
+  /** Fights in space battles and holds off assaults. */
+  defense?: boolean;
+  massTons: number;
+  buildDays: number;
+  /** Space resources to build it: Terra Invicta's material weights times the mass, at 10 tons a unit. */
+  buildCost: ResourceAmounts;
+  /** Paid each month. */
+  support: ResourceAmounts;
+  /** Earned each month. */
+  income: ResourceAmounts;
+  /** Extra faction project slots. */
+  projectSlots?: number;
+  /** Power made (positive) or used (negative). */
+  power: number;
+  crew: number;
+  /** Mission control provided (positive) or used (negative). */
+  missionControl?: number;
+  controlPointCapacity?: number;
+  /** Multiplier on how long the hab's modules take to build. */
+  constructionTime?: number;
+  /** Its build cost and power use scale with the body's mining modifier (mines). */
+  scalesWithMining?: boolean;
+  /** Bonus to the faction's research in each field. */
+  researchBonuses?: Partial<Record<ResearchCategory, number>>;
+  /** Terra Invicta's special rules for the module ("Solar_Power_Variable_Output", "NotInIrradiated"…), and the value some take. */
+  rules?: string[];
+  ruleValue?: number;
+  /** The project that becomes available once one is built. */
+  unlocksProject?: string;
 }
 
 export interface Content {
@@ -787,6 +948,10 @@ export interface Content {
   armyNames: Record<string, string[]>;
   /** The Sun and the bodies orbiting it, parents before the bodies that orbit them. */
   solarSystem: SpaceBodyDef[];
+  habSites: HabSiteDef[];
+  miningProfiles: MiningProfileDef[];
+  orbits: HabOrbitDef[];
+  habModules: HabModuleDef[];
   rules: Rules;
 }
 
@@ -914,6 +1079,40 @@ export function validateContent(content: Content): Content {
   for (const b of content.solarSystem) {
     if (b.parent === null ? b.orbit !== undefined : !placed.has(b.parent) || !b.orbit) fail(`space body "${b.id}" needs an orbit around a body listed before it`);
     placed.add(b.id);
+    if (b.exploreTech && !techIds.has(b.exploreTech)) fail(`space body "${b.id}" is opened by unknown tech "${b.exploreTech}"`);
+  }
+  const bodies = new Map(content.solarSystem.map((b) => [b.id, b]));
+  unique("mining profile", content.miningProfiles.map((p) => p.id));
+  const profileIds = new Set(content.miningProfiles.map((p) => p.id));
+  unique("hab site", content.habSites.map((s) => s.id));
+  for (const s of content.habSites) {
+    if (!bodies.get(s.body)?.maxHabTier) fail(`hab site "${s.id}" is on unknown body "${s.body}", or one without habs`);
+    if (!profileIds.has(s.profile)) fail(`hab site "${s.id}" has unknown mining profile "${s.profile}"`);
+  }
+  unique("orbit", content.orbits.map((o) => o.id));
+  for (const o of content.orbits) {
+    const body = bodies.get(o.body);
+    if (!body?.maxHabTier) fail(`orbit "${o.id}" goes round unknown body "${o.body}", or one without habs`);
+    if (o.lagrange && !body!.parent) fail(`orbit "${o.id}" is at a Lagrange point of "${o.body}", which orbits nothing`);
+    if (o.exploreTech && !techIds.has(o.exploreTech)) fail(`orbit "${o.id}" is opened by unknown tech "${o.exploreTech}"`);
+  }
+  unique("hab module", content.habModules.map((m) => m.id));
+  const modules = new Map(content.habModules.map((m) => [m.id, m]));
+  for (const m of content.habModules) {
+    if (!projectIds.has(m.project)) fail(`hab module "${m.id}" needs unknown project "${m.project}"`);
+    if (m.unlocksProject && !projectIds.has(m.unlocksProject)) fail(`hab module "${m.id}" unlocks unknown project "${m.unlocksProject}"`);
+    if (!m.upgradesFrom) continue;
+    const from = modules.get(m.upgradesFrom);
+    if (!from) fail(`hab module "${m.id}" upgrades unknown module "${m.upgradesFrom}"`);
+    else if (from.tier !== m.tier - 1 || !!from.core !== !!m.core) fail(`hab module "${m.id}" must upgrade a module of the tier below, of its kind`);
+  }
+  for (const start of content.rules.space.startingHabs) {
+    if (!content.factions.some((f) => f.id === start.faction)) fail(`starting hab "${start.name}" for unknown faction "${start.faction}"`);
+    if (!content.orbits.some((o) => o.id === start.orbit)) fail(`starting hab "${start.name}" in unknown orbit "${start.orbit}"`);
+    const core = modules.get(start.modules[0] ?? "");
+    if (!core?.core || core.type === "base") fail(`starting hab "${start.name}" needs a station core first`);
+    else if (start.modules.length !== content.rules.space.slotsByTier[core.tier - 1]! + 1) fail(`starting hab "${start.name}" needs a module or null for each of its slots`);
+    for (const id of start.modules.slice(1)) if (id && (!modules.has(id) || modules.get(id)!.core)) fail(`starting hab "${start.name}" has unknown or misplaced module "${id}"`);
   }
   return content;
 }

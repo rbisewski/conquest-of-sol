@@ -3,18 +3,45 @@
   // "Terrestrial Planet: Venus": the body's class, a large pixel-art portrait lit from the
   // upper left, surface gravity and name, what it orbits, then Terra Invicta's four figures
   // (distance from its parent, orbital period, escape velocity, diameter), its orbit, its
-  // distance from the Earth now and
-  // the next launch window from the Earth (bodyFacts.ts). Below, Terra Invicta's four lists:
-  // Moons (name and type; a name opens that moon here), Orbits, Stations and Fleets (still to
-  // come). Opened by clicking a body.
+  // distance from the Earth now and the next launch window from the Earth (src/sim/transfers.ts).
+  // Below, the lists: Moons (name and type; a name opens that moon here), Sites (its hab sites'
+  // monthly yields, estimated until a probe we launch from here prospects them; a site picked
+  // turns the portrait to it, the sites marked on it), Orbits (for stations), and Stations and
+  // Fleets (still to come). Opened by clicking a body.
   import { untrack } from "svelte";
   import { baseContent } from "../../content/index";
-  import { dateOfDay, yearsSinceJ2000 } from "../../sim/index";
+  import {
+    bodyExplored,
+    checkFoundHab,
+    checkLaunchProbe,
+    dateOfDay,
+    delivery,
+    formatLongDate,
+    foundingCore,
+    habBodyId,
+    habTier,
+    isBuilt,
+    MINED_RESOURCES,
+    orbitExplored,
+    probeDays,
+    probeTo,
+    siteEstimate,
+    transferFromEarth,
+    yearsSinceJ2000,
+    type Breakdown,
+    type Destination,
+    type HabOrbitDef,
+    type HabSiteDef,
+  } from "../../sim/index";
   import { game } from "../game.svelte";
-  import { bodyMap, bodyReach, bodyRelief, canvasSize, drawBody, drawComet, drawRock, drawSun, hasMap, SUN_REACH, type MapImage, type Relief } from "../solar/bodyArt";
-  import { bodyClass, distanceFromEarth, escapeVelocity, launchWindow, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
+  import { bodyMap, bodyReach, bodyRelief, canvasSize, drawBody, drawComet, drawRock, drawSun, hasMap, isSphere, SUN_REACH, type MapImage, type Orient, type Relief } from "../solar/bodyArt";
+  import { bodyClass, distanceFromEarth, escapeVelocity, moonsOf, orbitFigures, surfaceGravity } from "../solar/bodyFacts";
   import { scientific } from "../ui/format";
+  import Emblem from "../ui/Emblem.svelte";
   import Icon from "../ui/Icon.svelte";
+  import type { IconName } from "../ui/icons";
+  import { drawSprite, SITE_MARKER, SITE_PALETTES } from "../ui/pixelArt";
+  import { SPACE_RESOURCE_NAMES } from "../ui/resourceNames";
 
   const AU_KM = 149597870.7;
   /** Art radius of the portrait, drawn at 2× like the other pixel art. */
@@ -23,7 +50,9 @@
   /** Bodies whose mass reads better in kilograms than in Earths, and dwarf planets lighter than this many Earths (all but Pluto and Eris). */
   const SMALL_BODIES = new Set(["asteroid", "asteroidalMoon", "comet"]);
   const SMALL_DWARF_EARTHS = 0.001;
-  const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const DEG = Math.PI / 180;
+  /** Sites this near the portrait's limb or beyond are left unmarked. */
+  const LIMB = 0.2;
 
   const body = $derived(baseContent.solarSystem.find((b) => b.id === game.selectedBodyId) ?? null);
   const parent = $derived(body?.parent ? baseContent.solarSystem.find((b) => b.id === body.parent) : null);
@@ -32,12 +61,62 @@
   const escape = $derived(body ? escapeVelocity(body) : null);
   const figures = $derived(body ? orbitFigures(baseContent, body) : null);
   const fromEarth = $derived(body && body.id !== "Earth" ? distanceFromEarth(baseContent, body.id, years) : null);
-  const launch = $derived(body ? launchWindow(baseContent, body.id, years) : null);
+  const launch = $derived(body ? transferFromEarth(baseContent, body.id, years) : null);
   const moons = $derived(body ? moonsOf(baseContent, body.id) : []);
   /** What the list holds: the Sun's are planets, asteroids and comets, not moons. */
   const noun = $derived(body?.type === "star" ? ["Body", "Bodies"] : ["Moon", "Moons"]);
   /** The open list; kept from body to body, as in Terra Invicta. */
-  let tab = $state<"moons" | null>(null);
+  let tab = $state<"moons" | "sites" | "orbits" | "stations" | null>(null);
+
+  const world = $derived(game.state);
+  const faction = $derived(world?.factions.find((f) => f.id === game.playerFactionId) ?? null);
+  const sites = $derived(body ? baseContent.habSites.filter((s) => s.body === body.id) : []);
+  /** The body's own orbits, lowest first, then those round its Lagrange points with its parent. */
+  const orbits = $derived(body ? baseContent.orbits.filter((o) => o.body === body.id).sort((a, b) => (a.lagrange ?? 0) - (b.lagrange ?? 0)) : []);
+  const explored = $derived(body !== null && world !== null && bodyExplored(world, baseContent, body.id));
+  const prospected = $derived(body !== null && !!faction?.prospected.includes(body.id));
+  const probe = $derived(body && faction ? probeTo(faction, body.id) : undefined);
+  const probeCheck = $derived(body && world && faction && sites.length > 0 ? checkLaunchProbe(world, baseContent, faction.id, body.id) : null);
+  /** The day a probe launched now would arrive. */
+  const probeArrives = $derived(probeCheck?.ok ? world!.dayIndex + Math.max(1, Math.ceil(probeDays(world!, baseContent, faction!.id, body!.id))) : null);
+  const probeCost = Object.entries(baseContent.rules.space.probeCost) as [IconName, number][];
+  const techName = (id: string | undefined) => baseContent.techs.find((t) => t.id === id)?.name ?? "";
+  const onDay = (day: number) => formatLongDate(dateOfDay(baseContent.rules.startYear, day));
+
+  /** Sending a core from the Earth, and whether we can found a hab there now. All of a body's sites share the same journey. */
+  function journey(destination: Destination) {
+    const core = foundingCore(baseContent, destination);
+    return { core, sent: delivery(world!, baseContent, faction!.id, destination, core), check: checkFoundHab(world!, baseContent, faction!.id, destination) };
+  }
+  /** The site picked in the Sites list, which the portrait turns to: at first the first one with a place on the map. */
+  let siteId = $state<string | null>(null);
+  $effect(() => {
+    const first = sites.find((s) => s.lat !== undefined)?.id ?? null;
+    untrack(() => (siteId = first));
+  });
+  /** The site an outpost would be founded at: the one picked in the list, else the first free one. */
+  const foundSiteId = $derived(siteId ?? sites.find((s) => !world?.habs.some((h) => h.siteId === s.id))?.id ?? sites[0]?.id ?? null);
+  const siteJourney = $derived(world && faction && foundSiteId ? journey({ kind: "site", id: foundSiteId }) : null);
+  /** Every faction's habs on or round this body. */
+  const habsHere = $derived(body && world ? world.habs.filter((h) => habBodyId(baseContent, h) === body.id) : []);
+  const holder = (siteId: string) => world?.habs.find((h) => h.siteId === siteId) ?? null;
+  function found(destination: Destination) {
+    if (faction) void game.command({ type: "foundHab", factionId: faction.id, destination });
+  }
+  function openHab(id: string) {
+    game.selectedHabId = id;
+    game.selectedCouncilorId = null;
+    game.selectedArmyId = null;
+  }
+  /** A breakdown's terms, a line each, for a tooltip. */
+  const explain = (b: Breakdown, digits: number) => b.terms.map((t) => `${t.label}: ${t.op === "mul" ? "×" : ""}${t.value.toFixed(digits)}`).join("\n");
+
+  /** Where the portrait turns to face, while the Sites list is open on a round body: the picked site. */
+  const facing = $derived.by(() => {
+    if (tab !== "sites" || !body || !isSphere(body.id)) return null;
+    const site = sites.find((s) => s.id === siteId);
+    return site?.lat !== undefined && site.lon !== undefined ? { lat: site.lat, lon: site.lon } : null;
+  });
 
   let canvas = $state<HTMLCanvasElement>();
   /** The surface map of the body shown, by id, once loaded (only that one, so the others' memory can go). */
@@ -83,7 +162,26 @@
     }
     if (body.type !== "star") {
       // A ringed planet is drawn smaller, so its rings fit the frame.
-      drawBody(ctx, body.id, Math.floor(PORTRAIT_RADIUS / bodyReach(body.id)), LIGHT, maps[body.id] ?? null, null, undefined, reliefs[body.id] ?? null);
+      const r = Math.floor(PORTRAIT_RADIUS / bodyReach(body.id));
+      if (facing === null) {
+        drawBody(ctx, body.id, r, LIGHT, maps[body.id] ?? null, null, undefined, reliefs[body.id] ?? null);
+        return;
+      }
+      // Turned about its pole and tipped so the picked site faces us (the unturned portrait faces 90° W, north up).
+      const turn = (facing.lon + 90) * DEG;
+      const tip = facing.lat * DEG;
+      const [c, s, ct, st] = [Math.cos(turn), Math.sin(turn), Math.cos(tip), Math.sin(tip)];
+      // View to the globe's frame: tip back about the view's x axis, then turn about the pole; and back again.
+      const orient: Orient = ([x, y, z]) => {
+        const [ty, tz] = [ct * y + st * z, -st * y + ct * z];
+        return [c * x + s * tz, ty, -s * x + c * tz];
+      };
+      const toView: Orient = ([x, y, z]) => {
+        const [vx, vz] = [c * x - s * z, s * x + c * z];
+        return [vx, ct * y - st * vz, st * y + ct * vz];
+      };
+      drawBody(ctx, body.id, r, LIGHT, maps[body.id] ?? null, orient, undefined, reliefs[body.id] ?? null);
+      markSites(ctx, sites, r, toView);
       return;
     }
     // The Sun's portrait burns on, its flames reaching to the frame.
@@ -102,9 +200,37 @@
   /** The game date a number of years from now. */
   function dateIn(yearsAhead: number): string {
     if (!game.state) return "";
-    const day = game.state.dayIndex + game.dayFraction + yearsAhead * 365.25;
-    const d = dateOfDay(baseContent.rules.startYear, Math.floor(day));
-    return `${d.day} ${MONTHS[d.month - 1]} ${d.year}`;
+    return onDay(Math.floor(game.state.dayIndex + game.dayFraction + yearsAhead * 365.25));
+  }
+
+  /** Pixel-art markers on the portrait for the sites on the side facing us, the picked one on top. */
+  function markSites(ctx: CanvasRenderingContext2D, list: HabSiteDef[], r: number, toView: Orient) {
+    const centre = ctx.canvas.width / 2;
+    const ordered = [...list].sort((a, b) => Number(a.id === siteId) - Number(b.id === siteId));
+    for (const site of ordered) {
+      if (site.lat === undefined || site.lon === undefined) continue;
+      const lat = site.lat * DEG;
+      const lon = site.lon * DEG;
+      // The globe's convention: (cos lat cos lon, sin lat, −cos lat sin lon).
+      const [x, y, z] = toView([Math.cos(lat) * Math.cos(lon), Math.sin(lat), -Math.cos(lat) * Math.sin(lon)]);
+      if (z < LIMB) continue;
+      const palette = SITE_PALETTES[site.id === siteId ? "selected" : prospected ? "prospected" : "unknown"];
+      drawSprite(ctx, SITE_MARKER, palette, centre + x * r, centre - y * r);
+    }
+  }
+
+  /** A site's monthly yield, or "–" for none. */
+  const amount = (v: number) => (v === 0 ? "–" : v.toFixed(v < 100 ? 1 : 0));
+  /** Height for a body's orbit, its radius for a Lagrange point's, or what kind it is. */
+  function altitude(o: HabOrbitDef): string {
+    if (o.altitudeKm !== undefined) return `${number(o.altitudeKm)} km`;
+    if (o.semiMajorAxisKm !== undefined && o.lagrange) return `${number(o.semiMajorAxisKm)} km round L${o.lagrange}`;
+    if (o.semiMajorAxisKm !== undefined) return `${number(o.semiMajorAxisKm - body!.radiusKm)} km`;
+    return o.synchronous ? "Synchronous" : "Parking";
+  }
+
+  function launchProbe() {
+    if (body && faction) void game.command({ type: "launchProbe", factionId: faction.id, bodyId: body.id });
   }
 
   const close = () => (game.selectedBodyId = null);
@@ -131,11 +257,13 @@
       </div>
     </div>
 
-    {#if launch}
+    {#if launch?.window}
       <p class="window small">
-        Earth Launch Window: <strong>{launch.inYears < 1 / 365.25 ? "open now" : dateIn(launch.inYears)}</strong>
+        Earth Launch Window: <strong>{launch.window.inYears < 1 / 365.25 ? "open now" : dateIn(launch.window.inYears)}</strong>
         <span class="muted">· {period(launch.transferYears * 365.25)} transfer</span>
       </p>
+    {:else if launch}
+      <p class="window small">Transfer from Earth: <strong>{period(launch.transferYears * 365.25)}</strong> <span class="muted">· no launch window needed</span></p>
     {/if}
 
     {#if body.orbit && figures}
@@ -179,8 +307,9 @@
 
     <nav class="tabs">
       <button class:active={tab === "moons" && moons.length > 0} disabled={moons.length === 0} onclick={() => (tab = tab === "moons" ? null : "moons")}>{moons.length} {moons.length === 1 ? noun[0] : noun[1]}</button>
-      <button disabled title="Still to come">Orbits</button>
-      <button disabled title="Still to come">Stations</button>
+      <button class:active={tab === "sites" && sites.length > 0} disabled={sites.length === 0} onclick={() => (tab = tab === "sites" ? null : "sites")}>{sites.length} {sites.length === 1 ? "Site" : "Sites"}</button>
+      <button class:active={tab === "orbits" && orbits.length > 0} disabled={orbits.length === 0} onclick={() => (tab = tab === "orbits" ? null : "orbits")}>{orbits.length} {orbits.length === 1 ? "Orbit" : "Orbits"}</button>
+      <button class:active={tab === "stations" && habsHere.length > 0} disabled={habsHere.length === 0} onclick={() => (tab = tab === "stations" ? null : "stations")}>{habsHere.length} {habsHere.length === 1 ? "Hab" : "Habs"}</button>
       <button disabled title="Still to come">Fleets</button>
     </nav>
 
@@ -194,6 +323,107 @@
             <tr>
               <td><button class="name-link" onclick={() => (game.selectedBodyId = m.id)}>{m.name}</button></td>
               <td>{m.composition ?? bodyClass(m)}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    {/if}
+
+    {#if tab === "sites" && sites.length > 0 && world}
+      <div class="prospect small">
+        {#if !explored}
+          <span class="muted">Opens to probes and bases with {techName(body.exploreTech)}</span>
+        {:else if prospected}
+          <span class="good">Prospected: the yields below are known</span>
+        {:else if probe}
+          <span class="en-route"><Icon name="probe" size={16} />Our probe arrives on {onDay(probe.arrivesDay)}</span>
+        {:else if probeCheck}
+          <button class="launch" disabled={!probeCheck.ok} title={probeCheck.ok ? "Launch a probe from the Earth to prospect the sites and learn their yields" : probeCheck.reason} onclick={launchProbe}>
+            <Icon name="probe" size={18} />Launch Probe
+            {#each probeCost as [resource, amount] (resource)}<span class="cost"><Icon name={resource} size={13} />{amount}</span>{/each}
+          </button>
+          {#if probeArrives !== null}<span class="muted">Arrives {onDay(probeArrives)}</span>{:else if !probeCheck.ok}<span class="bad">{probeCheck.reason}</span>{/if}
+        {/if}
+      </div>
+      {#if siteJourney}
+        {@const { core, sent, check } = siteJourney}
+        <div class="journey small">
+          <span>{core.name} to the surface:</span>
+          <span class="figure-inline" title={explain(sent.deltaV, 2)}>Δv {sent.deltaV.value.toFixed(1)} km/s</span>
+          <span class="figure-inline" title={sent.boost ? explain(sent.boost, 2) : check.ok ? "" : check.reason}><Icon name="boost" size={13} />{sent.boost ? sent.boost.value.toFixed(1) : "–"}</span>
+          <span class="muted">arrives {onDay(sent.arrivesDay)}</span>
+        </div>
+        <div class="journey small">
+          {#if check.ok}
+            <button class="launch" title="Send an {core.name} from the Earth to found a base here" onclick={() => found({ kind: "site", id: foundSiteId! })}>
+              <Icon name="habitat" size={15} />Found an outpost at {sites.find((s) => s.id === foundSiteId)!.name}
+            </button>
+          {:else}<span class="muted">To found an outpost at {sites.find((s) => s.id === foundSiteId)!.name}: {check.reason}</span>{/if}
+        </div>
+      {/if}
+      <table class="list sites">
+        <thead>
+          <tr>
+            <th>Site</th>
+            {#each MINED_RESOURCES as r (r)}<th title={SPACE_RESOURCE_NAMES[r]}><Icon name={r} size={14} /></th>{/each}
+          </tr>
+        </thead>
+        <tbody>
+          {#each sites as s (s.id)}
+            {@const yields = prospected ? world.siteYields[s.id]! : siteEstimate(baseContent, world.difficulty, s.id)}
+            <tr class:picked={s.id === siteId}>
+              <td>
+                <button class="name-link" onclick={() => (siteId = s.id)}>{s.name}</button>
+                {#if holder(s.id)}{@const h = holder(s.id)!}<button class="holder" title={h.name} onclick={() => h.factionId === faction?.id && openHab(h.id)}><Emblem faction={h.factionId} size={14} /></button>{/if}
+              </td>
+              {#each MINED_RESOURCES as r (r)}<td class:estimate={!prospected}>{!prospected && yields[r] > 0 ? "~" : ""}{amount(yields[r])}</td>{/each}
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+      <p class="note small muted">{prospected ? "What a mine at each site yields a month." : "Estimated monthly yields; a probe finds the real ones."}</p>
+    {/if}
+
+    {#if tab === "orbits" && orbits.length > 0 && world && faction}
+      <table class="list">
+        <thead>
+          <tr><th>Orbit</th><th>Altitude</th><th title="Δv from low Earth orbit, km/s">Δv</th><th title="Boost to send a Platform Core from the Earth"><Icon name="boost" size={13} /></th><th title="Stations in it / how many it can hold">Stations</th><th></th></tr>
+        </thead>
+        <tbody>
+          {#each orbits as o (o.id)}
+            {@const open = orbitExplored(world, o)}
+            {@const { core, sent, check } = journey({ kind: "orbit", id: o.id })}
+            <tr class:locked={!open} class:ready={check.ok} title={`${core.name} arrives ${onDay(sent.arrivesDay)}. ${check.ok ? "We can found a platform here." : `To found a platform: ${check.reason}.`}`}>
+              <td>
+                {o.name}
+                {#if o.interface}<span class="tag" title="Interface orbit: where fleets meet the surface">Interface</span>{/if}
+                {#if o.irradiation}<span class="tag bad" title="Radiation: modules built here weigh this much more">Radiation ×{o.irradiation}</span>{/if}
+              </td>
+              <td>{altitude(o)}</td>
+              <td title={explain(sent.deltaV, 2)}>{sent.deltaV.value.toFixed(1)}</td>
+              <td title={sent.boost ? explain(sent.boost, 2) : ""}>{sent.boost ? sent.boost.value.toFixed(1) : "–"}</td>
+              <td>{world.habs.filter((h) => h.orbitId === o.id).length}/{o.capacity}</td>
+              <td>{#if check.ok}<button class="found" title="Send a {core.name} from the Earth to found a station here" onclick={() => found({ kind: "orbit", id: o.id })}>+</button>{/if}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    {/if}
+
+    {#if tab === "stations" && habsHere.length > 0 && world}
+      <table class="list">
+        <thead>
+          <tr><th>Hab</th><th>Where</th><th>Tier</th></tr>
+        </thead>
+        <tbody>
+          {#each habsHere as h (h.id)}
+            <tr>
+              <td>
+                <Emblem faction={h.factionId} size={14} />
+                {#if h.factionId === faction?.id}<button class="name-link" onclick={() => openHab(h.id)}>{h.name}</button>{:else}{h.name}{/if}
+              </td>
+              <td>{h.siteId ? sites.find((s) => s.id === h.siteId)?.name : baseContent.orbits.find((o) => o.id === h.orbitId)?.name}</td>
+              <td>{isBuilt(world, h.modules[0]!) ? ["I", "II", "III"][habTier(baseContent, h) - 1] : "Founding"}</td>
             </tr>
           {/each}
         </tbody>
@@ -307,7 +537,7 @@
   }
   .tabs {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     border-top: 1px solid var(--border-soft);
   }
   .tabs button {
@@ -355,5 +585,91 @@
   }
   .name-link:hover {
     color: var(--accent);
+  }
+  .name-link:disabled {
+    color: inherit;
+    cursor: default;
+  }
+  .prospect,
+  .journey {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 6px 10px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .launch,
+  .en-route,
+  .cost {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .cost {
+    gap: 2px;
+    margin-left: 4px;
+    color: var(--muted);
+  }
+  .good {
+    color: var(--good);
+  }
+  .bad {
+    color: var(--bad);
+  }
+  .sites th + th,
+  .sites td + td {
+    padding: 1px 4px;
+  }
+  .sites .estimate {
+    color: var(--muted);
+  }
+  .sites tr.picked td {
+    background: rgba(255, 211, 122, 0.08);
+  }
+  .sites tr.picked .name-link {
+    color: #ffd37a;
+  }
+  .note {
+    margin: 0;
+    padding: 4px 10px 8px;
+  }
+  .locked {
+    color: var(--muted);
+  }
+  .ready td:first-child {
+    color: var(--good);
+  }
+  .journey {
+    border-top: none;
+    padding-top: 0;
+  }
+  .figure-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .holder {
+    margin-left: 4px;
+    padding: 0;
+    border: 0;
+    background: none;
+    vertical-align: middle;
+  }
+  .found {
+    min-width: 20px;
+    padding: 0 5px;
+    line-height: 1.2;
+    color: var(--good);
+  }
+  .tag {
+    margin-left: 6px;
+    padding: 0 4px;
+    border: 1px solid var(--border-soft);
+    font-size: 0.8em;
+    color: var(--accent);
+  }
+  .tag.bad {
+    color: var(--bad);
   }
 </style>

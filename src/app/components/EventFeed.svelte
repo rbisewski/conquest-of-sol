@@ -39,6 +39,12 @@
   const tone = (e: LogEntry) => entryKind(e).tone ?? (e.factionId ? "mine" : "public");
 
   function open(e: LogEntry) {
+    if (e.bodyId) {
+      // A space event opens its body in the Solar System view.
+      game.view = "solar";
+      game.selectedBodyId = e.bodyId;
+      return;
+    }
     if (!e.nationId) return;
     game.selectedNationId = e.nationId;
     // The nation panel takes the upper left back from a rival councilor's.
@@ -63,7 +69,7 @@
       <div class="tip panel" role="tooltip">
         <div class="when">{when(e)}</div>
         <div>{e.text}</div>
-        <div class="hint">{e.nationId ? "Click to open the nation · " : ""}Right-click to dismiss</div>
+        <div class="hint">{e.bodyId ? "Click to open the body · " : e.nationId ? "Click to open the nation · " : ""}Right-click to dismiss</div>
       </div>
     </div>
   {/each}

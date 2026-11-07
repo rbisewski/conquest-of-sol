@@ -24,6 +24,9 @@ const MODIFIERS: Record<ModifierContext, (e: Extract<ResearchEffect, { kind: "mo
   Corruption: (e) => `Corruption ${times(e.value)}`,
   SpoilsOutput: (e) => `Spoils money ${times(e.value)}`,
   Economy_BasePCGDPIncrease: (e) => `Economy priority growth ${times(e.value)}`,
+  ProbeTransferTime: (e) => `Probe travel time ${times(e.value)}`,
+  GenericModuleTransferTime: (e) => `Boost delivery time ${times(e.value)}`,
+  GenericTransfer_OffDate_PCT: (e) => `Delay for launching outside a window ${times(e.value)}`,
 };
 
 export function describeEffect(e: ResearchEffect): string {
@@ -47,6 +50,8 @@ export function describeEffect(e: ResearchEffect): string {
       return "Re-rolls the project ideas we missed";
     case "maxMiltech":
       return `Highest Miltech any nation can reach ${signed(e.amount)}`;
+    case "exhaustVelocity":
+      return `Boost deliveries beyond low Earth orbit at ${e.kps} km/s exhaust velocity`;
   }
 }
 
@@ -66,12 +71,25 @@ function describeClaims(project: ProjectDef): string[] {
   });
 }
 
-/** Every line for a tech or project: effects, one-time grants, then claims. Empty if it does nothing yet. */
+/** "Opens Mars, Phobos and 17 more bodies to exploration" (probes and habs), and any station orbits it opens beyond those bodies'. */
+function describeExploration(tech: TechDef): string[] {
+  const bodies = baseContent.solarSystem.filter((b) => b.exploreTech === tech.id).map((b) => b.name);
+  const orbits = baseContent.orbits.filter((o) => o.exploreTech === tech.id && baseContent.solarSystem.find((b) => b.id === o.body)!.exploreTech !== tech.id).length;
+  const lines: string[] = [];
+  if (bodies.length > 0) {
+    const names = bodies.length <= 3 ? bodies.join(", ") : `${bodies.slice(0, 2).join(", ")} and ${bodies.length - 2} more bodies`;
+    lines.push(`Opens ${names} to exploration`);
+  }
+  if (orbits > 0) lines.push(`Opens ${orbits} more station orbit${orbits === 1 ? "" : "s"}`);
+  return lines;
+}
+
+/** Every line for a tech or project: effects, one-time grants, then claims, or what a tech opens in space. Empty if it does nothing yet. */
 export function describe(item: TechDef | ProjectDef): string[] {
   const lines = item.effects.map(describeEffect);
   if ("grants" in item) {
     for (const g of item.grants) lines.push(`${signed(g.amount)} ${g.resource} once`);
     lines.push(...describeClaims(item));
-  }
+  } else lines.push(...describeExploration(item));
   return lines;
 }

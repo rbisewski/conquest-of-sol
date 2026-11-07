@@ -12,7 +12,7 @@ All tunables live in `src/content/rules.json`. Names like `missions.rollBase` re
 
 ## Determinism rule
 
-Simulation code uses only `+ − × ÷`, `Math.sqrt`, `Math.floor`, `Math.round`, `Math.min`/`Math.max`, comparisons, and `detLn` / `detExp` / `detPow` / `detSin` / `detCos` from `src/sim/detmath.ts`.
+Simulation code uses only `+ − × ÷`, `Math.sqrt`, `Math.floor`, `Math.round`, `Math.min`/`Math.max`, comparisons, and `detLn` / `detExp` / `detPow` / `detSin` / `detCos` / `detAtan2` from `src/sim/detmath.ts`.
 Those helpers are built from basic arithmetic, so a game in WebKitGTK and the same seed under Node produce identical states.
 Never use `Math.pow`, `exp`, `log` or trigonometry in `src/sim/`.
 
@@ -395,8 +395,8 @@ At the start this gives the USA about 1,560 a month, China 980, Japan 435 and Ge
 
 **Projects** (`src/content/projects.json`): each faction researches its own, built from Terra Invicta's game files by `tools/data/build_research.py`.
 
-- **Which projects:** a project is kept if at least one of its effects or one-time grants works in our simulation, or it unlocks claims, along with every project on its prerequisite chains. That gives 136 projects: 87 with an effect here and 44 unlocking claims.
-- **Left out:** projects for the alien faction, projects that need campaign objectives, and those whose effects all act on systems we don't have yet (space, habs, ships, claims, alien missions).
+- **Which projects:** a project is kept if at least one of its effects or one-time grants works in our simulation, it unlocks claims, it unlocks a hab module, or its effects act on the space economy (hab founding, boost deliveries, probes, mining bonuses), along with every project on its prerequisite chains. That gives 265 projects: 94 with an effect here, 55 unlocking claims and 127 for the space layer. Most space projects do nothing yet; their effects are translated as the space layer applies them (the probe, rocket and delivery projects so far), and the AI ranks the rest only by what they lead to.
+- **Left out:** projects for the alien faction, projects that need campaign objectives, and those whose effects all act on systems we don't have yet (ships, alien missions).
 - **Faction projects:** these go to our faction in the same ideological place:
 
 | Terra Invicta | Ours |
@@ -442,6 +442,10 @@ At the start this gives the USA about 1,560 a month, China 980, Japan 435 and Ge
 | Orgs on the market | Added to the market size at each refresh |
 | Spoils output | Spoils money × the product |
 | Diplomatic cooldown | Cooldowns after the faction's diplomacy × the product |
+| Probe travel time (High Thrust Probes ×0.5) | Days a probe takes × the product (see "Space") |
+| Exhaust velocity (Solid-Fuel Space Rockets 2.6 km/s up to Advanced Interplanetary Rockets 21.6) | The best one is the faction's rockets for boost deliveries (see "Space") |
+| Delivery time (Space Tugs ×0.9, Nuclear Freighters ×0.85, Fusion Freighters ×0.6) | Days a boost delivery takes × the product |
+| Off-window delay (Solar Steamers ×0.75) | The extra time of a launch outside its window, for deliveries and probes, × the product |
 | One-time | Resources granted, attribute points or a trait for every councilor, XP, propaganda in every nation, re-rolling failed unlocks |
 
 For example, Audience, Commercial and Operations Research grant 25 influence, 100 money and 20 ops each time, and Management Research adds 5 control point capacity. (In Terra Invicta it takes 5% off upkeep; we changed it.)
@@ -480,6 +484,72 @@ Source: the wiki's Councilors and Orgs pages (copies in the wiki cache).
 | Value | Formula | Status |
 |---|---|---|
 | Monthly influence | `(influence.base + billions of supporters worldwide × perBillionSupporters) × (1 + aiBonus for AI) − overcap² / 12` | Income placeholder; penalty from Terra Invicta |
+
+## Space (Terra Invicta) — `src/sim/space.ts`, `src/sim/transfers.ts`
+
+Sources: the wiki's Celestial Bodies page (Wayback capture of 2025-10-28, "Resource Formulas") and Boost page (2026-10-02), and Terra Invicta's game files and English text (TISpaceBodyTemplate, TIEffectTemplate, UISpace, TIOperationTemplate; `docs/data-sources.md`, "Space economy"). Tunables are under `space` and `difficulty` in `rules.json`.
+
+**Exploration.** A body is open to probes and habs once the global tech in its `exploreTech` is done: Mission to the Moon opens Luna, Mission to Mars Mars, its moons and the near-Earth asteroids, and so on (the Research panel lists what each opens). The Earth needs none. An orbit opens with its body, except the Earth's farthest (with Mission to the Moon) and the Earth–Moon and Sun–Earth Lagrange points (with Mission to Mars).
+
+**Site yields.** Every hab site's monthly yield of water, volatiles, base metals, noble metals and fissiles is rolled once, when the world is made, from the seed (a sequence of its own, so the rest of the game's randomness is untouched; an older save upgraded to this version gets the yields a new game of its seed would). For each resource, from the site's mining profile:
+
+| Step | Rule |
+|---|---|
+| Size (small-body profiles only) | Mass modifier `min(1, mass / 5×10¹⁶ kg)`; density modifier `min(1, density / 1.25) × max(1, density / 3)` (g/cm³). Water and volatiles: mean and min × `clamp(mass modifier, 0.75, 1.25)`; metals, nobles and fissiles × `clamp(mass modifier × density modifier, 0.75, 1.25)` |
+| Mining rate | Mean and min × the difficulty's `miningRate` (Easy 2, Normal 1.5, Hard 1; decision D17). Width × the rate below 2, or × `(2 + rate^(1 − jump))` from 2 up, as the wiki gives it |
+| Least yield | If above 0, × a random 0.8–1.2 |
+| Roll | Count heads of a coin landing heads at the jump chance, until tails; half the time negate the count. Yield = `mean + count × width + random(−width/2, width/2)`, raised to the least yield; below 0.01 it is 0 |
+| Noble metals | At most the base metals ÷ 2 or ÷ 3 (even chances) |
+
+Until a faction prospects a body it sees an estimate for each site: the roll's mean (after size and mining rate), or its least yield if higher, never below 0. Terra Invicta's game settings also have `bigAsteroidResourceBonusChance`, `smallAsteroidresourceMalusChance` and `ZeroMinMiningProfileModifier`, which the wiki doesn't explain; they are **not modelled**.
+
+**Transfers from the Earth** (`transferFromEarth`): the Hohmann transfer between the Earth's orbit and the target's round the Sun (its planet's, for a moon of another planet), half the period of the ellipse touching both: `π √(((a₁ + a₂) / 2)³ / G M☉)`. Earth → Mars is 259 days, Jupiter 2.73 years. The next window opens when the target leads the Earth by `π − n₂ t` (n₂ its mean motion, t the transfer time), judged from where both bodies are; windows come a synodic period apart (780 days for Mars). For the Moon the transfer is from low Earth orbit (the Earth's first low orbit, 500 km up) and needs no window: about 5 days. The Celestial Body panel shows both.
+
+**Prospecting probes** (`launchProbe`): a faction launches one from the Earth to an explored body with hab sites that it hasn't prospected and isn't already probing, paying `space.probeCost` (1 boost; **inferred**: the game shows a cost but its files don't give it). The probe arrives after `transfer time × off-window factor × probe speed` days, rounded up, at least 1; on arrival the faction knows every site's yield on that body and may build bases there.
+
+- **Off-window factor** (**inferred**): Terra Invicta says a launch from Earth outside the optimum window "will suffer a penalty to the duration", and Solar Steamers cuts that penalty by 25%, but not how big it is. Ours is `1 + space.offWindowPenalty × Solar Steamers' 0.75 if done × (time to the next window ÷ synodic period)`: up to double the transfer just after a window closes, nothing as the next opens. None within the Earth's system.
+- **Probe speed:** High Thrust Probes halves the time (its ProbeTransferTime ×0.5).
+- **Not modelled yet:** launching from a shipyard instead of the Earth, sending a faster probe to overtake one en route, prospecting from ships, and Terra Invicta's mission techs letting their biggest contributors scan faster.
+
+**Δv from low Earth orbit** (`deltaV`): patched conics on circular orbits in one plane (inclinations and eccentricities are left out, as are gravity assists and aerobraking). Terra Invicta computes its own "from actual orbital calculations" at the launch date; this is the Hohmann estimate. Each burn is a term in the panel's tooltip:
+
+| Destination | Burns |
+|---|---|
+| The Earth's low orbits (the four `earthLeo` ones) | None: boost delivers there |
+| The Earth's other orbits | A Hohmann transfer from low Earth orbit (500 km) out to the orbit's height, and circularising there (geostationary: 3.8 km/s) |
+| The Sun–Earth Lagrange points | The Earth's escape speed less low orbit's speed (3.2 km/s) |
+| The Moon | A Hohmann transfer within the Earth's system out to the Moon's distance (3.1 km/s), then braking from the speed left relative to the Moon into its orbit (0.8 km/s to low lunar orbit) |
+| A body round the Sun, or a moon of one | Leaving low Earth orbit on the hyperbola that puts the craft on the Hohmann transfer to the body (or its planet): `√(v∞² + 2μ⊕ / r) − √(μ⊕ / r)` (Mars 3.55 km/s). For a moon, falling from the planet's sphere to the moon's distance and meeting it at the difference of their speeds. Then braking into the orbit the same way round the body (low Mars orbit 2.1 km/s) |
+| A Lagrange point of a body and its parent | Only matching the body's path: the speed left relative to it, no braking into its gravity |
+| A hab site | Braking into the body's lowest orbit, then landing: down a Hohmann ellipse to the surface and killing the speed left (the Moon 1.8 km/s; Luna's surface 5.7 km/s from low Earth orbit in all, Mars's 9.4) |
+
+Orbits the game gives no height (small bodies' parking orbits, a few low orbits) are taken as 1.1 body radii from the centre (**inferred**).
+
+**Boost deliveries** (`delivery`): one boost lifts ten tons to low Earth orbit (Terra Invicta's Boost page), and beyond it the rocket equation multiplies the mass by `e^(Δv / v)`, v the faction's best exhaust velocity (its rocket projects, `exhaustVelocity` effects). Radiation (Mercury ×2, Venus's orbits ×1.1, some Earth orbits ×2) multiplies the mass, the extra being base-metal shielding. A faction without a rocket project can only send things to low Earth orbit (the game's exhaust velocity effects raise it from nothing). The delivery takes the transfer to the destination's body (within the Earth's system, the Hohmann transfer to the orbit; to the Sun–Earth Lagrange points, out to where L1 and L2 lie, about 38 days, **inferred** for all five), longer off its launch window, times the faction's delivery time modifiers; to low Earth orbit it arrives the same day. An Outpost Core (20 t) to the Moon's surface costs 17.8 boost with Solid-Fuel Space Rockets, to Mars's 74.5; a Platform Core (15 t) to low Earth orbit 1.5.
+
+**Founding a hab** (`checkFoundHab`, `foundHab`): the destination is open (its tech is done), the site is free (one base a site, any faction's) or the orbit has room (its station capacity, counting every faction's stations), the faction has the core's project (Outpost Core for a base, Platform Core for a station), it has prospected the body (bases only), it has a rocket project if the destination is beyond low Earth orbit, and it has the boost to send the core. Founding pays that boost; the core arrives after the delivery and is then built in its build time (30 days for both). The Sites list shows the journey for the body's sites (they all share it), the first thing in the way, and a button to found an outpost at the picked site (or the first free one); the Orbits list shows each orbit's Δv, boost and stations, and a + to found a platform where we can.
+
+## Habs (Terra Invicta) — `src/sim/habs.ts`
+
+Source: the wiki's Habs page (Wayback capture of 2025-12-31) and Terra Invicta's TIHabModuleTemplate. Tunables are under `space` in `rules.json`.
+
+| Rule | Value | Status |
+|---|---|---|
+| Slots | The core, then 4, 12 or 20 more by the core's tier (`space.slotsByTier`) | Terra Invicta |
+| Tier | The core's. A core upgrades in place (Outpost → Settlement → Colony, Platform → Orbital → Ring) up to the body's largest hab tier, opening the new slots when done | Terra Invicta |
+| Modules | Any module whose project the faction has, of the hab's kind (base, station or either), up to the hab's tier, in an empty slot; or the next tier of its line in the slot of the one it upgrades. Once the core is built | Terra Invicta |
+| One per hab | Modules marked so (administration, operations centres, mines…): one of the line per hab | Terra Invicta |
+| Placement | Only in low Earth orbit (climate labs, listening posts); not where there is radiation (civilian modules); antimatter traps in orbits with natural antimatter, one per orbit across all factions; the helium-3 mine in a gas giant's interface orbit; modules needing a colonized (10,000 crew) or inhabited (50,000) body need that much crew in the planetary system's habs, except round the Earth and the Moon | Terra Invicta; crew as population **inferred** |
+| Cost | The module's build cost in space resources, or its mass sent up with boost (see "Boost deliveries"), which adds the delivery to the build time. Radiation adds `mass × (multiplier − 1) / 10` base metals | Terra Invicta |
+| Upgrades | Two thirds of the cost and build time (`space.upgradeShare`); the old module works until the upgrade is done | Terra Invicta; working meanwhile **inferred** |
+| Build time | Modules build side by side, each in `build days × upgrade share × construction factor`, rounded up. The construction factor multiplies, for the hab's built construction modules sorted fastest first, `1 − (1 − m) / i²` for the i-th (Construction Module 0.9, Nanofactory 0.75, Nanofacturing Complex 0.6) | Terra Invicta |
+| Scrapping | Removes a module (not the core) and anything being built in its place; nothing is refunded | **inferred** |
+| Mission control | Each module's (the cores 2, 3 and 4) counts from the moment it is placed; the top bar shows the total against the capacity the faction's nations give. Going over has no effect yet | Terra Invicta |
+| Crew and power | Shown in the hab panel from its built modules: crew, power made (solar modules × sunlight) and used. Running short has no effect yet | Terra Invicta's module figures |
+| Sunlight | `(1 AU / the planetary system's distance)²`, halved on a surface, in orbit times the share outside the body's shadow `1 − asin(R / r) / π`; 1 at a Lagrange point (Luna's surface 50%, Mercury's 334%, high Earth orbit 98%; low Earth orbit comes out 62% where Terra Invicta shows 76%) | **inferred** |
+| Starting habs | The ISS (Platform Core, two Solar Collectors, a Space Science Lab) for Lumen and Tiangong (a Platform Core) for the Ark, in their own Earth orbits, as Terra Invicta gives them to the Academy and Project Exodus (decision D17; `space.startingHabs`) | Terra Invicta |
+
+Not yet: mines and the mining slot, support costs and crew upkeep, what modules produce, and running short of power or mission control (those come with mining and upkeep, and the wider module catalogue); founding from a construction module or a ship's kit; capturing and destroying habs. The AI doesn't found habs yet.
 
 ## Time — `src/sim/simulation.ts`, `src/sim/monthly.ts`
 

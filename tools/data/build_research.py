@@ -12,8 +12,11 @@ are kept where our simulation has the system they act on (the Miltech cap, the E
 priority, councilor XP); docs/formulas.md ("Research") lists them.
 
 Projects are kept when at least one of their effects or one-time grants works in our
-simulation, or they unlock claims (src/content/claims.json, from build_claims.py, which must run
-first), together with every project on their prerequisite chains (which may do nothing yet). Projects for the alien faction, and projects that need campaign objectives we don't
+simulation, they unlock claims (src/content/claims.json, from build_claims.py, which must run
+first), they unlock a hab module (TIHabModuleTemplate; build_space.py keeps the modules whose
+projects are here), or their effects act on the space economy (SPACE_CONTEXTS: hab founding,
+boost deliveries, probes, mining), together with every project on their prerequisite chains
+(which may do nothing yet). Projects for the alien faction, and projects that need campaign objectives we don't
 have yet, are left out. Faction-specific projects go to our faction in the same ideological
 position (FACTIONS below).
 """
@@ -107,6 +110,34 @@ MODIFIERS = {
     "Corruption",
     "SpoilsOutput",
     "Economy_BasePCGDPIncrease",
+    "ProbeTransferTime",
+    "GenericModuleTransferTime",
+    "GenericTransfer_OffDate_PCT",
+}
+
+# The game's effect contexts for the space economy. Projects carrying them are kept for the space
+# layer to come (docs/formulas.md, "Research"), their effects not translated until it applies them.
+SPACE_CONTEXTS = {
+    "CanFoundAutomatedT1Base",
+    "CanFoundAutomatedT1Station",
+    "CanFoundTier1Base",
+    "CanFoundTier1Station",
+    "CanFoundTier2Base",
+    "CanFoundTier2Station",
+    "CanFoundTier3Base",
+    "CanFoundTier3Station",
+    "GenericTransferEV_kps",
+    "GenericModuleTransferTime",
+    "GenericTransfer_OffDate_PCT",
+    "HabMissionControlReduction",
+    "HabNuclearFreighters",
+    "ProbeTransferTime",
+    "SpaceMiningBonus",
+    "MiningWaterBonus",
+    "MiningVolatilesBonus",
+    "MiningMetalsBonus",
+    "MiningNoblesBonus",
+    "MiningFissilesBonus",
 }
 
 ATTRIBUTES = {"Persuasion", "Investigation", "Espionage", "Command", "Administration", "Science", "Security", "Loyalty"}
@@ -152,6 +183,9 @@ def convert_effect(e: dict, traits: set[str]) -> dict | None:
     context = contexts[0]
     op = "mul" if e.get("operation") == "Multiplicative" else "add"
     scope = "faction" if e.get("effectTarget") == "SourceFaction" else "global"
+    if context == "GenericTransferEV_kps":
+        # Raised to this value ("IncreaseToValue"): the best rocket the faction has for boost deliveries.
+        return {"kind": "exhaustVelocity", "kps": e["value"], "scope": scope}
     if context in PRIORITIES:
         return {"kind": "priority", "priority": PRIORITIES[context], "amount": e["value"], "scope": scope}
     m = re.fullmatch(r"Mission_(\w+)_(Att|Def)", context)
@@ -179,6 +213,10 @@ def main(game_dir: str, out_dir: str) -> None:
     project_text = load_localization(os.path.join(game_dir, "Localization", "en", "TIProjectTemplate.en"))
     traits = {t["id"] for t in json.load(open(os.path.join(out_dir, "traits.json"), encoding="utf-8"))}
     claim_projects = {c["project"] for c in json.load(open(os.path.join(out_dir, "claims.json"), encoding="utf-8")) if "project" in c}
+    module_projects = {m["requiredProjectName"] for m in load("TIHabModuleTemplate.json") if m.get("requiredProjectName") and not (m["alienModule"] or m["disable"] or m["destroyed"])}
+
+    def space_project(p: dict) -> bool:
+        return p["dataName"] in module_projects or any(c in SPACE_CONTEXTS for name in p.get("effects", []) for c in effects.get(name, {}).get("contexts", []))
 
     def effects_of(item: dict) -> list[dict]:
         return [c for c in (convert_effect(effects[name], traits) for name in item.get("effects", []) if name in effects) if c]
@@ -201,6 +239,7 @@ def main(game_dir: str, out_dir: str) -> None:
     tech_ids = {t["id"] for t in techs}
 
     candidates = {}
+    space_projects = set()
     for p in load("TIProjectTemplate.json"):
         factions = p.get("factionPrereq") or []
         if p.get("disable") or p.get("requiredObjectiveName") or p.get("requiredMilestone"):
@@ -210,6 +249,8 @@ def main(game_dir: str, out_dir: str) -> None:
         grants = [{"resource": RESOURCES[g["resource"]], "amount": g["value"]} for g in p["resourcesGranted"] if g["resource"] in RESOURCES]
         prereqs = [x for x in p.get("prereqs", []) if x]
         always = p.get("factionAlways")
+        if space_project(p):
+            space_projects.add(p["dataName"])
         candidates[p["dataName"]] = {
             "id": p["dataName"],
             "name": rename(project_text.get(f"TIProjectTemplate.displayName.{p['dataName']}", p["friendlyName"])),
@@ -229,8 +270,8 @@ def main(game_dir: str, out_dir: str) -> None:
             "role": p.get("AI_projectRole", ""),
         }
 
-    # Keep projects that do something here, then everything their prerequisite chains need.
-    keep = {pid for pid, p in candidates.items() if p["effects"] or p["grants"] or pid in claim_projects}
+    # Keep projects that do something here or that the space layer needs, then everything their prerequisite chains need.
+    keep = {pid for pid, p in candidates.items() if p["effects"] or p["grants"] or pid in claim_projects or pid in space_projects}
     frontier = list(keep)
     while frontier:
         p = candidates[frontier.pop()]
@@ -260,8 +301,9 @@ def main(game_dir: str, out_dir: str) -> None:
     write("projects.json", projects)
     working = sum(1 for p in projects if p["effects"] or p["grants"])
     claiming = sum(1 for p in projects if p["id"] in claim_projects)
+    space = sum(1 for p in projects if p["id"] in space_projects)
     missing = sorted(claim_projects - {p["id"] for p in projects})
-    print(f"{len(techs)} techs, {len(projects)} projects ({working} with effects we simulate, {claiming} unlocking claims)")
+    print(f"{len(techs)} techs, {len(projects)} projects ({working} with effects we simulate, {claiming} unlocking claims, {space} for the space layer)")
     if missing:
         print("claim projects left out:", ", ".join(missing))
 

@@ -58,3 +58,10 @@ export function formatDate(date: CalendarDate): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   return `${date.year}-${pad(date.month)}-${pad(date.day)}`;
 }
+
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/** "6 January 2030", for text. */
+export function formatLongDate(date: CalendarDate): string {
+  return `${date.day} ${MONTH_NAMES[date.month - 1]} ${date.year}`;
+}

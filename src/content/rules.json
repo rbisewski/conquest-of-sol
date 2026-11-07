@@ -843,16 +843,33 @@
   "difficulty": {
     "easy": {
       "researchCost": 0.6,
-      "aiBonus": -0.25
+      "aiBonus": -0.25,
+      "miningRate": 2
     },
     "normal": {
       "researchCost": 1.0,
-      "aiBonus": 0
+      "aiBonus": 0,
+      "miningRate": 1.5
     },
     "hard": {
       "researchCost": 1.8,
-      "aiBonus": 0.25
+      "aiBonus": 0.25,
+      "miningRate": 1
     }
+  },
+  "space": {
+    "probeCost": {
+      "boost": 1
+    },
+    "offWindowPenalty": 1,
+    "slotsByTier": [4, 12, 20],
+    "upgradeShare": 0.6666666666666666,
+    "colonizedPopulation": 10000,
+    "inhabitedPopulation": 50000,
+    "startingHabs": [
+      { "faction": "lumen", "orbit": "LowEarthOrbit4", "name": "International Space Station", "modules": ["PlatformCore", null, "SolarCollector", "SpaceScienceLab", "SolarCollector"] },
+      { "faction": "ark", "orbit": "LowEarthOrbit3", "name": "Tiangong", "modules": ["PlatformCore", null, null, null, null] }
+    ]
   },
   "research": {
     "startingTechs": [

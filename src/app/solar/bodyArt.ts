@@ -575,6 +575,12 @@ export function hasRelief(id: string): boolean {
   return !!STYLES[id]?.lumpy;
 }
 
+/** Whether the body is drawn as a plain sphere (not lumpy, not an ellipsoid), so a place's latitude and longitude land where a globe's would. */
+export function isSphere(id: string): boolean {
+  const style = STYLES[id];
+  return !style?.lumpy && !style?.shape;
+}
+
 /** A lumpy body's relief, loaded once from <map>_shape.png (16 bits, high byte red, low green, 0 to 2 radii) and laid on a cube map; null for any other body. */
 export function bodyRelief(id: string): Promise<Relief> | null {
   if (!hasRelief(id)) return null;

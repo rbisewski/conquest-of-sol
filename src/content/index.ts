@@ -6,8 +6,12 @@ import armyNames from "./armyNames.json";
 import claims from "./claims.json";
 import climate from "./climate.json";
 import factions from "./factions.json";
+import habModules from "./habModules.json";
+import habSites from "./habSites.json";
+import miningProfiles from "./miningProfiles.json";
 import names from "./names.json";
 import nations from "./nations.json";
+import orbits from "./orbits.json";
 import orgs from "./orgs.json";
 import priorities from "./priorities.json";
 import projects from "./projects.json";
@@ -35,5 +39,9 @@ export const baseContent: Content = validateContent({
   climate: climate as unknown as Content["climate"],
   armyNames: armyNames as Record<string, string[]>,
   solarSystem: solarSystem as unknown as Content["solarSystem"],
+  habSites,
+  miningProfiles,
+  orbits: orbits as unknown as Content["orbits"],
+  habModules: habModules as unknown as Content["habModules"],
   rules: rules as unknown as Rules,
 } as Content);

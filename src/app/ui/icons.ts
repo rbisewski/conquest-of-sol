@@ -77,11 +77,14 @@ import Users from "@lucide/svelte/icons/users";
 import X from "@lucide/svelte/icons/x";
 import Zap from "@lucide/svelte/icons/zap";
 import AntimatterIcon from "./AntimatterIcon.svelte";
+import CrewIcon from "./CrewIcon.svelte";
 import ExoticsIcon from "./ExoticsIcon.svelte";
 import FissilesIcon from "./FissilesIcon.svelte";
 import LaunchComplexIcon from "./LaunchComplexIcon.svelte";
 import MetalsIcon from "./MetalsIcon.svelte";
 import NobleMetalsIcon from "./NobleMetalsIcon.svelte";
+import ProbeIcon from "./ProbeIcon.svelte";
+import PowerIcon from "./PowerIcon.svelte";
 import TankIcon from "./TankIcon.svelte";
 import VolatilesIcon from "./VolatilesIcon.svelte";
 import type { Component } from "svelte";
@@ -101,6 +104,9 @@ export const icons = {
   fissiles: FissilesIcon,
   antimatter: AntimatterIcon,
   exotics: ExoticsIcon,
+  probe: ProbeIcon,
+  power: PowerIcon,
+  crew: CrewIcon,
   investment: Coins,
   corruption: HandCoins,
   democracy: Landmark,
@@ -174,6 +180,8 @@ export const resourceColor: Partial<Record<IconName, string>> = {
   fissiles: "#58c046",
   antimatter: "#f2f5f8",
   exotics: "#b585ec",
+  power: "#ffd34d",
+  crew: "#c8d2dc",
 };
 
 /** One glyph per field of research, used on its techs and projects. */
@@ -199,6 +207,7 @@ export const logIcons: Record<LogKind, Component> = {
   diplomacy: Handshake,
   territory: MapIcon,
   climate: Thermometer,
+  space: ProbeIcon,
 };
 
 export const missionIcons: Record<MissionType, Component> = {

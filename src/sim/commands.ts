@@ -6,12 +6,15 @@ import { ATTRIBUTES, type Attribute, type Content, type Gender } from "./content
 import { augment, buyOrg, checkAugment, checkBuyOrg, dismissCouncilor, sellOrg } from "./councilors";
 import { allFactionsDone, closeCouncilPhase, findCouncilor } from "./council";
 import { applyDiplomacy, checkDiplomacy, settlePolicyChoice, type DiplomaticAction } from "./diplomacy";
+import { buildModule, checkBuildModule, checkFoundHabCommand, checkScrapModule, foundHab, type Payment } from "./habs";
 import { armyCommander, checkAirlift, checkAnnex, checkMove, checkNuclearStrike, launchNuclearStrike, startAnnex, startMove } from "./military";
 import { assessMission, checkMissionCost } from "./missions";
 import { checkProjectChoice, checkTechChoice } from "./research";
 import { factionState } from "./lookup";
 import { checkHire, hire } from "./setup";
+import { checkLaunchProbe, launchProbe } from "./space";
 import type { GameState, Mission, Policy } from "./state";
+import type { Destination } from "./transfers";
 
 export type Command =
   | { type: "assignMission"; factionId: string; councilorId: string; mission: Mission | null }
@@ -54,7 +57,15 @@ export type Command =
   /** Sets the research pips: one per global tech slot, then one per project slot. */
   | { type: "setResearchPips"; factionId: string; pips: number[] }
   /** Starts a project in a slot, or clears the slot with null. Research already put in is kept. */
-  | { type: "setProject"; factionId: string; slot: number; projectId: string | null };
+  | { type: "setProject"; factionId: string; slot: number; projectId: string | null }
+  /** Launches a prospecting probe from the Earth to a body, paying its cost now. */
+  | { type: "launchProbe"; factionId: string; bodyId: string }
+  /** Founds a hab: sends its core from the Earth with boost to a hab site (a base) or an orbit (a station). */
+  | { type: "foundHab"; factionId: string; destination: Destination }
+  /** Builds a module in one of a hab's slots (or upgrades the one there), paid in space resources or sent up with boost. */
+  | { type: "buildModule"; factionId: string; habId: string; slot: number; moduleId: string; payWith: Payment }
+  /** Removes a module (not the core) from a hab, with anything being built in its place. */
+  | { type: "scrapModule"; factionId: string; habId: string; slot: number };
 
 export type CommandResult = { ok: true } | { ok: false; reason: string };
 
@@ -121,6 +132,30 @@ export function applyCommand(state: GameState, content: Content, command: Comman
       if (!check.ok) return reject(check.reason);
       faction.research.projectSlots[command.slot] = command.projectId;
       if (command.projectId) faction.research.choosing = faction.research.choosing.filter((j) => j !== command.slot);
+      return { ok: true };
+    }
+    case "launchProbe": {
+      const check = checkLaunchProbe(state, content, faction.id, command.bodyId);
+      if (!check.ok) return reject(check.reason);
+      launchProbe(state, content, faction.id, command.bodyId);
+      return { ok: true };
+    }
+    case "foundHab": {
+      const check = checkFoundHabCommand(state, content, faction.id, command.destination);
+      if (!check.ok) return reject(check.reason);
+      foundHab(state, content, faction.id, command.destination);
+      return { ok: true };
+    }
+    case "buildModule": {
+      const check = checkBuildModule(state, content, faction.id, command.habId, command.slot, command.moduleId, command.payWith);
+      if (!check.ok) return reject(check.reason);
+      buildModule(state, content, faction.id, command.habId, command.slot, command.moduleId, command.payWith);
+      return { ok: true };
+    }
+    case "scrapModule": {
+      const check = checkScrapModule(state, faction.id, command.habId, command.slot);
+      if (!check.ok) return reject(check.reason);
+      state.habs.find((h) => h.id === command.habId)!.modules[command.slot] = null;
       return { ok: true };
     }
     case "setPriorityWeights": {

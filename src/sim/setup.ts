@@ -12,6 +12,8 @@ import { homeCapital, startingOwners } from "./territory";
 import { controlPointCount } from "./nation";
 import { councilSize, initResearch, modifierSum, newFactionResearch, recruitBonus } from "./research";
 import { nextFloat, nextInt, pick, seedRng, weightedPick, type RngState } from "./rng";
+import { rollSiteYields } from "./space";
+import { addStartingHabs } from "./habs";
 import { STATE_VERSION, UNDECIDED, type Councilor, type FactionState, type GameState, type LaunchSite, type NationState } from "./state";
 
 export interface NewGameOptions {
@@ -56,6 +58,8 @@ export function newGame(content: Content, options: NewGameOptions): GameState {
     policyChoices: [],
     climateChoices: [],
     strikes: [],
+    siteYields: rollSiteYields(content, options.seed, options.difficulty),
+    habs: [],
     hidden: [],
     surveillance: {},
     recentTargets: {},
@@ -84,11 +88,14 @@ export function newGame(content: Content, options: NewGameOptions): GameState {
       intel: {},
       recruits: [],
       research: newFactionResearch(content),
+      prospected: [],
+      probes: [],
     });
   }
   refreshOrgMarkets(state, content);
   refreshRecruits(state, content);
   initResearch(state, content);
+  addStartingHabs(state, content);
   return state;
 }
 

@@ -15,6 +15,8 @@ import { nationDef } from "./lookup";
 import { controlPointCapacityCost, isDisabled, syncControlPointCount, unrestTarget } from "./nation";
 import { modifierSum, runResearchTick } from "./research";
 import { checkBreakaways, checkSecessions } from "./secession";
+import { runSpaceTick } from "./space";
+import { runHabTick } from "./habs";
 import type { FactionState, GameState, NationState } from "./state";
 import { isExtant } from "./territory";
 
@@ -55,6 +57,8 @@ export function runDailyTick(state: GameState, content: Content): void {
   checkBreakaways(state, content);
   checkSecessions(state, content);
   runResearchTick(state, content, share);
+  runSpaceTick(state, content);
+  runHabTick(state, content);
 }
 
 /** Population grows at its real-world rate. GDP per capita is unchanged, so GDP grows with it. */

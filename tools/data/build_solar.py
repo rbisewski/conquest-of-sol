@@ -15,6 +15,14 @@ A body's composition is Terra Invicta's "Type": the mining profile most of its h
 (TIHabSiteTemplate; ties go to the first listed), by its display name in
 Localization/en/TIMiningProfileTemplate.en beside Templates/. Bodies without sites have none.
 
+Bodies with hab sites or station orbits also carry what the space economy needs: the largest
+hab tier they can hold (maxHabTier: the game's maxHabSize, which runs to 4, capped at the top
+tier, 3; the game's own code isn't public, so that its 3 and 4 both allow every tier is inferred,
+from the wiki listing its 4s as 3s), the global tech that opens them to exploration (the tech whose
+effect is the body's effectToExplore, from TITechTemplate; the Sun and the Earth need none), the
+game's density (which scales small bodies' mining yields), and, where they aren't 1 and None,
+its radiation multiplier and atmosphere.
+
 Moons' orbits are JPL's where it lists them (jpl_satellites.json, from build_satellites.py), as
 the game's are measured from a mix of planes; every orbit here is measured from the ecliptic, so
 a moon's plane tilts with its planet (see moon_orbit). A moon JPL doesn't list keeps the game's
@@ -147,6 +155,13 @@ def compositions(templates):
     return {body: names[counts.most_common(1)[0][0]] for body, counts in profiles.items()}
 
 
+def explore_techs(templates):
+    """The global tech that carries each exploration effect, by the effect's name."""
+    with open(os.path.join(templates, "TITechTemplate.json"), encoding="utf-8-sig") as f:
+        techs = json.load(f)
+    return {effect: t["dataName"] for t in techs for effect in t.get("effects", []) if effect.startswith("Effect_Explore")}
+
+
 def main(templates, out_dir):
     with open(os.path.join(templates, "TISpaceBodyTemplate.json"), encoding="utf-8-sig") as f:
         bodies = json.load(f)
@@ -162,6 +177,7 @@ def main(templates, out_dir):
         # By name, those JPL has no name for by their provisional designations without the underscores.
         satellites = {(m["planet"], m["name"].replace("_", "")): m for m in json.load(f)["moons"]}
     composition = compositions(templates)
+    opened_by = explore_techs(templates)
     out = []
     for body in bodies:
         kind = TYPES.get(body["objectType"])
@@ -177,6 +193,16 @@ def main(templates, out_dir):
         }
         if body["dataName"] in composition:
             entry["composition"] = composition[body["dataName"]]
+        if body.get("habSites") or body.get("orbits"):
+            entry["maxHabTier"] = min(body["maxHabSize"], 3)
+            if body.get("effectToExplore"):
+                entry["exploreTech"] = opened_by[body["effectToExplore"]]
+            if body.get("density_gcm3"):
+                entry["densityGcm3"] = body["density_gcm3"]
+            if body.get("irradiatedMultiplier", 1) != 1:
+                entry["irradiation"] = body["irradiatedMultiplier"]
+            if body.get("atmosphere", "None") != "None":
+                entry["atmosphere"] = body["atmosphere"].lower()
         if kind != "star":
             orbit = elements(body)
             if orbit is None:

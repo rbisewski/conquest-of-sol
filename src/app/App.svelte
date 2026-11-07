@@ -11,6 +11,7 @@
   import ClimatePanel from "./components/ClimatePanel.svelte";
   import ConfirmAssignments from "./components/ConfirmAssignments.svelte";
   import CouncilorPanel from "./components/CouncilorPanel.svelte";
+  import HabPanel from "./components/HabPanel.svelte";
   import CouncilorSummary from "./components/CouncilorSummary.svelte";
   import EventFeed from "./components/EventFeed.svelte";
   import FactionAssets from "./components/FactionAssets.svelte";
@@ -52,7 +53,7 @@
     {/if}
     <div class="right">
       <FactionAssets />
-      {#if game.selectedCouncilorId}<CouncilorPanel />{:else if game.selectedArmyId}<ArmyPanel />{/if}
+      {#if game.selectedCouncilorId}<CouncilorPanel />{:else if game.selectedArmyId}<ArmyPanel />{:else if game.selectedHabId}<HabPanel />{/if}
     </div>
     <div class="missions"><MissionBar /></div>
     <div class="events"><EventFeed /></div>

@@ -40,6 +40,8 @@ class GameClient {
   rivalCouncilorId = $state<string | null>(null);
   /** The army whose panel is open (lower right, in place of the councilor's), if any. */
   selectedArmyId = $state<string | null>(null);
+  /** The hab whose panel is open (lower right, in place of the councilor's), if any. */
+  selectedHabId = $state<string | null>(null);
   /**
    * While set, the selected councilor's mission is aimed on the globe: hovering lights up a valid
    * target (a single region, or a whole nation) and a click assigns it. Targets are keyed by
@@ -149,6 +151,7 @@ class GameClient {
     this.selectedNationId = null;
     this.selectedCouncilorId = null;
     this.selectedArmyId = null;
+    this.selectedHabId = null;
     this.summaryCouncilorId = null;
     this.rivalCouncilorId = null;
     this.view = "earth";

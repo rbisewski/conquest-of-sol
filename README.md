@@ -9,7 +9,7 @@ Three.js, TypeScript, Svelte 5 and Vite, packaged with Tauri (SPEC 2.3).
 | Path | What it is |
 |---|---|
 | `src/sim/` | The deterministic simulation. Pure TypeScript with no DOM or Node dependencies (checked by `tsconfig.sim.json`). |
-| `src/content/` | Base game content as JSON: factions, nations, priorities, professions, rules. |
+| `src/content/` | Base game content as JSON: factions, nations, priorities, professions, rules, research, and the Solar System with its hab sites, orbits and hab modules. |
 | `src/worker/` | Runs the simulation in a Web Worker and streams snapshots to the UI. |
 | `src/app/` | Svelte UI and the Three.js globe. |
 | `tools/selfplay.ts` | Headless all-AI runs for balance testing. |
@@ -28,12 +28,14 @@ pnpm typecheck
 pnpm selfplay --seed 42 --years 10 --difficulty normal
 pnpm tauri dev           # desktop app (needs the Tauri system packages, below)
 
-# Regenerate nations, regions and map textures (needs Python with numpy and Pillow).
+# Regenerate nations, regions, map textures, research and the Solar System (needs Python with numpy and Pillow).
 python3 tools/data/fetch.py
 python3 -I tools/data/build_breakaways.py <game StreamingAssets>
 python3 tools/data/build_world.py
 python3 -I tools/data/build_claims.py <game StreamingAssets> src/content
+python3 -I tools/data/build_solar.py <game StreamingAssets>/Templates src/content
 python3 -I tools/data/build_research.py <game StreamingAssets> src/content
+python3 -I tools/data/build_space.py <game StreamingAssets> src/content
 ```
 
 On Arch Linux, Tauri needs:

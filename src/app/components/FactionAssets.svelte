@@ -1,14 +1,16 @@
 <script lang="ts">
-  // Faction Assets (right side): our councilors, then the armies we command (through the CPs
-  // they answer to). Spacecraft and Habitats have tabs ready for when space exists.
+  // Faction Assets (right side): our councilors, the armies we command (through the CPs they
+  // answer to), then our habs. Spacecraft have a tab ready for when ships exist.
   // Tabs filter the list; the search box filters by name. A councilor who knows another faction
   // has intel on them shows that faction's logo on their portrait in the councilor panel.
-  // With a free council seat, the recruit button opens the Recruiting screen.
+  // With a free council seat, the recruit button opens the Recruiting screen. Picking a hab opens
+  // its panel and its body in the Solar System view.
   import { baseContent } from "../../content/index";
-  import { armyActivity, armyCommander, armyName, councilSize, MISSION_NAMES, regionDef } from "../../sim/index";
+  import { armyActivity, armyCommander, armyName, councilSize, factionDef, habBodyId, habTier, isBuilt, MISSION_NAMES, regionDef } from "../../sim/index";
   import { game } from "../game.svelte";
   import Icon from "../ui/Icon.svelte";
   import { missionIcons } from "../ui/icons";
+  import HabSprite from "../ui/HabSprite.svelte";
   import Portrait from "../ui/Portrait.svelte";
   import Flag from "../ui/Flag.svelte";
   import { shownLocation } from "../missionTargets";
@@ -30,6 +32,19 @@
       ? world.armies.filter((a) => armyCommander(world, a) === faction.id).map((a) => ({ army: a, name: armyName(world, baseContent, a) })).filter((a) => matches(a.name))
       : [],
   );
+  const habs = $derived(faction ? world.habs.filter((h) => h.factionId === faction.id && matches(h.name)) : []);
+
+  function selectHab(id: string) {
+    game.selectedHabId = game.selectedHabId === id ? null : id;
+    game.selectedCouncilorId = null;
+    game.selectedArmyId = null;
+    game.armyMoveMode = false;
+    const hab = world.habs.find((h) => h.id === id);
+    if (game.selectedHabId && hab) {
+      game.view = "solar";
+      game.selectedBodyId = habBodyId(baseContent, hab);
+    }
+  }
 
   function selectArmy(id: string) {
     game.selectedArmyId = game.selectedArmyId === id ? null : id;
@@ -39,6 +54,7 @@
       game.focus = { lat: region.lat, lon: region.lon };
     }
     game.selectedCouncilorId = null;
+    game.selectedHabId = null;
     game.armyMoveMode = false;
   }
 </script>
@@ -82,7 +98,7 @@
             <button
               class="row"
               class:selected={game.selectedCouncilorId === c.id}
-              onclick={() => ((game.selectedCouncilorId = game.selectedCouncilorId === c.id ? null : c.id), (game.selectedArmyId = null), (game.armyMoveMode = false))}
+              onclick={() => ((game.selectedCouncilorId = game.selectedCouncilorId === c.id ? null : c.id), (game.selectedArmyId = null), (game.selectedHabId = null), (game.armyMoveMode = false))}
             >
               <Portrait councilor={c} factionId={faction.id} size={28} />
               <span class="name">{c.name}</span>
@@ -121,11 +137,25 @@
           </li>
         {/each}
       {/if}
+      {#if filter === "all" || filter === "habitats"}
+        {#each habs as h (h.id)}
+          {@const core = h.modules[0]!}
+          <li>
+            <button class="row" class:selected={game.selectedHabId === h.id} onclick={() => selectHab(h.id)}>
+              <span class="hab-look"><HabSprite kind={h.siteId ? "base" : "station"} tier={habTier(baseContent, h)} color={factionDef(baseContent, h.factionId).color} scale={1} /></span>
+              <span class="name">{h.name}</span>
+              <span class="status" title={isBuilt(world, core) ? `Tier ${habTier(baseContent, h)}` : "Its core is on its way or being built"}>
+                {#if isBuilt(world, core)}{["I", "II", "III"][habTier(baseContent, h) - 1]}{:else}<Icon name="pending" size={13} color="#5d6f80" />{/if}
+              </span>
+            </button>
+          </li>
+        {/each}
+      {/if}
       {#if filter === "spacecraft"}
         <li class="empty muted">No spacecraft yet.</li>
-      {:else if filter === "habitats"}
-        <li class="empty muted">No habitats yet.</li>
-      {:else if councilors.length + armies.length === 0}
+      {:else if filter === "habitats" && habs.length === 0}
+        <li class="empty muted">{query.trim() ? "Nothing matches." : "No habitats yet."}</li>
+      {:else if (filter === "all" ? councilors.length + armies.length + habs.length : filter === "councilors" ? councilors.length : filter === "armies" ? armies.length : 1) === 0}
         <li class="empty muted">Nothing matches.</li>
       {/if}
     </ul>
@@ -224,6 +254,10 @@
     display: inline-flex;
     width: 26px;
     justify-content: center;
+  }
+  .hab-look {
+    display: inline-flex;
+    flex: none;
   }
   .shield {
     height: 24px;

@@ -2,6 +2,8 @@
 
 import { newClimate } from "./climate";
 import type { Content } from "./content";
+import { addStartingHabs } from "./habs";
+import { rollSiteYields } from "./space";
 import { STATE_VERSION, type GameState } from "./state";
 
 interface SaveFile {
@@ -60,6 +62,18 @@ const migrations: Record<number, (state: Record<string, unknown>, content: Conte
       resources: { ...(f.resources as object), water: 0, volatiles: 0, metals: 0, nobleMetals: 0, fissiles: 0, antimatter: 0, exotics: 0 },
     })),
   }),
+  // Hab sites and probes: yields rolled as a new game of the same seed would, nothing prospected yet.
+  29: (state, content) => ({
+    ...state,
+    siteYields: rollSiteYields(content, state.seed as number, state.difficulty as GameState["difficulty"]),
+    factions: (state.factions as Record<string, unknown>[]).map((f) => ({ ...f, prospected: [], probes: [] })),
+  }),
+  // Habs: none yet but the starting stations a new game has (the ISS and Tiangong).
+  30: (state, content) => {
+    const next = { ...state, habs: [] } as unknown as GameState;
+    addStartingHabs(next, content);
+    return next as unknown as Record<string, unknown>;
+  },
 };
 
 export function serialize(state: GameState): string {

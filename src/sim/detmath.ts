@@ -1,6 +1,6 @@
-// Deterministic ln, exp and pow (see the determinism rule in docs/formulas.md).
+// Deterministic ln, exp, pow, sin, cos and atan2 (see the determinism rule in docs/formulas.md).
 // Math.pow/exp/log may differ in the last bits between JavaScript engines; these use only
-// + − × ÷ and Math.round, which IEEE 754 makes identical everywhere.
+// + − × ÷, Math.round, Math.floor and Math.sqrt, which IEEE 754 makes identical everywhere.
 
 const LN2 = 0.6931471805599453;
 
@@ -79,4 +79,32 @@ export function detSin(x: number): number {
 /** cos(x) = sin(x + π/2). */
 export function detCos(x: number): number {
   return detSin(x + HALF_PI);
+}
+
+/** atan(x), halving the angle until the series converges at once. */
+export function detAtan(x: number): number {
+  if (x < 0) return -detAtan(-x);
+  if (x > 1) return HALF_PI - detAtan(1 / x);
+  // tan(θ/2) = tan θ / (1 + √(1 + tan²θ)), down to |t| ≤ 0.1, where 20 terms are exact.
+  let t = x;
+  let scale = 1;
+  while (t > 0.1) {
+    t = t / (1 + Math.sqrt(1 + t * t));
+    scale *= 2;
+  }
+  const t2 = t * t;
+  let term = t;
+  let sum = 0;
+  for (let n = 1; n < 40; n += 2) {
+    sum += term / n;
+    term *= -t2;
+  }
+  return scale * sum;
+}
+
+/** The angle of (x, y) from the x axis, in (−π, π]. */
+export function detAtan2(y: number, x: number): number {
+  if (x > 0) return detAtan(y / x);
+  if (x < 0) return y >= 0 ? detAtan(y / x) + PI : detAtan(y / x) - PI;
+  return y > 0 ? HALF_PI : y < 0 ? -HALF_PI : 0;
 }
