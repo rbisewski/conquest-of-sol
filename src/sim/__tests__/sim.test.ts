@@ -12,6 +12,7 @@ import {
   MINUTES_PER_DAY,
   serialize,
   Simulation,
+  SPACE_RESOURCES,
   STATE_VERSION,
   UNDECIDED,
   validateContent,
@@ -206,6 +207,16 @@ describe("saves", () => {
     const sim = Simulation.create(content, { seed: 1, difficulty: "normal", playerFactions: [] });
     const text = serialize(sim.state).replace(`"version":${STATE_VERSION},`, '"version":999,');
     expect(() => deserialize(text, content)).toThrow(/newer/);
+  });
+
+  it("gives version 28 saves no space resources, keeping the rest", () => {
+    const sim = Simulation.create(content, { seed: 1, difficulty: "normal", playerFactions: [] });
+    const old = JSON.parse(serialize(sim.state));
+    old.version = 28;
+    for (const f of old.state.factions) for (const r of SPACE_RESOURCES) delete f.resources[r];
+    const resources = deserialize(JSON.stringify(old), content).factions[0]!.resources;
+    expect(resources).toEqual(sim.state.factions[0]!.resources);
+    for (const r of SPACE_RESOURCES) expect(resources[r]).toBe(0);
   });
 });
 

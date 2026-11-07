@@ -1,7 +1,7 @@
 // Content definitions (SPEC 2.18): everything the simulation reads from JSON.
 // The simulation never imports JSON itself; callers pass a validated Content object in.
 
-import type { MissionType } from "./state";
+import type { MissionType, Resources } from "./state";
 
 export const ATTRIBUTES = [
   "persuasion",
@@ -149,7 +149,7 @@ export interface Rules {
   councilPhaseDays: number[];
   recruitPoolSize: number;
   attribute: { min: number; max: number };
-  startingResources: { money: number; influence: number; ops: number; boost: number; missionControl: number };
+  startingResources: Resources;
   controlPoints: {
     gdpExponent: number;
     divisor: number;

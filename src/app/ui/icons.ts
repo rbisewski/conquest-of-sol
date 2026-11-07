@@ -19,6 +19,7 @@ import Coins from "@lucide/svelte/icons/coins";
 import Crosshair from "@lucide/svelte/icons/crosshair";
 import Crown from "@lucide/svelte/icons/crown";
 import Ellipsis from "@lucide/svelte/icons/ellipsis";
+import Droplets from "@lucide/svelte/icons/droplets";
 import Eye from "@lucide/svelte/icons/eye";
 import EyeOff from "@lucide/svelte/icons/eye-off";
 import FastForward from "@lucide/svelte/icons/fast-forward";
@@ -75,8 +76,14 @@ import UserSearch from "@lucide/svelte/icons/user-search";
 import Users from "@lucide/svelte/icons/users";
 import X from "@lucide/svelte/icons/x";
 import Zap from "@lucide/svelte/icons/zap";
+import AntimatterIcon from "./AntimatterIcon.svelte";
+import ExoticsIcon from "./ExoticsIcon.svelte";
+import FissilesIcon from "./FissilesIcon.svelte";
 import LaunchComplexIcon from "./LaunchComplexIcon.svelte";
+import MetalsIcon from "./MetalsIcon.svelte";
+import NobleMetalsIcon from "./NobleMetalsIcon.svelte";
 import TankIcon from "./TankIcon.svelte";
+import VolatilesIcon from "./VolatilesIcon.svelte";
 import type { Component } from "svelte";
 import type { Attribute, LogKind, MissionType, ResearchCategory } from "../../sim/index";
 
@@ -87,6 +94,13 @@ export const icons = {
   boost: Rocket,
   missionControl: SatelliteDish,
   research: FlaskConical,
+  water: Droplets,
+  volatiles: VolatilesIcon,
+  metals: MetalsIcon,
+  nobleMetals: NobleMetalsIcon,
+  fissiles: FissilesIcon,
+  antimatter: AntimatterIcon,
+  exotics: ExoticsIcon,
   investment: Coins,
   corruption: HandCoins,
   democracy: Landmark,
@@ -153,6 +167,13 @@ export const resourceColor: Partial<Record<IconName, string>> = {
   boost: "#f2f5f8",
   missionControl: "#ffb347",
   research: "#8fe0e6",
+  water: "#3fa3e0",
+  volatiles: "#e2552e",
+  metals: "#a4eef2",
+  nobleMetals: "#f5ea8c",
+  fissiles: "#58c046",
+  antimatter: "#f2f5f8",
+  exotics: "#b585ec",
 };
 
 /** One glyph per field of research, used on its techs and projects. */

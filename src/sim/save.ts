@@ -52,6 +52,14 @@ const migrations: Record<number, (state: Record<string, unknown>, content: Conte
       councilors: (f.councilors as Record<string, unknown>[]).map((c) => ({ ...c, repeatMission: null })),
     })),
   }),
+  // Space resources: every faction starts with none.
+  28: (state) => ({
+    ...state,
+    factions: (state.factions as Record<string, unknown>[]).map((f) => ({
+      ...f,
+      resources: { ...(f.resources as object), water: 0, volatiles: 0, metals: 0, nobleMetals: 0, fissiles: 0, antimatter: 0, exotics: 0 },
+    })),
+  }),
 };
 
 export function serialize(state: GameState): string {

@@ -2,7 +2,7 @@ import type { Attribute, ClaimDef, DifficultyId, Gender } from "./content";
 import type { RngState } from "./rng";
 
 /** Bump when the shape of GameState changes, and add a migration in save.ts. */
-export const STATE_VERSION = 28;
+export const STATE_VERSION = 29;
 
 export const UNDECIDED = "undecided";
 
@@ -217,7 +217,11 @@ export interface Councilor {
   detainedPhases: number;
 }
 
-export interface Resources {
+/** Resources mined in space (SPEC 2.8), after Terra Invicta's. */
+export const SPACE_RESOURCES = ["water", "volatiles", "metals", "nobleMetals", "fissiles", "antimatter", "exotics"] as const;
+export type SpaceResource = (typeof SPACE_RESOURCES)[number];
+
+export interface Resources extends Record<SpaceResource, number> {
   money: number;
   influence: number;
   ops: number;

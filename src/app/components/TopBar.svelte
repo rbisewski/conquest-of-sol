@@ -1,6 +1,8 @@
 <script lang="ts">
   // Top bar after Terra Invicta's: menu and faction emblem, then the faction's resources as
-  // icon + amount + daily rate (what today's tick pays), and the date, time and speed controls on the right.
+  // icon + amount + daily rate (what today's tick pays; the unit is in the tooltip, as Terra
+  // Invicta leaves it out to fit), the space resources it holds, and the date, time and speed
+  // controls on the right.
   // Money, influence and ops show what is left after this council phase's missions.
   import { baseContent } from "../../content/index";
   import {
@@ -16,7 +18,9 @@
     monthlyResearch,
     mustChooseResearch,
     perDay,
+    SPACE_RESOURCES,
     temperatureAnomaly,
+    type SpaceResource,
   } from "../../sim/index";
   import { SPEED_LABELS, type Speed } from "../../worker/protocol";
   import { game } from "../game.svelte";
@@ -27,6 +31,15 @@
   import Num from "./Num.svelte";
 
   const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const SPACE_NAMES: Record<SpaceResource, string> = {
+    water: "Water",
+    volatiles: "Volatiles",
+    metals: "Base Metals",
+    nobleMetals: "Noble Metals",
+    fissiles: "Fissiles",
+    antimatter: "Antimatter",
+    exotics: "Exotics",
+  };
 
   const world = $derived(game.state!);
   const faction = $derived(world.factions.find((f) => f.id === game.playerFactionId) ?? null);
@@ -49,7 +62,7 @@
   /** Resources committed to missions not yet paid for (paid when the council phase closes). */
   const committed = $derived(faction && world.phase === "council" ? committedResources(baseContent, faction) : { money: 0, influence: 0, ops: 0 });
   const mustChoose = $derived(faction ? mustChooseResearch(world, baseContent, faction.id) : false);
-  const tip = (name: string, amount: number) => (amount > 0 ? `${name} (${amount} committed to missions)` : name);
+  const tip = (name: string, amount: number) => `${name}, with its change per day${amount > 0 ? ` (${amount} committed to missions)` : ""}`;
   const date = $derived.by(() => {
     const d = dateOfDay(baseContent.rules.startYear, world.dayIndex);
     return `${String(d.day).padStart(2, "0")} ${MONTHS[d.month - 1]} ${d.year}`;
@@ -128,19 +141,19 @@
     <span class="cell-item" title={def.name}><Emblem faction={faction.id} size={26} /></span>
     <span class="cell-item" title={tip("Money", committed.money)}>
       <Icon name="money" size={18} />
-      <span>{compact(faction.resources.money - committed.money)} <span class="rate"><Num breakdown={income.money} signed digits={1} suffix="/day" /></span></span>
+      <span>{compact(faction.resources.money - committed.money)} <span class="rate"><Num breakdown={income.money} signed digits={1} /></span></span>
     </span>
     <span class="cell-item" title={tip("Influence", committed.influence)}>
       <Icon name="influence" size={18} />
-      <span>{compact(faction.resources.influence - committed.influence)} <span class="rate"><Num breakdown={income.influence} signed digits={2} suffix="/day" /></span></span>
+      <span>{compact(faction.resources.influence - committed.influence)} <span class="rate"><Num breakdown={income.influence} signed digits={2} /></span></span>
     </span>
     <span class="cell-item" title={tip("Operations", committed.ops)}>
       <Icon name="ops" size={18} />
-      <span>{compact(faction.resources.ops - committed.ops)} <span class="rate"><Num breakdown={income.ops} signed digits={2} suffix="/day" /></span></span>
+      <span>{compact(faction.resources.ops - committed.ops)} <span class="rate"><Num breakdown={income.ops} signed digits={2} /></span></span>
     </span>
-    <span class="cell-item" title="Boost">
+    <span class="cell-item" title={tip("Boost", 0)}>
       <Icon name="boost" size={18} />
-      <span>{compact(faction.resources.boost)} <span class="rate"><Num breakdown={income.boost} signed digits={3} suffix="/day" /></span></span>
+      <span>{compact(faction.resources.boost)} <span class="rate"><Num breakdown={income.boost} signed digits={3} /></span></span>
     </span>
     <span class="cell-item" title="Mission Control: used / available">
       <Icon name="missionControl" size={18} />
@@ -154,6 +167,13 @@
       <span class="cp-dot" style:background={def.color}></span>
       <span>{compact(upkeep, 0)}/<Num breakdown={cap} digits={0} /></span>
     </span>
+    {#each SPACE_RESOURCES as resource (resource)}
+      <!-- Antimatter comes in fractions of a ton. -->
+      <span class="cell-item" title={SPACE_NAMES[resource]}>
+        <Icon name={resource} size={18} />
+        <span>{compact(faction.resources[resource], resource === "antimatter" ? 3 : 1)}</span>
+      </span>
+    {/each}
   {/if}
 
   <span class="spacer"></span>
@@ -206,8 +226,8 @@
   .cell-item {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 0 10px;
+    gap: 3px;
+    padding: 0 6px;
     border-right: 1px solid var(--border-soft);
   }
   button.research {

@@ -62,7 +62,7 @@ Seven factions, each with its own ideology, objectives and victory condition:
 
 ### 1.5 Resources & economy
 - **Money**, **Influence** (spent on CPs and missions), **Operations/Ops** (spent on mission boosts and covert work), **Boost** (the ability to lift mass to orbit), **Mission Control (MC)** (the cap on space assets), **Research** (shared and private).
-- **Space resources**: Water, Volatiles, Metals, Noble Metals, Fissiles, and later **Antimatter** and **Exotics**, the last mostly from aliens.
+- **Space resources**: Water, Volatiles, Base Metals, Noble Metals, Fissiles, and later **Antimatter** and **Exotics**, the last mostly from aliens.
 - Resources mined in space can be sold back on Earth, and space-built things avoid Boost costs.
 
 ### 1.6 Research
@@ -231,7 +231,7 @@ Seven ideological factions mirror the strategic spread of the reference without 
 | Boost | Space programs, launch sites | Lift mass from Earth |
 | Mission Control | MC priority, hab modules | Cap on space assets |
 | Research | National Knowledge, labs | Global and faction research |
-| Water / Volatiles / Metals / Noble Metals / Fissiles | Space mining | Construction, propellant, power |
+| Water / Volatiles / Base Metals / Noble Metals / Fissiles | Space mining | Construction, propellant, power |
 | Antimatter | Late-game facilities | Drives, weapons |
 | Exotics | Alien wrecks and sites | Alien-derived tech |
 
@@ -320,7 +320,7 @@ Marines resolve as a short vignette with sprites fighting in hab corridors. The 
 ### 2.13 UI/UX
 - **UI skin after Terra Invicta's strategy layer**: translucent slate panels with thin steel borders, light uppercase section headers, a geometric sans (Exo 2, bundled), and small line glyphs (Lucide) beside numbers. Pixel art stays in the world (globe, sprites, portraits). Supports UI scale from 75% to 200%.
 - **Strategy layout**, as in Terra Invicta:
-  - A top bar with the faction's resources as icon, amount and monthly rate (money, influence, ops, boost, Mission Control, research a month (click to open the Research panel), control point capacity), then the date, time and speed controls.
+  - A top bar with the faction's resources as icon, amount and daily rate, the unit left to the tooltip as in Terra Invicta (money, influence, ops, boost, Mission Control, research a day (click to open the Research panel), control point capacity), then the space resources held (Water, Volatiles, Base Metals, Noble Metals, Fissiles, Antimatter, Exotics; built 2026-11-07, each starting at 0 until space mining exists), then the date, time and speed controls.
   - The nation panel opens at the upper left only while a nation is selected. It has the title, control point tiles, Overview, Military, Development and People sections, and Priorities, Regions, Opinion and Relations tabs. The Military title bar has a space program icon at the right, lit when the nation has one. The Regions tab is a borderless table without headers: name (with any occupation), a capital marker, a service structure icon for a launch complex (its name on hover), armies present and population. Relations lists wars, allies and rivals, and offers diplomacy from the nations whose executive we hold.
   - Faction Assets runs down the right side: councilors (each row with the flag of the country they are in, or heading to once a mission is assigned; the councilor panel and Councilor Summary show that location too, though the councilor only arrives when the mission resolves), then the armies we command. (Held nations show on the globe and in the nation panel.) Picking an army turns the globe to it and opens the army panel in place of the councilor panel: commander, health, Miltech, headquarters and what it is doing, with Deploy (choose a destination from the list, or click a green region on the globe) and Airlift Home.
   - Armies stand on the globe as small pixel tanks in their commander's colour (grey when no faction commands them), with a health bar and a blue stripe for a navy. Moving armies slide along a dotted route. Occupied regions are hatched in the occupier's colour.
