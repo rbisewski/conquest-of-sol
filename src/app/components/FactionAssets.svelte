@@ -35,15 +35,17 @@
   const habs = $derived(faction ? world.habs.filter((h) => h.factionId === faction.id && matches(h.name)) : []);
 
   function selectHab(id: string) {
-    game.selectedHabId = game.selectedHabId === id ? null : id;
+    const open = game.selectedHabId !== id;
     game.selectedCouncilorId = null;
     game.selectedArmyId = null;
     game.armyMoveMode = false;
     const hab = world.habs.find((h) => h.id === id);
-    if (game.selectedHabId && hab) {
+    if (open && hab) {
+      // The view turns to its body; the hab's panel takes the body's place.
       game.view = "solar";
       game.selectedBodyId = habBodyId(baseContent, hab);
     }
+    game.selectedHabId = open ? id : null;
   }
 
   function selectArmy(id: string) {
@@ -54,7 +56,6 @@
       game.focus = { lat: region.lat, lon: region.lon };
     }
     game.selectedCouncilorId = null;
-    game.selectedHabId = null;
     game.armyMoveMode = false;
   }
 </script>
@@ -98,7 +99,7 @@
             <button
               class="row"
               class:selected={game.selectedCouncilorId === c.id}
-              onclick={() => ((game.selectedCouncilorId = game.selectedCouncilorId === c.id ? null : c.id), (game.selectedArmyId = null), (game.selectedHabId = null), (game.armyMoveMode = false))}
+              onclick={() => ((game.selectedCouncilorId = game.selectedCouncilorId === c.id ? null : c.id), (game.selectedArmyId = null), (game.armyMoveMode = false))}
             >
               <Portrait councilor={c} factionId={faction.id} size={28} />
               <span class="name">{c.name}</span>

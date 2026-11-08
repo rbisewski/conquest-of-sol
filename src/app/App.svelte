@@ -1,7 +1,8 @@
 <script lang="ts">
   // Strategy layout after Terra Invicta (SPEC 2.13): top bar; nation panel upper left while a
   // nation is selected (or the Rival Councilor panel, after clicking another faction's councilor,
-  // or the Celestial Body panel in the Solar System view); Faction Assets on the right, shrinking to make room for the councilor
+  // the Hab panel while a hab is selected, or the Celestial Body panel in the Solar System view;
+  // a hab's Hab Details screen opens over the map); Faction Assets on the right, shrinking to make room for the councilor
   // panel (or the army panel) below it while a councilor (or army) is selected; Confirm
   // Assignments at the top centre and
   // the mission hexes at the bottom centre during a council phase; event alerts down the left.
@@ -11,7 +12,9 @@
   import ClimatePanel from "./components/ClimatePanel.svelte";
   import ConfirmAssignments from "./components/ConfirmAssignments.svelte";
   import CouncilorPanel from "./components/CouncilorPanel.svelte";
+  import HabDetails from "./components/HabDetails.svelte";
   import HabPanel from "./components/HabPanel.svelte";
+  import OrbitPanel from "./components/OrbitPanel.svelte";
   import CouncilorSummary from "./components/CouncilorSummary.svelte";
   import EventFeed from "./components/EventFeed.svelte";
   import FactionAssets from "./components/FactionAssets.svelte";
@@ -46,6 +49,10 @@
     <div class="center"><ConfirmAssignments /></div>
     {#if game.rivalCouncilorId}
       <div class="nation"><RivalCouncilorPanel /></div>
+    {:else if game.selectedHabId}
+      <div class="nation"><HabPanel /></div>
+    {:else if game.selectedOrbitId}
+      <div class="nation"><OrbitPanel /></div>
     {:else if game.view === "solar" && game.selectedBodyId}
       <div class="nation"><CelestialBodyPanel /></div>
     {:else if game.selectedNationId}
@@ -53,7 +60,7 @@
     {/if}
     <div class="right">
       <FactionAssets />
-      {#if game.selectedCouncilorId}<CouncilorPanel />{:else if game.selectedArmyId}<ArmyPanel />{:else if game.selectedHabId}<HabPanel />{/if}
+      {#if game.selectedCouncilorId}<CouncilorPanel />{:else if game.selectedArmyId}<ArmyPanel />{/if}
     </div>
     <div class="missions"><MissionBar /></div>
     <div class="events"><EventFeed /></div>
@@ -62,7 +69,7 @@
     <PolicyDialog />
     <ClimateEventDialog />
     {#if game.settingsOpen}<SettingsPanel />{/if}
-    {#if game.summaryCouncilorId}<CouncilorSummary />{:else if game.researchOpen || mustChoose}<ResearchPanel />{:else if game.recruitingOpen}<RecruitScreen />{/if}
+    {#if game.summaryCouncilorId}<CouncilorSummary />{:else if game.researchOpen || mustChoose}<ResearchPanel />{:else if game.recruitingOpen}<RecruitScreen />{:else if game.habDetailsOpen && game.selectedHabId}<HabDetails />{/if}
   </div>
 {:else}
   <div class="menus">
@@ -113,6 +120,11 @@
     left: 6px;
     width: 470px;
     bottom: 222px;
+    /* Only the panel takes the pointer: the view below it stays clickable. */
+    pointer-events: none;
+  }
+  .nation > :global(*) {
+    pointer-events: auto;
   }
   .right {
     top: 42px;

@@ -228,6 +228,8 @@ interface Pickable {
   y: number;
   half: [number, number];
   habId: string | null;
+  /** A Lagrange point's station orbit. */
+  orbitId?: string;
   text: string;
 }
 
@@ -252,6 +254,7 @@ export interface MarkerFrame {
 /** The pickable under a screen point. */
 export interface MarkerPick {
   habId: string | null;
+  orbitId?: string;
   text: string;
 }
 
@@ -639,7 +642,7 @@ export class HabMarkers {
         lShown.set(l.orbit.id, at);
         this.show(attr, k, at, origin, l.occupied ? 1 : LPOINT_FAINT);
         const p = project(at);
-        if (p) this.picks.lpoints.push({ x: p[0], y: p[1], half, habId: null, text: l.text });
+        if (p) this.picks.lpoints.push({ x: p[0], y: p[1], half, habId: null, orbitId: l.orbit.id, text: l.text });
       });
       this.finish(this.lPoints, attr, origin);
     }
@@ -780,7 +783,7 @@ export class HabMarkers {
         const d = Math.hypot(p.x - x, p.y - y);
         if (d < bestDistance) [best, bestDistance] = [p, d];
       }
-      if (best) return { habId: best.habId, text: best.text };
+      if (best) return { habId: best.habId, orbitId: best.orbitId, text: best.text };
     }
     return null;
   }

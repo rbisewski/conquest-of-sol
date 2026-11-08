@@ -78,6 +78,10 @@ import X from "@lucide/svelte/icons/x";
 import Zap from "@lucide/svelte/icons/zap";
 import ZapOff from "@lucide/svelte/icons/zap-off";
 import TriangleAlert from "@lucide/svelte/icons/triangle-alert";
+import Maximize from "@lucide/svelte/icons/maximize";
+import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+import ChevronRight from "@lucide/svelte/icons/chevron-right";
+import ArrowUpDown from "@lucide/svelte/icons/arrow-up-down";
 import AntimatterIcon from "./AntimatterIcon.svelte";
 import CrewIcon from "./CrewIcon.svelte";
 import ExoticsIcon from "./ExoticsIcon.svelte";
@@ -111,6 +115,11 @@ export const icons = {
   crew: CrewIcon,
   powerOff: ZapOff,
   warning: TriangleAlert,
+  expand: Maximize,
+  previous: ChevronLeft,
+  next: ChevronRight,
+  interface: ArrowUpDown,
+  radiation: Radiation,
   investment: Coins,
   corruption: HandCoins,
   democracy: Landmark,

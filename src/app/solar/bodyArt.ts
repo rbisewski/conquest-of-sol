@@ -1247,6 +1247,11 @@ export function hasStyle(id: string): boolean {
   return id in STYLES;
 }
 
+/** A body's ground colour: its style's base, or its tint as a small body. */
+export function bodyColor(id: string, type: string): string {
+  return STYLES[id]?.base ?? (type === "moon" ? MOON_STYLE.base : smallBodyTint(id, type));
+}
+
 const rgb = (hex: string): RGB => [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
 
 // 3D value noise, fixed layout (no simulation RNG).

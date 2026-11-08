@@ -105,8 +105,6 @@
   }
   function openHab(id: string) {
     game.selectedHabId = id;
-    game.selectedCouncilorId = null;
-    game.selectedArmyId = null;
   }
   /** A breakdown's terms, a line each, for a tooltip. */
   const explain = (b: Breakdown, digits: number) => b.terms.map((t) => `${t.label}: ${t.op === "mul" ? "×" : ""}${t.value.toFixed(digits)}`).join("\n");
@@ -272,7 +270,7 @@
           <span class="value">{reach(body.orbit.a)}</span><span class="label">Distance</span>
         </div>
         <div class="figure cell" title="Orbital period">
-          <span class="value">{period(figures.periodDays)}</span><span class="label">Year</span>
+          <span class="value">{period(figures.periodDays)}</span><span class="label">Revolution</span>
         </div>
         <div class="figure cell" title="Escape velocity from the surface">
           <span class="value">{escape === null ? "?" : `${number(escape, escape < 1 ? 2 : 1)} kps`}</span><span class="label">Escape</span>
@@ -392,18 +390,25 @@
     {#if tab === "orbits" && orbits.length > 0 && world && faction}
       <table class="list">
         <thead>
-          <tr><th>Orbit</th><th>Altitude</th><th title="Δv from low Earth orbit, km/s">Δv</th><th title="Boost to send a Platform Core from the Earth"><Icon name="boost" size={13} /></th><th title="Stations in it / how many it can hold">Stations</th><th></th></tr>
+          <tr>
+            <th>Orbit</th>
+            <th class="mark" title="Interface orbit: where fleets meet the surface"><Icon name="interface" size={13} color="var(--accent)" /></th>
+            <th class="mark" title="Radiation: modules built here weigh this much more"><Icon name="radiation" size={13} color="var(--bad)" /></th>
+            <th>Altitude</th>
+            <th title="Δv from low Earth orbit, km/s">Δv</th>
+            <th title="Boost to send a Platform Core from the Earth"><Icon name="boost" size={13} /></th>
+            <th title="Stations in it / how many it can hold">Stations</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
           {#each orbits as o (o.id)}
             {@const open = orbitExplored(world, o)}
             {@const { core, sent, check } = journey({ kind: "orbit", id: o.id })}
             <tr class:locked={!open} class:ready={check.ok} title={`${core.name} arrives ${onDay(sent.arrivesDay)}. ${check.ok ? "We can found a platform here." : `To found a platform: ${check.reason}.`}`}>
-              <td>
-                {o.name}
-                {#if o.interface}<span class="tag" title="Interface orbit: where fleets meet the surface">Interface</span>{/if}
-                {#if o.irradiation}<span class="tag bad" title="Radiation: modules built here weigh this much more">Radiation ×{o.irradiation}</span>{/if}
-              </td>
+              <td><button class="name-link" title="Open the orbit" onclick={() => (game.selectedOrbitId = o.id)}>{o.name}</button></td>
+              <td class="mark">{#if o.interface}<span title="Interface orbit: where fleets meet the surface"><Icon name="interface" size={13} color="var(--accent)" /></span>{/if}</td>
+              <td class="mark bad">{#if o.irradiation}<span title="Radiation: modules built here weigh {o.irradiation} times as much">×{o.irradiation}</span>{/if}</td>
               <td>{altitude(o)}</td>
               <td title={explain(sent.deltaV, 2)}>{sent.deltaV.value.toFixed(1)}</td>
               <td title={sent.boost ? explain(sent.boost, 2) : ""}>{sent.boost ? sent.boost.value.toFixed(1) : "–"}</td>
@@ -425,9 +430,11 @@
             <tr>
               <td>
                 <Emblem faction={h.factionId} size={14} />
-                {#if h.factionId === faction?.id}<button class="name-link" onclick={() => openHab(h.id)}>{h.name}</button>{:else}{h.name}{/if}
+                <button class="name-link" title="Open {h.name}" onclick={() => openHab(h.id)}>{h.name}</button>
               </td>
-              <td>{h.siteId ? sites.find((s) => s.id === h.siteId)?.name : baseContent.orbits.find((o) => o.id === h.orbitId)?.name}</td>
+              <td>
+                {#if h.siteId}{sites.find((s) => s.id === h.siteId)?.name}{:else}<button class="name-link" title="Open the orbit" onclick={() => (game.selectedOrbitId = h.orbitId)}>{baseContent.orbits.find((o) => o.id === h.orbitId)?.name}</button>{/if}
+              </td>
               <td>{isBuilt(world, h.modules[0]!) ? ["I", "II", "III"][habTier(baseContent, h) - 1] : "Founding"}</td>
             </tr>
           {/each}
@@ -667,14 +674,15 @@
     line-height: 1.2;
     color: var(--good);
   }
-  .tag {
-    margin-left: 6px;
-    padding: 0 4px;
-    border: 1px solid var(--border-soft);
-    font-size: 0.8em;
-    color: var(--accent);
+  th.mark,
+  td.mark {
+    width: 22px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
   }
-  .tag.bad {
+  td.mark.bad {
     color: var(--bad);
+    font-size: 0.85em;
   }
 </style>

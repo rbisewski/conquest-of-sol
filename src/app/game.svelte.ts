@@ -16,7 +16,15 @@ class GameClient {
   /** Time of day as a fraction of the current day (the worker's clock). */
   dayFraction = $state(0);
   playerFactionId = $derived(this.state?.factions.find((f) => f.isPlayer)?.id ?? null);
-  selectedNationId = $state<string | null>(null);
+  #nationId = $state<string | null>(null);
+  /** The nation whose panel is open (upper left); opening one closes the hab and orbit panels there. */
+  get selectedNationId(): string | null {
+    return this.#nationId;
+  }
+  set selectedNationId(id: string | null) {
+    this.#nationId = id;
+    if (id) this.selectedHabId = this.selectedOrbitId = null;
+  }
   /** The councilor whose panel is open (lower right), if any. */
   selectedCouncilorId = $state<string | null>(null);
   /** Whether the Recruiting screen is open. */
@@ -34,14 +42,44 @@ class GameClient {
   summaryCouncilorId = $state<string | null>(null);
   /** Which view fills the screen: the Earth's globe, or the Solar System (zoom out of the globe to reach it). */
   view = $state<"earth" | "solar">("earth");
-  /** The solar-system body whose Celestial Body panel is open in the Solar System view, if any. */
-  selectedBodyId = $state<string | null>(null);
+  #bodyId = $state<string | null>(null);
+  /** The solar-system body whose Celestial Body panel is open in the Solar System view, if any; opening one closes the hab and orbit panels. */
+  get selectedBodyId(): string | null {
+    return this.#bodyId;
+  }
+  set selectedBodyId(id: string | null) {
+    this.#bodyId = id;
+    if (id) this.selectedHabId = this.selectedOrbitId = null;
+  }
   /** Another faction's councilor, clicked on the globe, whose Rival Councilor panel is open (upper left), if any. */
   rivalCouncilorId = $state<string | null>(null);
   /** The army whose panel is open (lower right, in place of the councilor's), if any. */
   selectedArmyId = $state<string | null>(null);
-  /** The hab whose panel is open (lower right, in place of the councilor's), if any. */
-  selectedHabId = $state<string | null>(null);
+  #habId = $state<string | null>(null);
+  /** The hab whose panel is open (upper left), if any; its Hab Details screen opens over the map while `habDetailsOpen`. */
+  get selectedHabId(): string | null {
+    return this.#habId;
+  }
+  set selectedHabId(id: string | null) {
+    if (id !== this.#habId) {
+      this.habSlot = null;
+      if (!id) this.habDetailsOpen = false;
+    }
+    this.#habId = id;
+    if (id) this.#orbitId = null;
+  }
+  #orbitId = $state<string | null>(null);
+  /** The station orbit whose Orbit panel is open (upper left, in place of its body's), if any; opening one closes the hab panel. */
+  get selectedOrbitId(): string | null {
+    return this.#orbitId;
+  }
+  set selectedOrbitId(id: string | null) {
+    this.#orbitId = id;
+    if (id) this.selectedHabId = null;
+  }
+  habDetailsOpen = $state(false);
+  /** The slot picked in the hab panel and its details screen (the core is 0), if any. */
+  habSlot = $state<number | null>(null);
   /**
    * While set, the selected councilor's mission is aimed on the globe: hovering lights up a valid
    * target (a single region, or a whole nation) and a click assigns it. Targets are keyed by
@@ -152,6 +190,7 @@ class GameClient {
     this.selectedCouncilorId = null;
     this.selectedArmyId = null;
     this.selectedHabId = null;
+    this.selectedOrbitId = null;
     this.summaryCouncilorId = null;
     this.rivalCouncilorId = null;
     this.view = "earth";

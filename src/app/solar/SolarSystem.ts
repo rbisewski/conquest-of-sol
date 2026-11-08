@@ -1102,6 +1102,8 @@ export class SolarSystem {
   onSelectBody: ((id: string) => void) | null = null;
   /** Called with a hab's id when it is clicked. */
   onSelectHab: ((id: string) => void) | null = null;
+  /** Called when a Lagrange point's diamond is clicked, with its station orbit's id. */
+  onSelectOrbit: ((id: string) => void) | null = null;
 
   constructor(
     private readonly container: HTMLElement,
@@ -1766,11 +1768,12 @@ export class SolarSystem {
     const down = this.downAt;
     this.downAt = null;
     if (!down || Math.abs(event.clientX - down.x) + Math.abs(event.clientY - down.y) > 5) return;
-    // A hab is picked over the body behind it, and leaves the camera where it is.
+    // A hab (or Lagrange point) is picked over the body behind it, and leaves the camera where it is.
     const rect = this.renderer.domElement.getBoundingClientRect();
     const mark = this.habMarkers.pick(event.clientX - rect.left, event.clientY - rect.top);
     if (mark) {
       if (mark.habId) this.onSelectHab?.(mark.habId);
+      else if (mark.orbitId) this.onSelectOrbit?.(mark.orbitId);
       return;
     }
     const id = this.bodyAt(event);
@@ -1788,7 +1791,7 @@ export class SolarSystem {
     const rect = this.renderer.domElement.getBoundingClientRect();
     const mark = this.habMarkers.pick(event.clientX - rect.left, event.clientY - rect.top);
     const id = mark ? null : this.bodyAt(event);
-    this.renderer.domElement.style.cursor = mark?.habId || id ? "pointer" : "";
+    this.renderer.domElement.style.cursor = mark?.habId || mark?.orbitId || id ? "pointer" : "";
     if (!mark && !id) {
       this.tooltip.style.display = "none";
       return;

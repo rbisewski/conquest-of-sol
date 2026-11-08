@@ -40,11 +40,8 @@
     try {
       const view = new SolarSystem(container, baseContent, toEarth);
       view.onSelectBody = (id) => (game.selectedBodyId = id);
-      view.onSelectHab = (id) => {
-        game.selectedHabId = id;
-        game.selectedCouncilorId = null;
-        game.selectedArmyId = null;
-      };
+      view.onSelectHab = (id) => (game.selectedHabId = id);
+      view.onSelectOrbit = (id) => (game.selectedOrbitId = id);
       untrack(() => view.setTime(...time()));
       solar = handoff.solar = view;
     } catch (error) {
