@@ -11,12 +11,12 @@ import { investNation, payNationOutputs } from "./economy";
 import { friendlyArmyHealth, runMilitaryTick } from "./military";
 import { hostilePenalties } from "./claims";
 import { FormulaBuilder, type Breakdown } from "./formula";
-import { nationDef } from "./lookup";
+import { factionDef, nationDef } from "./lookup";
 import { controlPointCapacityCost, isDisabled, syncControlPointCount, unrestTarget } from "./nation";
 import { modifierSum, runResearchTick } from "./research";
 import { checkBreakaways, checkSecessions } from "./secession";
 import { runSpaceTick } from "./space";
-import { runHabTick } from "./habs";
+import { runHabEconomy, runHabTick } from "./habs";
 import type { FactionState, GameState, NationState } from "./state";
 import { isExtant } from "./territory";
 
@@ -44,8 +44,8 @@ export function runDailyTick(state: GameState, content: Content): void {
   // Nations and factions are always processed in content order, which keeps the tick deterministic.
   const nations = state.nations.filter(isExtant);
   for (const nation of nations) investNation(state, content, nation, share);
-  // Mission Control is a capacity, so it is rebuilt from the CPs each faction now holds.
-  for (const faction of state.factions) faction.resources.missionControl = 0;
+  // Mission Control is a capacity, so it is rebuilt each day: the faction's own, plus the CPs it now holds.
+  for (const faction of state.factions) faction.resources.missionControl = content.rules.space.baseMissionControl;
   const armyHealth = friendlyArmyHealth(state, content);
   for (const nation of nations) {
     payNationOutputs(state, content, nation, share);
@@ -59,6 +59,7 @@ export function runDailyTick(state: GameState, content: Content): void {
   runResearchTick(state, content, share);
   runSpaceTick(state, content);
   runHabTick(state, content);
+  runHabEconomy(state, content, share);
 }
 
 /** Population grows at its real-world rate. GDP per capita is unchanged, so GDP grows with it. */
@@ -138,4 +139,5 @@ function settleFaction(state: GameState, content: Content, faction: FactionState
   faction.resources.influence += monthlyInfluence(state, content, faction).value * share;
   // Money and Boost from nations are paid in payNationOutputs; these are the councilors' own.
   for (const key of ["money", "ops", "boost"] as const) faction.resources[key] += councilIncome(content, faction, key) * share;
+  faction.resources.boost += ((factionDef(content, faction.id).annualBoost ?? 0) / 12) * share;
 }

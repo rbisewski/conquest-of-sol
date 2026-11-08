@@ -6,7 +6,7 @@ import { ATTRIBUTES, type Attribute, type Content, type Gender } from "./content
 import { augment, buyOrg, checkAugment, checkBuyOrg, dismissCouncilor, sellOrg } from "./councilors";
 import { allFactionsDone, closeCouncilPhase, findCouncilor } from "./council";
 import { applyDiplomacy, checkDiplomacy, settlePolicyChoice, type DiplomaticAction } from "./diplomacy";
-import { buildModule, checkBuildModule, checkFoundHabCommand, checkScrapModule, foundHab, type Payment } from "./habs";
+import { buildModule, checkBuildModule, checkFoundHabCommand, checkScrapModule, checkSetModulePower, foundHab, type Payment } from "./habs";
 import { armyCommander, checkAirlift, checkAnnex, checkMove, checkNuclearStrike, launchNuclearStrike, startAnnex, startMove } from "./military";
 import { assessMission, checkMissionCost } from "./missions";
 import { checkProjectChoice, checkTechChoice } from "./research";
@@ -65,7 +65,9 @@ export type Command =
   /** Builds a module in one of a hab's slots (or upgrades the one there), paid in space resources or sent up with boost. */
   | { type: "buildModule"; factionId: string; habId: string; slot: number; moduleId: string; payWith: Payment }
   /** Removes a module (not the core) from a hab, with anything being built in its place. */
-  | { type: "scrapModule"; factionId: string; habId: string; slot: number };
+  | { type: "scrapModule"; factionId: string; habId: string; slot: number }
+  /** Switches a hab module on or off (not generators, nor modules that take power first). */
+  | { type: "setModulePower"; factionId: string; habId: string; slot: number; on: boolean };
 
 export type CommandResult = { ok: true } | { ok: false; reason: string };
 
@@ -156,6 +158,12 @@ export function applyCommand(state: GameState, content: Content, command: Comman
       const check = checkScrapModule(state, faction.id, command.habId, command.slot);
       if (!check.ok) return reject(check.reason);
       state.habs.find((h) => h.id === command.habId)!.modules[command.slot] = null;
+      return { ok: true };
+    }
+    case "setModulePower": {
+      const check = checkSetModulePower(state, content, faction.id, command.habId, command.slot);
+      if (!check.ok) return reject(check.reason);
+      state.habs.find((h) => h.id === command.habId)!.modules[command.slot]!.off = !command.on;
       return { ok: true };
     }
     case "setPriorityWeights": {

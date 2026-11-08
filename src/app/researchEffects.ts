@@ -27,6 +27,13 @@ const MODIFIERS: Record<ModifierContext, (e: Extract<ResearchEffect, { kind: "mo
   ProbeTransferTime: (e) => `Probe travel time ${times(e.value)}`,
   GenericModuleTransferTime: (e) => `Boost delivery time ${times(e.value)}`,
   GenericTransfer_OffDate_PCT: (e) => `Delay for launching outside a window ${times(e.value)}`,
+  SpaceMiningBonus: (e) => `Mines yield ${pct(e.value)}`,
+  MiningWaterBonus: (e) => `Mines yield water ${times(e.value)}`,
+  MiningVolatilesBonus: (e) => `Mines yield volatiles ${times(e.value)}`,
+  MiningMetalsBonus: (e) => `Mines yield base metals ${times(e.value)}`,
+  MiningNoblesBonus: (e) => `Mines yield noble metals ${times(e.value)}`,
+  MiningFissilesBonus: (e) => `Mines yield fissiles ${times(e.value)}`,
+  MCFreeSpaceMineNetwork: (e) => `${signed(e.value)} mines we can work without mission control`,
 };
 
 export function describeEffect(e: ResearchEffect): string {

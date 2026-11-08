@@ -24,6 +24,8 @@ export interface FactionDef {
   /** −3 (Order) to +3 (Freedom). */
   means: number;
   color: string;
+  /** Boost a year the faction has of its own (Terra Invicta's base income for the factions that start with a station). */
+  annualBoost?: number;
 }
 
 export interface ProfessionDef {
@@ -215,6 +217,16 @@ export interface SpaceRules {
   inhabitedPopulation: number;
   /** Habs factions start with: the faction, its orbit, its name, and its modules slot by slot (the core first). */
   startingHabs: { faction: string; orbit: string; name: string; modules: (string | null)[] }[];
+  /** Mission control every faction has of its own, besides its nations'. */
+  baseMissionControl: number;
+  /** What each crew member uses a year (Terra Invicta's life support); farms cover the water and volatiles. */
+  lifeSupport: { water: number; volatiles: number; money: number };
+  /**
+   * Hab Module Malfunction (**inferred** odds): each month a hab loses modules with this chance per
+   * point of mission control its faction is short, or `unsupplied` when its upkeep went unpaid;
+   * it loses up to `modules[i]` of them, picked by `weights`.
+   */
+  accidents: { perMissingMissionControl: number; unsupplied: number; modules: number[]; weights: number[] };
 }
 
 /** Research (Terra Invicta's Technology page and national research formula). See docs/formulas.md. */
@@ -290,7 +302,17 @@ export type ModifierContext =
   /** Boost deliveries' travel time. */
   | "GenericModuleTransferTime"
   /** The extra time of a launch from Earth outside its window, for deliveries and probes. */
-  | "GenericTransfer_OffDate_PCT";
+  | "GenericTransfer_OffDate_PCT"
+  /** Added to the share mines yield (0.1 = +10%). */
+  | "SpaceMiningBonus"
+  /** Multiply what mines yield of one resource. */
+  | "MiningWaterBonus"
+  | "MiningVolatilesBonus"
+  | "MiningMetalsBonus"
+  | "MiningNoblesBonus"
+  | "MiningFissilesBonus"
+  /** Mines the faction can work before they cost mission control. */
+  | "MCFreeSpaceMineNetwork";
 
 /** Who a lasting effect applies to: the faction that completed it, or every faction. */
 export type EffectScope = "faction" | "global";
@@ -805,6 +827,8 @@ export interface SpaceBodyDef {
   irradiation?: number;
   /** Absent for an airless body. */
   atmosphere?: "trace" | "thin" | "standard" | "thick" | "massive";
+  /** Bodies with hab sites: multiplies a mine's cost, mass and power there (Terra Invicta's, fitted; tools/data/build_solar.py). */
+  miningModifier?: number;
 }
 
 /** A surface site for a base (src/content/habSites.json, from tools/data/build_space.py). */
@@ -919,8 +943,10 @@ export interface HabModuleDef {
   controlPointCapacity?: number;
   /** Multiplier on how long the hab's modules take to build. */
   constructionTime?: number;
-  /** Its build cost and power use scale with the body's mining modifier (mines). */
+  /** Its build cost, mass and power use scale with the body's mining modifier (mines). */
   scalesWithMining?: boolean;
+  /** Mines: what it yields, as a multiple of its site's monthly yields. */
+  mineOutput?: number;
   /** Bonus to the faction's research in each field. */
   researchBonuses?: Partial<Record<ResearchCategory, number>>;
   /** Terra Invicta's special rules for the module ("Solar_Power_Variable_Output", "NotInIrradiated"…), and the value some take. */
@@ -1101,6 +1127,7 @@ export function validateContent(content: Content): Content {
   for (const m of content.habModules) {
     if (!projectIds.has(m.project)) fail(`hab module "${m.id}" needs unknown project "${m.project}"`);
     if (m.unlocksProject && !projectIds.has(m.unlocksProject)) fail(`hab module "${m.id}" unlocks unknown project "${m.unlocksProject}"`);
+    if (m.mine && !(m.mineOutput && m.type === "base")) fail(`hab module "${m.id}" is a mine, so it needs a base and an output`);
     if (!m.upgradesFrom) continue;
     const from = modules.get(m.upgradesFrom);
     if (!from) fail(`hab module "${m.id}" upgrades unknown module "${m.upgradesFrom}"`);

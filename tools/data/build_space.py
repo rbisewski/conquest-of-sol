@@ -261,7 +261,10 @@ def main(game_dir, out_dir):
             module["controlPointCapacity"] = m["controlPointCapacity"]
         if m["constructionTimeModifier"] != 1:
             module["constructionTime"] = m["constructionTimeModifier"]
-        if m.get("miningModifier"):
+        if m.get("mine"):
+            # A mine yields its site's resources times this; its cost and power scale with the body's mining modifier.
+            module["mineOutput"] = m["miningModifier"]
+        if "Cost_Scales_With_Gravity" in (m.get("specialRules") or []):
             module["scalesWithMining"] = True
         if m.get("techBonuses"):
             module["researchBonuses"] = {CATEGORIES[b["category"]]: b["bonus"] for b in m["techBonuses"]}

@@ -28,7 +28,8 @@
    "peri": 29.124,
    "meanAnomaly": 174.796,
    "epoch": 2000
-  }
+  },
+  "miningModifier": 1.9641
  },
  {
   "id": "Venus",
@@ -92,7 +93,8 @@
    "peri": 286.537,
    "meanAnomaly": 19.3564,
    "epoch": 2000
-  }
+  },
+  "miningModifier": 0.9335
  },
  {
   "id": "Jupiter",
@@ -197,7 +199,8 @@
    "peri": 72.522,
    "meanAnomaly": 77.372,
    "epoch": 2019.32
-  }
+  },
+  "miningModifier": 0.7699
  },
  {
   "id": "19521Chaos",
@@ -218,7 +221,8 @@
    "peri": 58.4097,
    "meanAnomaly": 337.2998,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.6571
  },
  {
   "id": "20000Varuna",
@@ -239,7 +243,8 @@
    "peri": 270.89,
    "meanAnomaly": 105.119,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5911
  },
  {
   "id": "28978Ixion",
@@ -260,7 +265,8 @@
    "peri": 298.84,
    "meanAnomaly": 283.89,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.5056
  },
  {
   "id": "Quaoar",
@@ -281,7 +287,8 @@
    "peri": 155.246,
    "meanAnomaly": 287.542,
    "epoch": 2016.329
-  }
+  },
+  "miningModifier": 1.5983
  },
  {
   "id": "55565KBO",
@@ -302,7 +309,8 @@
    "peri": 293.3,
    "meanAnomaly": 293.876,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.6999
  },
  {
   "id": "55637KBO",
@@ -323,7 +331,8 @@
    "peri": 279,
    "meanAnomaly": 295.71,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.5753
  },
  {
   "id": "78799KBO",
@@ -344,7 +353,8 @@
    "peri": 247.18,
    "meanAnomaly": 145.37,
    "epoch": 2019.320548
-  }
+  },
+  "miningModifier": 1.4548
  },
  {
   "id": "90482Orcus",
@@ -365,7 +375,8 @@
    "peri": 72.393,
    "meanAnomaly": 177.728,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.4936
  },
  {
   "id": "90568KBO",
@@ -386,7 +397,8 @@
    "peri": 293.2,
    "meanAnomaly": 34.603,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5676
  },
  {
   "id": "Salacia",
@@ -407,7 +419,8 @@
    "peri": 308.48,
    "meanAnomaly": 122.66,
    "epoch": 2017.126
-  }
+  },
+  "miningModifier": 1.5603
  },
  {
   "id": "Pluto",
@@ -429,7 +442,8 @@
    "peri": 113.834,
    "meanAnomaly": 14.53,
    "epoch": 2000
-  }
+  },
+  "miningModifier": 1.5029
  },
  {
   "id": "Haumea",
@@ -450,7 +464,8 @@
    "peri": 240.2,
    "meanAnomaly": 209.07,
    "epoch": 2014.936
-  }
+  },
+  "miningModifier": 1.594
  },
  {
   "id": "Eris",
@@ -471,7 +486,8 @@
    "peri": 151.639,
    "meanAnomaly": 205.989,
    "epoch": 2020.415301
-  }
+  },
+  "miningModifier": 2.2026
  },
  {
   "id": "Makemake",
@@ -492,7 +508,8 @@
    "peri": 294.834,
    "meanAnomaly": 165.514,
    "epoch": 2020.4134
-  }
+  },
+  "miningModifier": 1.6487
  },
  {
   "id": "145452KBO",
@@ -513,7 +530,8 @@
    "peri": 174.048846,
    "meanAnomaly": 349.602101,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.5585
  },
  {
   "id": "174567Varda",
@@ -534,7 +552,8 @@
    "peri": 182.916,
    "meanAnomaly": 266.99,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.6574
  },
  {
   "id": "202421KBO",
@@ -555,7 +574,8 @@
    "peri": 221.89,
    "meanAnomaly": 223.93,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5929
  },
  {
   "id": "208996KBO",
@@ -576,7 +596,8 @@
    "peri": 15.211,
    "meanAnomaly": 232.611,
    "epoch": 2019.321
-  }
+  },
+  "miningModifier": 1.4982
  },
  {
   "id": "Gonggong",
@@ -597,7 +618,8 @@
    "peri": 207.6675,
    "meanAnomaly": 106.496,
    "epoch": 2020.961749
-  }
+  },
+  "miningModifier": 2.1958
  },
  {
   "id": "278361KBO",
@@ -618,7 +640,8 @@
    "peri": 9.250557,
    "meanAnomaly": 344.419467,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.7074
  },
  {
   "id": "307261KBO",
@@ -639,7 +662,8 @@
    "peri": 215.534,
    "meanAnomaly": 216.187,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5563
  },
  {
   "id": "440030KBO",
@@ -660,7 +684,8 @@
    "peri": 37.4,
    "meanAnomaly": 41.709,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.5985
  },
  {
   "id": "455502KBO",
@@ -681,7 +706,8 @@
    "peri": 145,
    "meanAnomaly": 113.43,
    "epoch": 2019.321
-  }
+  },
+  "miningModifier": 1.492
  },
  {
   "id": "470308KBO",
@@ -702,7 +728,8 @@
    "peri": 4.7053,
    "meanAnomaly": 177.14,
    "epoch": 2016.575
-  }
+  },
+  "miningModifier": 1.5038
  },
  {
   "id": "470443KBO",
@@ -723,7 +750,8 @@
    "peri": 278.602123,
    "meanAnomaly": 103.982182,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6666
  },
  {
   "id": "472271KBO",
@@ -744,7 +772,8 @@
    "peri": 269.24,
    "meanAnomaly": 269.23,
    "epoch": 2016.575
-  }
+  },
+  "miningModifier": 1.5854
  },
  {
   "id": "482824KBO",
@@ -765,7 +794,8 @@
    "peri": 146.974302,
    "meanAnomaly": 319.421614,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.5711
  },
  {
   "id": "523645KBO",
@@ -786,7 +816,8 @@
    "peri": 82.855,
    "meanAnomaly": 173.94,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5907
  },
  {
   "id": "523681KBO",
@@ -807,7 +838,8 @@
    "peri": 349.137677,
    "meanAnomaly": 266.974545,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6514
  },
  {
   "id": "523750KBO",
@@ -828,7 +860,8 @@
    "peri": 174.726617,
    "meanAnomaly": 294.456836,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.6872
  },
  {
   "id": "559182KBO",
@@ -849,7 +882,8 @@
    "peri": 300.37726,
    "meanAnomaly": 273.43211,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6805
  },
  {
   "id": "612533KBO",
@@ -871,7 +905,8 @@
    "peri": 163.53,
    "meanAnomaly": 282.08,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.4996
  },
  {
   "id": "2010FX86KBO",
@@ -892,7 +927,8 @@
    "peri": 358.347897,
    "meanAnomaly": 289.627455,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6761
  },
  {
   "id": "2010KZ39KBO",
@@ -913,7 +949,8 @@
    "peri": 313.91,
    "meanAnomaly": 256.31,
    "epoch": 2017.126
-  }
+  },
+  "miningModifier": 1.6472
  },
  {
   "id": "2014WP50KBO",
@@ -934,7 +971,8 @@
    "peri": 337.286511,
    "meanAnomaly": 55.161815,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6396
  },
  {
   "id": "2014YA50KBO",
@@ -955,7 +993,8 @@
    "peri": 195.748154,
    "meanAnomaly": 314.651587,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6662
  },
  {
   "id": "2017OF69KBO",
@@ -976,7 +1015,8 @@
    "peri": 215.37,
    "meanAnomaly": 251.02,
    "epoch": 2019.320548
-  }
+  },
+  "miningModifier": 1.5049
  },
  {
   "id": "Sedna",
@@ -1151,7 +1191,8 @@
    "peri": 318.15,
    "meanAnomaly": 135.27,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.5071
  },
  {
   "id": "Io",
@@ -1175,7 +1216,8 @@
    "meanAnomaly": 330.9,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.4958
  },
  {
   "id": "Europa",
@@ -1199,7 +1241,8 @@
    "meanAnomaly": 345.4,
    "epoch": 2000.0,
    "localI": 0.5
-  }
+  },
+  "miningModifier": 1.2138
  },
  {
   "id": "Ganymede",
@@ -1223,7 +1266,8 @@
    "meanAnomaly": 324.8,
    "epoch": 2000.0,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.042
  },
  {
   "id": "Callisto",
@@ -1246,7 +1290,8 @@
    "meanAnomaly": 87.4,
    "epoch": 2000.0,
    "localI": 0.3
-  }
+  },
+  "miningModifier": 0.9123
  },
  {
   "id": "Mimas",
@@ -1269,7 +1314,8 @@
    "meanAnomaly": 275.3,
    "epoch": 2000.0,
    "localI": 1.6
-  }
+  },
+  "miningModifier": 1.3064
  },
  {
   "id": "Enceladus",
@@ -1293,7 +1339,8 @@
    "meanAnomaly": 57.0,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.1944
  },
  {
   "id": "Tethys",
@@ -1316,7 +1363,8 @@
    "meanAnomaly": 0.0,
    "epoch": 2000.0,
    "localI": 1.1
-  }
+  },
+  "miningModifier": 1.1182
  },
  {
   "id": "Dione",
@@ -1339,7 +1387,8 @@
    "meanAnomaly": 212.0,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.0479
  },
  {
   "id": "Rhea",
@@ -1362,7 +1411,8 @@
    "meanAnomaly": 31.5,
    "epoch": 2000.0,
    "localI": 0.3
-  }
+  },
+  "miningModifier": 0.9769
  },
  {
   "id": "Titan",
@@ -1385,7 +1435,8 @@
    "meanAnomaly": 11.7,
    "epoch": 2000.0,
    "localI": 0.3
-  }
+  },
+  "miningModifier": 0.8829
  },
  {
   "id": "Iapetus",
@@ -1407,7 +1458,8 @@
    "meanAnomaly": 74.8,
    "epoch": 2000.0,
    "localI": 7.6
-  }
+  },
+  "miningModifier": 0.8236
  },
  {
   "id": "Miranda",
@@ -1429,7 +1481,8 @@
    "meanAnomaly": 73.0,
    "epoch": 2000.0,
    "localI": 4.4
-  }
+  },
+  "miningModifier": 1.1209
  },
  {
   "id": "Ariel",
@@ -1451,7 +1504,8 @@
    "meanAnomaly": 193.5,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.0856
  },
  {
   "id": "Umbriel",
@@ -1473,7 +1527,8 @@
    "meanAnomaly": 253.0,
    "epoch": 2000.0,
    "localI": 0.1
-  }
+  },
+  "miningModifier": 1.0641
  },
  {
   "id": "Titania",
@@ -1495,7 +1550,8 @@
    "meanAnomaly": 68.1,
    "epoch": 2000.0,
    "localI": 0.1
-  }
+  },
+  "miningModifier": 1.0433
  },
  {
   "id": "Oberon",
@@ -1517,7 +1573,8 @@
    "meanAnomaly": 143.6,
    "epoch": 2000.0,
    "localI": 0.1
-  }
+  },
+  "miningModifier": 1.0348
  },
  {
   "id": "Triton",
@@ -1540,7 +1597,8 @@
    "meanAnomaly": 63.0,
    "epoch": 2000.0,
    "localI": 157.3
-  }
+  },
+  "miningModifier": 1.322
  },
  {
   "id": "Charon",
@@ -1562,7 +1620,8 @@
    "meanAnomaly": 304.1,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.5016
  },
  {
   "id": "Phobos",
@@ -1584,7 +1643,8 @@
    "meanAnomaly": 189.7,
    "epoch": 2000.0,
    "localI": 1.1
-  }
+  },
+  "miningModifier": 0.9134
  },
  {
   "id": "Deimos",
@@ -1606,7 +1666,8 @@
    "meanAnomaly": 205.0,
    "epoch": 2000.0,
    "localI": 1.8
-  }
+  },
+  "miningModifier": 0.9066
  },
  {
   "id": "Metis",
@@ -1629,7 +1690,8 @@
    "meanAnomaly": 166.0,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 3.2115
  },
  {
   "id": "Adrastea",
@@ -1652,7 +1714,8 @@
    "meanAnomaly": 214.5,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 3.1923
  },
  {
   "id": "Amalthea",
@@ -1675,7 +1738,8 @@
    "meanAnomaly": 310.6,
    "epoch": 2000.0,
    "localI": 0.4
-  }
+  },
+  "miningModifier": 2.483
  },
  {
   "id": "Thebe",
@@ -1698,7 +1762,8 @@
    "meanAnomaly": 182.1,
    "epoch": 2000.0,
    "localI": 1.1
-  }
+  },
+  "miningModifier": 2.1642
  },
  {
   "id": "Themisto",
@@ -1719,7 +1784,8 @@
    "peri": 236.3,
    "meanAnomaly": 289.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7795
  },
  {
   "id": "Leda",
@@ -1740,7 +1806,8 @@
    "peri": 271.3,
    "meanAnomaly": 232.6,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7651
  },
  {
   "id": "Himalia",
@@ -1761,7 +1828,8 @@
    "peri": 321.1,
    "meanAnomaly": 78.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7643
  },
  {
   "id": "Lysithea",
@@ -1782,7 +1850,8 @@
    "peri": 48.3,
    "meanAnomaly": 328.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7637
  },
  {
   "id": "Elara",
@@ -1803,7 +1872,8 @@
    "peri": 129.9,
    "meanAnomaly": 346.9,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7637
  },
  {
   "id": "Praxidike",
@@ -1824,7 +1894,8 @@
    "peri": 182.5,
    "meanAnomaly": 128.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7518
  },
  {
   "id": "Ananke",
@@ -1845,7 +1916,8 @@
    "peri": 78.8,
    "meanAnomaly": 271.7,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7517
  },
  {
   "id": "Iocaste",
@@ -1866,7 +1938,8 @@
    "peri": 91.4,
    "meanAnomaly": 182.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7517
  },
  {
   "id": "Taygete",
@@ -1887,7 +1960,8 @@
    "peri": 207.7,
    "meanAnomaly": 116.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7504
  },
  {
   "id": "Carme",
@@ -1908,7 +1982,8 @@
    "peri": 6.5,
    "meanAnomaly": 259.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7503
  },
  {
   "id": "Kalyke",
@@ -1929,7 +2004,8 @@
    "peri": 240.5,
    "meanAnomaly": 224.9,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7502
  },
  {
   "id": "Pasiphae",
@@ -1950,7 +2026,8 @@
    "peri": 172.8,
    "meanAnomaly": 279.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.7501
  },
  {
   "id": "Megaclite",
@@ -1971,7 +2048,8 @@
    "peri": 309.9,
    "meanAnomaly": 116.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.75
  },
  {
   "id": "Sinope",
@@ -1992,7 +2070,8 @@
    "peri": 354.3,
    "meanAnomaly": 157.4,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.75
  },
  {
   "id": "Callirrhoe",
@@ -2013,7 +2092,8 @@
    "peri": 13.5,
    "meanAnomaly": 117.9,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.75
  },
  {
   "id": "Pan",
@@ -2036,7 +2116,8 @@
    "meanAnomaly": 146.6,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.5063
  },
  {
   "id": "Daphnis",
@@ -2059,7 +2140,8 @@
    "meanAnomaly": 153.6,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.4912
  },
  {
   "id": "Atlas",
@@ -2082,7 +2164,8 @@
    "meanAnomaly": 289.1,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.4852
  },
  {
   "id": "Prometheus",
@@ -2105,7 +2188,8 @@
    "meanAnomaly": 135.4,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.4768
  },
  {
   "id": "Pandora",
@@ -2128,7 +2212,8 @@
    "meanAnomaly": 123.9,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.4657
  },
  {
   "id": "Epimetheus",
@@ -2151,7 +2236,8 @@
    "meanAnomaly": 197.2,
    "epoch": 2000.0,
    "localI": 0.3
-  }
+  },
+  "miningModifier": 1.4229
  },
  {
   "id": "Janus",
@@ -2174,7 +2260,8 @@
    "meanAnomaly": 111.7,
    "epoch": 2000.0,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.4224
  },
  {
   "id": "Pallene",
@@ -2197,7 +2284,8 @@
    "meanAnomaly": 2.0,
    "epoch": 2000.0,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.2432
  },
  {
   "id": "Telesto",
@@ -2220,7 +2308,8 @@
    "meanAnomaly": 360.0,
    "epoch": 2000.0,
    "localI": 1.2
-  }
+  },
+  "miningModifier": 1.118
  },
  {
   "id": "Calypso",
@@ -2243,7 +2332,8 @@
    "meanAnomaly": -0.0,
    "epoch": 2000.0,
    "localI": 1.5
-  }
+  },
+  "miningModifier": 1.118
  },
  {
   "id": "Helene",
@@ -2265,7 +2355,8 @@
    "meanAnomaly": -64.5,
    "epoch": 2000.0,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.0477
  },
  {
   "id": "Hyperion",
@@ -2287,7 +2378,8 @@
    "meanAnomaly": 122.9,
    "epoch": 2000.0,
    "localI": 0.6
-  }
+  },
+  "miningModifier": 0.8606
  },
  {
   "id": "S2019S1",
@@ -2308,7 +2400,8 @@
    "peri": 86.6,
    "meanAnomaly": 36.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.805
  },
  {
   "id": "Kiviuq",
@@ -2329,7 +2422,8 @@
    "peri": 91.8,
    "meanAnomaly": 183.2,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8049
  },
  {
   "id": "S2005S4",
@@ -2350,7 +2444,8 @@
    "peri": 107.1,
    "meanAnomaly": 247.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8049
  },
  {
   "id": "Ijiraq",
@@ -2371,7 +2466,8 @@
    "peri": 68.6,
    "meanAnomaly": 83.4,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8049
  },
  {
   "id": "Phoebe",
@@ -2393,7 +2489,8 @@
    "meanAnomaly": 308.0,
    "epoch": 2000.0,
    "localI": 175.2
-  }
+  },
+  "miningModifier": 0.8039
  },
  {
   "id": "S2006S20",
@@ -2414,7 +2511,8 @@
    "peri": 77.4,
    "meanAnomaly": 153.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8037
  },
  {
   "id": "Paaliaq",
@@ -2435,7 +2533,8 @@
    "peri": 237.6,
    "meanAnomaly": 318.2,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8029
  },
  {
   "id": "Skathi",
@@ -2456,7 +2555,8 @@
    "peri": 202.3,
    "meanAnomaly": 269.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8026
  },
  {
   "id": "S2007S2",
@@ -2477,7 +2577,8 @@
    "peri": 46.4,
    "meanAnomaly": 10.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8025
  },
  {
   "id": "Albiorix",
@@ -2498,7 +2599,8 @@
    "peri": 62.8,
    "meanAnomaly": 155.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8024
  },
  {
   "id": "Bebhionn",
@@ -2519,7 +2621,8 @@
    "peri": 5.1,
    "meanAnomaly": 128.4,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8021
  },
  {
   "id": "Erriapus",
@@ -2540,7 +2643,8 @@
    "peri": 279.8,
    "meanAnomaly": 14.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.802
  },
  {
   "id": "Skoll",
@@ -2561,7 +2665,8 @@
    "peri": 186.1,
    "meanAnomaly": 181.2,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8019
  },
  {
   "id": "Tarqeq",
@@ -2582,7 +2687,8 @@
    "peri": 72.2,
    "meanAnomaly": 292.8,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8019
  },
  {
   "id": "Siarnaq",
@@ -2603,7 +2709,8 @@
    "peri": 68.4,
    "meanAnomaly": 62.7,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8019
  },
  {
   "id": "Tarvos",
@@ -2624,7 +2731,8 @@
    "peri": 282.9,
    "meanAnomaly": 64.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8018
  },
  {
   "id": "Hyrrokkin",
@@ -2645,7 +2753,8 @@
    "peri": 264.8,
    "meanAnomaly": 214.8,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8017
  },
  {
   "id": "Greip",
@@ -2666,7 +2775,8 @@
    "peri": 146.2,
    "meanAnomaly": 355.9,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8017
  },
  {
   "id": "Mundilfari",
@@ -2687,7 +2797,8 @@
    "peri": 305.4,
    "meanAnomaly": 299.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8017
  },
  {
   "id": "S2006S1",
@@ -2708,7 +2819,8 @@
    "peri": 159.7,
    "meanAnomaly": 86.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8016
  },
  {
   "id": "Bergelmir",
@@ -2729,7 +2841,8 @@
    "peri": 133.9,
    "meanAnomaly": 255.7,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8015
  },
  {
   "id": "Jarnsaxa",
@@ -2750,7 +2863,8 @@
    "peri": 229.2,
    "meanAnomaly": 175.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8015
  },
  {
   "id": "Narvi",
@@ -2771,7 +2885,8 @@
    "peri": 177.9,
    "meanAnomaly": 111.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8015
  },
  {
   "id": "Suttungr",
@@ -2792,7 +2907,8 @@
    "peri": 65.0,
    "meanAnomaly": 171.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8014
  },
  {
   "id": "S2007S3",
@@ -2813,7 +2929,8 @@
    "peri": 323.1,
    "meanAnomaly": 304.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8014
  },
  {
   "id": "Hati",
@@ -2834,7 +2951,8 @@
    "peri": 10.4,
    "meanAnomaly": 270.6,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8014
  },
  {
   "id": "Eggther",
@@ -2855,7 +2973,8 @@
    "peri": 130.1,
    "meanAnomaly": 111.7,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8013
  },
  {
   "id": "Farbauti",
@@ -2876,7 +2995,8 @@
    "peri": 343.6,
    "meanAnomaly": 9.0,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8012
  },
  {
   "id": "Thrymr",
@@ -2897,7 +3017,8 @@
    "peri": 92.2,
    "meanAnomaly": 216.2,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8012
  },
  {
   "id": "Bestla",
@@ -2918,7 +3039,8 @@
    "peri": 85.6,
    "meanAnomaly": 33.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8012
  },
  {
   "id": "Aegir",
@@ -2939,7 +3061,8 @@
    "peri": 244.7,
    "meanAnomaly": 23.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8011
  },
  {
   "id": "S2004S7",
@@ -2960,7 +3083,8 @@
    "peri": 54.9,
    "meanAnomaly": 116.9,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.801
  },
  {
   "id": "S2006S3",
@@ -2981,7 +3105,8 @@
    "peri": 191.6,
    "meanAnomaly": 125.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.801
  },
  {
   "id": "Alvaldi",
@@ -3002,7 +3127,8 @@
    "peri": 188.1,
    "meanAnomaly": 38.3,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8009
  },
  {
   "id": "Kari",
@@ -3023,7 +3149,8 @@
    "peri": 160.2,
    "meanAnomaly": 83.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8009
  },
  {
   "id": "Surtur",
@@ -3044,7 +3171,8 @@
    "peri": 314.4,
    "meanAnomaly": 9.9,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8007
  },
  {
   "id": "Loge",
@@ -3065,7 +3193,8 @@
    "peri": 20.5,
    "meanAnomaly": 32.1,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8007
  },
  {
   "id": "Ymir",
@@ -3086,7 +3215,8 @@
    "peri": 45.3,
    "meanAnomaly": 167.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8007
  },
  {
   "id": "Fornjot",
@@ -3107,7 +3237,8 @@
    "peri": 321.9,
    "meanAnomaly": 53.5,
    "epoch": 2000.0
-  }
+  },
+  "miningModifier": 0.8004
  },
  {
   "id": "Cordelia",
@@ -3129,7 +3260,8 @@
    "meanAnomaly": 287.4,
    "epoch": 2025.000684,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.3004
  },
  {
   "id": "Ophelia",
@@ -3151,7 +3283,8 @@
    "meanAnomaly": 213.4,
    "epoch": 2025.000684,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.2787
  },
  {
   "id": "S2025U1",
@@ -3173,7 +3306,8 @@
    "meanAnomaly": 275.6,
    "epoch": 2025.000684,
    "localI": 4.0
-  }
+  },
+  "miningModifier": 1.2597
  },
  {
   "id": "Bianca",
@@ -3195,7 +3329,8 @@
    "meanAnomaly": 109.1,
    "epoch": 2025.000684,
    "localI": 2.3
-  }
+  },
+  "miningModifier": 1.2541
  },
  {
   "id": "Cressida",
@@ -3217,7 +3352,8 @@
    "meanAnomaly": 0.5,
    "epoch": 2025.000684,
    "localI": 1.8
-  }
+  },
+  "miningModifier": 1.2438
  },
  {
   "id": "Desdemona",
@@ -3239,7 +3375,8 @@
    "meanAnomaly": 230.0,
    "epoch": 2025.000684,
    "localI": 3.1
-  }
+  },
+  "miningModifier": 1.2405
  },
  {
   "id": "Juliet",
@@ -3261,7 +3398,8 @@
    "meanAnomaly": 319.8,
    "epoch": 2025.000684,
    "localI": 3.0
-  }
+  },
+  "miningModifier": 1.2344
  },
  {
   "id": "Portia",
@@ -3283,7 +3421,8 @@
    "meanAnomaly": 310.1,
    "epoch": 2025.000684,
    "localI": 2.7
-  }
+  },
+  "miningModifier": 1.2284
  },
  {
   "id": "Rosalind",
@@ -3305,7 +3444,8 @@
    "meanAnomaly": 287.7,
    "epoch": 2025.000684,
    "localI": 1.7
-  }
+  },
+  "miningModifier": 1.2164
  },
  {
   "id": "Cupid",
@@ -3327,7 +3467,8 @@
    "meanAnomaly": 3.3,
    "epoch": 2025.000684,
    "localI": 2.0
-  }
+  },
+  "miningModifier": 1.204
  },
  {
   "id": "Belinda",
@@ -3349,7 +3490,8 @@
    "meanAnomaly": 226.4,
    "epoch": 2025.000684,
    "localI": 1.4
-  }
+  },
+  "miningModifier": 1.2018
  },
  {
   "id": "Perdita",
@@ -3371,7 +3513,8 @@
    "meanAnomaly": 168.0,
    "epoch": 2025.000684,
    "localI": 1.6
-  }
+  },
+  "miningModifier": 1.1989
  },
  {
   "id": "Puck",
@@ -3393,7 +3536,8 @@
    "meanAnomaly": 264.1,
    "epoch": 2025.000684,
    "localI": 1.1
-  }
+  },
+  "miningModifier": 1.1777
  },
  {
   "id": "Mab",
@@ -3415,7 +3559,8 @@
    "meanAnomaly": 250.8,
    "epoch": 2025.000684,
    "localI": 1.8
-  }
+  },
+  "miningModifier": 1.1575
  },
  {
   "id": "Francisco",
@@ -3436,7 +3581,8 @@
    "peri": 137.6,
    "meanAnomaly": 288.4,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0127
  },
  {
   "id": "Caliban",
@@ -3457,7 +3603,8 @@
    "peri": 349.7,
    "meanAnomaly": 241.2,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0113
  },
  {
   "id": "S2023U1",
@@ -3478,7 +3625,8 @@
    "peri": 158.7,
    "meanAnomaly": 101.8,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0111
  },
  {
   "id": "Stephano",
@@ -3499,7 +3647,8 @@
    "peri": 17.1,
    "meanAnomaly": 164.4,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0111
  },
  {
   "id": "Trinculo",
@@ -3520,7 +3669,8 @@
    "peri": 162.2,
    "meanAnomaly": 55.6,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.011
  },
  {
   "id": "Sycorax",
@@ -3541,7 +3691,8 @@
    "peri": 25.4,
    "meanAnomaly": 332.1,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0105
  },
  {
   "id": "Margaret",
@@ -3562,7 +3713,8 @@
    "peri": 90.7,
    "meanAnomaly": 115.9,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0103
  },
  {
   "id": "Prospero",
@@ -3583,7 +3735,8 @@
    "peri": 180.4,
    "meanAnomaly": 197.6,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0102
  },
  {
   "id": "Setebos",
@@ -3604,7 +3757,8 @@
    "peri": 356.1,
    "meanAnomaly": 148.0,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.0101
  },
  {
   "id": "Ferdinand",
@@ -3625,7 +3779,8 @@
    "peri": 166.9,
    "meanAnomaly": 172.3,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.01
  },
  {
   "id": "Naiad",
@@ -3647,7 +3802,8 @@
    "meanAnomaly": 6.1,
    "epoch": 2000.0,
    "localI": 4.7
-  }
+  },
+  "miningModifier": 1.625
  },
  {
   "id": "Thalassa",
@@ -3669,7 +3825,8 @@
    "meanAnomaly": 3.0,
    "epoch": 2000.0,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.6123
  },
  {
   "id": "Despina",
@@ -3691,7 +3848,8 @@
    "meanAnomaly": 354.1,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.5961
  },
  {
   "id": "Galatea",
@@ -3713,7 +3871,8 @@
    "meanAnomaly": 12.0,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.5468
  },
  {
   "id": "Larissa",
@@ -3735,7 +3894,8 @@
    "meanAnomaly": 215.1,
    "epoch": 2000.0,
    "localI": 0.2
-  }
+  },
+  "miningModifier": 1.5034
  },
  {
   "id": "Hippocamp",
@@ -3757,7 +3917,8 @@
    "meanAnomaly": 322.3,
    "epoch": 2000.0,
    "localI": 0.3
-  }
+  },
+  "miningModifier": 1.4335
  },
  {
   "id": "Proteus",
@@ -3779,7 +3940,8 @@
    "meanAnomaly": 297.4,
    "epoch": 2000.0,
    "localI": 0.6
-  }
+  },
+  "miningModifier": 1.4164
  },
  {
   "id": "Nereid",
@@ -3800,7 +3962,8 @@
    "peri": 296.8,
    "meanAnomaly": 318.5,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2743
  },
  {
   "id": "Halimede",
@@ -3821,7 +3984,8 @@
    "peri": 157.9,
    "meanAnomaly": 135.8,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2722
  },
  {
   "id": "Sao",
@@ -3842,7 +4006,8 @@
    "peri": 93.5,
    "meanAnomaly": 178.5,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2719
  },
  {
   "id": "S2002N5",
@@ -3863,7 +4028,8 @@
    "peri": 59.1,
    "meanAnomaly": 303.2,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2719
  },
  {
   "id": "Laomedeia",
@@ -3884,7 +4050,8 @@
    "peri": 146.2,
    "meanAnomaly": 248.1,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2719
  },
  {
   "id": "Psamathe",
@@ -3905,7 +4072,8 @@
    "peri": 148.2,
    "meanAnomaly": 183.2,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2715
  },
  {
   "id": "Neso",
@@ -3926,7 +4094,8 @@
    "peri": 89.8,
    "meanAnomaly": 13.8,
    "epoch": 2019.998631
-  }
+  },
+  "miningModifier": 1.2715
  },
  {
   "id": "S2023N1",
@@ -3947,7 +4116,8 @@
    "peri": 100.79672,
    "meanAnomaly": 86.36403,
    "epoch": 2024.248634
-  }
+  },
+  "miningModifier": 1.2715
  },
  {
   "id": "Weywot",
@@ -3968,7 +4138,8 @@
    "peri": 97,
    "meanAnomaly": 79,
    "epoch": 2006.721424
-  }
+  },
+  "miningModifier": 1.5979
  },
  {
   "id": "Styx",
@@ -3990,7 +4161,8 @@
    "meanAnomaly": 358.1,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.5011
  },
  {
   "id": "Nix",
@@ -4012,7 +4184,8 @@
    "meanAnomaly": 338.2,
    "epoch": 2000.0,
    "localI": 0.0
-  }
+  },
+  "miningModifier": 1.5011
  },
  {
   "id": "Kerberos",
@@ -4034,7 +4207,8 @@
    "meanAnomaly": 276.1,
    "epoch": 2000.0,
    "localI": 0.4
-  }
+  },
+  "miningModifier": 1.5011
  },
  {
   "id": "Hydra",
@@ -4056,7 +4230,8 @@
    "meanAnomaly": 335.0,
    "epoch": 2000.0,
    "localI": 0.3
-  }
+  },
+  "miningModifier": 1.5011
  },
  {
   "id": "Namaka",
@@ -4077,7 +4252,8 @@
    "peri": 178.9,
    "meanAnomaly": 178.5,
    "epoch": 2008.402
-  }
+  },
+  "miningModifier": 1.5933
  },
  {
   "id": "Hiʻiaka",
@@ -4098,7 +4274,8 @@
    "peri": 154.1,
    "meanAnomaly": 152.8,
    "epoch": 2008.405202
-  }
+  },
+  "miningModifier": 1.5933
  },
  {
   "id": "S2004S31",
@@ -4253,7 +4430,8 @@
    "peri": 310.969916,
    "meanAnomaly": 254.249652,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7696
  },
  {
   "id": "3Juno",
@@ -4274,7 +4452,8 @@
    "peri": 247.948,
    "meanAnomaly": 119.146,
    "epoch": 2002.893
-  }
+  },
+  "miningModifier": 0.7746
  },
  {
   "id": "4Vesta",
@@ -4295,7 +4474,8 @@
    "peri": 151.19853,
    "meanAnomaly": 20.86384,
    "epoch": 2014.939083
-  }
+  },
+  "miningModifier": 0.794
  },
  {
   "id": "5Astraea",
@@ -4316,7 +4496,8 @@
    "peri": 358.3534,
    "meanAnomaly": 239.0456,
    "epoch": 2010.559
-  }
+  },
+  "miningModifier": 0.7796
  },
  {
   "id": "6Hebe",
@@ -4337,7 +4518,8 @@
    "peri": 239.3597,
    "meanAnomaly": 247.947,
    "epoch": 2005.903
-  }
+  },
+  "miningModifier": 0.7892
  },
  {
   "id": "7Iris",
@@ -4358,7 +4540,8 @@
    "peri": 145.44,
    "meanAnomaly": 269.531,
    "epoch": 2005.903
-  }
+  },
+  "miningModifier": 0.7921
  },
  {
   "id": "8Flora",
@@ -4379,7 +4562,8 @@
    "peri": 285.128,
    "meanAnomaly": 156.401,
    "epoch": 2005.903
-  }
+  },
+  "miningModifier": 0.8069
  },
  {
   "id": "9Metis",
@@ -4400,7 +4584,8 @@
    "peri": 5.489,
    "meanAnomaly": 274.183,
    "epoch": 2004.536
-  }
+  },
+  "miningModifier": 0.792
  },
  {
   "id": "10Hygiea",
@@ -4421,7 +4606,8 @@
    "peri": 312.32,
    "meanAnomaly": 152.18,
    "epoch": 2019.321
-  }
+  },
+  "miningModifier": 0.7551
  },
  {
   "id": "11Parthenope",
@@ -4442,7 +4628,8 @@
    "peri": 195.436,
    "meanAnomaly": 333.562,
    "epoch": 2004.536
-  }
+  },
+  "miningModifier": 0.7874
  },
  {
   "id": "12Victoria",
@@ -4463,7 +4650,8 @@
    "peri": 69.747,
    "meanAnomaly": 80.591,
    "epoch": 2004.536
-  }
+  },
+  "miningModifier": 0.7959
  },
  {
   "id": "13Egeria",
@@ -4484,7 +4672,8 @@
    "peri": 79.118806,
    "meanAnomaly": 88.616683,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7796
  },
  {
   "id": "14Irene",
@@ -4505,7 +4694,8 @@
    "peri": 96.473,
    "meanAnomaly": 326.489,
    "epoch": 2004.536
-  }
+  },
+  "miningModifier": 0.7791
  },
  {
   "id": "15Eunomia",
@@ -4526,7 +4716,8 @@
    "peri": 97.909,
    "meanAnomaly": 286.102,
    "epoch": 2006.449
-  }
+  },
+  "miningModifier": 0.7759
  },
  {
   "id": "16Psyche",
@@ -4547,7 +4738,8 @@
    "peri": 228.047,
    "meanAnomaly": 323.379,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7629
  },
  {
   "id": "17Thetis",
@@ -4568,7 +4760,8 @@
    "peri": 135.906,
    "meanAnomaly": 38.435,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7862
  },
  {
   "id": "18Melpomene",
@@ -4589,7 +4782,8 @@
    "peri": 227.975,
    "meanAnomaly": 205.245,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7989
  },
  {
   "id": "19Fortuna",
@@ -4610,7 +4804,8 @@
    "peri": 182.091,
    "meanAnomaly": 268.398,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7882
  },
  {
   "id": "20Massalia",
@@ -4631,7 +4826,8 @@
    "peri": 255.578,
    "meanAnomaly": 161.641,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7905
  },
  {
   "id": "21Lutetia",
@@ -4652,7 +4848,8 @@
    "peri": 250.227,
    "meanAnomaly": 75.393,
    "epoch": 2005.082
-  }
+  },
+  "miningModifier": 0.7886
  },
  {
   "id": "22Kalliope",
@@ -4673,7 +4870,8 @@
    "peri": 358.312408,
    "meanAnomaly": 350.328407,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7633
  },
  {
   "id": "23Thalia",
@@ -4694,7 +4892,8 @@
    "peri": 61.670824,
    "meanAnomaly": 216.402531,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7767
  },
  {
   "id": "24Themis",
@@ -4715,7 +4914,8 @@
    "peri": 109.221764,
    "meanAnomaly": 92.016956,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.755
  },
  {
   "id": "25Phocaea",
@@ -4736,7 +4936,8 @@
    "peri": 90.154,
    "meanAnomaly": 6.932,
    "epoch": 2006.449
-  }
+  },
+  "miningModifier": 0.791
  },
  {
   "id": "26Proserpina",
@@ -4757,7 +4958,8 @@
    "peri": 193.695,
    "meanAnomaly": 328.781,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.7752
  },
  {
   "id": "27Euterpe",
@@ -4778,7 +4980,8 @@
    "peri": 356.754,
    "meanAnomaly": 126.457,
    "epoch": 2006.449
-  }
+  },
+  "miningModifier": 0.7948
  },
  {
   "id": "28Bellona",
@@ -4799,7 +5002,8 @@
    "peri": 344.4219,
    "meanAnomaly": 311.1867,
    "epoch": 2010.559
-  }
+  },
+  "miningModifier": 0.7692
  },
  {
   "id": "29Amphitrite",
@@ -4820,7 +5024,8 @@
    "peri": 63.433,
    "meanAnomaly": 229.662,
    "epoch": 2006.449
-  }
+  },
+  "miningModifier": 0.781
  },
  {
   "id": "30Urania",
@@ -4841,7 +5046,8 @@
    "peri": 87.228095,
    "meanAnomaly": 13.67314,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7936
  },
  {
   "id": "31Euphrosyne",
@@ -4862,7 +5068,8 @@
    "peri": 61.996,
    "meanAnomaly": 14.5,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7548
  },
  {
   "id": "34Circe",
@@ -4883,7 +5090,8 @@
    "peri": 330.233,
    "meanAnomaly": 39.80474,
    "epoch": 2013.841
-  }
+  },
+  "miningModifier": 0.7735
  },
  {
   "id": "35Leukothea",
@@ -4904,7 +5112,8 @@
    "peri": 215.529702,
    "meanAnomaly": 346.881212,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7597
  },
  {
   "id": "36Atalante",
@@ -4925,7 +5134,8 @@
    "peri": 47.132,
    "meanAnomaly": 47.005,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7705
  },
  {
   "id": "37Fides",
@@ -4946,7 +5156,8 @@
    "peri": 62.330024,
    "meanAnomaly": 218.716298,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7758
  },
  {
   "id": "38Leda",
@@ -4967,7 +5178,8 @@
    "peri": 168.804,
    "meanAnomaly": 107.567,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7707
  },
  {
   "id": "39Laetitia",
@@ -4988,7 +5200,8 @@
    "peri": 209.56,
    "meanAnomaly": 58.261,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7695
  },
  {
   "id": "40Harmonia",
@@ -5009,7 +5222,8 @@
    "peri": 268.988,
    "meanAnomaly": 249.12,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.8012
  },
  {
   "id": "41Daphne",
@@ -5030,7 +5244,8 @@
    "peri": 46.239,
    "meanAnomaly": 247.5,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7697
  },
  {
   "id": "42Isis",
@@ -5051,7 +5266,8 @@
    "peri": 236.626,
    "meanAnomaly": 121.874,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7881
  },
  {
   "id": "43Ariadne",
@@ -5072,7 +5288,8 @@
    "peri": 15.948,
    "meanAnomaly": 101.582,
    "epoch": 2005.903
-  }
+  },
+  "miningModifier": 0.8067
  },
  {
   "id": "44Nysa",
@@ -5093,7 +5310,8 @@
    "peri": 342.5207,
    "meanAnomaly": 118.7432,
    "epoch": 2008.369
-  }
+  },
+  "miningModifier": 0.7894
  },
  {
   "id": "45Eugenia",
@@ -5114,7 +5332,8 @@
    "peri": 85.137,
    "meanAnomaly": 45.254,
    "epoch": 2005.903
-  }
+  },
+  "miningModifier": 0.7719
  },
  {
   "id": "46Hestia",
@@ -5135,7 +5354,8 @@
    "peri": 176.882,
    "meanAnomaly": 45.401,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7827
  },
  {
   "id": "47Aglaja",
@@ -5156,7 +5376,8 @@
    "peri": 314.589,
    "meanAnomaly": 225.007,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7646
  },
  {
   "id": "48Doris",
@@ -5177,7 +5398,8 @@
    "peri": 257.583,
    "meanAnomaly": 336.191,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7561
  },
  {
   "id": "49Pales",
@@ -5198,7 +5420,8 @@
    "peri": 109.804,
    "meanAnomaly": 274.69,
    "epoch": 2008.935
-  }
+  },
+  "miningModifier": 0.7566
  },
  {
   "id": "51Nemausa",
@@ -5219,7 +5442,8 @@
    "peri": 2.82,
    "meanAnomaly": 316.668,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7936
  },
  {
   "id": "52Europa",
@@ -5240,7 +5464,8 @@
    "peri": 343.553,
    "meanAnomaly": 70.73,
    "epoch": 2005.903
-  }
+  },
+  "miningModifier": 0.7564
  },
  {
   "id": "54Alexandra",
@@ -5261,7 +5486,8 @@
    "peri": 346.358144,
    "meanAnomaly": 230.778218,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7724
  },
  {
   "id": "55Pandora",
@@ -5282,7 +5508,8 @@
    "peri": 3.944,
    "meanAnomaly": 61.834,
    "epoch": 2015.485
-  }
+  },
+  "miningModifier": 0.7699
  },
  {
   "id": "56Melete",
@@ -5303,7 +5530,8 @@
    "peri": 103.648,
    "meanAnomaly": 267.781,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7786
  },
  {
   "id": "57Mnemosyne",
@@ -5324,7 +5552,8 @@
    "peri": 212.848,
    "meanAnomaly": 68.001,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7548
  },
  {
   "id": "59Elpis",
@@ -5345,7 +5574,8 @@
    "peri": 210.901,
    "meanAnomaly": 246.848,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7721
  },
  {
   "id": "62Erato",
@@ -5366,7 +5596,8 @@
    "peri": 277.801136,
    "meanAnomaly": 341.114835,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7555
  },
  {
   "id": "63Ausonia",
@@ -5387,7 +5618,8 @@
    "peri": 295.78,
    "meanAnomaly": 340.16,
    "epoch": 2017.6767
-  }
+  },
+  "miningModifier": 0.7914
  },
  {
   "id": "65Cybele",
@@ -5408,7 +5640,8 @@
    "peri": 105.757,
    "meanAnomaly": 279.683,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7474
  },
  {
   "id": "68Leto",
@@ -5429,7 +5662,8 @@
    "peri": 305.392,
    "meanAnomaly": 24.606,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7688
  },
  {
   "id": "69Hesperia",
@@ -5450,7 +5684,8 @@
    "peri": 289.34,
    "meanAnomaly": 185.728,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.7606
  },
  {
   "id": "76Freia",
@@ -5471,7 +5706,8 @@
    "peri": 254.07,
    "meanAnomaly": 299.268,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7477
  },
  {
   "id": "85Io",
@@ -5492,7 +5728,8 @@
    "peri": 122.293,
    "meanAnomaly": 206.947,
    "epoch": 2006.197
-  }
+  },
+  "miningModifier": 0.7754
  },
  {
   "id": "87Sylvia",
@@ -5513,7 +5750,8 @@
    "peri": 266.195,
    "meanAnomaly": 352.763,
    "epoch": 2004.531
-  }
+  },
+  "miningModifier": 0.7461
  },
  {
   "id": "88Thisbe",
@@ -5534,7 +5772,8 @@
    "peri": 36.591,
    "meanAnomaly": 165.454,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7695
  },
  {
   "id": "89Julia",
@@ -5555,7 +5794,8 @@
    "peri": 45.461,
    "meanAnomaly": 255.367,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7812
  },
  {
   "id": "92Undina",
@@ -5576,7 +5816,8 @@
    "peri": 239.494,
    "meanAnomaly": 6.12456,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7536
  },
  {
   "id": "93Minerva",
@@ -5597,7 +5838,8 @@
    "peri": 274.543,
    "meanAnomaly": 262.022,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.77
  },
  {
   "id": "94Aurora",
@@ -5618,7 +5860,8 @@
    "peri": 59.814,
    "meanAnomaly": 239.694,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7545
  },
  {
   "id": "95Arethusa",
@@ -5639,7 +5882,8 @@
    "peri": 154.196,
    "meanAnomaly": 250.185,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7575
  },
  {
   "id": "96Aegle",
@@ -5660,7 +5904,8 @@
    "peri": 206.967,
    "meanAnomaly": 354.814,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7578
  },
  {
   "id": "97Klotho",
@@ -5681,7 +5926,8 @@
    "peri": 268.542,
    "meanAnomaly": 267.7697,
    "epoch": 2023.1534
-  }
+  },
+  "miningModifier": 0.7746
  },
  {
   "id": "104Klymene",
@@ -5702,7 +5948,8 @@
    "peri": 32.134,
    "meanAnomaly": 101.498,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7547
  },
  {
   "id": "106Dione",
@@ -5723,7 +5970,8 @@
    "peri": 329.725,
    "meanAnomaly": 51.5257,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.754
  },
  {
   "id": "107Camilla",
@@ -5744,7 +5992,8 @@
    "peri": 309.877,
    "meanAnomaly": 1.746,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7464
  },
  {
   "id": "110Lydia",
@@ -5765,7 +6014,8 @@
    "peri": 283.499,
    "meanAnomaly": 348.344,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7712
  },
  {
   "id": "114Kassandra",
@@ -5786,7 +6036,8 @@
    "peri": 352.208,
    "meanAnomaly": 197.019,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.774
  },
  {
   "id": "117Lomia",
@@ -5807,7 +6058,8 @@
    "peri": 53.35358,
    "meanAnomaly": 282.369176,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7601
  },
  {
   "id": "120Lachesis",
@@ -5828,7 +6080,8 @@
    "peri": 232.822,
    "meanAnomaly": 56.2095,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7558
  },
  {
   "id": "121Hermione",
@@ -5849,7 +6102,8 @@
    "peri": 296.215,
    "meanAnomaly": 248.068,
    "epoch": 2006.997
-  }
+  },
+  "miningModifier": 0.7468
  },
  {
   "id": "127Johanna",
@@ -5870,7 +6124,8 @@
    "peri": 94.611,
    "meanAnomaly": 67.782,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7701
  },
  {
   "id": "128Nemesis",
@@ -5891,7 +6146,8 @@
    "peri": 303.86,
    "meanAnomaly": 215.699,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7704
  },
  {
   "id": "129Antigone",
@@ -5912,7 +6168,8 @@
    "peri": 111.076,
    "meanAnomaly": 97.3536,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7649
  },
  {
   "id": "130Elektra",
@@ -5933,7 +6190,8 @@
    "peri": 236.231,
    "meanAnomaly": 128.885,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7554
  },
  {
   "id": "132Aethra",
@@ -5954,7 +6212,8 @@
    "peri": 255.216,
    "meanAnomaly": 38.271,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7778
  },
  {
   "id": "135Hertha",
@@ -5975,7 +6234,8 @@
    "peri": 340.0687,
    "meanAnomaly": 224.5537,
    "epoch": 2010.559
-  }
+  },
+  "miningModifier": 0.789
  },
  {
   "id": "137Meliboea",
@@ -5996,7 +6256,8 @@
    "peri": 107.116,
    "meanAnomaly": 221.115,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7556
  },
  {
   "id": "139Juewa",
@@ -6017,7 +6278,8 @@
    "peri": 165.566,
    "meanAnomaly": 60.2817,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7689
  },
  {
   "id": "146Lucina",
@@ -6038,7 +6300,8 @@
    "peri": 146.982,
    "meanAnomaly": 198.102,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.772
  },
  {
   "id": "153Hilda",
@@ -6059,7 +6322,8 @@
    "peri": 39.14267,
    "meanAnomaly": 162.1932,
    "epoch": 2011.107
-  }
+  },
+  "miningModifier": 0.7389
  },
  {
   "id": "154Bertha",
@@ -6080,7 +6344,8 @@
    "peri": 159.722,
    "meanAnomaly": 125.046,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7534
  },
  {
   "id": "165Loreley",
@@ -6101,7 +6366,8 @@
    "peri": 347.29,
    "meanAnomaly": 125.88,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7556
  },
  {
   "id": "168Sibylla",
@@ -6122,7 +6388,8 @@
    "peri": 173.92,
    "meanAnomaly": 171.517,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7485
  },
  {
   "id": "185Eunike",
@@ -6143,7 +6410,8 @@
    "peri": 224.01,
    "meanAnomaly": 327.48,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.771
  },
  {
   "id": "187Lamberta",
@@ -6164,7 +6432,8 @@
    "peri": 196.93,
    "meanAnomaly": 217.42,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7715
  },
  {
   "id": "190Ismene",
@@ -6185,7 +6454,8 @@
    "peri": 271.47,
    "meanAnomaly": 134.92,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7388
  },
  {
   "id": "192Nausikaa",
@@ -6206,7 +6476,8 @@
    "peri": 30.067,
    "meanAnomaly": 94.342,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7908
  },
  {
   "id": "194Prokne",
@@ -6227,7 +6498,8 @@
    "peri": 163.24,
    "meanAnomaly": 42.282,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7774
  },
  {
   "id": "196Philomela",
@@ -6248,7 +6520,8 @@
    "peri": 195.69,
    "meanAnomaly": 276.49,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7558
  },
  {
   "id": "209Dido",
@@ -6269,7 +6542,8 @@
    "peri": 248.387,
    "meanAnomaly": 311.722,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7548
  },
  {
   "id": "216Kleopatra",
@@ -6290,7 +6564,8 @@
    "peri": 180.16,
    "meanAnomaly": 261.75,
    "epoch": 2017.126
-  }
+  },
+  "miningModifier": 0.7683
  },
  {
   "id": "221Eos",
@@ -6311,7 +6586,8 @@
    "peri": 193.56,
    "meanAnomaly": 66.5202,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7595
  },
  {
   "id": "230Athamantis",
@@ -6332,7 +6608,8 @@
    "peri": 139.121,
    "meanAnomaly": 116.194,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7923
  },
  {
   "id": "233Asterope",
@@ -6353,7 +6630,8 @@
    "peri": 125.128,
    "meanAnomaly": 138.789,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.775
  },
  {
   "id": "238Hypatia",
@@ -6374,7 +6652,8 @@
    "peri": 210.75,
    "meanAnomaly": 170,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7636
  },
  {
   "id": "241Germania",
@@ -6395,7 +6674,8 @@
    "peri": 80.6364,
    "meanAnomaly": 277.959,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7581
  },
  {
   "id": "246Asperina",
@@ -6416,7 +6696,8 @@
    "peri": 96.6218,
    "meanAnomaly": 172.414,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7732
  },
  {
   "id": "250Bettina",
@@ -6437,7 +6718,8 @@
    "peri": 75.77394,
    "meanAnomaly": 121.9044,
    "epoch": 2023.1534
-  }
+  },
+  "miningModifier": 0.755
  },
  {
   "id": "253Mathilde",
@@ -6458,7 +6740,8 @@
    "peri": 157.39642,
    "meanAnomaly": 170.584,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7756
  },
  {
   "id": "259Aletheia",
@@ -6479,7 +6762,8 @@
    "peri": 167.07,
    "meanAnomaly": 71.26,
    "epoch": 2015.489
-  }
+  },
+  "miningModifier": 0.7553
  },
  {
   "id": "279Thule",
@@ -6500,7 +6784,8 @@
    "peri": 29.396142,
    "meanAnomaly": 116.462224,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7366
  },
  {
   "id": "308Polyxo",
@@ -6521,7 +6806,8 @@
    "peri": 115.501,
    "meanAnomaly": 70.419,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7704
  },
  {
   "id": "323Brucia",
@@ -6542,7 +6828,8 @@
    "peri": 291.26,
    "meanAnomaly": 106.64,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.7923
  },
  {
   "id": "324Bamberga",
@@ -6563,7 +6850,8 @@
    "peri": 44.2409,
    "meanAnomaly": 225.419,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7738
  },
  {
   "id": "325Heidelberga",
@@ -6584,7 +6872,8 @@
    "peri": 68.563,
    "meanAnomaly": 7.209,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.753
  },
  {
   "id": "328Gudrun",
@@ -6605,7 +6894,8 @@
    "peri": 103.924,
    "meanAnomaly": 325.246,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.756
  },
  {
   "id": "334Chicago",
@@ -6626,7 +6916,8 @@
    "peri": 148.31,
    "meanAnomaly": 110.236,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7397
  },
  {
   "id": "336Lacadiera",
@@ -6647,7 +6938,8 @@
    "peri": 30.949,
    "meanAnomaly": 304.475,
    "epoch": 2023.1534
-  }
+  },
+  "miningModifier": 0.8025
  },
  {
   "id": "349Dembowska",
@@ -6668,7 +6960,8 @@
    "peri": 346.225,
    "meanAnomaly": 306.898,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7627
  },
  {
   "id": "354Eleonora",
@@ -6689,7 +6982,8 @@
    "peri": 5.5215,
    "meanAnomaly": 123.762,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7683
  },
  {
   "id": "356Liguria",
@@ -6710,7 +7004,8 @@
    "peri": 78.556,
    "meanAnomaly": 28.9708,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.77
  },
  {
   "id": "361Bononia",
@@ -6731,7 +7026,8 @@
    "peri": 68.3637,
    "meanAnomaly": 329.195,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.739
  },
  {
   "id": "372Palma",
@@ -6752,7 +7048,8 @@
    "peri": 115.582,
    "meanAnomaly": 275.769,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7547
  },
  {
   "id": "375Ursula",
@@ -6773,7 +7070,8 @@
    "peri": 342.146,
    "meanAnomaly": 189.032,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.7556
  },
  {
   "id": "386Siegena",
@@ -6794,7 +7092,8 @@
    "peri": 219.478,
    "meanAnomaly": 66.751,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7639
  },
  {
   "id": "391Ingeborg",
@@ -6815,7 +7114,8 @@
    "peri": 147.158971,
    "meanAnomaly": 104.475552,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7969
  },
  {
   "id": "409Aspasia",
@@ -6836,7 +7136,8 @@
    "peri": 353.72,
    "meanAnomaly": 260.362,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7797
  },
  {
   "id": "419Aurelia",
@@ -6857,7 +7158,8 @@
    "peri": 44.326,
    "meanAnomaly": 297.81,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7784
  },
  {
   "id": "423Diotima",
@@ -6878,7 +7180,8 @@
    "peri": 200.103,
    "meanAnomaly": 237.495,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7574
  },
  {
   "id": "433Eros",
@@ -6899,7 +7202,8 @@
    "peri": 178.82,
    "meanAnomaly": 71.28,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.9168
  },
  {
   "id": "434Hungaria",
@@ -6920,7 +7224,8 @@
    "peri": 123.8,
    "meanAnomaly": 221.145,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.8338
  },
  {
   "id": "444Gyptis",
@@ -6941,7 +7246,8 @@
    "peri": 154.984,
    "meanAnomaly": 11.8852,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7694
  },
  {
   "id": "451Patientia",
@@ -6962,7 +7268,8 @@
    "peri": 337.06,
    "meanAnomaly": 279.3,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7577
  },
  {
   "id": "475Ocllo",
@@ -6983,7 +7290,8 @@
    "peri": 305.68,
    "meanAnomaly": 174.037,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7786
  },
  {
   "id": "488Kreusa",
@@ -7004,7 +7312,8 @@
    "peri": 71.36554,
    "meanAnomaly": 197.66463,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7542
  },
  {
   "id": "490Veritas",
@@ -7025,7 +7334,8 @@
    "peri": 194.39,
    "meanAnomaly": 31.094,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7541
  },
  {
   "id": "511Davida",
@@ -7046,7 +7356,8 @@
    "peri": 338.694,
    "meanAnomaly": 124.997,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7543
  },
  {
   "id": "512Taurinensis",
@@ -7067,7 +7378,8 @@
    "peri": 249.36,
    "meanAnomaly": 30.908,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.808
  },
  {
   "id": "532Herculina",
@@ -7088,7 +7400,8 @@
    "peri": 76.097,
    "meanAnomaly": 131.039,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7693
  },
  {
   "id": "536Merapi",
@@ -7109,7 +7422,8 @@
    "peri": 295.862,
    "meanAnomaly": 302.4,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.746
  },
  {
   "id": "566Stereoskopia",
@@ -7130,7 +7444,8 @@
    "peri": 298.527,
    "meanAnomaly": 177.298,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7484
  },
  {
   "id": "588Achilles",
@@ -7151,7 +7466,8 @@
    "peri": 132.77,
    "meanAnomaly": 157.779,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7366
  },
  {
   "id": "596Scheila",
@@ -7172,7 +7488,8 @@
    "peri": 175.501205,
    "meanAnomaly": 335.510606,
    "epoch": 2022.057534
-  }
+  },
+  "miningModifier": 0.7626
  },
  {
   "id": "617Patroclus",
@@ -7193,7 +7510,8 @@
    "peri": 307.8,
    "meanAnomaly": 315.33,
    "epoch": 2011.107
-  }
+  },
+  "miningModifier": 0.7367
  },
  {
   "id": "624Hektor",
@@ -7214,7 +7532,8 @@
    "peri": 183.579,
    "meanAnomaly": 94.752,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7367
  },
  {
   "id": "654Zelinda",
@@ -7235,7 +7554,8 @@
    "peri": 214.008,
    "meanAnomaly": 51.9052,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7988
  },
  {
   "id": "699Hela",
@@ -7256,7 +7576,8 @@
    "peri": 91.479,
    "meanAnomaly": 3.93957,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7776
  },
  {
   "id": "702Alauda",
@@ -7277,7 +7598,8 @@
    "peri": 349.51,
    "meanAnomaly": 242.49,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7534
  },
  {
   "id": "704Interamnia",
@@ -7298,7 +7620,8 @@
    "peri": 95.76,
    "meanAnomaly": 119.95,
    "epoch": 2008.915
-  }
+  },
+  "miningModifier": 0.7577
  },
  {
   "id": "747Winchester",
@@ -7319,7 +7642,8 @@
    "peri": 275.511,
    "meanAnomaly": 59.0474,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7598
  },
  {
   "id": "762Pulcova",
@@ -7340,7 +7664,8 @@
    "peri": 189.54,
    "meanAnomaly": 348.62,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7546
  },
  {
   "id": "776Berbericia",
@@ -7361,7 +7686,8 @@
    "peri": 307.132,
    "meanAnomaly": 235.69,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7625
  },
  {
   "id": "790Praetoria",
@@ -7382,7 +7708,8 @@
    "peri": 38.637,
    "meanAnomaly": 87.1149,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7478
  },
  {
   "id": "911Agamemnon",
@@ -7403,7 +7730,8 @@
    "peri": 81.402,
    "meanAnomaly": 186.643,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.737
  },
  {
   "id": "944Hidalgo",
@@ -7424,7 +7752,8 @@
    "peri": 56.569,
    "meanAnomaly": 346.285,
    "epoch": 2004.536
-  }
+  },
+  "miningModifier": 0.7401
  },
  {
   "id": "1036Ganymed",
@@ -7445,7 +7774,8 @@
    "peri": 132.429,
    "meanAnomaly": 152.459,
    "epoch": 2004.809
-  }
+  },
+  "miningModifier": 0.7748
  },
  {
   "id": "1143Odysseus",
@@ -7466,7 +7796,8 @@
    "peri": 236.95,
    "meanAnomaly": 117.81,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 0.7369
  },
  {
   "id": "1170Siva",
@@ -7487,7 +7818,8 @@
    "peri": 59.46174,
    "meanAnomaly": 264.066544,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7965
  },
  {
   "id": "1172Aneas",
@@ -7508,7 +7840,8 @@
    "peri": 49.74433,
    "meanAnomaly": 7.02424,
    "epoch": 2010.559
-  }
+  },
+  "miningModifier": 0.7366
  },
  {
   "id": "1173Anchises",
@@ -7529,7 +7862,8 @@
    "peri": 40.85445,
    "meanAnomaly": 333.9271,
    "epoch": 2011.107
-  }
+  },
+  "miningModifier": 0.7372
  },
  {
   "id": "1437Diomedes",
@@ -7550,7 +7884,8 @@
    "peri": 131.59,
    "meanAnomaly": 183.828,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 0.7366
  },
  {
   "id": "1580Betulia",
@@ -7571,7 +7906,8 @@
    "peri": 159.73,
    "meanAnomaly": 19.64,
    "epoch": 2025.3424
-  }
+  },
+  "miningModifier": 0.8075
  },
  {
   "id": "1627Ivar",
@@ -7592,7 +7928,8 @@
    "peri": 167.76,
    "meanAnomaly": 229.02,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.8442
  },
  {
   "id": "1866Sisyphus",
@@ -7613,7 +7950,8 @@
    "peri": 293.09,
    "meanAnomaly": 85.918,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.8402
  },
  {
   "id": "1867Deiphobus",
@@ -7634,7 +7972,8 @@
    "peri": 1.06832,
    "meanAnomaly": 55.056898,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.7364
  },
  {
   "id": "1870Glaukos",
@@ -7655,7 +7994,8 @@
    "peri": 130.22,
    "meanAnomaly": 199.18,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.7368
  },
  {
   "id": "1911Schubart",
@@ -7676,7 +8016,8 @@
    "peri": 181.75,
    "meanAnomaly": 136.84,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.7389
  },
  {
   "id": "1917Cuyo",
@@ -7697,7 +8038,8 @@
    "peri": 194.56,
    "meanAnomaly": 97.51,
    "epoch": 2025.3424
-  }
+  },
+  "miningModifier": 0.8117
  },
  {
   "id": "1951Lick",
@@ -7718,7 +8060,8 @@
    "peri": 140.52,
    "meanAnomaly": 221.32,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.9335
  },
  {
   "id": "2060Chiron",
@@ -7739,7 +8082,8 @@
    "peri": 339.98,
    "meanAnomaly": 94.716,
    "epoch": 2009.463
-  }
+  },
+  "miningModifier": 0.8832
  },
  {
   "id": "2064Thomsen",
@@ -7760,7 +8104,8 @@
    "peri": 2.7479,
    "meanAnomaly": 142.3,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.809
  },
  {
   "id": "2099Öpik",
@@ -7781,7 +8126,8 @@
    "peri": 159.383207,
    "meanAnomaly": 273.877056,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7982
  },
  {
   "id": "2204Lyyli",
@@ -7802,7 +8148,8 @@
    "peri": 283.25,
    "meanAnomaly": 350.25,
    "epoch": 2017.676712
-  }
+  },
+  "miningModifier": 0.7789
  },
  {
   "id": "2212Hephaistos",
@@ -7823,7 +8170,8 @@
    "peri": 209.430157,
    "meanAnomaly": 61.576293,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.8106
  },
  {
   "id": "2335James",
@@ -7844,7 +8192,8 @@
    "peri": 79.539655,
    "meanAnomaly": 147.728708,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.8142
  },
  {
   "id": "3200Phaethon",
@@ -7866,7 +8215,8 @@
    "peri": 322.19,
    "meanAnomaly": 313.94,
    "epoch": 2019.3205
-  }
+  },
+  "miningModifier": 0.9679
  },
  {
   "id": "3317Paris",
@@ -7887,7 +8237,8 @@
    "peri": 150.79805,
    "meanAnomaly": 33.62648,
    "epoch": 2023.1534
-  }
+  },
+  "miningModifier": 0.7368
  },
  {
   "id": "3353Jarvis",
@@ -7908,7 +8259,8 @@
    "peri": 34.976142,
    "meanAnomaly": 319.073396,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.8442
  },
  {
   "id": "3443Leetsungdao",
@@ -7929,7 +8281,8 @@
    "peri": 112.923878,
    "meanAnomaly": 209.565227,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7915
  },
  {
   "id": "3451Mentor",
@@ -7950,7 +8303,8 @@
    "peri": 131.435,
    "meanAnomaly": 28.6756,
    "epoch": 2023.1534
-  }
+  },
+  "miningModifier": 0.7365
  },
  {
   "id": "3552DonQuixote",
@@ -7971,7 +8325,8 @@
    "peri": 316.491565,
    "meanAnomaly": 330.620146,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7366
  },
  {
   "id": "3674Erbisbuhl",
@@ -7992,7 +8347,8 @@
    "peri": 98.22826,
    "meanAnomaly": 41.879229,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7939
  },
  {
   "id": "3737Beckman",
@@ -8013,7 +8369,8 @@
    "peri": 85.512719,
    "meanAnomaly": 92.939797,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7906
  },
  {
   "id": "3753Cruithne",
@@ -8034,7 +8391,8 @@
    "peri": 43.883016,
    "meanAnomaly": 182.132444,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.0806
  },
  {
   "id": "4222Nancita",
@@ -8055,7 +8413,8 @@
    "peri": 217.862375,
    "meanAnomaly": 196.553469,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7934
  },
  {
   "id": "4558Janesick",
@@ -8076,7 +8435,8 @@
    "peri": 94.392072,
    "meanAnomaly": 153.239348,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.8072
  },
  {
   "id": "4954Eric",
@@ -8097,7 +8457,8 @@
    "peri": 52.429,
    "meanAnomaly": 314.18,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 0.8271
  },
  {
   "id": "5145Pholus",
@@ -8118,7 +8479,8 @@
    "peri": 354.780906,
    "meanAnomaly": 136.500403,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.0346
  },
  {
   "id": "5230Asahina",
@@ -8139,7 +8501,8 @@
    "peri": 266.352547,
    "meanAnomaly": 81.329448,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7912
  },
  {
   "id": "5731Zeus",
@@ -8160,7 +8523,8 @@
    "peri": 218.447627,
    "meanAnomaly": 50.704617,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.8013
  },
  {
   "id": "6500Kodaira",
@@ -8181,7 +8545,8 @@
    "peri": 255.348824,
    "meanAnomaly": 108.595664,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7702
  },
  {
   "id": "7066Nessus",
@@ -8202,7 +8567,8 @@
    "peri": 170.478,
    "meanAnomaly": 72.524,
    "epoch": 2016.578
-  }
+  },
+  "miningModifier": 1.1357
  },
  {
   "id": "7092Cadmus",
@@ -8223,7 +8589,8 @@
    "peri": 94.782682,
    "meanAnomaly": 293.483803,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.7815
  },
  {
   "id": "7096Napier",
@@ -8244,7 +8611,8 @@
    "peri": 258.070974,
    "meanAnomaly": 48.92871,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7691
  },
  {
   "id": "7505Furusho",
@@ -8265,7 +8633,8 @@
    "peri": 288.003912,
    "meanAnomaly": 324.928108,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7761
  },
  {
   "id": "8373Stephengould",
@@ -8286,7 +8655,8 @@
    "peri": 55.34598,
    "meanAnomaly": 235.736876,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7511
  },
  {
   "id": "8405Asbolus",
@@ -8307,7 +8677,8 @@
    "peri": 290.07,
    "meanAnomaly": 68.836,
    "epoch": 2017.126
-  }
+  },
+  "miningModifier": 0.9802
  },
  {
   "id": "10199Chariklo",
@@ -8328,7 +8699,8 @@
    "peri": 242.2,
    "meanAnomaly": 68.918,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 0.9301
  },
  {
   "id": "10370Hylonome",
@@ -8349,7 +8721,8 @@
    "peri": 6.7926,
    "meanAnomaly": 61.91,
    "epoch": 2017.126
-  }
+  },
+  "miningModifier": 1.1497
  },
  {
   "id": "14222Asteroid",
@@ -8370,7 +8743,8 @@
    "peri": 84.875704,
    "meanAnomaly": 308.448923,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7564
  },
  {
   "id": "15760Albion",
@@ -8391,7 +8765,8 @@
    "peri": 0.6029,
    "meanAnomaly": 33.562,
    "epoch": 2019.320548
-  }
+  },
+  "miningModifier": 1.6071
  },
  {
   "id": "15789KBO",
@@ -8412,7 +8787,8 @@
    "peri": 316.2,
    "meanAnomaly": 66.186,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.4991
  },
  {
   "id": "15810Arawn",
@@ -8433,7 +8809,8 @@
    "peri": 103.562242,
    "meanAnomaly": 39.0528,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.4992
  },
  {
   "id": "25916Asteroid",
@@ -8454,7 +8831,8 @@
    "peri": 199.698905,
    "meanAnomaly": 282.567801,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7807
  },
  {
   "id": "26760Asteroid",
@@ -8475,7 +8853,8 @@
    "peri": 155.14,
    "meanAnomaly": 330.1,
    "epoch": 2025.3424
-  }
+  },
+  "miningModifier": 0.7656
  },
  {
   "id": "31824Elatus",
@@ -8496,7 +8875,8 @@
    "peri": 281.930061,
    "meanAnomaly": 224.123872,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.841
  },
  {
   "id": "32532Thereus",
@@ -8517,7 +8897,8 @@
    "peri": 86.3223,
    "meanAnomaly": 192.91,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.8183
  },
  {
   "id": "35671KBO",
@@ -8538,7 +8919,8 @@
    "peri": 262.470105,
    "meanAnomaly": 305.231466,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.4653
  },
  {
   "id": "38628Huya",
@@ -8559,7 +8941,8 @@
    "peri": 67.576,
    "meanAnomaly": 1.5319,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5047
  },
  {
   "id": "49036Pelion",
@@ -8580,7 +8963,8 @@
    "peri": 152.007,
    "meanAnomaly": 101.575,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.0256
  },
  {
   "id": "52762Asteroid",
@@ -8601,7 +8985,8 @@
    "peri": 254.501485,
    "meanAnomaly": 284.243623,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.7899
  },
  {
   "id": "52872Okyrhoe",
@@ -8622,7 +9007,8 @@
    "peri": 337.958,
    "meanAnomaly": 143.232,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.7752
  },
  {
   "id": "52975Cyllarus",
@@ -8643,7 +9029,8 @@
    "peri": 300.77,
    "meanAnomaly": 75.673,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.1741
  },
  {
   "id": "53311Deucalion",
@@ -8664,7 +9051,8 @@
    "peri": 242.806241,
    "meanAnomaly": 310.417119,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.6111
  },
  {
   "id": "53319Asteroid",
@@ -8685,7 +9073,8 @@
    "peri": 166.81985,
    "meanAnomaly": 140.972705,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.7717
  },
  {
   "id": "54598Bienor",
@@ -8706,7 +9095,8 @@
    "peri": 152.579633,
    "meanAnomaly": 351.637907,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.9485
  },
  {
   "id": "55576Amycus",
@@ -8727,7 +9117,8 @@
    "peri": 239.17,
    "meanAnomaly": 37.041,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.1495
  },
  {
   "id": "60558Echeclus",
@@ -8748,7 +9139,8 @@
    "peri": 162.804,
    "meanAnomaly": 24.47205,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.8189
  },
  {
   "id": "83982Crantor",
@@ -8769,7 +9161,8 @@
    "peri": 93.333565,
    "meanAnomaly": 89.55471,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.0148
  },
  {
   "id": "84719KBO",
@@ -8790,7 +9183,8 @@
    "peri": 287.87,
    "meanAnomaly": 73.453,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.4973
  },
  {
   "id": "84922KBO",
@@ -8811,7 +9205,8 @@
    "peri": 114.317,
    "meanAnomaly": 15.535,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.5
  },
  {
   "id": "88263Asteroid",
@@ -8832,7 +9227,8 @@
    "peri": 241.58111,
    "meanAnomaly": 89.702822,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.8169
  },
  {
   "id": "89830Asteroid",
@@ -8853,7 +9249,8 @@
    "peri": 5.851523,
    "meanAnomaly": 24.893576,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.8188
  },
  {
   "id": "95626Centaur",
@@ -8874,7 +9271,8 @@
    "peri": 154.871,
    "meanAnomaly": 354.07,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.1043
  },
  {
   "id": "97514Asteroid",
@@ -8895,7 +9293,8 @@
    "peri": 119.178114,
    "meanAnomaly": 74.466477,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.8253
  },
  {
   "id": "101742Asteroid",
@@ -8916,7 +9315,8 @@
    "peri": 88.161447,
    "meanAnomaly": 142.801869,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7921
  },
  {
   "id": "102528Asteroid",
@@ -8937,7 +9337,8 @@
    "peri": 182,
    "meanAnomaly": 195.96,
    "epoch": 2025.3424
-  }
+  },
+  "miningModifier": 0.7696
  },
  {
   "id": "119951KBO",
@@ -8958,7 +9359,8 @@
    "peri": 78.473164,
    "meanAnomaly": 270.267424,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.4804
  },
  {
   "id": "120061Centaur",
@@ -8979,7 +9381,8 @@
    "peri": 116.5876,
    "meanAnomaly": 41.5617,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.0474
  },
  {
   "id": "120348KBO",
@@ -9000,7 +9403,8 @@
    "peri": 359.71,
    "meanAnomaly": 265.93,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.4839
  },
  {
   "id": "136204Centaur",
@@ -9021,7 +9425,8 @@
    "peri": 70.858,
    "meanAnomaly": 25.2857,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.0309
  },
  {
   "id": "144897KBO",
@@ -9042,7 +9447,8 @@
    "peri": 147.96,
    "meanAnomaly": 99.606,
    "epoch": 2016.575
-  }
+  },
+  "miningModifier": 1.4859
  },
  {
   "id": "145453KBO",
@@ -9063,7 +9469,8 @@
    "peri": 281.597462,
    "meanAnomaly": 54.703151,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 1.5996
  },
  {
   "id": "175113KBO",
@@ -9084,7 +9491,8 @@
    "peri": 84.2,
    "meanAnomaly": 165.41,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.485
  },
  {
   "id": "248835Centaur",
@@ -9105,7 +9513,8 @@
    "peri": 70.625,
    "meanAnomaly": 19.679,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.0759
  },
  {
   "id": "281371Centaur",
@@ -9126,7 +9535,8 @@
    "peri": 141.814,
    "meanAnomaly": 22.311,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.9045
  },
  {
   "id": "301842Asteroid",
@@ -9147,7 +9557,8 @@
    "peri": 94.513131,
    "meanAnomaly": 331.170463,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7686
  },
  {
   "id": "301964Asteroid",
@@ -9168,7 +9579,8 @@
    "peri": 115.752622,
    "meanAnomaly": 173.061276,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7355
  },
  {
   "id": "309239Centaur",
@@ -9189,7 +9601,8 @@
    "peri": 95.684,
    "meanAnomaly": 66.98,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.2724
  },
  {
   "id": "310071Centaur",
@@ -9210,7 +9623,8 @@
    "peri": 108.067646,
    "meanAnomaly": 30.095028,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.2622
  },
  {
   "id": "315898Centaur",
@@ -9231,7 +9645,8 @@
    "peri": 68.923,
    "meanAnomaly": 79.666,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 0.7762
  },
  {
   "id": "316179Centaur",
@@ -9252,7 +9667,8 @@
    "peri": 226.04,
    "meanAnomaly": 44.262,
    "epoch": 2016.575
-  }
+  },
+  "miningModifier": 1.2893
  },
  {
   "id": "342842Centaur",
@@ -9273,7 +9689,8 @@
    "peri": 330.92159,
    "meanAnomaly": 59.06555,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.8381
  },
  {
   "id": "385571Otrera",
@@ -9294,7 +9711,8 @@
    "peri": 7.0511,
    "meanAnomaly": 348.6,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.27
  },
  {
   "id": "405058Asteroid",
@@ -9315,7 +9733,8 @@
    "peri": 53.610281,
    "meanAnomaly": 215.678372,
    "epoch": 2026.435318
-  }
+  },
+  "miningModifier": 0.7445
  },
  {
   "id": "447178Centaur",
@@ -9336,7 +9755,8 @@
    "peri": 326.423919,
    "meanAnomaly": 341.975758,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.2422
  },
  {
   "id": "469306KBO",
@@ -9357,7 +9777,8 @@
    "peri": 143.51,
    "meanAnomaly": 250.48,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.6071
  },
  {
   "id": "469372KBO",
@@ -9378,7 +9799,8 @@
    "peri": 41.215,
    "meanAnomaly": 154.29,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.4952
  },
  {
   "id": "471288KBO",
@@ -9399,7 +9821,8 @@
    "peri": 214.93,
    "meanAnomaly": 70.965,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.6115
  },
  {
   "id": "472651Centaur",
@@ -9420,7 +9843,8 @@
    "peri": 238.750425,
    "meanAnomaly": 339.365391,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.0051
  },
  {
   "id": "499514KBO",
@@ -9441,7 +9865,8 @@
    "peri": 244.115366,
    "meanAnomaly": 250.916796,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.5739
  },
  {
   "id": "514041Asteroid",
@@ -9462,7 +9887,8 @@
    "peri": 333.077204,
    "meanAnomaly": 84.577787,
    "epoch": 2025.890411
-  }
+  },
+  "miningModifier": 0.7637
  },
  {
   "id": "523643Centaur",
@@ -9483,7 +9909,8 @@
    "peri": 2.306025,
    "meanAnomaly": 332.263936,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.4992
  },
  {
   "id": "523695Centaur",
@@ -9504,7 +9931,8 @@
    "peri": 330.556813,
    "meanAnomaly": 122.084331,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.3489
  },
  {
   "id": "523727Centaur",
@@ -9525,7 +9953,8 @@
    "peri": 232.787696,
    "meanAnomaly": 313.09393,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.1059
  },
  {
   "id": "556068KBO",
@@ -9546,7 +9975,8 @@
    "peri": 297.144852,
    "meanAnomaly": 257.124004,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.5005
  },
  {
   "id": "556416KBO",
@@ -9567,7 +9997,8 @@
    "peri": 260.289567,
    "meanAnomaly": 78.120585,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.6721
  },
  {
   "id": "562274Centaur",
@@ -9588,7 +10019,8 @@
    "peri": 49.705229,
    "meanAnomaly": 339.645806,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.2152
  },
  {
   "id": "578993KBO",
@@ -9609,7 +10041,8 @@
    "peri": 317.553766,
    "meanAnomaly": 214.652218,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.5032
  },
  {
   "id": "612243Centaur",
@@ -9630,7 +10063,8 @@
    "peri": 172.224062,
    "meanAnomaly": 78.661463,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.2794
  },
  {
   "id": "613490Centaur",
@@ -9651,7 +10085,8 @@
    "peri": 14.729701,
    "meanAnomaly": 283.412178,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.2742
  },
  {
   "id": "636872Centaur",
@@ -9672,7 +10107,8 @@
    "peri": 280.483284,
    "meanAnomaly": 103.656549,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.0068
  },
  {
   "id": "2008LC18Centaur",
@@ -9693,7 +10129,8 @@
    "peri": 8.169,
    "meanAnomaly": 179.96,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.2677
  },
  {
   "id": "2010THCentaur",
@@ -9714,7 +10151,8 @@
    "peri": 209.84,
    "meanAnomaly": 60.855,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 0.9923
  },
  {
   "id": "2011GN27Centaur",
@@ -9735,7 +10173,8 @@
    "peri": 32.701826,
    "meanAnomaly": 178.621975,
    "epoch": 2011.254795
-  }
+  },
+  "miningModifier": 0.9291
  },
  {
   "id": "2011HM102Centaur",
@@ -9756,7 +10195,8 @@
    "peri": 149.92,
    "meanAnomaly": 31.306,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.2713
  },
  {
   "id": "2011MM4Centaur",
@@ -9777,7 +10217,8 @@
    "peri": 6.809,
    "meanAnomaly": 47.19,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.0542
  },
  {
   "id": "2011QF99Centaur",
@@ -9798,7 +10239,8 @@
    "peri": 287.63,
    "meanAnomaly": 277.47,
    "epoch": 2016.033
-  }
+  },
+  "miningModifier": 1.0061
  },
  {
   "id": "2013KY18Centaur",
@@ -9819,7 +10261,8 @@
    "peri": 268.803,
    "meanAnomaly": 279.026,
    "epoch": 2017.674
-  }
+  },
+  "miningModifier": 1.2759
  },
  {
   "id": "2015AH281Centaur",
@@ -9840,7 +10283,8 @@
    "peri": 354.145838,
    "meanAnomaly": 202.167067,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.4572
  },
  {
   "id": "2015QW23KBO",
@@ -9861,7 +10305,8 @@
    "peri": 100.808794,
    "meanAnomaly": 113.16544,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 1.702
  },
  {
   "id": "Leleakuhonua",
@@ -9899,7 +10344,8 @@
    "peri": 152.982167,
    "meanAnomaly": 7.631696,
    "epoch": 1995.775342
-  }
+  },
+  "miningModifier": 1.1736
  },
  {
   "id": "Neujmin",
@@ -9920,7 +10366,8 @@
    "peri": 347.467431,
    "meanAnomaly": 40.724449,
    "epoch": 2023.282192
-  }
+  },
+  "miningModifier": 0.753
  },
  {
   "id": "Loneos",
@@ -9941,7 +10388,8 @@
    "peri": 116.419511,
    "meanAnomaly": 357.96382,
    "epoch": 2001.928767
-  }
+  },
+  "miningModifier": 0.8742
  },
  {
   "id": "Levy",
@@ -9962,7 +10410,8 @@
    "peri": 41.478818,
    "meanAnomaly": 3.336757,
    "epoch": 1991.994521
-  }
+  },
+  "miningModifier": 0.8855
  },
  {
   "id": "Halley",
@@ -9983,7 +10432,8 @@
    "peri": 112.257792,
    "meanAnomaly": 274.140492,
    "epoch": 1968.005464
-  }
+  },
+  "miningModifier": 0.9791
  },
  {
   "id": "Gunn",
@@ -10004,7 +10454,8 @@
    "peri": 213.568017,
    "meanAnomaly": 28.123859,
    "epoch": 2018.391781
-  }
+  },
+  "miningModifier": 0.7399
  },
  {
   "id": "Tempel",
@@ -10025,7 +10476,8 @@
    "peri": 179.197275,
    "meanAnomaly": 336.585444,
    "epoch": 2016.223135
-  }
+  },
+  "miningModifier": 0.7549
  },
  {
   "id": "ArendRigaux",
@@ -10046,7 +10498,8 @@
    "peri": 332.790534,
    "meanAnomaly": 3.359607,
    "epoch": 2011.863014
-  }
+  },
+  "miningModifier": 0.7447
  },
  {
   "id": "Machholz",
@@ -10067,7 +10520,8 @@
    "peri": 14.792919,
    "meanAnomaly": 340.993923,
    "epoch": 2017.545205
-  }
+  },
+  "miningModifier": 0.7586
  },
  {
   "id": "Encke",
@@ -10088,7 +10542,8 @@
    "peri": 186.562694,
    "meanAnomaly": 341.432284,
    "epoch": 2017.019178
-  }
+  },
+  "miningModifier": 0.8057
  },
  {
   "id": "PonsBrooks",
@@ -10109,7 +10564,8 @@
    "peri": 198.987981,
    "meanAnomaly": 356.940525,
    "epoch": 2023.70137
-  }
+  },
+  "miningModifier": 0.9619
  },
  {
   "id": "Kowal",
@@ -10130,7 +10586,8 @@
    "peri": 174.191914,
    "meanAnomaly": 187.190469,
    "epoch": 2014.975342
-  }
+  },
+  "miningModifier": 0.7438
  },
  {
   "id": "Cineos",

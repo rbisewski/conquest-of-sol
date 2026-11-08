@@ -76,6 +76,8 @@ import UserSearch from "@lucide/svelte/icons/user-search";
 import Users from "@lucide/svelte/icons/users";
 import X from "@lucide/svelte/icons/x";
 import Zap from "@lucide/svelte/icons/zap";
+import ZapOff from "@lucide/svelte/icons/zap-off";
+import TriangleAlert from "@lucide/svelte/icons/triangle-alert";
 import AntimatterIcon from "./AntimatterIcon.svelte";
 import CrewIcon from "./CrewIcon.svelte";
 import ExoticsIcon from "./ExoticsIcon.svelte";
@@ -107,6 +109,8 @@ export const icons = {
   probe: ProbeIcon,
   power: PowerIcon,
   crew: CrewIcon,
+  powerOff: ZapOff,
+  warning: TriangleAlert,
   investment: Coins,
   corruption: HandCoins,
   democracy: Landmark,

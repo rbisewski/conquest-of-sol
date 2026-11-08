@@ -10,6 +10,7 @@ import type { Content, DifficultyId, HabModuleDef, HabOrbitDef, MinedResource, M
 import { detExp, detPow } from "./detmath";
 import type { Check } from "./diplomacy";
 import { FormulaBuilder, type Breakdown } from "./formula";
+import { missionControlUsed } from "./habs";
 import { addLog, factionState } from "./lookup";
 import { spaceBody, yearsSinceJ2000 } from "./orbits";
 import { activeEffects, modifierProduct } from "./research";
@@ -174,7 +175,7 @@ export function delivery(state: GameState, content: Content, factionId: string, 
  * Whether the faction can found a hab at a destination with boost from the Earth: the body or
  * orbit is open, the site is free (or the orbit has room for another station), it has the core's
  * project, it has prospected the body (for a base), it has rockets for anything beyond low Earth
- * orbit, and it has the boost to send the core.
+ * orbit, room in its mission control for the core, and the boost to send the core.
  */
 export function checkFoundHab(state: GameState, content: Content, factionId: string, destination: Destination): Check {
   const faction = factionState(state, factionId);
@@ -201,6 +202,9 @@ export function checkFoundHab(state: GameState, content: Content, factionId: str
       .sort((a, b) => a.kps - b.kps)[0]!;
     return { ok: false, reason: `Needs ${rockets.name} to send it beyond low Earth orbit` };
   }
+  const mc = -(core.missionControl ?? 0);
+  const used = missionControlUsed(state, content, factionId);
+  if (used + mc > faction.resources.missionControl) return { ok: false, reason: `Needs ${mc} mission control: we use ${used} of our ${+faction.resources.missionControl.toFixed(1)}` };
   if (faction.resources.boost < sent.boost.value) return { ok: false, reason: `Needs ${sent.boost.value.toFixed(1)} boost` };
   return { ok: true };
 }

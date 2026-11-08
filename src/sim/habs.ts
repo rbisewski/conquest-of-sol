@@ -3,18 +3,25 @@
 // built, modules go into the slots its tier gives (4, 12 or 20), paid in space resources or sent
 // up with boost, and are built side by side. A module in a filled slot can be upgraded to the next
 // tier of its line for two thirds of its cost and time, and keeps working until the upgrade is
-// done. Each module's mission control use counts against the faction's mission control.
+// done. A base's first slot is its mining slot, where its mine works the site. Working modules
+// take power, mission control and upkeep, paid each day from the faction's resources (boost
+// stands in for missing space resources); running short of either brings malfunctions.
 
 import { dateOfDay, formatLongDate } from "./calendar";
-import type { Content, HabModuleDef, ResourceAmounts } from "./content";
+import type { Content, HabModuleDef, MinedResource, ModifierContext, ResourceAmounts } from "./content";
 import type { Check } from "./diplomacy";
-import type { Breakdown } from "./formula";
+import { FormulaBuilder, type Breakdown } from "./formula";
 import { addLog, factionState, newId } from "./lookup";
 import { detAtan2 } from "./detmath";
 import { spaceBody } from "./orbits";
-import { checkFoundHab, delivery, foundingCore } from "./space";
-import type { GameState, HabModuleState, HabState, Resources } from "./state";
+import { modifierProduct, modifierSum } from "./research";
+import { nextFloat, nextInt, weightedPick } from "./rng";
+import { checkFoundHab, delivery, foundingCore, MINED_RESOURCES } from "./space";
+import { SPACE_RESOURCES, type GameState, type HabModuleState, type HabState, type Resources, type SpaceResource } from "./state";
 import { orbitRadius, type Destination } from "./transfers";
+
+/** A base's first slot after the core: only a mine goes there, and a mine goes nowhere else. */
+export const MINING_SLOT = 1;
 
 export function habModuleDef(content: Content, id: string): HabModuleDef {
   const def = content.habModules.find((m) => m.id === id);
@@ -36,6 +43,11 @@ function habIrradiation(content: Content, hab: HabState): number {
   return (hab.orbitId ? content.orbits.find((o) => o.id === hab.orbitId)!.irradiation : spaceBody(content, habBodyId(content, hab)).irradiation) ?? 1;
 }
 
+/** What a module's cost, mass and power use are multiplied by where a hab is: the body's mining modifier for mines, else 1. */
+export function moduleScale(content: Content, hab: HabState, module: HabModuleDef): number {
+  return module.scalesWithMining ? (spaceBody(content, habBodyId(content, hab)).miningModifier ?? 1) : 1;
+}
+
 export function isBuilt(state: GameState, slot: HabModuleState): boolean {
   return slot.doneDay <= state.dayIndex;
 }
@@ -45,21 +57,88 @@ export function habTier(content: Content, hab: HabState): 1 | 2 | 3 {
   return habModuleDef(content, hab.modules[0]!.moduleId).tier;
 }
 
-/** The modules that are built and working. */
-export function builtModules(state: GameState, content: Content, hab: HabState): HabModuleDef[] {
-  return hab.modules.filter((m): m is HabModuleState => m !== null && isBuilt(state, m)).map((m) => habModuleDef(content, m.moduleId));
+/** Modules that take power before the rest, and can't be switched off (Terra Invicta's PowerFirst: farms, barracks, docks, defences…). */
+export function takesPowerFirst(module: HabModuleDef): boolean {
+  return module.rules?.includes("PowerFirst") ?? false;
 }
 
-/** Mission control the hab uses: its modules' (those being built too), the core's most of all. */
-export function habMissionControl(content: Content, hab: HabState): number {
+/** A module still being built, switched off, built but without the power to run, or working. */
+export type ModuleStatus = "building" | "off" | "unpowered" | "working";
+
+export interface HabOperation {
+  /** Each slot's module's status; null for an empty slot. */
+  status: (ModuleStatus | null)[];
+  /** Power its generators make (solar by its sunlight), its working modules use, and every module switched on would. */
+  made: number;
+  used: number;
+  wanted: number;
+}
+
+/**
+ * Which of a hab's modules work. Built generators always do. The power they make goes to the
+ * modules that take power first, then to the rest, slot by slot; a module the power left can't
+ * run goes without (**inferred** order: Terra Invicta lets its player pick).
+ */
+export function habOperation(state: GameState, content: Content, hab: HabState): HabOperation {
+  const light = sunlight(content, hab);
+  const status: (ModuleStatus | null)[] = hab.modules.map((m) => (m === null ? null : isBuilt(state, m) ? "working" : "building"));
+  let made = 0;
+  const consumers: { slot: number; need: number; first: boolean }[] = [];
+  hab.modules.forEach((m, i) => {
+    if (!m || status[i] !== "working") return;
+    const def = habModuleDef(content, m.moduleId);
+    if (def.power > 0) made += def.power * (def.rules?.includes("Solar_Power_Variable_Output") ? light : 1);
+    else if (m.off && !takesPowerFirst(def)) status[i] = "off";
+    else consumers.push({ slot: i, need: -def.power * moduleScale(content, hab, def), first: takesPowerFirst(def) });
+  });
+  consumers.sort((a, b) => Number(b.first) - Number(a.first) || a.slot - b.slot);
+  let left = made;
+  let wanted = 0;
+  for (const c of consumers) {
+    wanted += c.need;
+    if (c.need <= left + 1e-9) left -= c.need;
+    else status[c.slot] = "unpowered";
+  }
+  return { status, made, used: made - Math.max(0, left), wanted };
+}
+
+/** The modules that are working, with their slots. */
+export function workingModules(state: GameState, content: Content, hab: HabState): { slot: number; def: HabModuleDef }[] {
+  const { status } = habOperation(state, content, hab);
+  return hab.modules.flatMap((m, i) => (m && status[i] === "working" ? [{ slot: i, def: habModuleDef(content, m.moduleId) }] : []));
+}
+
+/** Mission control the hab uses: its working modules' and those being built, the core's most of all (switched off or without power, a module uses none). */
+export function habMissionControl(state: GameState, content: Content, hab: HabState): number {
+  const { status } = habOperation(state, content, hab);
   let used = 0;
-  for (const m of hab.modules) if (m) used += Math.max(0, -(habModuleDef(content, m.moduleId).missionControl ?? 0));
+  hab.modules.forEach((m, i) => {
+    if (m && (status[i] === "working" || status[i] === "building")) used += Math.max(0, -(habModuleDef(content, m.moduleId).missionControl ?? 0));
+  });
   return used;
 }
 
-/** Mission control the faction's habs use, against the capacity its nations give (resources.missionControl). */
+/**
+ * The faction's mine network: its working mines, how many it may work before they cost mission
+ * control (the Mission to… techs' and Gold Rush's), what the rest cost, `max(1, ⌊excess² / 2⌋)`,
+ * and what one more working mine would add.
+ */
+export function mineNetwork(state: GameState, content: Content, factionId: string): { active: number; free: number; cost: number; next: number } {
+  let active = 0;
+  for (const hab of state.habs) {
+    if (hab.factionId !== factionId || !hab.siteId) continue;
+    const mine = hab.modules[MINING_SLOT];
+    if (mine && habModuleDef(content, mine.moduleId).mine && habOperation(state, content, hab).status[MINING_SLOT] === "working") active++;
+  }
+  const free = modifierSum(state, content, factionId, "MCFreeSpaceMineNetwork");
+  const cost = (mines: number) => (mines > free ? Math.max(1, Math.floor(((mines - free) * (mines - free)) / 2)) : 0);
+  return { active, free, cost: cost(active), next: cost(active + 1) - cost(active) };
+}
+
+/** Mission control the faction's habs and mines use, against the capacity it has (resources.missionControl). */
 export function missionControlUsed(state: GameState, content: Content, factionId: string): number {
-  return state.habs.filter((h) => h.factionId === factionId).reduce((sum, h) => sum + habMissionControl(content, h), 0);
+  const habs = state.habs.filter((h) => h.factionId === factionId).reduce((sum, h) => sum + habMissionControl(state, content, h), 0);
+  return habs + mineNetwork(state, content, factionId).cost;
 }
 
 /**
@@ -68,8 +147,8 @@ export function missionControlUsed(state: GameState, content: Content, factionId
  * fastest first, cuts it by `(1 − m) / i²` for the i-th (Terra Invicta's diminishing returns).
  */
 export function constructionFactor(state: GameState, content: Content, hab: HabState): number {
-  const speeds = builtModules(state, content, hab)
-    .map((m) => m.constructionTime)
+  const speeds = workingModules(state, content, hab)
+    .map((m) => m.def.constructionTime)
     .filter((m): m is number => m !== undefined)
     .sort((a, b) => a - b);
   return speeds.reduce((factor, m, i) => factor * (1 - (1 - m) / ((i + 1) * (i + 1))), 1);
@@ -82,10 +161,10 @@ function systemOf(content: Content, bodyId: string): string {
   return body.id;
 }
 
-/** The crew of every hab in a planetary system, built modules only. */
+/** The crew of every hab in a planetary system, working modules only. */
 export function systemPopulation(state: GameState, content: Content, bodyId: string): number {
   const system = systemOf(content, bodyId);
-  return state.habs.filter((h) => systemOf(content, habBodyId(content, h)) === system).reduce((sum, h) => sum + builtModules(state, content, h).reduce((s, m) => s + m.crew, 0), 0);
+  return state.habs.filter((h) => systemOf(content, habBodyId(content, h)) === system).reduce((sum, h) => sum + habCrew(state, content, h), 0);
 }
 
 /**
@@ -96,7 +175,7 @@ export function systemPopulation(state: GameState, content: Content, bodyId: str
  */
 export function sunlight(content: Content, hab: HabState): number {
   const bodyId = habBodyId(content, hab);
-  const au = spaceBody(content, systemOf(content, bodyId)).orbit!.a;
+  const au = spaceBody(content, systemOf(content, bodyId)).orbit!.a / spaceBody(content, "Earth").orbit!.a;
   const flux = 1 / (au * au);
   if (hab.siteId) return flux / 2;
   const orbit = content.orbits.find((o) => o.id === hab.orbitId)!;
@@ -105,20 +184,97 @@ export function sunlight(content: Content, hab: HabState): number {
   return flux * (1 - detAtan2(ratio, Math.sqrt(1 - ratio * ratio)) / Math.PI);
 }
 
-/** A hab's power from its built modules: what they make (solar modules by its sunlight) and what they use. */
-export function habPower(state: GameState, content: Content, hab: HabState): { made: number; used: number } {
-  const light = sunlight(content, hab);
-  let made = 0;
-  let used = 0;
-  for (const m of builtModules(state, content, hab)) {
-    if (m.power > 0) made += m.power * (m.rules?.includes("Solar_Power_Variable_Output") ? light : 1);
-    else used -= m.power;
-  }
-  return { made, used };
+export function habCrew(state: GameState, content: Content, hab: HabState): number {
+  return workingModules(state, content, hab).reduce((sum, m) => sum + m.def.crew, 0);
 }
 
-export function habCrew(state: GameState, content: Content, hab: HabState): number {
-  return builtModules(state, content, hab).reduce((sum, m) => sum + m.crew, 0);
+const MINING_BONUS: Record<MinedResource, ModifierContext> = {
+  water: "MiningWaterBonus",
+  volatiles: "MiningVolatilesBonus",
+  metals: "MiningMetalsBonus",
+  nobleMetals: "MiningNoblesBonus",
+  fissiles: "MiningFissilesBonus",
+};
+
+/**
+ * What a mine would yield a month at a site for a faction: the site's yields × the mine's output
+ * (1, 1.5 or 2; automated 1.25) × (1 + the faction's mining bonus) × its bonus for each resource.
+ */
+export function mineRate(state: GameState, content: Content, factionId: string, siteId: string, mine: HabModuleDef): Record<MinedResource, number> {
+  const share = (mine.mineOutput ?? 0) * (1 + modifierSum(state, content, factionId, "SpaceMiningBonus"));
+  const site = state.siteYields[siteId]!;
+  return Object.fromEntries(MINED_RESOURCES.map((r) => [r, site[r] * share * modifierProduct(state, content, factionId, MINING_BONUS[r])])) as Record<MinedResource, number>;
+}
+
+/** What a hab's modules earn and cost a month: working modules' income (not research) and its mine's yield; their upkeep and their crew's life support. */
+export interface HabLedger {
+  income: ResourceAmounts;
+  upkeep: ResourceAmounts;
+}
+
+/**
+ * A hab's month: its working modules' income and upkeep, its mine's yield, and life support for
+ * their crew (water and volatiles for those its farms don't feed, money for all).
+ */
+export function habLedger(state: GameState, content: Content, hab: HabState): HabLedger {
+  const income: ResourceAmounts = {};
+  const upkeep: ResourceAmounts = {};
+  const add = (to: ResourceAmounts, r: keyof ResourceAmounts, v: number) => {
+    if (v) to[r] = (to[r] ?? 0) + v;
+  };
+  let crew = 0;
+  let fed = 0;
+  for (const { slot, def } of workingModules(state, content, hab)) {
+    crew += def.crew;
+    if (def.rules?.includes("Farm")) fed += def.ruleValue ?? 0;
+    for (const [r, v] of Object.entries(def.support) as [keyof ResourceAmounts, number][]) add(upkeep, r, v);
+    for (const [r, v] of Object.entries(def.income) as [keyof ResourceAmounts, number][]) if (r !== "research") add(income, r, v);
+    if (def.mine && slot === MINING_SLOT && hab.siteId) for (const [r, v] of Object.entries(mineRate(state, content, hab.factionId, hab.siteId, def))) add(income, r as MinedResource, v);
+  }
+  const life = content.rules.space.lifeSupport;
+  const hungry = crew - Math.min(crew, fed);
+  add(upkeep, "water", (hungry * life.water) / 12);
+  add(upkeep, "volatiles", (hungry * life.volatiles) / 12);
+  add(upkeep, "money", (crew * life.money) / 12);
+  return { income, upkeep };
+}
+
+/** Every hab of the faction's month, summed. */
+export function factionHabLedger(state: GameState, content: Content, factionId: string): HabLedger {
+  const total: HabLedger = { income: {}, upkeep: {} };
+  for (const hab of state.habs) {
+    if (hab.factionId !== factionId) continue;
+    const l = habLedger(state, content, hab);
+    for (const side of ["income", "upkeep"] as const) {
+      for (const [r, v] of Object.entries(l[side]) as [keyof ResourceAmounts, number][]) total[side][r] = (total[side][r] ?? 0) + v;
+    }
+  }
+  return total;
+}
+
+/** Each space resource's monthly change from the faction's habs: what its mines and modules make, less their upkeep. */
+export function spaceResourceIncome(state: GameState, content: Content, factionId: string): Record<SpaceResource, Breakdown> {
+  const ledger = factionHabLedger(state, content, factionId);
+  return Object.fromEntries(
+    SPACE_RESOURCES.map((r) => {
+      const f = new FormulaBuilder();
+      if (ledger.income[r]) f.add("Habs' mines and modules", ledger.income[r]);
+      if (ledger.upkeep[r]) f.add("Habs' upkeep and life support", -ledger.upkeep[r]);
+      return [r, f.build()];
+    }),
+  ) as Record<SpaceResource, Breakdown>;
+}
+
+/** Boost a month that would stand in for the space resources the faction's habs need and it has run out of (for the top bar). */
+export function boostForMissingUpkeep(state: GameState, content: Content, factionId: string): number {
+  const ledger = factionHabLedger(state, content, factionId);
+  const resources = factionState(state, factionId).resources;
+  let boost = 0;
+  for (const r of SPACE_RESOURCES) {
+    const net = (ledger.income[r] ?? 0) - (ledger.upkeep[r] ?? 0);
+    if (net < 0 && resources[r] <= 1e-9) boost -= net;
+  }
+  return boost;
 }
 
 /** The first rule of a module's placement that the hab breaks, or null (Terra Invicta's special rules about where modules go). */
@@ -156,17 +312,20 @@ export interface ModuleOrder {
   upgrade: boolean;
 }
 
-/** What building a module in a hab's slot would take, paid in space resources or sent up with boost. */
+/**
+ * What building a module in a hab's slot would take, paid in space resources or sent up with
+ * boost. A mine's cost and mass are multiplied by the body's mining modifier, before radiation.
+ */
 export function moduleOrder(state: GameState, content: Content, factionId: string, hab: HabState, slot: number, moduleId: string): ModuleOrder {
   const module = habModuleDef(content, moduleId);
   const upgrade = hab.modules[slot]?.moduleId === module.upgradesFrom && module.upgradesFrom !== undefined;
-  const share = upgrade ? content.rules.space.upgradeShare : 1;
+  const share = (upgrade ? content.rules.space.upgradeShare : 1) * moduleScale(content, hab, module);
   const irradiation = habIrradiation(content, hab);
   const resources: ResourceAmounts = {};
   for (const [r, amount] of Object.entries(module.buildCost) as [keyof ResourceAmounts, number][]) resources[r] = amount * share;
   // Radiation adds mass, paid in base metals at ten tons a unit.
   if (irradiation > 1) resources.metals = (resources.metals ?? 0) + (module.massTons * share * (irradiation - 1)) / 10;
-  const buildDays = Math.ceil(module.buildDays * share * constructionFactor(state, content, hab));
+  const buildDays = Math.ceil(module.buildDays * (upgrade ? content.rules.space.upgradeShare : 1) * constructionFactor(state, content, hab));
   const sent = delivery(state, content, factionId, habDestination(hab), { ...module, massTons: module.massTons * share });
   return {
     resources,
@@ -180,7 +339,11 @@ export function moduleOrder(state: GameState, content: Content, factionId: strin
 
 export type Payment = "resources" | "boost";
 
-/** Whether the faction can build a module in a hab's slot now, paying the way given. */
+/**
+ * Whether the faction can build a module in a hab's slot now, paying the way given. A base's
+ * mining slot takes only a mine. Nothing is built while the faction uses more mission control
+ * than it has, nor anything that would take it over.
+ */
 export function checkBuildModule(state: GameState, content: Content, factionId: string, habId: string, slot: number, moduleId: string, payWith: Payment): Check {
   const no = (reason: string): Check => ({ ok: false, reason });
   const hab = state.habs.find((h) => h.id === habId);
@@ -190,7 +353,9 @@ export function checkBuildModule(state: GameState, content: Content, factionId: 
   if (!module) return no(`Unknown module "${moduleId}"`);
   const faction = factionState(state, factionId);
   if (!faction.research.completed[module.project]) return no(`Needs the ${content.projects.find((p) => p.id === module.project)?.name ?? module.project} project`);
-  if (module.mine) return no(`${module.name} goes in a base's mining slot`);
+  const mining = hab.siteId !== null && slot === MINING_SLOT;
+  if (module.mine && !mining) return no(`${module.name} goes in a base's mining slot`);
+  if (!module.mine && mining) return no("Only a mine goes in the mining slot");
   if (!Number.isInteger(slot) || slot < 0 || slot >= hab.modules.length) return no("No such slot");
   const kind = hab.siteId ? "base" : "station";
   if (module.type !== "any" && module.type !== kind) return no(`${module.name} goes only on ${module.type === "base" ? "bases" : "stations"}`);
@@ -211,6 +376,11 @@ export function checkBuildModule(state: GameState, content: Content, factionId: 
   }
   const problem = placementProblem(state, content, hab, module);
   if (problem) return no(problem);
+  const used = missionControlUsed(state, content, factionId);
+  const cap = +faction.resources.missionControl.toFixed(1);
+  if (used > cap) return no(`We use ${used} mission control of our ${cap}`);
+  const more = Math.max(0, -(module.missionControl ?? 0)) - (current ? Math.max(0, -(habModuleDef(content, current.moduleId).missionControl ?? 0)) : 0);
+  if (used + more > cap) return no(`Needs ${more} mission control: we use ${used} of our ${cap}`);
   const order = moduleOrder(state, content, factionId, hab, slot, moduleId);
   if (payWith === "boost") {
     if (!order.boost) return no("Needs rockets to send it beyond low Earth orbit");
@@ -236,7 +406,19 @@ export function buildModule(state: GameState, content: Content, factionId: strin
   }
   const placed = { moduleId, arrivesDay, doneDay: arrivesDay + order.buildDays };
   if (order.upgrade) hab.modules[slot]!.upgrade = placed;
-  else hab.modules[slot] = { ...placed, upgrade: null };
+  else hab.modules[slot] = { ...placed, upgrade: null, off: false };
+}
+
+/** Switches a module on or off. Generators and modules that take power first stay on. */
+export function checkSetModulePower(state: GameState, content: Content, factionId: string, habId: string, slot: number): Check {
+  const hab = state.habs.find((h) => h.id === habId);
+  if (!hab || hab.factionId !== factionId) return { ok: false, reason: "Not one of our habs" };
+  const m = Number.isInteger(slot) && slot > 0 ? hab.modules[slot] : null;
+  if (!m) return { ok: false, reason: slot === 0 ? "The core stays on" : "That slot is empty" };
+  const def = habModuleDef(content, m.moduleId);
+  if (def.power > 0) return { ok: false, reason: `${def.name} makes power` };
+  if (takesPowerFirst(def)) return { ok: false, reason: `${def.name} can't be switched off` };
+  return { ok: true };
 }
 
 /** Removes a module (not the core), and anything being built in its place; nothing is refunded. */
@@ -271,8 +453,9 @@ export function foundHab(state: GameState, content: Content, factionId: string, 
     name: habName(state, content, destination),
     siteId: destination.kind === "site" ? destination.id : null,
     orbitId: destination.kind === "orbit" ? destination.id : null,
-    modules: [{ moduleId: core.id, arrivesDay: sent.arrivesDay, doneDay: sent.arrivesDay + core.buildDays, upgrade: null }, ...Array<null>(content.rules.space.slotsByTier[0]).fill(null)],
+    modules: [{ moduleId: core.id, arrivesDay: sent.arrivesDay, doneDay: sent.arrivesDay + core.buildDays, upgrade: null, off: false }, ...Array<null>(content.rules.space.slotsByTier[0]).fill(null)],
     foundedDay: state.dayIndex,
+    unsupplied: false,
   };
   state.habs.push(hab);
   const built = formatLongDate(dateOfDay(content.rules.startYear, hab.modules[0]!.doneDay));
@@ -295,8 +478,9 @@ export function addStartingHabs(state: GameState, content: Content): void {
       name: start.name,
       siteId: null,
       orbitId: start.orbit,
-      modules: start.modules.map((moduleId) => (moduleId ? { moduleId, arrivesDay: state.dayIndex, doneDay: state.dayIndex, upgrade: null } : null)),
+      modules: start.modules.map((moduleId) => (moduleId ? { moduleId, arrivesDay: state.dayIndex, doneDay: state.dayIndex, upgrade: null, off: false } : null)),
       foundedDay: state.dayIndex,
+      unsupplied: false,
     });
   }
 }
@@ -321,5 +505,69 @@ export function runHabTick(state: GameState, content: Content): void {
         addLog(state, { factionId: hab.factionId, kind: "space", bodyId, tone: "good", text: i === 0 ? `${hab.name} is founded: its ${def.name} is built.` : `${hab.name}: ${def.name} built.` });
       }
     });
+  }
+}
+
+/** The order upkeep is paid in: the Earth's resources, then the space resources (boost stands in for those). */
+const UPKEEP_ORDER: (keyof Resources)[] = ["money", "influence", "ops", "boost", ...SPACE_RESOURCES];
+
+/**
+ * A day of the habs' economy for every faction: their income and mines' yield come in, then
+ * their upkeep is paid; boost stands in, unit for unit, for space resources the faction has run
+ * out of. A hab whose upkeep can't be met is unsupplied. Then malfunctions.
+ */
+export function runHabEconomy(state: GameState, content: Content, share: number): void {
+  for (const faction of state.factions) {
+    const habs = state.habs.filter((h) => h.factionId === faction.id);
+    if (habs.length === 0) continue;
+    const ledgers = habs.map((h) => habLedger(state, content, h));
+    const resources = faction.resources;
+    const owed: ResourceAmounts = {};
+    for (const l of ledgers) {
+      for (const [r, v] of Object.entries(l.income) as [keyof Resources, number][]) resources[r] += v * share;
+      for (const [r, v] of Object.entries(l.upkeep) as [keyof ResourceAmounts, number][]) owed[r] = (owed[r] ?? 0) + v;
+    }
+    const short = new Set<string>();
+    for (const r of UPKEEP_ORDER) {
+      let due = (owed[r as keyof ResourceAmounts] ?? 0) * share;
+      if (due <= 0) continue;
+      const paid = Math.min(due, Math.max(0, resources[r]));
+      resources[r] -= paid;
+      due -= paid;
+      if (due > 1e-12 && (SPACE_RESOURCES as readonly string[]).includes(r)) {
+        const boost = Math.min(due, Math.max(0, resources.boost));
+        resources.boost -= boost;
+        due -= boost;
+      }
+      if (due > 1e-12) short.add(r);
+    }
+    habs.forEach((h, i) => (h.unsupplied = Object.keys(ledgers[i]!.upkeep).some((r) => short.has(r))));
+    runMalfunctions(state, content, habs, share);
+  }
+}
+
+/**
+ * Terra Invicta's Hab Module Malfunction: while a faction uses more mission control than it has,
+ * or a hab goes unsupplied, the hab may lose modules (never its core), more likely the shorter it
+ * is (rules.space.accidents, **inferred** odds).
+ */
+function runMalfunctions(state: GameState, content: Content, habs: HabState[], share: number): void {
+  const rules = content.rules.space.accidents;
+  const factionId = habs[0]!.factionId;
+  const missing = missionControlUsed(state, content, factionId) - factionState(state, factionId).resources.missionControl;
+  for (const hab of habs) {
+    const chance = Math.max(missing > 0 ? Math.min(1, missing * rules.perMissingMissionControl) : 0, hab.unsupplied ? rules.unsupplied : 0);
+    if (chance <= 0 || nextFloat(state.rng) >= chance * share) continue;
+    const slots = hab.modules.flatMap((m, i) => (m && i > 0 ? [i] : []));
+    let count = rules.modules[weightedPick(state.rng, rules.modules.map((_, i) => i), (i) => rules.weights[i]!)]!;
+    const lost: string[] = [];
+    while (count-- > 0 && slots.length > 0) {
+      const slot = slots.splice(nextInt(state.rng, 0, slots.length - 1), 1)[0]!;
+      lost.push(habModuleDef(content, hab.modules[slot]!.moduleId).name);
+      hab.modules[slot] = null;
+    }
+    if (lost.length === 0) continue;
+    const why = missing > 0 ? "we use more mission control than we have" : "its upkeep went unpaid";
+    addLog(state, { factionId, kind: "space", bodyId: habBodyId(content, hab), tone: "bad", text: `${hab.name}: a malfunction destroyed its ${lost.join(", ")}, as ${why}.` });
   }
 }

@@ -869,7 +869,10 @@
     "startingHabs": [
       { "faction": "lumen", "orbit": "LowEarthOrbit4", "name": "International Space Station", "modules": ["PlatformCore", null, "SolarCollector", "SpaceScienceLab", "SolarCollector"] },
       { "faction": "ark", "orbit": "LowEarthOrbit3", "name": "Tiangong", "modules": ["PlatformCore", null, null, null, null] }
-    ]
+    ],
+    "baseMissionControl": 2,
+    "lifeSupport": { "water": 0.35, "volatiles": 0.35, "money": 0.1 },
+    "accidents": { "perMissingMissionControl": 0.1, "unsupplied": 0.25, "modules": [2, 4, 8], "weights": [3, 2, 1] }
   },
   "research": {
     "startingTechs": [

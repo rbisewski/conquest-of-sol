@@ -21,7 +21,8 @@ tier, 3; the game's own code isn't public, so that its 3 and 4 both allow every 
 from the wiki listing its 4s as 3s), the global tech that opens them to exploration (the tech whose
 effect is the body's effectToExplore, from TITechTemplate; the Sun and the Earth need none), the
 game's density (which scales small bodies' mining yields), and, where they aren't 1 and None,
-its radiation multiplier and atmosphere.
+its radiation multiplier and atmosphere. Bodies with hab sites carry their mining modifier, which
+scales a mine's cost and power there (see mining_modifier).
 
 Moons' orbits are JPL's where it lists them (jpl_satellites.json, from build_satellites.py), as
 the game's are measured from a mix of planes; every orbit here is measured from the ecliptic, so
@@ -44,6 +45,7 @@ import sys
 
 AU_KM = 149597870.7
 J2000_JD = 2451545.0
+G = 6.674e-11
 
 TYPES = {
     "Star": "star",
@@ -162,6 +164,33 @@ def explore_techs(templates):
     return {effect: t["dataName"] for t in techs for effect in t.get("effects", []) if effect.startswith("Effect_Explore")}
 
 
+def mining_modifier(body, by_id):
+    """Terra Invicta's mining modifier: the cost of a mine rises with the escape velocities (km/s) to
+    climb from the body, from its planet at its orbit, and from the Sun at its planetary system's
+    orbit, and with that orbit's size in AU. The wiki gives the factors, not the formula; this fit
+    gives its eight listed bodies within 0.004:
+
+        0.5 + (v_body² + v_planet²) / 800 + v_sun² / 3200 + a / 40
+
+    In the Earth's system (Luna) only the body's own escape velocity counts. Atmosphere, which the
+    wiki says also adds, isn't modelled."""
+
+    def escape_sq(mass_kg, distance_km):
+        return 2 * G * mass_kg / (distance_km * 1000) / 1e6
+
+    total = 0.5 + escape_sq(body["massKg"], body["radiusKm"]) / 800
+    system = body
+    while by_id[system["parent"]]["type"] != "star":
+        parent = by_id[system["parent"]]
+        total += escape_sq(parent["massKg"], system["orbit"]["a"] * AU_KM) / 800
+        system = parent
+    if system["id"] == "Earth":
+        return round(0.5 + escape_sq(body["massKg"], body["radiusKm"]) / 800, 4)
+    sun = by_id[system["parent"]]
+    total += escape_sq(sun["massKg"], system["orbit"]["a"] * AU_KM) / 3200 + system["orbit"]["a"] / 40
+    return round(total, 4)
+
+
 def main(templates, out_dir):
     with open(os.path.join(templates, "TISpaceBodyTemplate.json"), encoding="utf-8-sig") as f:
         bodies = json.load(f)
@@ -243,6 +272,10 @@ def main(templates, out_dir):
     # Parents before their moons, so a body's parent is always known when it is placed.
     order = {"star": 0, "planet": 1, "dwarf": 2, "moon": 3, "asteroidalMoon": 4, "asteroid": 5, "comet": 6}
     out.sort(key=lambda b: order[b["type"]])
+    by_id = {b["id"]: b for b in out}
+    for b in out:
+        if "composition" in b:
+            b["miningModifier"] = mining_modifier(b, by_id)
     with open(os.path.join(out_dir, "solarSystem.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
         f.write("\n")

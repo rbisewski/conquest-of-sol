@@ -80,7 +80,7 @@ export function newGame(content: Content, options: NewGameOptions): GameState {
     state.factions.push({
       id: def.id,
       isPlayer: options.playerFactions.includes(def.id),
-      resources: { ...content.rules.startingResources },
+      resources: { ...content.rules.startingResources, missionControl: content.rules.space.baseMissionControl },
       councilors,
       priorityWeights: {},
       councilDone: false,

@@ -1,33 +1,41 @@
 <script lang="ts">
   // Hab panel (lower right, in place of the councilor panel), after Terra Invicta's hab screen:
   // the hab's pixel-art look by tier in its faction's colour, where it is and how its core is
-  // coming on, its crew, power and mission control, then its slots (the core first). Picking a
-  // slot shows its module and, for our habs, what can be built there or what it upgrades to, with
-  // the cost in space resources or in boost to send it up from the Earth, and why not if it can't.
+  // coming on, its crew, power and mission control, what it makes and costs a month, then its
+  // slots (the core first; a base's mining slot next). Picking a slot shows its module (switched
+  // on or off here) and, for our habs, what can be built there or what it upgrades to, with the
+  // cost in space resources or in boost to send it up from the Earth, and why not if it can't.
   import { baseContent } from "../../content/index";
   import {
     checkBuildModule,
+    checkSetModulePower,
     dateOfDay,
     factionDef,
     formatLongDate,
     habBodyId,
     habCrew,
+    habLedger,
     habMissionControl,
     habModuleDef,
-    habPower,
+    habOperation,
     habTier,
     isBuilt,
+    MINING_SLOT,
+    mineRate,
+    missionControlUsed,
     moduleOrder,
     spaceBody,
     type HabModuleDef,
     type HabModuleState,
     type Payment,
+    type SpaceResource,
     type ResourceAmounts,
   } from "../../sim/index";
   import { game } from "../game.svelte";
   import HabSprite from "../ui/HabSprite.svelte";
   import Icon from "../ui/Icon.svelte";
   import type { IconName } from "../ui/icons";
+  import { SPACE_RESOURCE_NAMES } from "../ui/resourceNames";
   import ModuleIcon from "../ui/ModuleIcon.svelte";
 
   const world = $derived(game.state!);
@@ -40,8 +48,18 @@
     if (hab.siteId) return `${baseContent.habSites.find((s) => s.id === hab.siteId)!.name}, ${body.name}`;
     return baseContent.orbits.find((o) => o.id === hab.orbitId)!.name;
   });
-  const power = $derived(hab ? habPower(world, baseContent, hab) : { made: 0, used: 0 });
+  const operation = $derived(hab ? habOperation(world, baseContent, hab) : null);
+  const ledger = $derived(hab ? habLedger(world, baseContent, hab) : null);
+  /** Each resource's net monthly change from the hab, income less upkeep. */
+  const net = $derived.by(() => {
+    if (!ledger) return [];
+    const keys = [...new Set([...Object.keys(ledger.income), ...Object.keys(ledger.upkeep)])] as (keyof ResourceAmounts)[];
+    return keys.map((r) => [r, (ledger.income[r] ?? 0) - (ledger.upkeep[r] ?? 0)] as [IconName, number]).filter(([, v]) => Math.abs(v) > 0.005);
+  });
+  const overMissionControl = $derived(hab ? missionControlUsed(world, baseContent, hab.factionId) > world.factions.find((f) => f.id === hab.factionId)!.resources.missionControl : false);
+  const mining = (i: number) => !!hab?.siteId && i === MINING_SLOT;
   const onDay = (day: number) => formatLongDate(dateOfDay(baseContent.rules.startYear, day));
+  const amount = (v: number) => (Math.abs(v) < 10 ? Math.abs(v).toFixed(2) : Math.abs(v).toFixed(0));
 
   /** The slot picked below; the core at first. */
   let slot = $state(0);
@@ -50,22 +68,22 @@
     slot = 0;
   });
 
-  /** How a module in a slot is coming on. */
-  function progress(m: HabModuleState): string {
+  /** How a module in a slot is coming on, or whether it works. */
+  function progress(m: HabModuleState, i: number): string {
     if (m.upgrade) return m.upgrade.arrivesDay > world.dayIndex ? `Upgrade to ${habModuleDef(baseContent, m.upgrade.moduleId).name} on its way, arriving ${onDay(m.upgrade.arrivesDay)}` : `Upgrading to ${habModuleDef(baseContent, m.upgrade.moduleId).name}, done ${onDay(m.upgrade.doneDay)}`;
-    if (isBuilt(world, m)) return "Working";
+    if (isBuilt(world, m)) return operation?.status[i] === "off" ? "Switched off" : operation?.status[i] === "unpowered" ? "Idle: not enough power" : "Working";
     if (m.arrivesDay > world.dayIndex) return `On its way from the Earth, arriving ${onDay(m.arrivesDay)}`;
     return `Being built, done ${onDay(m.doneDay)}`;
   }
 
-  /** What could go in the picked slot: an upgrade of the module there, or, if empty, any module we have the project for. */
+  /** What could go in the picked slot: an upgrade of the module there, or, if empty, any module we have the project for (a mine in a base's mining slot, and only there). */
   const options = $derived.by(() => {
     if (!hab || !ours) return [];
     const faction = world.factions.find((f) => f.id === hab.factionId)!;
     const current = hab.modules[slot];
     const kind = hab.siteId ? "base" : "station";
     return baseContent.habModules
-      .filter((m) => faction.research.completed[m.project] && !m.mine && (m.type === "any" || m.type === kind))
+      .filter((m) => faction.research.completed[m.project] && !!m.mine === mining(slot) && (m.type === "any" || m.type === kind))
       .filter((m) => (slot === 0 ? m.core && m.upgradesFrom === current?.moduleId : !m.core && (current ? m.upgradesFrom === current.moduleId : true)))
       .sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name))
       .map((m) => ({
@@ -76,13 +94,20 @@
       }));
   });
 
-  const costs = (r: ResourceAmounts) => Object.entries(r).filter(([, v]) => v! > 0) as [IconName, number][];
+  const costs = (r: ResourceAmounts) => Object.entries(r).filter(([, v]) => v! > 0.005) as [IconName, number][];
+  /** What a mine would yield a month in this base. */
+  const yields = (m: HabModuleDef) => (hab?.siteId ? costs(mineRate(world, baseContent, hab.factionId, hab.siteId, m)) : []);
   /** The module's lasting figures, for its tooltip. */
   function describe(m: HabModuleDef): string {
     const parts = [m.summary, `Tier ${m.tier} · ${m.massTons} t · ${m.buildDays} days to build`];
+    if (m.mineOutput) parts.push(`Yields ${m.mineOutput} × its site's resources a month; its cost and power go with the body's mining modifier`);
     if (m.power) parts.push(`Power ${m.power > 0 ? "+" : ""}${m.power}${m.rules?.includes("Solar_Power_Variable_Output") ? " in full sunlight" : ""}`);
     if (m.crew) parts.push(`Crew ${m.crew}`);
     if (m.missionControl) parts.push(`Mission control ${m.missionControl > 0 ? "+" : ""}${m.missionControl}`);
+    const upkeep = Object.entries(m.support).map(([r, v]) => `${v} ${(SPACE_RESOURCE_NAMES[r as SpaceResource] ?? r).toLowerCase()}`);
+    if (upkeep.length > 0) parts.push(`Upkeep a month: ${upkeep.join(", ")}`);
+    if (m.rules?.includes("Farm")) parts.push(`Feeds ${m.ruleValue} crew: no water or volatiles for them`);
+    if (m.rules?.includes("PowerFirst")) parts.push("Takes power first, and can't be switched off");
     return parts.join("\n");
   }
 
@@ -91,6 +116,9 @@
   }
   function scrap() {
     if (hab) void game.command({ type: "scrapModule", factionId: hab.factionId, habId: hab.id, slot });
+  }
+  function setPower(on: boolean) {
+    if (hab) void game.command({ type: "setModulePower", factionId: hab.factionId, habId: hab.id, slot, on });
   }
   const close = () => (game.selectedHabId = null);
 </script>
@@ -109,22 +137,46 @@
       <div class="identity">
         <h2>{hab.name}</h2>
         <div class="muted small">{where}</div>
-        <div class="small">{habModuleDef(baseContent, core.moduleId).name} · {progress(core)}</div>
+        <div class="small">{habModuleDef(baseContent, core.moduleId).name} · {progress(core, 0)}</div>
         {#if !ours}<div class="muted small">{factionDef(baseContent, hab.factionId).name}</div>{/if}
       </div>
     </div>
 
     <div class="stats">
-      <span title="Crew of its built modules"><Icon name="crew" size={14} />{habCrew(world, baseContent, hab)}</span>
-      <span title="Power made by its built modules (solar by its sunlight) / power they use" class:short={power.made < power.used}><Icon name="power" size={14} />{Math.round(power.made)}/{Math.round(power.used)}</span>
-      <span title="Mission control it uses"><Icon name="missionControl" size={14} />{habMissionControl(baseContent, hab)}</span>
+      <span title="Crew of its working modules"><Icon name="crew" size={14} />{habCrew(world, baseContent, hab)}</span>
+      <span title="Power its generators make (solar by its sunlight) / what its modules switched on want; those it can't run stand idle" class:short={operation!.made + 1e-9 < operation!.wanted}><Icon name="power" size={14} />{Math.round(operation!.made)}/{Math.round(operation!.wanted)}</span>
+      <span title="Mission control it uses"><Icon name="missionControl" size={14} />{habMissionControl(world, baseContent, hab)}</span>
     </div>
+
+    {#if net.length > 0}
+      <div class="ledger" title="What it makes and costs a month: its mine, its modules' income and upkeep, and its crew's life support">
+        <span class="muted small">A month</span>
+        {#each net as [r, v] (r)}<span class="cost" class:loss={v < 0}><Icon name={r} size={12} />{v > 0 ? "+" : "−"}{amount(v)}</span>{/each}
+      </div>
+    {/if}
+    {#if hab.unsupplied}
+      <div class="warning small"><Icon name="warning" size={13} /> Unsupplied: its upkeep went unpaid, and it risks malfunctions.</div>
+    {/if}
+    {#if overMissionControl}
+      <div class="warning small"><Icon name="warning" size={13} /> {ours ? "We use" : "Its faction uses"} more mission control than {ours ? "we have" : "it has"}: its habs risk malfunctions.</div>
+    {/if}
 
     <div class="slots">
       {#each hab.modules as m, i (i)}
-        <button class="slot" class:core={i === 0} class:picked={i === slot} class:pending={m && !isBuilt(world, m)} title={m ? `${habModuleDef(baseContent, m.moduleId).name}: ${progress(m)}` : "Empty slot"} onclick={() => (slot = i)}>
-          {#if m}<ModuleIcon moduleId={m.moduleId} size={64} {color} />{/if}
+        {@const status = operation!.status[i]}
+        <button
+          class="slot"
+          class:core={i === 0}
+          class:mining={mining(i)}
+          class:picked={i === slot}
+          class:pending={status === "building"}
+          class:idle={status === "off" || status === "unpowered"}
+          title={m ? `${habModuleDef(baseContent, m.moduleId).name}: ${progress(m, i)}` : mining(i) ? "Mining slot: only a mine goes here" : "Empty slot"}
+          onclick={() => (slot = i)}
+        >
+          {#if m}<ModuleIcon moduleId={m.moduleId} size={64} {color} />{:else if mining(i)}<Icon name="mining" size={22} color="#5d6f80" />{/if}
           {#if m?.upgrade}<span class="upgrading" title="Upgrading">▲</span>{/if}
+          {#if status === "off" || status === "unpowered"}<span class="badge" class:unpowered={status === "unpowered"}><Icon name="powerOff" size={13} /></span>{/if}
         </button>
       {/each}
     </div>
@@ -133,15 +185,27 @@
       {#if picked}
         {@const def = habModuleDef(baseContent, picked.moduleId)}
         <div class="picked" title={describe(def)}>
-          <ModuleIcon moduleId={def.id} size={64} {color} />
-          <div>
+          <ModuleIcon moduleId={def.id} size={128} {color} />
+          <div class="picked-info">
             <div>{def.name}</div>
-            <div class="muted small">{progress(picked)}</div>
+            <div class="muted small">{progress(picked, slot)}</div>
+            {#if def.mine && hab.siteId && isBuilt(world, picked)}
+              <div class="yields small" title="What it yields a month while it works">{#each yields(def) as [r, v] (r)}<span class="cost"><Icon name={r} size={12} />{amount(v)}</span>{/each}</div>
+            {/if}
+            {#if ours && slot > 0}
+              <div class="actions">
+                {#if checkSetModulePower(world, baseContent, hab.factionId, hab.id, slot).ok}
+                  <button class="scrap" title={picked.off ? "Switch it on" : "Switch it off: it uses no power, mission control or upkeep, and does nothing"} onclick={() => setPower(picked.off)}>
+                    <Icon name={picked.off ? "power" : "powerOff"} size={12} />{picked.off ? "Switch on" : "Switch off"}
+                  </button>
+                {/if}
+                <button class="scrap" title="Scrap it: nothing is refunded" onclick={scrap}><Icon name="close" size={12} /> Scrap</button>
+              </div>
+            {/if}
           </div>
-          {#if ours && slot > 0}<button class="scrap" title="Scrap it: nothing is refunded" onclick={scrap}><Icon name="close" size={12} /> Scrap</button>{/if}
         </div>
       {:else}
-        <div class="muted small">An empty slot.</div>
+        <div class="muted small">{mining(slot) ? "The mining slot: a mine here works the site." : "An empty slot."}</div>
       {/if}
 
       {#if ours && isBuilt(world, core)}
@@ -155,6 +219,9 @@
                   <span class="name">{o.module.name}</span>
                   <span class="muted small">{o.order.buildDays} d</span>
                 </div>
+                {#if o.module.mine}
+                  <div class="yields small" title="What it would yield a month">{#each yields(o.module) as [r, v] (r)}<span class="cost"><Icon name={r} size={12} />{amount(v)}</span>{/each}</div>
+                {/if}
                 <div class="pay">
                   <button disabled={!o.resources.ok} title={o.resources.ok ? `Build it from our space resources, done ${onDay(o.order.doneDayWithResources)}` : o.resources.reason} onclick={() => order(o.module.id, "resources")}>
                     {#each costs(o.order.resources) as [r, v] (r)}<span class="cost"><Icon name={r} size={12} />{v < 10 ? v.toFixed(2) : v.toFixed(0)}</span>{/each}
@@ -235,7 +302,23 @@
     align-items: center;
     gap: 3px;
   }
-  .short {
+  .short,
+  .loss {
+    color: var(--bad);
+  }
+  .ledger {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin: 0 8px 6px;
+    font-size: 0.85em;
+  }
+  .warning {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 8px 6px;
     color: var(--bad);
   }
   .slots {
@@ -257,12 +340,29 @@
   .slot.core {
     border-color: var(--border);
   }
+  .slot.mining {
+    border-style: dashed;
+  }
   .slot.picked {
     border-color: var(--accent);
     background: rgba(143, 224, 230, 0.08);
   }
-  .slot.pending :global(svg) {
+  .slot.pending :global(canvas) {
     opacity: 0.45;
+  }
+  .slot.idle :global(canvas) {
+    opacity: 0.35;
+    filter: grayscale(0.8);
+  }
+  .badge {
+    position: absolute;
+    left: 2px;
+    bottom: 1px;
+    display: inline-flex;
+    color: var(--muted);
+  }
+  .badge.unpowered {
+    color: var(--bad);
   }
   .upgrading {
     position: absolute;
@@ -279,15 +379,30 @@
   }
   .picked {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
   }
+  .picked-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+  }
   .scrap {
-    margin-left: auto;
     display: inline-flex;
     align-items: center;
     gap: 3px;
     font-size: 0.85em;
+  }
+  .actions,
+  .yields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+  .yields {
+    margin-top: 2px;
   }
   .options-title {
     color: var(--muted);

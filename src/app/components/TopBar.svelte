@@ -1,8 +1,8 @@
 <script lang="ts">
   // Top bar after Terra Invicta's: menu and faction emblem, then the faction's resources as
   // icon + amount + daily rate (what today's tick pays; the unit is in the tooltip, as Terra
-  // Invicta leaves it out to fit), the space resources it holds, and the date, time and speed
-  // controls on the right.
+  // Invicta leaves it out to fit), the space resources it holds (with their rate once its habs
+  // make or use them), and the date, time and speed controls on the right.
   // Money, influence and ops show what is left after this council phase's missions.
   import { baseContent } from "../../content/index";
   import {
@@ -14,12 +14,13 @@
     factionDef,
     factionMonthlyIncome,
     formatTimeOfDay,
-    monthlyInfluence,
+    mineNetwork,
     monthlyResearch,
     missionControlUsed,
     mustChooseResearch,
     perDay,
     SPACE_RESOURCES,
+    spaceResourceIncome,
     temperatureAnomaly,
   } from "../../sim/index";
   import { SPEED_LABELS, type Speed } from "../../worker/protocol";
@@ -42,19 +43,21 @@
     faction && monthly
       ? {
           money: perDay(world, baseContent, monthly.money),
-          influence: perDay(world, baseContent, monthlyInfluence(world, baseContent, faction)),
+          influence: perDay(world, baseContent, monthly.influence),
           ops: perDay(world, baseContent, monthly.ops),
           boost: perDay(world, baseContent, monthly.boost),
           research: perDay(world, baseContent, monthlyResearch(world, baseContent, faction)),
         }
       : null,
   );
+  const spaceIncome = $derived(faction ? spaceResourceIncome(world, baseContent, faction.id) : null);
   const upkeep = $derived(faction ? controlUpkeep(world, baseContent, faction.id) : 0);
   const cap = $derived(faction ? controlCap(world, baseContent, faction) : null);
   /** Resources committed to missions not yet paid for (paid when the council phase closes). */
   const committed = $derived(faction && world.phase === "council" ? committedResources(baseContent, faction) : { money: 0, influence: 0, ops: 0 });
   const mustChoose = $derived(faction ? mustChooseResearch(world, baseContent, faction.id) : false);
   const mcUsed = $derived(faction ? missionControlUsed(world, baseContent, faction.id) : 0);
+  const mines = $derived(faction ? mineNetwork(world, baseContent, faction.id) : null);
   const tip = (name: string, amount: number) => `${name}, with its change per day${amount > 0 ? ` (${amount} committed to missions)` : ""}`;
   const date = $derived.by(() => {
     const d = dateOfDay(baseContent.rules.startYear, world.dayIndex);
@@ -148,7 +151,7 @@
       <Icon name="boost" size={18} />
       <span>{compact(faction.resources.boost)} <span class="rate"><Num breakdown={income.boost} signed digits={3} /></span></span>
     </span>
-    <span class="cell-item" class:over={mcUsed > faction.resources.missionControl} title="Mission Control: used by our habs / available from our nations">
+    <span class="cell-item" class:over={mcUsed > faction.resources.missionControl} title={`Mission Control: used by our habs and mines / what we have, from our nations and our own\nWe work ${mines!.active} mines; ${mines!.free} cost no mission control${mines!.cost > 0 ? ` (the rest cost ${mines!.cost})` : ""}. Another working mine would cost ${mines!.next}.`}>
       <Icon name="missionControl" size={18} />
       <span><span class="mc">{mcUsed}</span>/{compact(faction.resources.missionControl)}</span>
     </span>
@@ -164,7 +167,7 @@
       <!-- Antimatter comes in fractions of a ton. -->
       <span class="cell-item" title={SPACE_RESOURCE_NAMES[resource]}>
         <Icon name={resource} size={18} />
-        <span>{compact(faction.resources[resource], resource === "antimatter" ? 3 : 1)}</span>
+        <span>{compact(faction.resources[resource], resource === "antimatter" ? 3 : 1)}{#if spaceIncome && spaceIncome[resource].terms.length > 0}&nbsp;<span class="rate"><Num breakdown={perDay(world, baseContent, spaceIncome[resource])} signed digits={2} /></span>{/if}</span>
       </span>
     {/each}
   {/if}

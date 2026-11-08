@@ -11,10 +11,12 @@ import { advisorBonus, councilIncome } from "./councilors";
 import { detPow } from "./detmath";
 import { federationEconomyBonus, hasSharedSpaceProgram, sharedOutputs } from "./federation";
 import { FormulaBuilder, type Breakdown } from "./formula";
-import { addLog, factionState, nationDef } from "./lookup";
+import { boostForMissingUpkeep, factionHabLedger } from "./habs";
+import { addLog, factionDef, factionState, nationDef } from "./lookup";
 import { equipNavy, nationArmies, navyCount, raiseArmy } from "./military";
 import { nationRegions } from "./territory";
 import { applyPropaganda } from "./missions";
+import { monthlyInfluence } from "./monthly";
 import { controlPointType, gdpPerCapita, isDisabled, ownsActiveType } from "./nation";
 import { globalModifierProduct, modifierProduct, priorityBonus } from "./research";
 import { pick } from "./rng";
@@ -367,11 +369,12 @@ export function payNationOutputs(state: GameState, content: Content, nation: Nat
 }
 
 /**
- * A faction's expected monthly Money, Boost and Ops at current priorities: its Funding and Boost
- * shares, plus the Spoils money its CPs would collect if the Spoils priority keeps its pace.
- * Ops come only from councilors.
+ * A faction's expected monthly Money, Influence, Boost and Ops at current priorities: its Funding
+ * and Boost shares, plus the Spoils money its CPs would collect if the Spoils priority keeps its
+ * pace, and what its habs make and cost (with the boost that stands in for space resources it
+ * has run out of). Ops come only from councilors and habs.
  */
-export function factionMonthlyIncome(state: GameState, content: Content, factionId: string): { money: Breakdown; boost: Breakdown; ops: Breakdown } {
+export function factionMonthlyIncome(state: GameState, content: Content, factionId: string): { money: Breakdown; influence: Breakdown; boost: Breakdown; ops: Breakdown } {
   const sp = content.rules.priorityEffects.spoils;
   const spoilsCost = content.priorities.find((p) => p.id === "spoils")?.cost ?? 1;
   let funding = 0;
@@ -392,16 +395,20 @@ export function factionMonthlyIncome(state: GameState, content: Content, faction
       spoils += completions * perCompletion * fraction * aristocracy;
     }
   }
+  const faction = factionState(state, factionId);
+  const habs = factionHabLedger(state, content, factionId);
+  const hasHabs = state.habs.some((h) => h.factionId === factionId);
+  const fromHabs = (f: FormulaBuilder, r: "money" | "influence" | "ops") => (hasHabs ? f.add("Habs", (habs.income[r] ?? 0) - (habs.upkeep[r] ?? 0)) : f);
+  const influence = new FormulaBuilder();
+  for (const t of monthlyInfluence(state, content, faction).terms) influence[t.op](t.label, t.value);
+  const boostIncome = new FormulaBuilder().add("Nations' Boost", boost).add("Councilors' traits and orgs", councilIncome(content, faction, "boost"));
+  const own = factionDef(content, factionId).annualBoost;
+  if (own) boostIncome.add("Our own", own / 12);
+  if (hasHabs) boostIncome.add("Habs' upkeep", -(habs.upkeep.boost ?? 0)).add("Standing in for space resources we lack", -boostForMissingUpkeep(state, content, factionId));
   return {
-    money: new FormulaBuilder()
-      .add("Funding", funding)
-      .add("Spoils (expected)", spoils)
-      .add("Councilors' traits and orgs", councilIncome(content, factionState(state, factionId), "money"))
-      .build(),
-    boost: new FormulaBuilder()
-      .add("Nations' Boost", boost)
-      .add("Councilors' traits and orgs", councilIncome(content, factionState(state, factionId), "boost"))
-      .build(),
-    ops: new FormulaBuilder().add("Councilors' traits and orgs", councilIncome(content, factionState(state, factionId), "ops")).build(),
+    money: fromHabs(new FormulaBuilder().add("Funding", funding).add("Spoils (expected)", spoils).add("Councilors' traits and orgs", councilIncome(content, faction, "money")), "money").build(),
+    influence: fromHabs(influence, "influence").build(),
+    boost: boostIncome.build(),
+    ops: fromHabs(new FormulaBuilder().add("Councilors' traits and orgs", councilIncome(content, faction, "ops")), "ops").build(),
   };
 }

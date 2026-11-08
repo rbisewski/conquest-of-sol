@@ -2,7 +2,7 @@ import type { Attribute, ClaimDef, DifficultyId, Gender, MinedResource } from ".
 import type { RngState } from "./rng";
 
 /** Bump when the shape of GameState changes, and add a migration in save.ts. */
-export const STATE_VERSION = 31;
+export const STATE_VERSION = 32;
 
 export const UNDECIDED = "undecided";
 
@@ -405,9 +405,11 @@ export interface HabState {
   /** Where it is: a hab site for a base, an orbit for a station. */
   siteId: string | null;
   orbitId: string | null;
-  /** The core first, then the module slots its tier gives (4, 12 or 20); null where a slot is empty. */
+  /** The core first, then the module slots its tier gives (4, 12 or 20); null where a slot is empty. A base's first slot is its mining slot. */
   modules: (HabModuleState | null)[];
   foundedDay: number;
+  /** Its upkeep went unpaid today: the faction ran out of what it needs and of boost to stand in for it. */
+  unsupplied: boolean;
 }
 
 /** A module in a hab's slot. It works from the day it is built. */
@@ -419,6 +421,8 @@ export interface HabModuleState {
   doneDay: number;
   /** An upgrade being built in its place; the module keeps working until the upgrade is done. */
   upgrade: { moduleId: string; arrivesDay: number; doneDay: number } | null;
+  /** Switched off by its faction: it uses no power and does nothing (modules that take power first can't be). */
+  off: boolean;
 }
 
 /** A climate event a player faction must answer (Terra Invicta's narrative events). */

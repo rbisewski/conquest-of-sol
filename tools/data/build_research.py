@@ -113,6 +113,13 @@ MODIFIERS = {
     "ProbeTransferTime",
     "GenericModuleTransferTime",
     "GenericTransfer_OffDate_PCT",
+    "SpaceMiningBonus",
+    "MiningWaterBonus",
+    "MiningVolatilesBonus",
+    "MiningMetalsBonus",
+    "MiningNoblesBonus",
+    "MiningFissilesBonus",
+    "MCFreeSpaceMineNetwork",
 }
 
 # The game's effect contexts for the space economy. Projects carrying them are kept for the space

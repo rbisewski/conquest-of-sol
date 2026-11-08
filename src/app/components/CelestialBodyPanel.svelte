@@ -345,6 +345,11 @@
           {#if probeArrives !== null}<span class="muted">Arrives {onDay(probeArrives)}</span>{:else if !probeCheck.ok}<span class="bad">{probeCheck.reason}</span>{/if}
         {/if}
       </div>
+      {#if body?.miningModifier}
+        <div class="journey small" title="Terra Invicta's mining modifier: it rises with the escape velocities to climb out and the distance from the Sun">
+          <Icon name="mining" size={13} /><span>A mine here costs and uses power ×{body.miningModifier.toFixed(2)}</span>
+        </div>
+      {/if}
       {#if siteJourney}
         {@const { core, sent, check } = siteJourney}
         <div class="journey small">

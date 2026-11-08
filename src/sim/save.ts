@@ -74,6 +74,15 @@ const migrations: Record<number, (state: Record<string, unknown>, content: Conte
     addStartingHabs(next, content);
     return next as unknown as Record<string, unknown>;
   },
+  // Hab upkeep and power: every module switched on, every hab supplied.
+  31: (state) => ({
+    ...state,
+    habs: (state.habs as Record<string, unknown>[]).map((h) => ({
+      ...h,
+      unsupplied: h.unsupplied ?? false,
+      modules: (h.modules as (Record<string, unknown> | null)[]).map((m) => (m ? { ...m, off: m.off ?? false } : null)),
+    })),
+  }),
 };
 
 export function serialize(state: GameState): string {
