@@ -94,6 +94,11 @@
     solar?.setHabs(game.state, game.playerFactionId);
   });
 
+  // The picked hab's station orbit is drawn.
+  $effect(() => {
+    solar?.selectHab(game.selectedHabId);
+  });
+
 </script>
 
 <div class="solar" bind:this={container}></div>

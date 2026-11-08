@@ -6,7 +6,10 @@
 // the body. A hab shows where it is once that is far enough from its body's disc on screen to tell
 // them apart, as a moon does (a base once its body is drawn at its true size, and only on the side
 // facing the camera; a station not while behind the disc); till then the habs of a body, and of
-// its moons not drawn, are fanned in a crown over its disc. The focused body's system shows its
+// its moons not drawn, are fanned in a crown over its disc. Stations round the focused body (or
+// its moons), and the station picked in the game, keep to their orbits instead, drawn just clear of
+// the disc where the true orbit lies inside it (the discs are drawn larger than true); the picked
+// one's orbit is a grey line, as a picked small body's is, hidden where it passes behind the disc. The focused body's system shows its
 // Lagrange points that have station orbits as small diamonds, faint unless a hab is there, which
 // then sits over its diamond. The player's probes and deliveries in flight (theirs only: they are
 // private) are dashed arcs in the faction's colour from the Earth at launch to where they arrive,
@@ -53,9 +56,23 @@ const AU_KM = 149597870.7;
 const YEAR_S = 31557600;
 const TWO_PI = 2 * Math.PI;
 /** Art pixels across an atlas cell: the largest sprite. */
-const CELL = 11;
+const CELL = 22;
+/** The hab sprites' art pixels per body pixel: they are drawn finer than the discs. */
+const FINE = 2;
 /** A station shows on its orbit once that spans this many CSS pixels (as a moon does), and is clear of its body's disc. */
 const HAB_MIN_PIXELS = 16;
+/** Stations round the focused body keep to their orbits while its disc is drawn at least this radius, CSS pixels; else they fan in its crown. */
+const ORBIT_MIN_DISC = 24;
+/** Fastest a station is drawn going round, radians per real second (half a turn). */
+const MAX_SPIN = Math.PI;
+/** Longest real time run on at once, seconds: a frame's, or between the time's updates. */
+const MAX_FRAME_S = 0.1;
+/** A step in the game's time longer than this, years (a day), is a jump, not the clock running. */
+const MAX_STEP_YEARS = 1 / 365.25;
+/** How far the pace moves to each new reading of it. */
+const PACE_EASE = 0.3;
+/** The clock is taken as stopped once the time has not changed for this long, seconds. */
+const PAUSED_AFTER_S = 0.25;
 /** A base shows on its site once its body is drawn at its true size and at least this radius, CSS pixels. */
 const BASE_MIN_PIXELS = 24;
 /** Gap between sprites fanned round a disc, CSS pixels. */
@@ -71,28 +88,41 @@ const ARC_SEGMENTS = 256;
 /** Dashes along an arc, whatever its length, and its opacity. */
 const ARC_DASHES = 60;
 const ARC_OPACITY = 0.7;
+/** The orbit of the station picked, drawn as a picked small body's is. */
+const RING = { color: "#8fa3b8", opacity: 0.65, segments: 128 };
 
 /**
- * Reduced looks of CORE_SPRITES (habArt.ts), small enough to sit beside a body's disc: the same
- * palette keys, the faction's colour ("f", "F") on the modules, a station's ring or a base's
- * band, so it reads at a glance. Platform, orbital, ring; outpost, settlement, colony.
+ * Reduced looks of CORE_SPRITES (habArt.ts), small enough to sit beside a body's disc, at twice
+ * the bodies' pixel density: the same palette keys, the faction's colour ("f", "F") on the
+ * modules, lit windows ("w"), solar wings, a station's ring or a base's dome and regolith, so it
+ * reads at a glance. Platform, orbital, ring; outpost, settlement, colony.
  */
 const HAB_SPRITES: Record<HabKind, [string[], string[], string[]]> = {
   station: [
-    ["kkk.....kkk", "kSk.kkk.kSk", "kskkfffkksk", "k33kfwFk33k", "kSkkfFFkkSk", "ksk.kkk.ksk", "kkk.....kkk"],
-    ["....kkk....", "kkk.kfk.kkk", "kSk.kfk.kSk", "ksk.kFk.ksk", "kSkkfffkkSk", "k333fwF333k", "kSkkfFFkkSk", "ksk.kFk.ksk", "kSk.kfk.kSk", "kkk.kFk.kkk", "....krk...."],
-    ["...kkkkk...", ".kkfffffkk.", "kffkk2kkFFk", "kfk.k2k.kFk", "kf2221w33Fk", "kFk.k3k.kFk", "kFFkk4kkFFk", ".kkFFFFFkk.", "...kkkkk..."],
+    // Platform: a module between two solar wings, a beacon on top.
+    ["kkkkkk.....k....kkkkkk", "kSsSsk....krk...kSsSsk", "ksSsSk..kkkkkk..ksSsSk", "kSsSsk.k112223k.kSsSsk", "ksSsSk3k1w2w34k3ksSsSk", "kkkkkk2kfffFFFk2kkkkkk", "ksSsSk4k223344k4ksSsSk", "kSsSsk.k2w3w44k.kSsSsk", "ksSsSk..kk44kk..ksSsSk", "kSsSsk...k44k...kSsSsk", "kkkkkk...kkkk...kkkkkk"],
+    // Orbital: two modules stacked on a truss, wings either side, docking lights.
+    ["..........kk..........", ".........krrk.........", "..........kk..........", "kkkkkk...k21k...kkkkkk", "kSsSsk...k23k...kSsSsk", "ksSsSk.kkk22kkk.ksSsSk", "kSsSsk.k1w22w3k.kSsSsk", "ksSsSk3kfffFFFk3ksSsSk", "kkkkkk2k122334k2kkkkkk", "kSsSsk4k2w33w4k4kSsSsk", "ksSsSk.kkk33kkk.ksSsSk", "kSsSsk..k1234k..kSsSsk", "ksSsSk.kk2334kk.ksSsSk", "kkkkkk.k122334k.kkkkkk", "kSsSsk.k1fffFFk.kSsSsk", "ksSsSk3k2w33w4k3ksSsSk", "kSsSsk2k223344k2kSsSsk", "ksSsSk4k2w33w4k4ksSsSk", "kSsSsk.kkkkkkkk.kSsSsk", "kkkkkk...k44k...kkkkkk", ".........k44k.........", "........kkrrkk........"],
+    // Ring: a wheel on spokes round a hub, its rim banded in the faction's colour.
+    ["......kkkkkkkkkk......", "....kk1122222233kk....", "...k11kkkkkkkkkk33k...", "..k1kk....k2....kk3k..", ".k1k......k2......k3k.", ".k2k......k2......k4k.", "k12k....kkkkkk....k34k", "k2k....k112234k....k4k", "k2k2222k1ffFF3k3333k4k", "k2k....k2w3w44k....k4k", "k23k....kkkkkk....k44k", ".k3k......k3......k4k.", ".k3k......k3......k4k.", "..k3kk....k4....kk4k..", "...k33kkkkkkkkkk44k...", "....kkfFfFfFfFfFkk....", "......kkkkkkkkkk......"],
   ],
   base: [
-    ["..k........", ".krk..kkk..", ".k4fk.k1wk.", ".k4Fkkf1fFk", ".k4kkkfffFk", "keeeeeeeeek", "kggegggggGk", ".kkGGGGGkk."],
-    ["...........", "..kkk......", ".kdDdk.kkk.", "kdDdddkdDdk", "kdddddkdddk", "kfFfFfffFfk", "keeeeeeeeek", ".kkgggggkk."],
-    ["....krk....", "....kfk....", "..kkdddkk..", ".kdDdddddk.", "kdDdw2wdddk", "kDdd232dddk", "kfFfFfFfFfk", "keeeeeeeeek", ".kkgggggkk."],
+    // Outpost: the flag, a landed module and a lander under its dish.
+    ["..k...................", ".krk.............k....", ".kfk............k1k...", ".kfFk..........k12k...", ".kFFk.........kkkk3k..", ".k4kk.........k..k4k..", ".k4k..kkkkkkk.....k4k.", ".k4k.k1122234k...k22k.", ".k4kk11w2w3w4k..k1233k", ".k4kk1ffffFF4k.k12w34k", ".k4kk22223334k.kfffFFk", ".k4kkkkkkkkkkk.k3344kk", "keeeeeeeeeeeeeeeeeeeek", "kgggegggggeggggggegggk", "kGgGGgGgGGGgGgGgGGgGGk", ".kkkkkkkkkkkkkkkkkkkk."],
+    // Settlement: a dome over gardens, modules either side of its gate.
+    ["...........k..........", "..........krk.........", "......kkkkkkkkkk......", "....kkdDDdddddddkk....", "...kdDDdddddddddddk...", "..kdDdddddddddddddDk..", "..kdDddd2d2ddd2dddDk..", ".kddddd2223222323ddDk.", ".kddd22223232232322dk.", "kkkkkkkkkkkkkkkkkkkkkk", "k1122223kffFFk1122334k", "k1w2w3w3kffFFk1w2w3w4k", "k2222333kffFFk2223344k", "kkkkkkkkkkkkkkkkkkkkkk", "keeeeeeeeeeeeeeeeeeeek", "kgggeggggggeggggggeggk", "kGgGGgGgGGGgGgGgGGgGGk", ".kkkkkkkkkkkkkkkkkkkk."],
+    // Colony: a tower between domes, over a long hall.
+    ["..........krk.........", "..........kfk.........", ".........kk1kk........", "........k11223k.......", "......kkk1w23kkk......", "....kkdDkfffFFkddkk...", "...kdDDdk12234kdddDk..", "..kdDdddk1w2w4kddddDk.", "..kdDd2dk22334kd2dddk.", ".kdddd22k1w2w4k232ddk.", ".kdd2223k23344k2322dk.", "kkkkkkkkkkkkkkkkkkkkkk", "k112223kfFfFfFfFk1234k", "k1w2w3wkffffFFFFk1w3wk", "k223334kfFfFfFfFk2344k", "kkkkkkkkkkkkkkkkkkkkkk", "keeeeeeeeeeeeeeeeeeeek", "kggegggggegggggeggeggk", "kGgGGgGgGGGgGgGgGGgGGk", ".kkkkkkkkkkkkkkkkkkkk."],
   ],
 };
+/** A sprite drawn at the bodies' pixel size, in the finer art pixels: each pixel made 2×2. */
+const coarse = (rows: string[]) => rows.flatMap((row) => Array<string>(FINE).fill([...row].map((c) => c.repeat(FINE)).join("")));
 /** A delivery on its way: a cargo pod in the faction's colour, its thrusters lit. */
-const POD = ["..kkk..", ".k122k.", ".kfffk.", ".k2w3k.", ".kFFFk.", "kk3k3kk", ".r...r."];
+const POD = coarse(["..kkk..", ".k122k.", ".kfffk.", ".k2w3k.", ".kFFFk.", "kk3k3kk", ".r...r."]);
 /** A prospecting probe in flight: PROBE (pixelArt.ts) cut down, its dish up. */
-const PROBE_SMALL = [".aaaa..", "abbbba.", ".aaaa..", "...a...", "..aca.a", ".a.a.a.", "a.....a"];
+const PROBE_SMALL = coarse([".aaaa..", "abbbba.", ".aaaa..", "...a...", "..aca.a", ".a.a.a.", "a.....a"]);
+/** Lagrange point diamonds, and the pod and the probe: 7 body pixels across. */
+const SMALL_PIXELS = 7 * FINE;
 /** The sprites in each faction's run of atlas cells: the hab looks, then the pod and the probe. */
 const FACTION_SPRITES = [...HAB_SPRITES.station, ...HAB_SPRITES.base, POD, PROBE_SMALL];
 const POD_CELL = 6;
@@ -320,15 +350,31 @@ export class HabMarkers {
   private picks: { habs: Pickable[]; arcs: Pickable[]; lpoints: Pickable[] } = { habs: [], arcs: [], lpoints: [] };
   private readonly v = new THREE.Vector3();
   private readonly w = new THREE.Vector3();
+  /** The hab picked in the game, whose station's orbit is drawn; and that line (a unit circle in the orbit's plane, scaled). */
+  private selected: string | null = null;
+  private ring: { habId: string; line: THREE.LineLoop } | null = null;
+  /** CSS pixels per art pixel (the habs' finer pixels). */
+  private readonly pixel: number;
+  /** CSS pixels per body pixel. */
+  private readonly bodyPixel: number;
+  /**
+   * The game's pace as seen here: the last time drawn and when it came, and years per real
+   * second, from the times seen (the worker's updates come a few dozen times a second).
+   */
+  private readonly pace = { years: Number.NaN, came: 0, drawn: 0, rate: 0 };
+  /** Each station's angle round its orbit as drawn last, radians. */
+  private readonly angles = new Map<string, number>();
 
   constructor(
     private readonly scene: THREE.Scene,
     private readonly content: Content,
-    /** CSS pixels per art pixel, as the bodies'. */
-    private readonly pixel: number,
-    /** Device pixels per art pixel. */
+    /** CSS pixels per body pixel, as the bodies'. */
+    bodyPixel: number,
+    /** Device pixels per body pixel. */
     devicePixel: number,
   ) {
+    this.pixel = bodyPixel / FINE;
+    this.bodyPixel = bodyPixel;
     for (const b of content.solarSystem) {
       this.bodies.set(b.id, b);
       if (!b.orbit) continue;
@@ -348,8 +394,8 @@ export class HabMarkers {
       FACTION_SPRITES.forEach((rows, k) => drawSprite(ctx, rows, palette, (first + k + 0.5) * CELL, CELL / 2));
     });
     this.lCells = { faint: cells - 2, occupied: cells - 1 };
-    drawSprite(ctx, SITE_MARKER, SITE_PALETTES.unknown, (cells - 1.5) * CELL, CELL / 2);
-    drawSprite(ctx, SITE_MARKER, SITE_PALETTES.prospected, (cells - 0.5) * CELL, CELL / 2);
+    drawSprite(ctx, coarse(SITE_MARKER), SITE_PALETTES.unknown, (cells - 1.5) * CELL, CELL / 2);
+    drawSprite(ctx, coarse(SITE_MARKER), SITE_PALETTES.prospected, (cells - 0.5) * CELL, CELL / 2);
     this.atlas = new THREE.CanvasTexture(canvas);
     this.atlas.magFilter = THREE.NearestFilter;
     this.atlas.minFilter = THREE.NearestFilter;
@@ -361,7 +407,7 @@ export class HabMarkers {
       uniforms: {
         atlas: { value: this.atlas },
         cells: { value: cells },
-        pixel: { value: devicePixel },
+        pixel: { value: devicePixel / FINE },
         resolution: { value: new THREE.Vector2(1, 1) },
       },
       transparent: true,
@@ -498,17 +544,75 @@ export class HabMarkers {
   private stationAt(place: Placement, years: number, positionOf: PositionOf, out: THREE.Vector3): THREE.Vector3 {
     const { orbit } = place;
     if (orbit.lagrange) return this.lagrange(orbit.lagrange, orbit.body, positionOf, out);
+    return this.onOrbit(orbit, place.phase + place.motion * years, out).multiplyScalar(place.radius).add(positionOf(orbit.body));
+  }
+
+  /**
+   * A station's angle round its orbit as drawn, at the time drawn: its true one while it goes round
+   * no faster than MAX_SPIN at the game's pace; faster (low orbits at the higher speeds, where each
+   * update would move it most of a turn and it would seem to jump about at random), on from where
+   * it was at MAX_SPIN, its true place given up for steady motion.
+   */
+  private drawnAngle(habId: string, place: Placement, years: number, dt: number): number {
+    const was = this.angles.get(habId);
+    const angle =
+      was !== undefined && Math.abs(place.motion) * this.pace.rate > MAX_SPIN ? was + Math.sign(place.motion) * MAX_SPIN * dt : place.phase + place.motion * years;
+    this.angles.set(habId, angle);
+    return angle;
+  }
+
+  /** The point of a body's orbit at argument u, as a unit vector from the body. */
+  private onOrbit(orbit: HabOrbitDef, u: number, out: THREE.Vector3): THREE.Vector3 {
     const [x, y, z] = orbit.body === "Earth" ? EQUATOR : ECLIPTIC;
-    const u = place.phase + place.motion * years;
     const i = THREE.MathUtils.degToRad(orbit.inclinationDeg);
     const node = THREE.MathUtils.degToRad(orbit.nodeDeg);
     const [cu, su, ci, si, cn, sn] = [Math.cos(u), Math.sin(u), Math.cos(i), Math.sin(i), Math.cos(node), Math.sin(node)];
-    const r = place.radius;
     return out
-      .copy(positionOf(orbit.body))
-      .addScaledVector(x, r * (cn * cu - sn * su * ci))
-      .addScaledVector(y, r * (sn * cu + cn * su * ci))
-      .addScaledVector(z, r * su * si);
+      .set(0, 0, 0)
+      .addScaledVector(x, cn * cu - sn * su * ci)
+      .addScaledVector(y, sn * cu + cn * su * ci)
+      .addScaledVector(z, su * si);
+  }
+
+  /** Picks the hab whose station's orbit is drawn, and which keeps to its orbit wherever the camera is. */
+  select(habId: string | null): void {
+    this.selected = habId;
+  }
+
+  /**
+   * The picked station's orbit line, made for it, placed round its body at the radius drawn; null
+   * hides it. It is drawn over the discs, but where it passes behind its body's disc it fades out,
+   * a vertex at a time (`hidden` tells which).
+   */
+  private showRing(m: HabMark | null, bodyAt: THREE.Vector3 | null, radius: number, hidden: (at: THREE.Vector3) => boolean = () => false): void {
+    if (this.ring && this.ring.habId !== m?.hab.id) {
+      this.scene.remove(this.ring.line);
+      this.ring.line.geometry.dispose();
+      (this.ring.line.material as THREE.Material).dispose();
+      this.ring = null;
+    }
+    if (!m?.place || !bodyAt) return;
+    if (!this.ring) {
+      const points = Array.from({ length: RING.segments }, (_, k) => this.onOrbit(m.place!.orbit, (k / RING.segments) * TWO_PI, new THREE.Vector3()));
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      geometry.setAttribute("color", new THREE.Float32BufferAttribute(new Float32Array(RING.segments * 4), 4));
+      const line = new THREE.LineLoop(geometry, new THREE.LineBasicMaterial({ color: RING.color, vertexColors: true, transparent: true, depthTest: false, depthWrite: false }));
+      line.frustumCulled = false;
+      // Over the discs (4–5), under the habs' sprites.
+      line.renderOrder = 6;
+      this.scene.add(line);
+      this.ring = { habId: m.hab.id, line };
+    }
+    const { line } = this.ring;
+    line.position.copy(bodyAt);
+    line.scale.setScalar(radius);
+    const unit = line.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const color = line.geometry.getAttribute("color") as THREE.BufferAttribute;
+    for (let k = 0; k < RING.segments; k++) {
+      this.v.fromBufferAttribute(unit, k).multiplyScalar(radius).add(bodyAt);
+      color.setXYZW(k, 1, 1, 1, hidden(this.v) ? 0 : RING.opacity);
+    }
+    color.needsUpdate = true;
   }
 
   /** The body round the Sun a body is, or is in the system of. */
@@ -588,6 +692,7 @@ export class HabMarkers {
     }
     this.habs = [];
     this.arcs = [];
+    this.showRing(null, null, 0);
   }
 
   /** The Lagrange points with station orbits of the focused body and its parent, and of its moons with it. */
@@ -609,8 +714,24 @@ export class HabMarkers {
     const shown = frame.shown && !Number.isNaN(frame.years);
     for (const points of [this.habPoints, this.arcPoints, this.lPoints]) if (points) points.visible = shown;
     for (const arc of this.arcs) arc.line.visible = false;
-    if (!shown) return;
+    if (!shown) {
+      this.showRing(null, null, 0);
+      return;
+    }
     const { camera, positions, years } = frame;
+    const now = performance.now() / 1000;
+    const dt = Math.min(now - this.pace.drawn, MAX_FRAME_S);
+    this.pace.drawn = now;
+    if (years !== this.pace.years) {
+      const step = years - this.pace.years;
+      // A jump (a load, the first time) stops the pace; else it follows the time's steps.
+      if (step > 0 && step < MAX_STEP_YEARS) this.pace.rate += (step / Math.max(now - this.pace.came, 1e-3) - this.pace.rate) * PACE_EASE;
+      else this.pace.rate = 0;
+      this.pace.years = years;
+      this.pace.came = now;
+    } else if (now - this.pace.came > PAUSED_AFTER_S) this.pace.rate = 0;
+    // The time as drawn: run on from the last update at the pace, so stations glide between updates.
+    const smooth = years + this.pace.rate * Math.min(now - this.pace.came, MAX_FRAME_S);
     (this.material.uniforms.resolution!.value as THREE.Vector2).set(frame.width * frame.pixelRatio, frame.height * frame.pixelRatio);
     const origin = positions.get(frame.focusId)!;
     const positionOf: PositionOf = (id) => positions.get(id)!;
@@ -629,7 +750,7 @@ export class HabMarkers {
     const lShown = new Map<string, THREE.Vector3>();
     if (this.lPoints) {
       const attr = this.attributes(this.lPoints);
-      const half: [number, number] = [(7 * this.pixel) / 2, (7 * this.pixel) / 2];
+      const half: [number, number] = [(SMALL_PIXELS * this.pixel) / 2, (SMALL_PIXELS * this.pixel) / 2];
       this.lpoints.forEach((l, k) => {
         attr.cell.setX(k, l.occupied ? this.lCells.occupied : this.lCells.faint);
         attr.alpha.setX(k, 0);
@@ -658,6 +779,8 @@ export class HabMarkers {
         fans.set(key, entry);
       };
       const at = new THREE.Vector3();
+      // Set in the loop below (a closure, so held in an object for the type checker).
+      const picked: { ring: { m: HabMark; bodyAt: THREE.Vector3; radius: number; drawn: number } | null } = { ring: null };
       this.habs.forEach((m, k) => {
         attr.cell.setX(k, m.cell);
         attr.shade.setX(k, m.dim ? DIM_SHADE : 1);
@@ -669,20 +792,31 @@ export class HabMarkers {
         let placed: "here" | "hidden" | "fan" = "fan";
         const lpoint = m.hab.orbitId ? lShown.get(m.hab.orbitId) : undefined;
         if (lpoint) {
-          fan(m.hab.orbitId!, lpoint, (7 * this.pixel) / 2, k);
+          fan(m.hab.orbitId!, lpoint, (SMALL_PIXELS * this.pixel) / 2, k);
           return;
         }
         if (disc && m.place) {
-          this.stationAt(m.place, years, positionOf, at);
-          const offset = at.distanceTo(bodyAt) * ppu(bodyAt);
-          if (offset >= HAB_MIN_PIXELS && (offset >= disc.drawn + m.half[0] + FAN_GAP || disc.true >= disc.drawn - this.pixel)) {
+          // The picked station keeps to its orbit at every zoom, and those round the focused body
+          // or its moons while its disc is drawn large enough to hold them round it; drawn just
+          // clear of the disc where the true orbit is inside it (as the view's discs are larger
+          // than true). Which way a station goes depends on the zoom only: deciding by its offset
+          // on screen flipped it between orbit and crown as it went round, and it jumped about.
+          const near = (focused || this.body(m.body).parent === frame.focusId) && disc.drawn >= ORBIT_MIN_DISC;
+          const keep = !m.place.orbit.lagrange && (m.hab.id === this.selected || near);
+          const radius = keep ? Math.max(m.place.radius, Math.max(HAB_MIN_PIXELS, disc.drawn + m.half[0] + FAN_GAP) / ppu(bodyAt)) : m.place.radius;
+          if (keep && m.hab.id === this.selected) picked.ring = { m, bodyAt, radius, drawn: disc.drawn };
+          if (m.place.orbit.lagrange) this.stationAt(m.place, years, positionOf, at);
+          else this.onOrbit(m.place.orbit, this.drawnAngle(m.hab.id, m.place, smooth, dt), at).multiplyScalar(radius).add(bodyAt);
+          // Others go by their orbit's radius on screen, not their offset, so as not to flip either.
+          const reach = m.place.radius * ppu(bodyAt);
+          if (keep || (reach >= HAB_MIN_PIXELS && (reach >= disc.drawn + m.half[0] + FAN_GAP || disc.true >= disc.drawn - this.bodyPixel))) {
             placed = "here";
             // Behind its body's disc.
             const p = project(at);
             const c = project(bodyAt);
             if (p && c && Math.hypot(p[0] - c[0], p[1] - c[1]) < disc.drawn && camera.position.distanceTo(at) > camera.position.distanceTo(bodyAt)) placed = "hidden";
           }
-        } else if (disc && m.site?.lat !== undefined && m.site.lon !== undefined && disc.true >= BASE_MIN_PIXELS && disc.true >= disc.drawn - this.pixel) {
+        } else if (disc && m.site?.lat !== undefined && m.site.lon !== undefined && disc.true >= BASE_MIN_PIXELS && disc.true >= disc.drawn - this.bodyPixel) {
           const lat = THREE.MathUtils.degToRad(m.site.lat);
           const lon = THREE.MathUtils.degToRad(m.site.lon);
           const direction = this.v.set(Math.cos(lat) * Math.cos(lon), Math.sin(lat), -Math.cos(lat) * Math.sin(lon));
@@ -704,6 +838,12 @@ export class HabMarkers {
         while (host && !frame.disc(host)) host = this.body(host).parent;
         if (!host || (frame.backgroundHidden && host !== frame.focusId)) return;
         fan(host, positions.get(host)!, frame.disc(host)!.drawn, k);
+      });
+      const ring = picked.ring;
+      const centre = ring ? project(ring.bodyAt) : null;
+      this.showRing(ring?.m ?? null, ring?.bodyAt ?? null, ring?.radius ?? 0, (p) => {
+        const s = project(p);
+        return !!(ring && s && centre && Math.hypot(s[0] - centre[0], s[1] - centre[1]) < ring.drawn && camera.position.distanceTo(p) > camera.position.distanceTo(ring.bodyAt));
       });
       // Every sprite takes a cell's width, so the rings stay even.
       const size = CELL * this.pixel + FAN_GAP;
@@ -735,7 +875,7 @@ export class HabMarkers {
     if (this.arcPoints) {
       const attr = this.attributes(this.arcPoints);
       const at = new THREE.Vector3();
-      const half: [number, number] = [(7 * this.pixel) / 2, (7 * this.pixel) / 2];
+      const half: [number, number] = [(SMALL_PIXELS * this.pixel) / 2, (SMALL_PIXELS * this.pixel) / 2];
       this.arcs.forEach((arc, k) => {
         attr.cell.setX(k, arc.cell);
         attr.alpha.setX(k, 0);

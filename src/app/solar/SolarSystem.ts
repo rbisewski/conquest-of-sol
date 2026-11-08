@@ -1333,6 +1333,11 @@ export class SolarSystem {
     this.habMarkers.setState(state, playerFactionId);
   }
 
+  /** The hab picked in the game: its station's orbit is drawn, and it keeps to it. */
+  selectHab(id: string | null): void {
+    this.habMarkers.select(id);
+  }
+
   /**
    * Draws this view from the globe's camera (in Earth radii, the globe's frame), beneath the
    * globe: called by the globe every frame while it has the camera.
