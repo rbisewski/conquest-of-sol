@@ -130,7 +130,7 @@ export function applyCommand(state: GameState, content: Content, command: Comman
       return { ok: true };
     }
     case "setProject": {
-      const check = checkProjectChoice(content, faction, command.slot, command.projectId);
+      const check = checkProjectChoice(state, content, faction, command.slot, command.projectId);
       if (!check.ok) return reject(check.reason);
       faction.research.projectSlots[command.slot] = command.projectId;
       if (command.projectId) faction.research.choosing = faction.research.choosing.filter((j) => j !== command.slot);

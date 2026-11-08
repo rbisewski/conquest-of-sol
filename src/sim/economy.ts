@@ -11,7 +11,7 @@ import { advisorBonus, councilIncome } from "./councilors";
 import { detPow } from "./detmath";
 import { federationEconomyBonus, hasSharedSpaceProgram, sharedOutputs } from "./federation";
 import { FormulaBuilder, type Breakdown } from "./formula";
-import { boostForMissingUpkeep, factionHabLedger } from "./habs";
+import { boostForMissingUpkeep, factionHabLedger, habBonuses, type HabBonuses } from "./habs";
 import { addLog, factionDef, factionState, nationDef } from "./lookup";
 import { equipNavy, nationArmies, navyCount, raiseArmy } from "./military";
 import { nationRegions } from "./territory";
@@ -98,14 +98,17 @@ export function weightsForControlPoint(state: GameState, content: Content, natio
 /**
  * IP per month flowing into each priority. Each CP spends an equal share of the nation's IP
  * by its holder's weights, ignoring priorities the nation can't use, and each priority gets
- * the CP's diversity bonus from the other nation-building priorities it funds.
+ * the CP's diversity bonus from the other nation-building priorities it funds, and its holder's
+ * bonuses from projects and from its habs' modules in the Earth's low orbits.
  */
 export function priorityFlows(state: GameState, content: Content, nation: NationState): Record<string, number> {
   const flows: Record<string, number> = {};
   const share = monthlyInvestment(state, content, nation).value / nation.controlPoints.length;
   const available = content.priorities.filter((p) => priorityAvailable(state, content, nation, p.id));
   const federation = federationEconomyBonus(state, content, nation);
+  const habs = new Map<string, HabBonuses>();
   for (const cp of nation.controlPoints) {
+    if (cp.owner && !habs.has(cp.owner)) habs.set(cp.owner, habBonuses(state, content, cp.owner));
     const weights = weightsForControlPoint(state, content, nation.id, cp.owner);
     const pips = (p: PriorityDef) => Math.max(0, weights[p.id] ?? 0);
     const total = available.reduce((sum, p) => sum + pips(p), 0);
@@ -116,7 +119,7 @@ export function priorityFlows(state: GameState, content: Content, nation: Nation
       // A priority can't earn a diversity bonus from itself.
       const bonus = diversity - ((p.diversity ?? 0) * pips(p)) / total;
       // Projects make the holder's IP go further in the priorities they improve.
-      const projects = cp.owner ? priorityBonus(state, content, cp.owner, p.id) : 0;
+      const projects = cp.owner ? priorityBonus(state, content, cp.owner, p.id) + (habs.get(cp.owner)!.priorities[p.id] ?? 0) : 0;
       // Federation members invest in their Economy more cheaply.
       const federated = p.id === "economy" ? federation : 0;
       flows[p.id] = (flows[p.id] ?? 0) + ((share * pips(p)) / total) * (1 + bonus + projects + federated);

@@ -3,7 +3,8 @@
   // while the globe has the camera it draws from the globe's (handoff.ts), and zooming out past
   // the globe it takes over from there, so the zoom carries on with no change of view. Scrolling
   // all the way back in on the Earth hands back; double-clicking it or the button flies home
-  // first. Clicking a body opens its Celestial Body panel, and choosing one there swings to it.
+  // first. Clicking a body opens its Celestial Body panel, and choosing one there swings to it;
+  // clicking a hab opens its Hab panel.
   import { untrack } from "svelte";
   import * as THREE from "three";
   import { baseContent } from "../../content/index";
@@ -39,6 +40,11 @@
     try {
       const view = new SolarSystem(container, baseContent, toEarth);
       view.onSelectBody = (id) => (game.selectedBodyId = id);
+      view.onSelectHab = (id) => {
+        game.selectedHabId = id;
+        game.selectedCouncilorId = null;
+        game.selectedArmyId = null;
+      };
       untrack(() => view.setTime(...time()));
       solar = handoff.solar = view;
     } catch (error) {
@@ -84,6 +90,11 @@
     void game.state?.dayIndex;
     void game.dayFraction;
     solar?.setTime(...time());
+  });
+
+  // The habs, and our probes and deliveries in flight, from each snapshot (rebuilt only when they change).
+  $effect(() => {
+    solar?.setHabs(game.state, game.playerFactionId);
   });
 
 </script>

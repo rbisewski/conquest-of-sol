@@ -8,6 +8,7 @@ import { factionDef, factionState, nationState } from "./lookup";
 import { armyCommander, nationToRestore, checkAirlift, checkAnnex, checkMove, distanceKm, isFriendlyRegion, isFullyOccupied, mayEnter, militaryStrength, navalFreedom, occupiedShare, startAnnex, startMove } from "./military";
 import { assessMission, checkMissionCost, committedResources, ideologicalDistance } from "./missions";
 import { controlCap, controlUpkeep } from "./monthly";
+import { priorityAvailable } from "./economy";
 import { controlPointCapacityCost, corruption, isDefended, isDisabled } from "./nation";
 import type { ArmyState, Councilor, FactionState, GameState, Mission, NationState, Policy } from "./state";
 import { capitalRegion, isCapital, isExtant, nationRegions, populationShare, regionDef, regionOwner } from "./territory";
@@ -76,13 +77,16 @@ export function abandonOverCap(state: GameState, content: Content, faction: Fact
 /**
  * Sets this faction's priorities in every nation where it holds CPs: the default
  * nation-building mix plus enough Spoils to keep the elites satisfied, since
- * unsatisfied elites make coups much easier.
+ * unsatisfied elites make coups much easier. Once it can found habs, it also funds Boost and
+ * Mission Control where the nation can use them, for its space plans (rules.space.ai.priorities).
  */
 function setPriorities(state: GameState, content: Content, faction: FactionState): void {
-  const base = content.rules.defaultPriorities;
-  const baseTotal = Object.values(base).reduce((a, b) => a + b, 0);
+  const space = faction.research.completed["Project_OutpostCore"] || faction.research.completed["Project_PlatformCore"];
   for (const nation of state.nations) {
     if (!nation.controlPoints.some((cp) => cp.owner === faction.id)) continue;
+    const base: Record<string, number> = { ...content.rules.defaultPriorities };
+    if (space) for (const [id, weight] of Object.entries(content.rules.space.ai.priorities)) if (priorityAvailable(state, content, nation, id)) base[id] = weight;
+    const baseTotal = Object.values(base).reduce((a, b) => a + b, 0);
     const share = corruption(content, nation).value;
     // spoils / (baseTotal + spoils) = share  →  spoils = share × baseTotal / (1 − share)
     const spoils = Math.round(((share * baseTotal) / (1 - share)) * 10) / 10;

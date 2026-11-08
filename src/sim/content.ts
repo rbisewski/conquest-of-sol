@@ -227,6 +227,30 @@ export interface SpaceRules {
    * it loses up to `modules[i]` of them, picked by `weights`.
    */
   accidents: { perMissingMissionControl: number; unsupplied: number; modules: number[]; weights: number[] };
+  /** The most a solar module makes, as a multiple of its power, with sunlight and mirrors. */
+  solarMaxMultiple: number;
+  /** Caps on what all a faction's habs in the Earth's low orbits add: to each priority's IP, public campaign strength, councilor detection and army Miltech. */
+  earthOrbitCaps: { priority: number; publicCampaign: number; detection: number; armyMiltech: number };
+  /**
+   * The space AI (**ours**): the least boost it keeps, and the months of its habs' draw on boost
+   * it keeps if more; the months ahead it plans its boost over; what a unit of boost and of each
+   * mined resource is worth to it; how many probes it has out at once; the least a month's yield
+   * (less the boost the outpost draws) must be worth for it to found an outpost; the least
+   * sunlight for it to build solar power; the least monthly money income for it to add labs; and
+   * the weights it gives Boost and Mission Control in its nations once it can found habs.
+   */
+  ai: {
+    boostReserve: number;
+    reserveMonths: number;
+    planMonths: number;
+    boostValue: number;
+    maxProbesInFlight: number;
+    resourceValue: Record<MinedResource, number>;
+    minSiteValue: number;
+    minSunlight: number;
+    minMoneyIncome: number;
+    priorities: Record<string, number>;
+  };
 }
 
 /** Research (Terra Invicta's Technology page and national research formula). See docs/formulas.md. */
@@ -312,7 +336,9 @@ export type ModifierContext =
   | "MiningNoblesBonus"
   | "MiningFissilesBonus"
   /** Mines the faction can work before they cost mission control. */
-  | "MCFreeSpaceMineNetwork";
+  | "MCFreeSpaceMineNetwork"
+  /** Multiplies the mission control its habs use. */
+  | "HabMissionControlReduction";
 
 /** Who a lasting effect applies to: the faction that completed it, or every faction. */
 export type EffectScope = "faction" | "global";

@@ -872,7 +872,21 @@
     ],
     "baseMissionControl": 2,
     "lifeSupport": { "water": 0.35, "volatiles": 0.35, "money": 0.1 },
-    "accidents": { "perMissingMissionControl": 0.1, "unsupplied": 0.25, "modules": [2, 4, 8], "weights": [3, 2, 1] }
+    "accidents": { "perMissingMissionControl": 0.1, "unsupplied": 0.25, "modules": [2, 4, 8], "weights": [3, 2, 1] },
+    "solarMaxMultiple": 8,
+    "earthOrbitCaps": { "priority": 0.3, "publicCampaign": 9, "detection": 9, "armyMiltech": 0.3 },
+    "ai": {
+      "boostReserve": 5,
+      "reserveMonths": 6,
+      "planMonths": 24,
+      "boostValue": 2,
+      "maxProbesInFlight": 2,
+      "resourceValue": { "water": 1, "volatiles": 1, "metals": 1, "nobleMetals": 3, "fissiles": 3 },
+      "minSiteValue": 3,
+      "minSunlight": 0.3,
+      "minMoneyIncome": 20,
+      "priorities": { "boost": 1, "mission-control": 1 }
+    }
   },
   "research": {
     "startingTechs": [

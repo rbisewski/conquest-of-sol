@@ -34,6 +34,7 @@ const MODIFIERS: Record<ModifierContext, (e: Extract<ResearchEffect, { kind: "mo
   MiningNoblesBonus: (e) => `Mines yield noble metals ${times(e.value)}`,
   MiningFissilesBonus: (e) => `Mines yield fissiles ${times(e.value)}`,
   MCFreeSpaceMineNetwork: (e) => `${signed(e.value)} mines we can work without mission control`,
+  HabMissionControlReduction: (e) => `Mission control our habs use ${times(e.value)}`,
 };
 
 export function describeEffect(e: ResearchEffect): string {

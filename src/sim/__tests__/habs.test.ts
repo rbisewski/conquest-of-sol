@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { baseContent } from "../../content/index";
 import {
+  controlCap,
+  habBonuses,
+  monthlyResearch,
+  moduleOrder,
+  priorityFlows,
+  projectSlotCount,
+  projectsBonus,
+  runResearchTick,
+  spaceBody,
   applyCommand,
   constructionFactor,
   delivery,
@@ -296,6 +305,105 @@ describe("mission control", () => {
     expect(habs.every((h) => h.modules[0]!.moduleId === "OutpostCore")).toBe(true);
     expect(habs.filter((h) => h.modules.slice(1).every((m) => m === null)).length).toBeGreaterThan(6);
     expect(state.log.some((e) => / a malfunction destroyed its .*, as we use more mission control than we have\.$/.test(e.text))).toBe(true);
+  });
+});
+
+describe("what modules do", () => {
+  /** A station of Aegis's in an orbit, every module built, with a fusion reactor farm for power. */
+  function station(state: GameState, orbitId: string, ids: string[]): HabState {
+    const hab: HabState = { id: `hab-${orbitId}-${state.habs.length}`, factionId: "aegis", name: orbitId, siteId: null, orbitId, foundedDay: 0, unsupplied: false, modules: [built("RingCore"), built("FusionReactorFarm"), ...ids.map(built)] };
+    state.habs.push(hab);
+    return hab;
+  }
+
+  it("make research, more in their field (with diminishing returns above 50%) and more with an administration module", () => {
+    const { state } = game();
+    const before = monthlyResearch(state, content, aegis(state)).value;
+    const hab = station(state, "HighEarthOrbit", ["EnergyInstitute", "EnergyInstitute", "EnergyInstitute"]);
+    expect(monthlyResearch(state, content, aegis(state)).value).toBeCloseTo(before + 45, 9);
+    // Three institutes add 75% to energy research: 50% + 50% × 25% / 225%.
+    expect(habBonuses(state, content, "aegis").research.energy).toBeCloseTo(0.5 + 0.5 * (0.25 / 2.25), 9);
+    hab.modules.push(built("AdministrationNode"));
+    expect(monthlyResearch(state, content, aegis(state)).value).toBeCloseTo(before + 45 * 1.025, 9);
+  });
+
+  it("put a field's bonus on the techs researched in it", () => {
+    const { state } = game();
+    aegis(state).research.projectSlots = aegis(state).research.projectSlots.map(() => null);
+    aegis(state).research.pips = aegis(state).research.pips.map(() => 1);
+    const energy = content.techs.find((t) => t.category === "energy")!;
+    const other = content.techs.find((t) => t.category === "social")!;
+    state.research.slots[0]!.techId = energy.id;
+    state.research.slots[1]!.techId = other.id;
+    state.research.slots[2]!.techId = null;
+    station(state, "HighEarthOrbit", ["EnergyInstitute"]);
+    const ours = (i: number) => state.research.slots[i]!.contributions["aegis"] ?? 0;
+    const [a, b] = [ours(0), ours(1)];
+    runResearchTick(state, content, 1 / 30);
+    // Equal pips: the energy slot gets the institute's 25% more of our research than the social one.
+    expect((ours(0) - a) / (ours(1) - b)).toBeCloseTo(1.25, 9);
+  });
+
+  it("add to our CPs' priorities from low Earth orbit, at most 30% each, and nothing from higher up", () => {
+    const { state } = game();
+    // The ISS's Space Science Lab gives Lumen +3% to Mission Control.
+    expect(habBonuses(state, content, "lumen").priorities["mission-control"]).toBeCloseTo(0.03, 9);
+    const nation = state.nations.find((n) => n.spaceProgram)!;
+    nation.controlPoints.forEach((cp) => (cp.owner = "aegis"));
+    aegis(state).priorityWeights[nation.id] = Object.fromEntries(content.priorities.map((p) => [p.id, p.id === "mission-control" ? 1 : 0]));
+    const before = priorityFlows(state, content, nation)["mission-control"]!;
+    station(state, "HighEarthOrbit", ["SpaceScienceInstitute"]);
+    expect(habBonuses(state, content, "aegis").priorities["mission-control"]).toBeUndefined();
+    station(state, "LowEarthOrbit1", ["SpaceScienceInstitute", "SpaceScienceInstitute", "SpaceScienceInstitute", "SpaceScienceInstitute"]);
+    expect(habBonuses(state, content, "aegis").priorities["mission-control"]).toBe(0.3);
+    expect(priorityFlows(state, content, nation)["mission-control"]! / before).toBeCloseTo(1.3, 9);
+  });
+
+  it("give control point capacity from administration in low Earth orbit, and mission control from operations centres", () => {
+    const { sim, state } = game();
+    const cap = controlCap(state, content, aegis(state)).value;
+    station(state, "HighEarthOrbit", ["AdministrationNode", "OperationsCenter"]);
+    expect(controlCap(state, content, aegis(state)).value).toBe(cap);
+    station(state, "LowEarthOrbit1", ["AdministrationNode"]);
+    expect(controlCap(state, content, aegis(state)).value).toBe(cap + 4);
+    expect(habBonuses(state, content, "aegis").missionControl).toBe(4);
+    sim.advance(1);
+    expect(aegis(state).resources.missionControl).toBeGreaterThanOrEqual(content.rules.space.baseMissionControl + 4);
+  });
+
+  it("open the third project slot with project income, and speed projects with more", () => {
+    const { state } = game();
+    expect(projectSlotCount(state, content, aegis(state))).toBe(1);
+    station(state, "HighEarthOrbit", ["Foundry"]);
+    expect(projectSlotCount(state, content, aegis(state))).toBe(2);
+    // The Foundry's second project is the first beyond the slot: +5%.
+    expect(projectsBonus(state, content, "aegis")).toBeCloseTo(0.05, 9);
+  });
+
+  it("let mirrors raise a base's solar power, up to eight times the module's, and cost more far from the Sun", () => {
+    const { state, hab } = lunarBase();
+    hab.modules[2] = built("SolarCollector");
+    expect(habOperation(state, content, hab).made).toBe(10);
+    const mirror = station(state, "LowLunarOrbit", ["SolarMirror"]);
+    expect(habOperation(state, content, hab).made).toBe(12);
+    mirror.modules.push(...Array.from({ length: 80 }, () => built("SolarMirror")));
+    expect(habOperation(state, content, hab).made).toBe(160);
+    // At Jupiter's L1 point a mirror costs the square of Jupiter's distance in AU as much.
+    const jupiter = station(state, content.orbits.find((o) => o.body === "Jupiter" && o.lagrange === 1)!.id, []);
+    const order = moduleOrder(state, content, "aegis", jupiter, 2, "SolarMirror");
+    expect(order.resources.volatiles! / habModuleDef(content, "SolarMirror").buildCost.volatiles!).toBeCloseTo(spaceBody(content, "Jupiter").orbit!.a ** 2, 9);
+  });
+
+  it("swap fissiles for water in helium-3 fusion modules while we harvest helium-3, and spare quarters' crew money", () => {
+    const { state } = game();
+    const hab = station(state, "HighEarthOrbit", ["HeavyFusionPile", "Quarters"]);
+    const [core, farm, pile] = ["RingCore", "FusionReactorFarm", "HeavyFusionPile"].map((id) => habModuleDef(content, id));
+    expect(habLedger(state, content, hab).upkeep.fissiles).toBeCloseTo((farm!.support.fissiles ?? 0) + pile!.support.fissiles!, 9);
+    // The quarters' 50 crew pay no money; everyone else's do.
+    const money = core!.support.money! + farm!.support.money! + pile!.support.money! + ((core!.crew + farm!.crew + pile!.crew) * 0.1) / 12;
+    expect(habLedger(state, content, hab).upkeep.money).toBeCloseTo(money, 9);
+    station(state, content.orbits.find((o) => o.body === "Jupiter" && o.interface)!.id, ["Helium-3Mine"]);
+    expect(habLedger(state, content, hab).upkeep.fissiles ?? 0).toBeCloseTo(farm!.support.fissiles ?? 0, 9);
   });
 });
 

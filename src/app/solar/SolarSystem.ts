@@ -4,7 +4,8 @@
 // comets are small pixel-art sprites (smallBodies.ts). Bodies are pixel-art discs (bodyArt.ts) lit from the Sun's real
 // direction, at least a fixed size on screen, and at their true size once the camera is close
 // enough for that to be bigger. A moon shows once its orbit is wide enough on screen to tell
-// it from its planet.
+// it from its planet. Habs, the player's probes and deliveries in flight and the focused
+// system's Lagrange points are drawn over them (habMarkers.ts); clicking a hab opens its panel.
 //
 // The camera orbits a focused body and follows it along its orbit; clicking a body focuses it.
 // The view and the globe are one: the globe is drawn see-through on top of this view, and while
@@ -19,12 +20,14 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import type { Content, SpaceBodyDef } from "../../sim/content";
 import { orbitPath, solarPositions, type Vec3 } from "../../sim/orbits";
+import type { GameState } from "../../sim/state";
 import { GLOBE_FADE_FROM, GLOBE_FARTHEST } from "../globe/Globe";
 import { Recency } from "./recency";
 import { bodyMap, bodyRelief, canvasSize, cometCanvasSize, drawBody, drawCometActivity, drawSun, hasMap, hasStyle, releaseBodyMaps, sunCanvasSize, surfaceReach, type Light, type MapImage, type Orient, type Relief } from "./bodyArt";
 import { bodyToScene, hasFrame } from "./bodyFrames";
 import { EARTH_POLE, globeToScene } from "./earthFrame";
 import { cometActivity, disposeSmallBodies, makeSmallBodies, setSmallBodiesSun, setSmallBodyShown } from "./smallBodies";
+import { HabMarkers } from "./habMarkers";
 
 /** Ecliptic coordinates (z north) to the scene's (y up). */
 const toScene = (p: Vec3, out = new THREE.Vector3()) => out.set(p.x, p.z, -p.y);
@@ -972,6 +975,8 @@ const HOME_SECONDS = 1.4;
 /** Between these distances from the Earth (AU) the camera's up turns from the Earth's axis to the ecliptic's. */
 const UP_TURN: [number, number] = [HANDOFF, 0.05];
 const ECLIPTIC_UP = new THREE.Vector3(0, 1, 0);
+/** A small sprite's radius on screen, CSS pixels, for the habs fanned round it. */
+const DOT_PIXELS = 2 * PIXEL;
 
 /** How a body is shown: an asteroidal moon with a map of its own (Phobos, Deimos) as a moon, a lit globe on its orbit, not a small sprite. */
 function kind(def: SpaceBodyDef): string {
@@ -1013,6 +1018,8 @@ interface BodyView {
   /** The size, light direction (and, for the Earth, the turn) the disc was last drawn with, rounded. */
   lightKey: string;
   shown: boolean;
+  /** The disc's radius as drawn this frame, CSS pixels. */
+  px: number;
   /** A comet drawn close up: its jets, coma and tails, on a sprite over the nucleus, the frame they were last drawn at, and its index among the small sprites, one of which stands in for it far away. */
   comet: { sprite: THREE.Sprite; canvas: HTMLCanvasElement; texture: THREE.CanvasTexture; frame: string; dot: number } | null;
 }
@@ -1060,6 +1067,9 @@ export class SolarSystem {
   private readonly dotPoints: THREE.Points;
   /** Whether each dot is drawn: asteroidal moons only once their orbits are wide enough on screen. */
   private readonly dotShown: boolean[] = [];
+  private readonly dotIndex = new Map<string, number>();
+  /** The habs, the player's probes and deliveries in flight, and the focused system's Lagrange points (habMarkers.ts). */
+  private readonly habMarkers: HabMarkers;
   /** The selected small body's orbit, and that body. */
   private selectedOrbit: { def: SpaceBodyDef; line: THREE.LineLoop } | null = null;
   /** Scene positions of every body, by id. */
@@ -1090,6 +1100,8 @@ export class SolarSystem {
   private readonly earthToScene = new THREE.Matrix4();
   /** Called with a body's id when it is clicked. */
   onSelectBody: ((id: string) => void) | null = null;
+  /** Called with a hab's id when it is clicked. */
+  onSelectHab: ((id: string) => void) | null = null;
 
   constructor(
     private readonly container: HTMLElement,
@@ -1139,7 +1151,9 @@ export class SolarSystem {
     }
     this.dotPoints = makeSmallBodies(this.dots, PIXEL * Math.min(window.devicePixelRatio, 2));
     this.dotShown.push(...this.dots.map(() => true));
+    this.dots.forEach((d, i) => this.dotIndex.set(d.id, i));
     this.scene.add(this.dotPoints);
+    this.habMarkers = new HabMarkers(this.scene, content, PIXEL, PIXEL * Math.min(window.devicePixelRatio, 2));
 
     for (const b of this.bodies) {
       if (b.baseR < ALWAYS_MAPPED_RADIUS || b.comet || !hasMap(b.def.id)) continue;
@@ -1220,7 +1234,7 @@ export class SolarSystem {
       this.scene.add(tailSprite);
       comet = { sprite: tailSprite, canvas: tails, texture: tailTexture, frame: "", dot };
     }
-    const view: BodyView = { def, baseR: r, r, sprite, canvas, texture, orbit, label, lightKey: "", shown: true, comet };
+    const view: BodyView = { def, baseR: r, r, sprite, canvas, texture, orbit, label, lightKey: "", shown: true, px: 0, comet };
     this.bodies.push(view);
     this.byId.set(def.id, view);
   }
@@ -1310,6 +1324,11 @@ export class SolarSystem {
   setTime(years: number, sunInGlobe: THREE.Vector3): void {
     this.years = years;
     this.sunInGlobe.copy(sunInGlobe);
+  }
+
+  /** The habs, and the player's probes and deliveries, from the game's state (rebuilt only when they change). */
+  setHabs(state: GameState | null, playerFactionId: string | null): void {
+    this.habMarkers.setState(state, playerFactionId);
   }
 
   /**
@@ -1526,6 +1545,7 @@ export class SolarSystem {
       this.resizeArt(b, Math.max(b.baseR, Math.min(CLOSE_ART_RADIUS[b.def.id] ?? MAX_ART_RADIUS, Math.ceil(truePixels / PIXEL))));
       const pixel = Math.max(PIXEL, truePixels / b.r);
       const size = b.canvas.width * pixel;
+      b.px = b.r * pixel;
       b.sprite.scale.set(size * unit, size * unit, 1);
       // Moons show when their orbit is wide enough on screen, planets when clear of the Sun.
       const parent = b.def.parent ? this.positions.get(b.def.parent)! : null;
@@ -1598,7 +1618,35 @@ export class SolarSystem {
       const toSun = this.positions.get(this.focusId)!.distanceTo(sun) * this.pixelsPerUnit(sun);
       if (toSun < LABEL_MIN_PIXELS) sol.label.style.display = "none";
     }
+    this.habMarkers.draw({
+      camera: this.camera,
+      width: this.container.clientWidth,
+      height,
+      pixelRatio: this.renderer.getPixelRatio(),
+      years: this.placedYears,
+      positions: this.positions,
+      focusId: this.focusId,
+      shown: !this.following,
+      backgroundHidden,
+      disc: (id) => this.discOf(id),
+      frame: (id) => {
+        const view = this.byId.get(id);
+        return view ? this.frameOf(view.def, this.positions.get(id)!) : null;
+      },
+    });
     this.renderer.render(this.scene, this.camera);
+  }
+
+  /** A body's disc as drawn this frame, its radius on screen and its true radius there, CSS pixels; null when it isn't drawn. */
+  private discOf(id: string): { drawn: number; true: number } | null {
+    const view = this.byId.get(id);
+    const dot = this.dotIndex.get(id);
+    const def = view?.def ?? (dot === undefined ? null : this.dots[dot]!);
+    if (!def) return null;
+    const truePixels = (def.radiusKm / AU_KM) * this.pixelsPerUnit(this.positions.get(id)!);
+    if (view?.sprite.visible) return { drawn: view.px, true: truePixels };
+    if (dot !== undefined && this.dotPoints.visible && this.dotShown[dot]) return { drawn: DOT_PIXELS, true: truePixels };
+    return null;
   }
 
   /** Gives a disc a new art radius: a new canvas (and texture, as a texture can't change size). */
@@ -1646,10 +1694,16 @@ export class SolarSystem {
     comet.texture.needsUpdate = true;
   }
 
+  /** A body's own frame in the scene (the globe's, for the Earth); null for a body with none. */
+  private frameOf(def: SpaceBodyDef, at: THREE.Vector3): THREE.Matrix4 | null {
+    if (def.id === "Earth") return this.earthToScene;
+    if (!hasFrame(def.id)) return null;
+    return bodyToScene(def.id, this.years, def.parent ? this.positions.get(def.parent)!.clone().sub(at) : new THREE.Vector3(1, 0, 0));
+  }
+
   /** View space to a body's own frame (the globe's, for the Earth), and that turn's matrix elements; null for a body with no frame. */
   private orientOf(b: BodyView, at: THREE.Vector3): { orient: Orient; e: number[] } | null {
-    const toParent = b.def.parent ? this.positions.get(b.def.parent)!.clone().sub(at) : new THREE.Vector3(1, 0, 0);
-    const frame = b.def.id === "Earth" ? this.earthToScene : hasFrame(b.def.id) ? bodyToScene(b.def.id, this.years, toParent) : null;
+    const frame = this.frameOf(b.def, at);
     if (!frame) return null;
     // Camera to scene, then scene to body.
     const e = frame.clone().transpose().multiply(new THREE.Matrix4().extractRotation(this.camera.matrixWorld)).elements;
@@ -1712,6 +1766,13 @@ export class SolarSystem {
     const down = this.downAt;
     this.downAt = null;
     if (!down || Math.abs(event.clientX - down.x) + Math.abs(event.clientY - down.y) > 5) return;
+    // A hab is picked over the body behind it, and leaves the camera where it is.
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    const mark = this.habMarkers.pick(event.clientX - rect.left, event.clientY - rect.top);
+    if (mark) {
+      if (mark.habId) this.onSelectHab?.(mark.habId);
+      return;
+    }
     const id = this.bodyAt(event);
     if (!id) return;
     this.focus(id);
@@ -1724,15 +1785,15 @@ export class SolarSystem {
 
   private readonly handleMove = (event: PointerEvent): void => {
     if (this.downAt) return;
-    const id = this.bodyAt(event);
-    this.renderer.domElement.style.cursor = id ? "pointer" : "";
-    if (!id) {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    const mark = this.habMarkers.pick(event.clientX - rect.left, event.clientY - rect.top);
+    const id = mark ? null : this.bodyAt(event);
+    this.renderer.domElement.style.cursor = mark?.habId || id ? "pointer" : "";
+    if (!mark && !id) {
       this.tooltip.style.display = "none";
       return;
     }
-    const def = this.content.solarSystem.find((b) => b.id === id)!;
-    const rect = this.renderer.domElement.getBoundingClientRect();
-    this.tooltip.textContent = def.name;
+    this.tooltip.textContent = mark ? mark.text : this.content.solarSystem.find((b) => b.id === id)!.name;
     this.tooltip.style.display = "";
     this.tooltip.style.transform = `translate(${event.clientX - rect.left + 12}px, ${event.clientY - rect.top - 8}px)`;
   };
@@ -1768,6 +1829,7 @@ export class SolarSystem {
     canvas.removeEventListener("wheel", this.handleWheel);
     this.controls.dispose();
     disposeSmallBodies(this.dotPoints);
+    this.habMarkers.dispose();
     this.scene.traverse((object) => {
       const o = object as THREE.Mesh;
       o.geometry?.dispose();

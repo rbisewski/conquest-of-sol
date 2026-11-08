@@ -120,6 +120,7 @@ MODIFIERS = {
     "MiningNoblesBonus",
     "MiningFissilesBonus",
     "MCFreeSpaceMineNetwork",
+    "HabMissionControlReduction",
 }
 
 # The game's effect contexts for the space economy. Projects carrying them are kept for the space

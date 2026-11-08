@@ -12,6 +12,7 @@ import { advisorBonus, removeCouncilor } from "./councilors";
 import { detPow } from "./detmath";
 import { hasClaim, takeRegion } from "./claims";
 import { addAlliance, areAllies, atWar, checkExecutive, enemiesOf, resolveConquests, sideOf, warBetween, type Check } from "./diplomacy";
+import { habBonuses } from "./habs";
 import { addLog, factionDef, nationDef, nationState, newId } from "./lookup";
 import { foundingEffects, markBreakaway } from "./secession";
 import { applyPropaganda } from "./missions";
@@ -295,6 +296,9 @@ export function armyMiltech(state: GameState, content: Content, army: ArmyState,
   const home = nationState(state, army.nationId);
   const owner = regionOwner(state, regionId);
   let miltech = home.militaryTech + advisorBonus(state, home.id, "command") / 100;
+  // Military science labs in low Earth orbit aid the armies their faction commands.
+  const commander = armyCommander(state, army);
+  if (commander) miltech += habBonuses(state, content, commander).armyMiltech;
   if (owner === army.nationId) miltech += r.homeBonus;
   if (isDisabled(state, home, armyControlPoint(state, army))) miltech -= r.disabledCpPenalty;
   if (attacking && isFriendlyRegion(state, content, army.nationId, regionId)) miltech += r.cohesionBonus * nationState(state, owner).cohesion;

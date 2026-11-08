@@ -10,10 +10,12 @@
   import {
     availableTechs,
     factionDef,
+    habBonuses,
     projectChoices,
     projectCost,
     projectDef,
     projectSlotCount,
+    projectsBonus,
     techCost,
     techDef,
     topContributor,
@@ -32,7 +34,10 @@
   const faction = $derived(world.factions.find((f) => f.id === game.playerFactionId) ?? null);
   const rules = baseContent.rules.research;
   const techSlots = $derived(world.research.slots.length);
-  const openProjectSlots = $derived(faction ? projectSlotCount(baseContent, faction) : 0);
+  const openProjectSlots = $derived(faction ? projectSlotCount(world, baseContent, faction) : 0);
+  /** Our habs' labs' research bonus by field, and the Projects bonus from their project income. */
+  const labs = $derived(faction ? habBonuses(world, baseContent, faction.id).research : {});
+  const projectBoost = $derived(faction ? projectsBonus(world, baseContent, faction.id) : 0);
   const choices = $derived([...availableTechs(world, baseContent)].sort((a, b) => a.cost - b.cost || a.name.localeCompare(b.name)));
   /** The techs and projects each tech or project leads to, listed in the sheet. */
   const leadsTo = $derived.by(() => {
@@ -208,7 +213,7 @@
               {@const leader = topContributor(world, slot)}
               {@render heading(tech, "")}
               {@render effects(tech)}
-              <div class="small muted progress">{compact(slot.progress, 0)} / {compact(cost, 0)}</div>
+              <div class="small muted progress">{compact(slot.progress, 0)} / {compact(cost, 0)}{#if labs[tech.category]}{" · "}<span class="good" title="Our habs' labs add this to our research in the field (less when other slots work in it too)">+{Math.round(labs[tech.category]! * 100)}% from our labs</span>{/if}</div>
               {@render contributions(slot, cost)}
               <div class="small centered">
                 Our share {pct(slot.contributions[faction.id] ?? 0, slot.progress)}%{#if leader}{" · "}Leading: <span class:good={leader === faction.id}>{factionName(leader)}</span>{/if}
@@ -238,7 +243,7 @@
           <div class="slot cell" class:locked={j >= openProjectSlots}>
             {#if j >= openProjectSlots}
               <div class="muted">
-                {j === 1 ? "Opens when one of our councilors holds an org with research income." : "Opens with a research hab module (not in the game yet)."}
+                Opens with a councilor holding an org with research income, and another with a working Skunk Works or Foundry in one of our habs.
               </div>
             {:else if projectId}
               {@const p = projectDef(baseContent, projectId)}
@@ -251,10 +256,10 @@
               <div class="small muted">{p.summary}</div>
               {@render effects(p)}
               <div class="bar"><span style:width="{Math.min(100, pct(progress, cost))}%" style:background={CATEGORY[p.category].color}></span></div>
-              <div class="small muted">{compact(progress, 0)} / {compact(cost, 0)}</div>
+              <div class="small muted">{compact(progress, 0)} / {compact(cost, 0)}{#if labs[p.category] || projectBoost}{" · "}<span class="good" title="Our habs' labs add the field's bonus (less when other slots work in it too), and project income beyond the first speeds projects">+{Math.round(((labs[p.category] ?? 0) + projectBoost) * 100)}% from our habs</span>{/if}</div>
               {@render pips(techSlots + j)}
             {:else}
-              {#if projectChoices(baseContent, faction).includes(j)}
+              {#if projectChoices(world, baseContent, faction).includes(j)}
                 <div class="name good">Project complete</div>
                 <div class="small muted">Pick the next one. The clock waits for our choice.</div>
               {:else}

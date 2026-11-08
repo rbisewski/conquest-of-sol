@@ -3,6 +3,7 @@
 // and scheduled missions resolve at their own minute in between.
 
 import { planCouncilPhase } from "./ai";
+import { planSpace } from "./aiSpace";
 import { dateOfDay } from "./calendar";
 import { applyCommand, type Command, type CommandResult } from "./commands";
 import type { Content } from "./content";
@@ -25,7 +26,11 @@ import { currentMinute, MINUTES_PER_DAY } from "./time";
  */
 function openCouncilPhase(state: GameState, content: Content): void {
   startCouncilPhase(state, content);
-  for (const faction of state.factions) if (!faction.isPlayer) planCouncilPhase(state, content, faction);
+  for (const faction of state.factions) {
+    if (faction.isPlayer) continue;
+    planCouncilPhase(state, content, faction);
+    planSpace(state, content, faction);
+  }
   if (allFactionsDone(state)) closeCouncilPhase(state, content);
 }
 

@@ -10,6 +10,7 @@ import { alliesOf, answerDefection, checkExecutive, enactPolicy } from "./diplom
 import { priorityAvailable, weightsForControlPoint } from "./economy";
 import { federationOf, removeFromFederation, sameFederation } from "./federation";
 import { FormulaBuilder, type Breakdown } from "./formula";
+import { habBonuses } from "./habs";
 import { addLog, factionDef, factionState, nationDef, nationState } from "./lookup";
 import { capitalRegion, isExtant, nationNeighbors, regionDef, regionOwner } from "./territory";
 import { overCap } from "./monthly";
@@ -700,7 +701,8 @@ export function resolveMission(state: GameState, content: Content, factionId: st
       if (success) {
         // A critical success reaches twice the audience.
         const before = nation.publicOpinion[factionId] ?? 0;
-        const strength = effectiveAttributes(content, councilor).persuasion * modifierProduct(state, content, factionId, "PublicCampaignStrength");
+        // Media modules in low Earth orbit add their strength to our successful campaigns.
+        const strength = (effectiveAttributes(content, councilor).persuasion + habBonuses(state, content, factionId).publicCampaign) * modifierProduct(state, content, factionId, "PublicCampaignStrength");
         applyPropaganda(content, nation, factionId, strength * (outcome === "criticalSuccess" ? 2 : 1));
         const gain = (nation.publicOpinion[factionId] ?? 0) - before;
         text = `${who} ran a public campaign in ${nationName}: our support rose ${(gain * 100).toFixed(1)} points to ${percent(nation.publicOpinion[factionId] ?? 0)}.`;
@@ -856,6 +858,8 @@ function detectMission(state: GameState, content: Content, factionId: string, co
     let attack = (d.cpWeight * nation.controlPoints.filter((cp) => cp.owner === faction.id).length) / nation.controlPoints.length;
     const watching = Object.entries(state.surveillance).some(([watched, watchers]) => watchers.includes(faction.id) && (near.has(watched)));
     if (watching) attack += rules.surveilLocation.detectionBonus;
+    // Listening posts in low Earth orbit watch the whole Earth.
+    attack += habBonuses(state, content, faction.id).detection;
     for (const c of faction.councilors) {
       if (c.detainedPhases > 0) continue;
       const weight = c.regionId === region.id ? d.sameRegion : c.locationId === nation.id ? d.sameNation : near.has(c.regionId) ? d.neighborRegion : 0;

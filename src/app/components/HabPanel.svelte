@@ -17,6 +17,7 @@
     habLedger,
     habMissionControl,
     habModuleDef,
+    EARTH_ORBIT_PRIORITIES,
     habOperation,
     habTier,
     isBuilt,
@@ -103,9 +104,26 @@
     if (m.mineOutput) parts.push(`Yields ${m.mineOutput} × its site's resources a month; its cost and power go with the body's mining modifier`);
     if (m.power) parts.push(`Power ${m.power > 0 ? "+" : ""}${m.power}${m.rules?.includes("Solar_Power_Variable_Output") ? " in full sunlight" : ""}`);
     if (m.crew) parts.push(`Crew ${m.crew}`);
-    if (m.missionControl) parts.push(`Mission control ${m.missionControl > 0 ? "+" : ""}${m.missionControl}`);
+    if (m.missionControl) parts.push(m.missionControl > 0 ? `Provides ${m.missionControl} mission control` : `Uses ${-m.missionControl} mission control`);
+    const income = Object.entries(m.income).map(([r, v]) => `${v} ${r === "research" ? "research" : (SPACE_RESOURCE_NAMES[r as SpaceResource] ?? r).toLowerCase()}`);
+    if (income.length > 0) parts.push(`Income a month: ${income.join(", ")}`);
     const upkeep = Object.entries(m.support).map(([r, v]) => `${v} ${(SPACE_RESOURCE_NAMES[r as SpaceResource] ?? r).toLowerCase()}`);
     if (upkeep.length > 0) parts.push(`Upkeep a month: ${upkeep.join(", ")}`);
+    for (const [field, v] of Object.entries(m.researchBonuses ?? {})) parts.push(`+${+(v * 100).toFixed(1)}% to our ${field} research (less above 50% in all)`);
+    if (m.projectSlots) parts.push(`${m.projectSlots} project income: opens our third project slot; more speeds projects`);
+    for (const rule of m.rules ?? []) {
+      const priority = EARTH_ORBIT_PRIORITIES[rule];
+      if (priority) parts.push(`In low Earth orbit: +${Math.round((m.ruleValue ?? 0) * 100)}% to our CPs' ${baseContent.priorities.find((p) => p.id === priority)!.name} priority (at most +30% from all our habs)`);
+    }
+    if (m.rules?.includes("LEOBonusPropagandaStrength")) parts.push(`In low Earth orbit: +${m.ruleValue} strength to our public campaigns (at most +9)`);
+    if (m.rules?.includes("LEOBonusHumanDetection")) parts.push(`In low Earth orbit: +${m.tier} to spotting enemy councilors on Earth (at most +9)`);
+    if (m.rules?.includes("LEOBonusArmyCombatValue")) parts.push(`In low Earth orbit: +${m.ruleValue} Miltech to the armies we command (at most +0.3)`);
+    if (m.controlPointCapacity) parts.push(`In low Earth orbit: +${m.controlPointCapacity} control point capacity`);
+    if (m.rules?.includes("Efficiency")) parts.push(`+${Math.round((m.ruleValue ?? 0) * 100)}% to everything this hab makes`);
+    if (m.rules?.includes("SolarMirror")) parts.push(`+${m.ruleValue} power × tier to our solar modules on the body it orbits (or below its Lagrange point); costs more the farther from the Sun`);
+    if (m.rules?.includes("HarvestHelium3")) parts.push("Our helium-3 fusion modules take water instead of fissiles");
+    if (m.rules?.includes("HarvestAntimatter")) parts.push(`Harvests ${Math.round((m.ruleValue ?? 0) * 100)}% of the orbit's natural antimatter`);
+    if (m.rules?.includes("Stability")) parts.push("Its crew cost no money");
     if (m.rules?.includes("Farm")) parts.push(`Feeds ${m.ruleValue} crew: no water or volatiles for them`);
     if (m.rules?.includes("PowerFirst")) parts.push("Takes power first, and can't be switched off");
     return parts.join("\n");

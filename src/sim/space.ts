@@ -175,9 +175,10 @@ export function delivery(state: GameState, content: Content, factionId: string, 
  * Whether the faction can found a hab at a destination with boost from the Earth: the body or
  * orbit is open, the site is free (or the orbit has room for another station), it has the core's
  * project, it has prospected the body (for a base), it has rockets for anything beyond low Earth
- * orbit, room in its mission control for the core, and the boost to send the core.
+ * orbit, room in its mission control for the core, and the boost to send the core (unless
+ * `boostAside`, for planning).
  */
-export function checkFoundHab(state: GameState, content: Content, factionId: string, destination: Destination): Check {
+export function checkFoundHab(state: GameState, content: Content, factionId: string, destination: Destination, boostAside = false): Check {
   const faction = factionState(state, factionId);
   const techName = (id: string | undefined) => content.techs.find((t) => t.id === id)?.name ?? id;
   const projectName = (id: string) => content.projects.find((p) => p.id === id)?.name ?? id;
@@ -205,7 +206,7 @@ export function checkFoundHab(state: GameState, content: Content, factionId: str
   const mc = -(core.missionControl ?? 0);
   const used = missionControlUsed(state, content, factionId);
   if (used + mc > faction.resources.missionControl) return { ok: false, reason: `Needs ${mc} mission control: we use ${used} of our ${+faction.resources.missionControl.toFixed(1)}` };
-  if (faction.resources.boost < sent.boost.value) return { ok: false, reason: `Needs ${sent.boost.value.toFixed(1)} boost` };
+  if (!boostAside && faction.resources.boost < sent.boost.value) return { ok: false, reason: `Needs ${sent.boost.value.toFixed(1)} boost` };
   return { ok: true };
 }
 

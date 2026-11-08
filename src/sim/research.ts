@@ -10,6 +10,8 @@ import { activeOrgs, effectiveAttributes, traitDef } from "./councilors";
 import { detLn, detPow } from "./detmath";
 import { workingHolders } from "./economy";
 import { FormulaBuilder, type Breakdown } from "./formula";
+import { AI_SPACE_MODULES } from "./aiSpace";
+import { factionHabLedger, habBonuses } from "./habs";
 import { addLog, factionState } from "./lookup";
 import { applyPropaganda } from "./missions";
 import { controlCap, controlUpkeep } from "./monthly";
@@ -182,7 +184,7 @@ function councilorResearch(content: Content, faction: FactionState): number {
   return sum;
 }
 
-/** A faction's research a month: its CPs' shares of their nations' research, a base, and its councilors. */
+/** A faction's research a month: its CPs' shares of their nations' research, a base, its councilors and its habs. */
 export function monthlyResearch(state: GameState, content: Content, faction: FactionState): Breakdown {
   let nations = 0;
   for (const nation of state.nations) {
@@ -192,10 +194,10 @@ export function monthlyResearch(state: GameState, content: Content, faction: Fac
   const f = new FormulaBuilder().add("Nations (control points)", nations);
   const projects = modifierProduct(state, content, faction.id, "ControlPointResearch");
   if (projects !== 1) f.mul("Projects (control point research)", projects);
-  return f
-    .add("Faction base", content.rules.research.factionBase)
-    .add("Councilors' traits and orgs", councilorResearch(content, faction))
-    .build();
+  f.add("Faction base", content.rules.research.factionBase).add("Councilors' traits and orgs", councilorResearch(content, faction));
+  const habs = factionHabLedger(state, content, faction.id).income.research ?? 0;
+  if (habs > 0) f.add("Habs' labs", habs);
+  return f.build();
 }
 
 /** The holder's share of a nation's research: an equal share per CP, +5% with the Knowledge Sector. */
@@ -216,10 +218,25 @@ export function projectCost(state: GameState, content: Content, faction: Faction
   return projectDef(content, id).cost * (1 + (faction.research.completed[id] ?? 0)) * content.rules.difficulty[state.difficulty].researchCost;
 }
 
-/** One project slot is free; a councilor holding an org with research income opens a second. Habs (the third) aren't modelled yet. */
-export function projectSlotCount(content: Content, faction: FactionState): number {
+/**
+ * One project slot is free; a councilor holding an org with research income opens a second, and
+ * a working hab module with project income (Skunk Works, Foundry) another.
+ */
+export function projectSlotCount(state: GameState, content: Content, faction: FactionState): number {
   const org = faction.councilors.some((c) => c.detainedPhases === 0 && activeOrgs(content, c).some((o) => (o.income?.research ?? 0) > 0));
-  return Math.min(content.rules.research.maxProjectSlots, org ? 2 : 1);
+  const hab = habBonuses(state, content, faction.id).projects > 0;
+  return Math.min(content.rules.research.maxProjectSlots, 1 + (org ? 1 : 0) + (hab ? 1 : 0));
+}
+
+/**
+ * Terra Invicta's Projects bonus to project research: hab project income beyond the first, 5%
+ * each up to 100%, then 3% each up to 160%, then 1% each.
+ */
+export function projectsBonus(state: GameState, content: Content, factionId: string): number {
+  const extra = Math.max(0, habBonuses(state, content, factionId).projects - 1);
+  const first = Math.min(extra, 20);
+  const second = Math.min(Math.max(0, extra - 20), 20);
+  return first * 0.05 + second * 0.03 + Math.max(0, extra - 40) * 0.01;
 }
 
 export function techAvailable(state: GameState, content: Content, id: string): boolean {
@@ -237,22 +254,22 @@ export function awaitingTechChoice(state: GameState): boolean {
 }
 
 /** The project slots where a faction must pick the next project: emptied by a completion, still empty, with a project to pick. */
-export function projectChoices(content: Content, faction: FactionState): number[] {
+export function projectChoices(state: GameState, content: Content, faction: FactionState): number[] {
   const r = faction.research;
   if (!r.available.some((id) => !r.projectSlots.includes(id))) return [];
-  return r.choosing.filter((j) => r.projectSlots[j] === null && j < projectSlotCount(content, faction));
+  return r.choosing.filter((j) => r.projectSlots[j] === null && j < projectSlotCount(state, content, faction));
 }
 
 /** True while a player faction must pick the next project; the clock waits for it. */
 export function awaitingProjectChoice(state: GameState, content: Content): boolean {
-  return state.factions.some((f) => f.isPlayer && projectChoices(content, f).length > 0);
+  return state.factions.some((f) => f.isPlayer && projectChoices(state, content, f).length > 0);
 }
 
 /** Whether this faction must pick a global tech or a project before the clock runs again. */
 export function mustChooseResearch(state: GameState, content: Content, factionId: string): boolean {
   const faction = state.factions.find((f) => f.id === factionId);
   if (!faction) return false;
-  return state.research.slots.some((s) => s.techId === null && s.chooser === factionId) || projectChoices(content, faction).length > 0;
+  return state.research.slots.some((s) => s.techId === null && s.chooser === factionId) || projectChoices(state, content, faction).length > 0;
 }
 
 /** A player faction picks the project for an emptied slot (once any is available). */
@@ -358,11 +375,15 @@ export function runResearchTick(state: GameState, content: Content, share: numbe
   });
 }
 
-/** Splits research between the slots with pips: pips / total pips × (1 + 5% per such slot). */
+/**
+ * Splits research between the slots with pips: pips / total pips × (1 + 5% per such slot), each
+ * share × (1 + its field's hab research bonus × 0.9^(other slots of that field) + the Projects
+ * bonus, for a project), as Terra Invicta does.
+ */
 function spendResearch(state: GameState, content: Content, faction: FactionState, amount: number): void {
   const r = faction.research;
   const techSlots = state.research.slots.length;
-  const projectSlots = projectSlotCount(content, faction);
+  const projectSlots = projectSlotCount(state, content, faction);
   const active: number[] = [];
   state.research.slots.forEach((s, i) => {
     if (s.techId && r.pips[i]! > 0) active.push(i);
@@ -371,10 +392,15 @@ function spendResearch(state: GameState, content: Content, faction: FactionState
     if (id && j < projectSlots && r.pips[techSlots + j]! > 0) active.push(techSlots + j);
   });
   if (active.length === 0 || amount <= 0) return;
+  const fields = active.map((i) => (i < techSlots ? techDef(content, state.research.slots[i]!.techId!).category : projectDef(content, r.projectSlots[i - techSlots]!).category));
+  const bonuses = habBonuses(state, content, faction.id).research;
+  const projectBonus = projectsBonus(state, content, faction.id);
   const totalPips = active.reduce((sum, i) => sum + r.pips[i]!, 0);
   const total = amount * (1 + content.rules.research.bonusPerActiveSlot * active.length);
-  for (const i of active) {
-    const part = (total * r.pips[i]!) / totalPips;
+  active.forEach((i, k) => {
+    const sameField = fields.filter((c) => c === fields[k]).length;
+    const bonus = (bonuses[fields[k]!] ?? 0) * detPow(0.9, sameField - 1) + (i < techSlots ? 0 : projectBonus);
+    const part = ((total * r.pips[i]!) / totalPips) * (1 + bonus);
     if (i < techSlots) {
       const slot = state.research.slots[i]!;
       slot.progress += part;
@@ -383,11 +409,11 @@ function spendResearch(state: GameState, content: Content, faction: FactionState
       const j = i - techSlots;
       const id = r.projectSlots[j];
       // A one-of-a-kind project another faction completed earlier today has left the slot.
-      if (!id) continue;
+      if (!id) return;
       r.progress[id] = (r.progress[id] ?? 0) + part;
       if (r.progress[id]! >= projectCost(state, content, faction, id)) completeProject(state, content, faction, j);
     }
-  }
+  });
 }
 
 /** The faction that put the most into the slot's tech; ties go to the first in faction order. */
@@ -489,9 +515,9 @@ export function checkTechChoice(state: GameState, content: Content, factionId: s
   return { ok: true };
 }
 
-export function checkProjectChoice(content: Content, faction: FactionState, slot: number, projectId: string | null): { ok: true } | { ok: false; reason: string } {
+export function checkProjectChoice(state: GameState, content: Content, faction: FactionState, slot: number, projectId: string | null): { ok: true } | { ok: false; reason: string } {
   const r = faction.research;
-  if (slot < 0 || slot >= projectSlotCount(content, faction)) return { ok: false, reason: "That project slot isn't open" };
+  if (slot < 0 || slot >= projectSlotCount(state, content, faction)) return { ok: false, reason: "That project slot isn't open" };
   if (projectId === null) return { ok: true };
   if (!r.available.includes(projectId)) return { ok: false, reason: "That project isn't available" };
   if (r.projectSlots.some((id, j) => id === projectId && j !== slot)) return { ok: false, reason: "That project is already under way" };
@@ -525,6 +551,9 @@ const AI_ROLE_WEIGHT: Record<string, number> = {
   Ops: 1,
 };
 
+/** How much the AI wants the projects for its space plans (aiSpace.ts). */
+const AI_SPACE_WEIGHT = 1.5;
+
 /** Fills open project slots with the most wanted project per point of cost; more cap when near the control cap. */
 export function aiFillProjects(state: GameState, content: Content, faction: FactionState): void {
   const r = faction.research;
@@ -532,14 +561,16 @@ export function aiFillProjects(state: GameState, content: Content, faction: Fact
   const unlocks = lookup(content).unlocks;
   const score = (id: string) => {
     const p = projectDef(content, id);
-    const useful = p.effects.length > 0 || p.grants.length > 0;
+    // The space AI's modules and rockets are wanted as much as a project with effects.
+    const space = p.effects.some((e) => e.kind === "exhaustVelocity") || content.habModules.some((m) => m.project === id && AI_SPACE_MODULES.has(m.id));
+    const useful = p.effects.length > 0 || p.grants.length > 0 || space;
     // Seats and cheaper control points are worth the most, whatever the project's role.
     const core = p.effects.some((e) => e.kind === "modifier" && (e.context === "CouncilSize" || e.context === "ControlPointMaintenance" || e.context === "ControlPointCapacity"));
-    const role = core ? 2 : (AI_ROLE_WEIGHT[p.role] ?? 0.5);
+    const role = core ? 2 : space ? AI_SPACE_WEIGHT : (AI_ROLE_WEIGHT[p.role] ?? 0.5);
     const weight = (useful ? role : 0.3 * (unlocks.get(id) ?? 0)) * (tight && core ? 3 : 1) * (p.repeatable ? 0.5 : 1);
     return weight / projectCost(state, content, faction, id);
   };
-  for (let j = 0; j < projectSlotCount(content, faction); j++) {
+  for (let j = 0; j < projectSlotCount(state, content, faction); j++) {
     if (r.projectSlots[j]) continue;
     const options = r.available.filter((id) => !r.projectSlots.includes(id));
     if (options.length === 0) return;

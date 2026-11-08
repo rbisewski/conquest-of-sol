@@ -16,7 +16,7 @@ import { controlPointCapacityCost, isDisabled, syncControlPointCount, unrestTarg
 import { modifierSum, runResearchTick } from "./research";
 import { checkBreakaways, checkSecessions } from "./secession";
 import { runSpaceTick } from "./space";
-import { runHabEconomy, runHabTick } from "./habs";
+import { habBonuses, runHabEconomy, runHabTick } from "./habs";
 import type { FactionState, GameState, NationState } from "./state";
 import { isExtant } from "./territory";
 
@@ -44,8 +44,8 @@ export function runDailyTick(state: GameState, content: Content): void {
   // Nations and factions are always processed in content order, which keeps the tick deterministic.
   const nations = state.nations.filter(isExtant);
   for (const nation of nations) investNation(state, content, nation, share);
-  // Mission Control is a capacity, so it is rebuilt each day: the faction's own, plus the CPs it now holds.
-  for (const faction of state.factions) faction.resources.missionControl = content.rules.space.baseMissionControl;
+  // Mission Control is a capacity, so it is rebuilt each day: the faction's own and its habs', plus the CPs it now holds.
+  for (const faction of state.factions) faction.resources.missionControl = content.rules.space.baseMissionControl + habBonuses(state, content, faction.id).missionControl;
   const armyHealth = friendlyArmyHealth(state, content);
   for (const nation of nations) {
     payNationOutputs(state, content, nation, share);
@@ -83,7 +83,7 @@ export function controlledPoints(state: GameState, factionId: string): number {
   return count;
 }
 
-/** Control Point Capacity: +1 per point of each cap attribute of the faction's free councilors, plus projects. */
+/** Control Point Capacity: +1 per point of each cap attribute of the faction's free councilors, plus projects and administration modules in low Earth orbit. */
 export function controlCap(state: GameState, content: Content, faction: FactionState): Breakdown {
   const f = new FormulaBuilder();
   for (const attr of content.rules.controlPoints.capAttributes) {
@@ -92,6 +92,8 @@ export function controlCap(state: GameState, content: Content, faction: FactionS
   }
   const projects = modifierSum(state, content, faction.id, "ControlPointCapacity");
   if (projects !== 0) f.add("Projects", projects);
+  const habs = habBonuses(state, content, faction.id).controlPointCapacity;
+  if (habs !== 0) f.add("Habs' administration in low Earth orbit", habs);
   return f.build();
 }
 

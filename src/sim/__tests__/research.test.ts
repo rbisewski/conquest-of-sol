@@ -221,10 +221,10 @@ describe("projects", () => {
 
   it("opens a second slot for a councilor with a research org", () => {
     const { state, us } = game();
-    expect(projectSlotCount(content, us)).toBe(1);
+    expect(projectSlotCount(state, content, us)).toBe(1);
     expect(applyCommand(state, content, { type: "setProject", factionId: "aegis", slot: 1, projectId: "Project_CommercialResearch" }).ok).toBe(false);
     us.councilors[0]!.orgs = ["brookhaven"];
-    expect(projectSlotCount(content, us)).toBe(2);
+    expect(projectSlotCount(state, content, us)).toBe(2);
   });
 
   it("validates pips", () => {
