@@ -1,7 +1,7 @@
 // Procedural pixel-art councilor portraits in a JRPG anime style (SPEC 2.12: pixel portraits),
 // after the reference sheet in docs/screenshots/conquest_of_sol_sample_portraits.png: head
-// and shoulders on a dark card with a glow of the faction's colour, semi-realistic anime
-// faces, big glossy hair and outfits that follow the councilor's profession.
+// and shoulders on a dark card with a glow of the faction's colour, anime faces with large
+// eyes and a pointed chin, big glossy hair and outfits that follow the councilor's profession.
 //
 // The simulation stores only a councilor's gender and a portrait seed. This module turns them
 // into a 128×150 sprite. Shapes are written in "design units" on a 96-wide grid and rasterised
@@ -95,7 +95,7 @@ const hex = (h: string): Rgb => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3
 /** Skin tones, fair to deep; Customize picks one by index. */
 export const SKIN = ["#ffe3d3", "#fbd2b6", "#f0bd96", "#d9a077", "#b67c55", "#8e5a3a", "#64402a"];
 
-/** Hair base colours; the last few are rarer anime colours. */
+/** Hair base colours, natural first, then the anime colours. */
 const HAIR = [
   "#26222e", // black
   "#4a2e22", // dark brown
@@ -110,14 +110,17 @@ const HAIR = [
   "#3a9ee8", // sky blue
   "#2f3f8e", // navy
   "#5b3a8a", // violet
+  "#f07fa8", // pink
+  "#2fb8a6", // teal
+  "#d8402c", // scarlet
 ];
-const HAIR_WEIGHTS = [12, 9, 9, 7, 6, 8, 3, 5, 4, 4, 4, 4, 4];
+const HAIR_WEIGHTS = [10, 7, 8, 6, 6, 8, 5, 3, 5, 5, 5, 4, 5, 5, 4, 4];
 
-/** Iris base colours. */
-const EYES = ["#7a4424", "#a8642a", "#c88a2a", "#3f9a5a", "#3a78d0", "#7f8fa6", "#8a56d8", "#b0503a"];
-const EYE_WEIGHTS = [16, 10, 8, 8, 9, 4, 3, 2];
+/** Iris base colours: bright, as anime eyes are. */
+const EYES = ["#8a4a24", "#b8702a", "#e0a020", "#2fae62", "#2f7fe0", "#7f95b4", "#9a52e0", "#d8403a", "#20b0b8", "#e0609a"];
+const EYE_WEIGHTS = [12, 8, 8, 9, 11, 4, 6, 5, 5, 3];
 
-type Clothing = "suit" | "coat" | "labcoat" | "uniform" | "fatigues" | "flightsuit" | "turtleneck" | "jacket";
+type Clothing = "suit" | "coat" | "labcoat" | "uniform" | "fatigues" | "flightsuit" | "turtleneck" | "jacket" | "hoodie" | "robe" | "vestment";
 
 const CLOTHING_BY_PROFESSION: Record<string, Clothing> = {
   executive: "suit",
@@ -131,13 +134,13 @@ const CLOTHING_BY_PROFESSION: Record<string, Clothing> = {
   officer: "uniform",
   commando: "fatigues",
   astronaut: "flightsuit",
-  hacker: "turtleneck",
+  hacker: "hoodie",
   spy: "turtleneck",
-  activist: "jacket",
-  judge: "suit",
+  activist: "hoodie",
+  judge: "robe",
   attorney: "suit",
-  evangelist: "suit",
-  celebrity: "suit",
+  evangelist: "vestment",
+  celebrity: "jacket",
   investigator: "coat",
   fixer: "coat",
   professor: "turtleneck",
@@ -147,16 +150,19 @@ const CLOTHING_BY_PROFESSION: Record<string, Clothing> = {
   rebel: "fatigues",
 };
 
-/** Cloth base colours per clothing type, and the shirt worn under it. */
+/** Cloth base colours per clothing type, and the shirt worn under it. The second suit is pinstriped. */
 const CLOTH: Record<Clothing, { cloth: string[]; shirt: string[] }> = {
-  suit: { cloth: ["#2a3346", "#3a3a42", "#4a2a34", "#2e3a34"], shirt: ["#eef1f4", "#dfe6ee", "#f3ece0"] },
-  coat: { cloth: ["#a8865a", "#6d6152", "#4a5462"], shirt: ["#eef1f4", "#2a2e36"] },
+  suit: { cloth: ["#2a3a5e", "#3a3a42", "#5a2438", "#2e4a3c", "#e8e4dc", "#4a3a6a"], shirt: ["#eef1f4", "#cfe0f2", "#f3ece0", "#f2d6dc", "#22252c"] },
+  coat: { cloth: ["#b8905a", "#6d6152", "#4a5a72", "#7a3a36"], shirt: ["#eef1f4", "#2a2e36"] },
   labcoat: { cloth: ["#eef2f6"], shirt: ["#3c8a5e", "#3a5e9a", "#7a3a52", "#2a2e36"] },
-  uniform: { cloth: ["#22304e", "#2e3a28", "#3a3a40"], shirt: ["#eef1f4"] },
+  uniform: { cloth: ["#22345e", "#2e4a30", "#3a3a44", "#eceae4", "#7a2630"], shirt: ["#eef1f4"] },
   fatigues: { cloth: ["#4e5a36", "#5e5340", "#3e4a52"], shirt: ["#2a2e26"] },
-  flightsuit: { cloth: ["#e6e9ee", "#d0662a"], shirt: ["#3a3f4a"] },
-  turtleneck: { cloth: ["#22252c", "#3a2e46", "#5a2a2a", "#2a3a4a"], shirt: ["#22252c"] },
-  jacket: { cloth: ["#8a3a2e", "#3a5a70", "#5a6a3a", "#3e3a48"], shirt: ["#e8e4da", "#2a2e36", "#c8b48a"] },
+  flightsuit: { cloth: ["#e6e9ee", "#e0702a", "#2a6ab0"], shirt: ["#3a3f4a"] },
+  turtleneck: { cloth: ["#22252c", "#3a2e46", "#5a2a2a", "#2a3a4a", "#e8e2d6", "#2a5a52"], shirt: ["#22252c"] },
+  jacket: { cloth: ["#b8402e", "#2e6a98", "#5a7a3a", "#3e3a48", "#e0a030", "#7a3a8a"], shirt: ["#e8e4da", "#2a2e36", "#c8b48a"] },
+  hoodie: { cloth: ["#4a4e5a", "#7a3a8a", "#2e6a98", "#b8402e", "#2e7a5a", "#e8e2d6"], shirt: ["#eef1f4", "#22252c"] },
+  robe: { cloth: ["#22222a", "#3a1a22", "#1e2a3a"], shirt: ["#eef1f4"] },
+  vestment: { cloth: ["#eee8dc", "#2a2630", "#5a2a3a", "#2a3a5e"], shirt: ["#eef1f4"] },
 };
 
 type Headgear = "none" | "beanie" | "beret" | "headset" | "headphones" | "earpiece";
@@ -436,17 +442,17 @@ interface FaceShape {
   c: number;
 }
 
-/** Semi-realistic anime proportions: an oval face, softer for women, squarer for men. */
+/** Anime proportions: a wide brow and cheeks tapering to a small pointed chin, sharper for women. */
 const FACES: Record<Gender, FaceShape[]> = {
   female: [
-    { rx: 18.8, top: 26, cheekY: 56, chinY: 79, a: 0.82, b: 0.47, c: 3 },
-    { rx: 18.4, top: 26, cheekY: 56, chinY: 80, a: 0.79, b: 0.42, c: 2.4 },
-    { rx: 19.2, top: 26, cheekY: 56, chinY: 78.5, a: 0.85, b: 0.52, c: 3.6 },
+    { rx: 19, top: 26, cheekY: 59, chinY: 77, a: 0.75, b: 0.34, c: 1.6 },
+    { rx: 18.6, top: 26, cheekY: 59, chinY: 78, a: 0.72, b: 0.31, c: 1.2 },
+    { rx: 19.4, top: 26, cheekY: 60, chinY: 76.5, a: 0.78, b: 0.38, c: 2 },
   ],
   male: [
-    { rx: 19.8, top: 25, cheekY: 56, chinY: 81, a: 0.88, b: 0.6, c: 5 },
-    { rx: 19.4, top: 25, cheekY: 56, chinY: 81.5, a: 0.85, b: 0.54, c: 4 },
-    { rx: 20.2, top: 25, cheekY: 56, chinY: 80.5, a: 0.9, b: 0.66, c: 6.2 },
+    { rx: 19.6, top: 25, cheekY: 58, chinY: 80, a: 0.8, b: 0.42, c: 2.6 },
+    { rx: 19.2, top: 25, cheekY: 58, chinY: 80.5, a: 0.77, b: 0.38, c: 2.2 },
+    { rx: 20, top: 25, cheekY: 58, chinY: 79.5, a: 0.83, b: 0.48, c: 3.4 },
   ],
 };
 
@@ -467,7 +473,8 @@ function faceHw(s: FaceShape, y: number): number {
   for (let k = 0; k < keys.length - 1; k++) {
     const [t0, v0] = keys[k]!;
     const [t1, v1] = keys[k + 1]!;
-    if (t <= t1) return v0 + (v1 - v0) * smooth((t - t0) / (t1 - t0));
+    // Straight runs between the keys: easing each one would step the jaw line.
+    if (t <= t1) return v0 + ((v1 - v0) * (t - t0)) / (t1 - t0);
   }
   return s.c;
 }
@@ -502,15 +509,12 @@ function drawFace(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
       c.ellipse(ex - side * 0.4, 67.8, 1.1, 1.5, 0.55, Mat.Accent, Z_FEATURES, ring);
     }
   }
-  // The face, shaded as a flattened sphere: lit on the left, a cheek shadow on the right.
+  // The face, cel-shaded: flat skin with a crescent of shadow down the side away from the light.
   const face = c.newPart();
   c.fill(CX - s.rx - 1, s.top, CX + s.rx + 1, s.chinY + 1, (x, y) => {
     const hw = faceHw(s, y);
     if (Math.abs(x - CX) >= hw) return null;
-    const nx = (x - CX) / (hw + 2.5);
-    const ny = clamp((y - 52) / 34, -0.6, 0.75);
-    const n = normalize([nx * 1.15, ny * 0.7, Math.sqrt(Math.max(0.05, 1 - nx * nx - ny * ny * 0.5))]);
-    return 0.27 + 0.4 * diffuse(n);
+    return (x - CX) / hw > 0.7 ? 0.3 : 0.5;
   }, Mat.Skin, Z_FACE, face);
 }
 
@@ -527,22 +531,22 @@ interface EyeShape {
   crease: boolean;
 }
 
-/** Almond eyes: wider than tall, with a strong upper lash line. */
+/** Large anime eyes, tall for women and narrower for men, with a strong upper lash line. */
 const EYE_SHAPES: Record<Gender, EyeShape[]> = {
   female: [
-    { rx: 6.2, ry: 4.4, lift: 0.9, iris: 3.9, lash: 1.5, wing: true, crease: true },
-    { rx: 6.4, ry: 3.9, lift: 1.6, iris: 3.8, lash: 1.5, wing: true, crease: false },
-    { rx: 5.9, ry: 4.7, lift: 0.2, iris: 4, lash: 1.3, wing: false, crease: true },
+    { rx: 6.6, ry: 6.2, lift: 0.6, iris: 5.2, lash: 1.7, wing: true, crease: true },
+    { rx: 6.9, ry: 5.6, lift: 1.5, iris: 4.9, lash: 1.7, wing: true, crease: false },
+    { rx: 6.3, ry: 6.6, lift: -0.3, iris: 5.4, lash: 1.5, wing: false, crease: true },
   ],
   male: [
-    { rx: 5.9, ry: 3.5, lift: 0.6, iris: 3.4, lash: 1.2, wing: false, crease: true },
-    { rx: 6.1, ry: 3.1, lift: 1.3, iris: 3.3, lash: 1.2, wing: false, crease: false },
-    { rx: 5.7, ry: 3.8, lift: 0.1, iris: 3.5, lash: 1.1, wing: false, crease: true },
+    { rx: 6.3, ry: 4.6, lift: 0.5, iris: 4.1, lash: 1.4, wing: false, crease: true },
+    { rx: 6.6, ry: 4, lift: 1.3, iris: 3.8, lash: 1.4, wing: false, crease: false },
+    { rx: 6, ry: 5, lift: 0, iris: 4.3, lash: 1.3, wing: false, crease: true },
   ],
 };
 
-const EYE_Y = 56.5;
-const EYE_DX = 9.2;
+const EYE_Y = 58;
+const EYE_DX = 9.8;
 
 function drawEye(c: Canvas, f: PortraitFeatures, e: EyeShape, cx: number, cy: number, side: -1 | 1): void {
   const female = f.gender === "female";
@@ -559,21 +563,25 @@ function drawEye(c: Canvas, f: PortraitFeatures, e: EyeShape, cx: number, cy: nu
 
   // The white, in the lid's shadow at the top and toward the shaded side.
   paint(inEye, Mat.Sclera, (x, y) => (y < up(x) + 1.3 ? 0.3 : outer(x) * side > e.rx * 0.5 ? 0.55 : 0.85));
-  // Iris: a tall oval cut by the lids, dark at the top, glowing toward the bottom.
-  const icx = cx - side * 0.3;
-  const icy = cy + 0.2;
-  const ir = e.iris;
-  const inIris = (x: number, y: number) => inEye(x, y) && ((x - icx) / (ir * 0.92)) ** 2 + ((y - icy) / (ir * 1.12)) ** 2 <= 1;
+  // Iris: a tall oval cut by the lids, in bands from a dark top to a glowing lower crescent.
+  const icx = cx - side * 0.4;
+  const top = up(icx);
+  const bottom = lo(icx);
+  const icy = (top + bottom) / 2 + 0.2;
+  const irx = e.iris * 0.84;
+  const iry = e.iris * 1.1;
+  const q = (x: number, y: number) => ((x - icx) / irx) ** 2 + ((y - icy) / iry) ** 2;
+  const inIris = (x: number, y: number) => inEye(x, y) && q(x, y) <= 1;
   paint(inIris, Mat.Iris, (x, y) => {
-    const v = (y - (icy - ir)) / (2 * ir);
-    const rim = ((x - icx) / (ir * 0.92)) ** 2 + ((y - icy) / (ir * 1.12)) ** 2 > 0.62;
-    return rim ? 0.12 : v < 0.4 ? 0.32 : v < 0.65 ? 0.55 : 0.8;
+    const v = (y - top) / (bottom - top);
+    return q(x, y) > 0.72 ? 0.1 : v < 0.38 ? 0.25 : v < 0.7 ? 0.5 : 0.85;
   });
   // Pupil.
-  paint((x, y) => inIris(x, y) && ((x - icx) / (ir * 0.38)) ** 2 + ((y - icy + 0.2) / (ir * 0.55)) ** 2 <= 1, Mat.Ink, 0.2);
-  // Highlights: a bright block at the upper left, a small dot lower right.
-  paint((x, y) => inEye(x, y) && ((x - (icx - ir * 0.42)) / 1.05) ** 2 + ((y - (icy - ir * 0.42)) / 1.15) ** 2 <= 1, Mat.Shine, 1);
-  paint((x, y) => inEye(x, y) && ((x - (icx + ir * 0.45)) / 0.55) ** 2 + ((y - (icy + ir * 0.4)) / 0.55) ** 2 <= 1, Mat.Shine, 1);
+  paint((x, y) => inIris(x, y) && ((x - icx) / (irx * 0.42)) ** 2 + ((y - icy + 0.3) / (iry * 0.48)) ** 2 <= 1, Mat.Ink, 0.2);
+  // Highlights: a big bright block at the upper left, a small dot lower right.
+  const hr = female ? 1.35 : 1;
+  paint((x, y) => inEye(x, y) && ((x - (icx - irx * 0.45)) / hr) ** 2 + ((y - (top + (bottom - top) * 0.3)) / (hr * 1.15)) ** 2 <= 1, Mat.Shine, 1);
+  paint((x, y) => inEye(x, y) && ((x - (icx + irx * 0.5)) / 0.7) ** 2 + ((y - (icy + iry * 0.42)) / 0.7) ** 2 <= 1, Mat.Shine, 1);
 
   // Upper lash: a heavy line, thicker toward the outer corner, with a wing for women.
   const lashT = (x: number) => e.lash * (0.7 + 0.6 * Math.max(0, outer(x) / e.rx));
@@ -589,14 +597,29 @@ function drawEye(c: Canvas, f: PortraitFeatures, e: EyeShape, cx: number, cy: nu
   if (e.crease) c.relight(box[0], box[1], box[2], box[3], (x, y, l, i) => (c.mat[i] === Mat.Skin && outer(x) > -e.rx * 0.5 && outer(x) < e.rx * 0.95 && Math.abs(y - (up(x) - lashT(x) - 1.1)) < 0.4 ? Math.min(l, 0.1) : null));
   // The eye socket is a little shaded toward the shadow side.
   c.relight(box[0], cy - e.ry - 3, box[2], cy - e.ry + 1, (x, y, l, i) => (c.mat[i] === Mat.Skin && c.z[i] === Z_FACE && Math.abs(outer(x)) < e.rx && y < up(x) - lashT(x) ? l - 0.06 : null));
+}
 
-  // Brow: a tapered stroke (heavier and straighter for men).
-  const innerX = cx - side * e.rx * 0.95;
-  const outerX = cx + side * e.rx * 1.2;
-  const top = cy - e.ry - (female ? 4.6 : 3.6);
-  const brow = c.newPart(false);
-  if (female) c.stroke([[innerX, top + 1.2], [cx - side * 1, top - 0.9], [cx + side * 3, top - 1.1], [outerX, top + 0.9]], 1.3, 0.5, Mat.Hair, Z_FEATURES, brow, () => 0.18);
-  else c.stroke([[innerX, top + 0.6], [cx - side * 1, top - 0.5], [cx + side * 3, top - 0.6], [outerX, top + 0.8]], 2.1, 0.9, Mat.Hair, Z_FEATURES, brow, () => 0.14);
+/** Brows: tapered strokes (heavier and straighter for men), drawn last so they show through the fringe, as anime brows do. */
+function drawBrows(c: Canvas, f: PortraitFeatures): void {
+  const female = f.gender === "female";
+  const e = EYE_SHAPES[f.gender][f.eyes]!;
+  const brows = new Canvas();
+  for (const side of [-1, 1]) {
+    const cx = CX + side * EYE_DX;
+    const innerX = cx - side * e.rx * 0.95;
+    const outerX = cx + side * e.rx * 1.2;
+    const top = EYE_Y - e.ry - (female ? 3 : 2.4);
+    if (female) brows.stroke([[innerX, top + 1.2], [cx - side * 1, top - 0.9], [cx + side * 3, top - 1.1], [outerX, top + 0.9]], 1.2, 0.5, Mat.Hair, Z_FEATURES, 0, () => 0.18);
+    else brows.stroke([[innerX, top + 0.9], [cx - side * 1, top - 0.3], [cx + side * 3, top - 0.6], [outerX, top + 0.4]], 2, 0.9, Mat.Hair, Z_FEATURES, 0, () => 0.14);
+  }
+  const part = c.newPart(false);
+  for (let i = 0; i < W * H; i++) {
+    if (brows.mat[i] === Mat.None) continue;
+    const overHair = c.mat[i] === Mat.Hair && c.z[i] === Z_FRONT_HAIR;
+    if (!overHair && !(c.mat[i] === Mat.Skin && c.z[i] === Z_FACE)) continue;
+    // Over the fringe a brow keeps the hair's depth, so the fringe still shades the skin under it.
+    c.put(i % W, Math.floor(i / W), Mat.Hair, brows.light[i]!, overHair ? Z_FRONT_HAIR : Z_FEATURES, part);
+  }
 }
 
 function drawFeatures(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
@@ -606,23 +629,23 @@ function drawFeatures(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
   drawEye(c, f, e, CX + EYE_DX, EYE_Y, 1);
   const skinOnly = (i: number) => c.mat[i] === Mat.Skin && c.z[i] === Z_FACE;
 
-  // Nose: shade down the right of the bridge, a dark nostril, light on the tip.
-  const ny = female ? 66 : 67;
-  c.relight(CX - 3, 58, CX + 4, ny + 2, (x, y, l, i) => {
+  // Nose: anime-small. A short tick of shadow under the tip, a dot of light on it, and for men
+  // a faint line down the bridge.
+  const ny = female ? 66.5 : 67.5;
+  c.relight(CX - 3, 60, CX + 4, ny + 2, (x, y, l, i) => {
     if (!skinOnly(i)) return null;
-    if (x > CX + 0.4 && x < CX + 1.6 && y > 60 && y < ny - 0.5) return Math.min(l, 0.32);
-    if (((x - (CX + 1)) / 1.8) ** 2 + ((y - (ny - 0.5)) / 1.2) ** 2 <= 1 && x > CX - 0.4) return Math.min(l, 0.3);
-    if (((x - (CX - 0.8)) / 0.8) ** 2 + ((y - (ny - 1.2)) / 0.7) ** 2 <= 1) return 0.95;
+    if (!female && x > CX + 0.5 && x < CX + 1.4 && y > 62.5 && y < ny - 1.2) return Math.min(l, 0.32);
+    if (x > CX + 0.1 && x < CX + 2 && Math.abs(y - ny) < 0.7) return female ? Math.min(l, 0.3) : 0.12;
+    if (((x - (CX - 0.9)) / 0.8) ** 2 + ((y - (ny - 1.4)) / 0.7) ** 2 <= 1) return 0.7;
     return null;
   });
-  c.relight(CX, ny, CX + 3, ny + 1.5, (x, y, l, i) => (skinOnly(i) && ((x - (CX + 1.4)) / 0.8) ** 2 + ((y - (ny + 0.4)) / 0.5) ** 2 <= 1 ? 0.04 : null));
 
   // Mouth.
-  const my = female ? 72 : 73.5;
+  const my = female ? 71.5 : 73.5;
   const mouth = c.newPart(false);
   const line = (x0: number, x1: number, yAt: (x: number) => number, mat: Mat, light: number, t = 0.42) =>
     c.fill(x0 - 1, my - 3, x1 + 1, my + 3, (x, y) => (x >= x0 && x <= x1 && Math.abs(y - yAt(x)) < t ? light : null), mat, Z_FEATURES, mouth);
-  const half = female ? 3.2 : 3.8;
+  const half = female ? 2.6 : 3.4;
   // Men's portraits keep their mouths closed: the open smile reads as a grimace at this size.
   switch (!female && f.mouth === 2 ? 0 : f.mouth) {
     case 0: // gentle smile
@@ -644,18 +667,18 @@ function drawFeatures(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
   }
   // Lips: colour for women, and a little shadow under the lower lip.
   if (female && f.mouth !== 2) {
-    c.fill(CX - 3, my, CX + 3, my + 2, (x, y) => (Math.abs(x - CX) < 2.3 - (y - my - 0.5) * 0.8 && y > my + 0.45 && y < my + 1.7 ? 0.6 : null), Mat.Lip, Z_FEATURES, mouth);
+    c.fill(CX - 3, my, CX + 3, my + 2, (x, y) => (Math.abs(x - CX) < 1.8 - (y - my - 0.5) * 0.8 && y > my + 0.45 && y < my + 1.7 ? 0.6 : null), Mat.Lip, Z_FEATURES, mouth);
   }
   c.relight(CX - 3, my + 1.5, CX + 3, my + 3.5, (x, y, l, i) => (skinOnly(i) && Math.abs(x - CX) < 1.8 && y > my + 2.1 && y < my + 2.9 ? Math.min(l, 0.32) : null));
 
   if (f.blush) {
     const blush = c.newPart(false);
     for (const side of [-1, 1]) {
-      const bx = CX + side * 11.5;
-      c.each(bx - 5, 61, bx + 5, 67, (px, py, x, y) => {
+      const bx = CX + side * 12;
+      c.each(bx - 5, 62, bx + 5, 69, (px, py, x, y) => {
         const i = py * W + px;
         if (!skinOnly(i)) return;
-        const d = ((x - bx) / 4.2) ** 2 + ((y - 64) / 1.8) ** 2;
+        const d = ((x - bx) / 4.2) ** 2 + ((y - 65.5) / 1.8) ** 2;
         // Solid in the middle, dithered toward the edge.
         if (d <= 0.45 || (d <= 1 && (px + py) % 2 === 0)) c.put(px, py, Mat.Blush, c.light[i]!, Z_FACE, blush);
       });
@@ -666,7 +689,7 @@ function drawFeatures(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
     for (let i = 0; i < 14; i++) {
       const side = i % 2 ? 1 : -1;
       const fx = CX + side * (4 + rand() * 9);
-      const fy = 61.5 + rand() * 3.5;
+      const fy = 63.5 + rand() * 3.5;
       c.relight(fx - 0.6, fy - 0.6, fx + 0.6, fy + 0.6, (x, y, l, k) => (skinOnly(k) ? Math.min(l, 0.3) : null));
     }
   }
@@ -703,16 +726,19 @@ function drawFeatures(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
   }
 }
 
-function drawGlasses(c: Canvas): void {
+function drawGlasses(c: Canvas, f: PortraitFeatures): void {
+  const e = EYE_SHAPES[f.gender][f.eyes]!;
   const part = c.newPart(false);
+  // Lenses sized to the eye, which opens more below the lash line's peak than above its centre.
+  const gy = EYE_Y - e.ry * 0.22;
+  const rx = 8;
+  const ry = e.ry * 0.78 + 2.2;
   for (const side of [-1, 1]) {
     const gx = CX + side * EYE_DX;
-    const rx = 7.2;
-    const ry = 4.8;
-    const d = (x: number, y: number) => Math.hypot(Math.max(0, Math.abs(x - gx) - (rx - 2.2)), Math.max(0, Math.abs(y - EYE_Y) - (ry - 2.2)));
+    const d = (x: number, y: number) => Math.hypot(Math.max(0, Math.abs(x - gx) - (rx - 2.2)), Math.max(0, Math.abs(y - gy) - (ry - 2.2)));
     // A glare streak in the lens, then a rounded-rectangle frame.
-    c.relight(gx - rx, EYE_Y - ry, gx + rx, EYE_Y + ry, (x, y, l, i) => (d(x, y) < 1.6 && c.mat[i] !== Mat.Ink && Math.abs(y - EYE_Y + 1 + (x - gx + side * 3) * 0.9) < 0.45 ? 1 : null));
-    c.fill(gx - rx - 1, EYE_Y - ry - 1, gx + rx + 1, EYE_Y + ry + 1, (x, y) => (d(x, y) > 1.75 && d(x, y) <= 2.45 ? (y < EYE_Y ? 0.6 : 0.25) : null), Mat.Frame, Z_GLASSES, part);
+    c.relight(gx - rx, gy - ry, gx + rx, gy + ry, (x, y, l, i) => (d(x, y) < 1.6 && c.mat[i] !== Mat.Ink && Math.abs(y - gy + 1 + (x - gx + side * 3) * 0.9) < 0.45 ? 1 : null));
+    c.fill(gx - rx - 1, gy - ry - 1, gx + rx + 1, gy + ry + 1, (x, y) => (d(x, y) > 1.75 && d(x, y) <= 2.45 ? (y < gy ? 0.6 : 0.25) : null), Mat.Frame, Z_GLASSES, part);
   }
   c.fill(CX - 3, EYE_Y - 4, CX + 3, EYE_Y, (x, y) => (Math.abs(x - CX) < 1.8 && Math.abs(y - (EYE_Y - 2 + (x - CX) ** 2 * 0.08)) < 0.45 ? 0.5 : null), Mat.Frame, Z_GLASSES, part);
 }
@@ -737,7 +763,7 @@ function torsoLight(f: PortraitFeatures, x: number, y: number): number {
 
 function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
   const female = f.gender === "female";
-  const neckHw = female ? 5.6 : 7.2;
+  const neckHw = female ? 5 : 6.6;
   const neckW = (y: number) => neckHw + Math.max(0, y - 84) * 0.5;
   const bottom = (ZOOM_Y + (H / S - ZOOM_Y) / ZOOM);
   // Neck: in the jaw's shadow under the chin and down its right side.
@@ -762,8 +788,26 @@ function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
   const vOpen = (y: number, start = top - 1) => Math.max(0, (y - start) * 0.5);
   const shirtTone = (x: number, y: number) => (x > CX + 0.8 ? 0.4 : 0.72) - Math.max(0, y - top) * 0.004;
 
-  /** A shirt collar and tie (or a brooch), in the V of a jacket. */
-  const shirtAndTie = (opening: (y: number) => number, tie: boolean) => {
+  /** Height of the shoulder line at a distance d from the figure's axis. */
+  const shoulderY = (d: number) => {
+    let y = top;
+    while (y < bottom && torsoHw(f, y) < d) y += 0.25;
+    return y;
+  };
+
+  /** A bow at the throat in the faction's colour: a bow tie, or with tails a ribbon. */
+  const bow = (y0: number, w: number, tails: boolean) => {
+    const part = c.newPart();
+    if (tails) for (const side of [-1, 1]) c.stroke([[CX, y0], [CX + side * 1, y0 + 3], [CX + side * 2.4, y0 + 6], [CX + side * 3.4, y0 + 9.5]], 1.8, 1.3, Mat.Accent, Z_TRIM + 1, part, () => (side < 0 ? 0.55 : 0.32), 1);
+    trim((x, y) => {
+      const d = Math.abs(x - CX);
+      return d < w && Math.abs(y - y0) < 0.5 + d * 0.5 ? (x < CX ? 0.68 : 0.42) : null;
+    }, Mat.Accent, Z_TRIM + 2, part);
+    trim((x, y) => (Math.abs(x - CX) < 1 && Math.abs(y - y0) < 1.1 ? 0.25 : null), Mat.Accent, Z_TRIM + 3);
+  };
+
+  /** A shirt collar in the V of a jacket, with something at the throat. */
+  const shirtAndTie = (opening: (y: number) => number, neckwear: "tie" | "bow" | "ribbon" | "pendant") => {
     trim((x, y) => (y >= top - 1.5 && Math.abs(x - CX) < opening(y) ? shirtTone(x, y) : null), Mat.Shirt);
     for (const side of [-1, 1]) {
       trim((x, y) => {
@@ -771,23 +815,31 @@ function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
         return y >= top - 2.5 && y < top + 4.5 && d > (y - top + 2.5) * 0.35 && d < neckHw + 2 - (y - top) * 0.6 ? (side < 0 ? 0.85 : 0.5) : null;
       }, Mat.Shirt, Z_TRIM + 0);
     }
-    if (tie) {
+    if (neckwear === "tie") {
       const knot = c.newPart();
       trim((x, y) => (y >= top - 0.5 && y < top + 2.6 && Math.abs(x - CX) < 1.9 - (y - top) * 0.15 ? 0.45 : null), Mat.Accent, Z_TRIM, knot);
       trim((x, y) => (y >= top + 2.6 && Math.abs(x - CX) < 1.2 + (y - top - 2.6) * 0.12 ? (x > CX + 0.3 ? 0.3 : 0.6) : null), Mat.Accent, Z_TRIM);
-    } else if (female) {
+    } else if (neckwear === "bow") bow(top + 1, 4.2, false);
+    else if (neckwear === "ribbon") bow(top + 1.5, 4.8, true);
+    else {
       // A pendant on a fine chain.
       trim((x, y) => (Math.abs(x - CX) < 4.5 && Math.abs(y - (top + 0.5 + ((x - CX) / 4.5) ** 2 * -2.5 + 2.5)) < 0.4 ? 0.8 : null), Mat.Metal, Z_TRIM + 1);
       trim((x, y) => (((x - CX) / 1.2) ** 2 + ((y - (top + 4)) / 1.5) ** 2 <= 1 ? 0.6 : null), Mat.Accent, Z_TRIM + 1);
     }
   };
+  /** What a woman wears at the throat of a jacket, and a man: mostly a tie. */
+  const neckwear = female ? (["tie", "ribbon", "pendant"] as const)[f.jitter % 3]! : f.jitter % 4 === 0 ? "bow" : "tie";
 
-  /** Lapels: bands along the jacket's opening, lit on the left, with their own edge line. */
+  /** Lapels: notched bands along the jacket's opening, lit on the left, with their own edge line. */
   const lapels = (opening: (y: number) => number, width: number, depth: number) => {
     for (const side of [-1, 1]) {
       trim((x, y) => {
         const d = side * (x - CX) - opening(y);
-        return d >= 0 && d < width - (y - top) * 0.12 && y >= top - 1 && y < top + depth ? (side < 0 ? 0.62 : 0.24) : null;
+        const w = width - (y - top) * 0.12;
+        if (d < 0 || d >= w || y < top - 1 || y >= top + depth) return null;
+        // The notch between collar and lapel.
+        if (d > w * 0.45 && Math.abs(y - (top + 5.2) + (d - w * 0.45) * 0.5) < 0.6) return null;
+        return side < 0 ? 0.62 : 0.24;
       }, Mat.Cloth, Z_TRIM + 1);
     }
   };
@@ -795,16 +847,25 @@ function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
   switch (f.clothing) {
     case "suit": {
       const opening = (y: number) => Math.min(neckHw + 2, vOpen(y) + 2.2);
-      shirtAndTie(opening, !female || f.jitter % 3 === 0);
+      shirtAndTie(opening, neckwear);
       lapels(opening, 6.5, 22);
-      // A pocket square in the faction's colour.
+      // A lapel pin and a pocket square in the faction's colour.
+      trim((x, y) => (((x - (CX - opening(top + 9) - 3.2)) / 1.1) ** 2 + ((y - (top + 9)) / 1.1) ** 2 <= 1 ? 0.75 : null), Mat.Metal, Z_TRIM + 2);
       trim((x, y) => (x > CX + 22 && x < CX + 27 && y > top + 13 && y < top + 15.5 - (x - CX - 22) * 0.3 ? 0.6 : null), Mat.Accent, Z_TRIM + 1);
       break;
     }
     case "coat": {
-      // A trench coat: a high, wide collar standing up behind the neck, and big lapels.
+      // A trench coat: a high, wide collar standing up behind the neck, big lapels and shoulder straps.
       const opening = (y: number) => Math.min(neckHw + 3, vOpen(y) + 3);
-      shirtAndTie(opening, !female);
+      shirtAndTie(opening, female ? "pendant" : "tie");
+      for (const side of [-1, 1]) {
+        const strap = trim((x, y) => {
+          const d = side * (x - CX);
+          const sy = shoulderY(d);
+          return d > 19 && d < 33 && y > sy + 0.8 && y < sy + 4 ? (side < 0 ? 0.68 : 0.36) : null;
+        }, Mat.Cloth, Z_TRIM + 1);
+        trim((x, y) => (((x - (CX + side * 21.5)) / 0.9) ** 2 + ((y - (shoulderY(21.5) + 2.4)) / 0.9) ** 2 <= 1 ? 0.75 : null), Mat.Metal, Z_TRIM + 2, strap);
+      }
       for (const side of [-1, 1]) {
         trim((x, y) => {
           const d = side * (x - CX);
@@ -834,24 +895,36 @@ function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
       break;
     }
     case "uniform": {
-      // A service jacket with gold-striped epaulettes, a shirt and tie, and ribbons.
-      const opening = (y: number) => Math.min(neckHw + 1.5, vOpen(y) + 1.6);
-      shirtAndTie(opening, true);
-      lapels(opening, 5, 18);
+      // A dress tunic buttoned to a stand collar: gold piping and buttons, collar tabs in the
+      // faction's colour, gold-striped shoulder boards, ribbons and an aiguillette.
+      const inCollar = (x: number, y: number) => y > top - 5 && y < top + 1.5 && Math.abs(x - CX) < neckHw + 1.6 && Math.abs(x - CX) > 0.5;
+      const collar = c.newPart();
+      trim((x, y) => (inCollar(x, y) ? (x > CX ? 0.28 : 0.6) : null), Mat.Cloth, Z_TRIM + 1, collar);
+      trim((x, y) => (inCollar(x, y) && y < top - 4 ? 0.7 : null), Mat.Metal, Z_TRIM + 1, collar);
+      for (const side of [-1, 1]) trim((x, y) => (side * (x - CX) > 1.6 && side * (x - CX) < 4.6 && y > top - 3.2 && y < top + 0.4 ? 0.55 : null), Mat.Accent, Z_TRIM + 2);
+      trim((x, y) => (y >= top + 1.5 && Math.abs(x - CX) < 0.55 ? 0.6 : null), Mat.Metal, Z_TRIM);
       for (const side of [-1, 1]) {
+        for (let k = 0; k < 3; k++) trim((x, y) => (((x - (CX + side * 5)) / 1.15) ** 2 + ((y - (top + 5.5 + k * 6)) / 1.15) ** 2 <= 1 ? 0.8 : null), Mat.Metal, Z_TRIM + 1);
+        const board = (d: number, y: number) => d > 21 && d < 37 && y > shoulderY(d) - 2 && y < shoulderY(d) + 2.2;
         const ep = c.newPart();
-        trim((x, y) => {
-          const d = side * (x - CX);
-          return d > 23 && d < 38 && y > top + 3.5 - (d - 23) * -0.12 && y < top + 7.5 + (d - 23) * 0.12 ? (y < top + 5 ? 0.6 : 0.3) : null;
-        }, Mat.Cloth, Z_TRIM + 1, ep);
-        for (let k = 0; k < 3; k++) trim((x, y) => (Math.abs(side * (x - CX) - 27.5 - k * 2.6) < 0.6 && y > top + 4 && y < top + 8.5 ? 0.75 : null), Mat.Metal, Z_TRIM + 2);
+        trim((x, y) => (board(side * (x - CX), y) ? (side < 0 ? 0.62 : 0.34) : null), Mat.Cloth, Z_TRIM + 1, ep);
+        for (let k = 0; k < 3; k++) trim((x, y) => (board(side * (x - CX), y) && Math.abs(side * (x - CX) - 26 - k * 3) < 0.7 ? 0.75 : null), Mat.Metal, Z_TRIM + 2, ep);
       }
       for (let i = 0; i < 3; i++) trim((x, y) => (x > CX - 26 + i * 3.4 && x < CX - 23 + i * 3.4 && y > top + 13 && y < top + 15.5 ? (i === 1 ? 0.7 : 0.5) : null), i === 1 ? Mat.Metal : Mat.Accent, Z_TRIM + 2);
-      trim((x, y) => (((x - (CX + 22)) / 1.8) ** 2 + ((y - (top + 14)) / 1.8) ** 2 <= 1 ? 0.7 : null), Mat.Metal, Z_TRIM + 2);
+      const cord = c.newPart();
+      c.stroke([[CX + 25, top + 9], [CX + 22, top + 18], [CX + 11, top + 18], [CX + 6, top + 12]], 1, 1, Mat.Metal, Z_TRIM + 2, cord, () => 0.7, 1);
+      c.stroke([[CX + 25, top + 9], [CX + 20, top + 14], [CX + 12, top + 14], [CX + 6, top + 12]], 1, 1, Mat.Metal, Z_TRIM + 2, cord, () => 0.45, 1);
       break;
     }
     case "fatigues": {
-      // Combat fatigues: a turned-down collar over a dark T-shirt, chest pockets, a patch.
+      // Combat fatigues in blocky camouflage: a turned-down collar over a dark T-shirt and chest
+      // pockets, with a neckerchief in the faction's colour, webbing straps or a patch.
+      c.relight(0, top, 96, bottom, (x, y, l, i) => {
+        if (c.part[i] !== cloth) return null;
+        const row = Math.floor(y / 2.4);
+        const blotch = (Math.floor(x / 3.4 + row * 0.37) * 7 + row * 13 + f.jitter) % 6;
+        return blotch === 0 ? Math.max(0, l - 0.2) : blotch === 1 ? l + 0.14 : null;
+      });
       trim((x, y) => (y >= top - 2 && Math.abs(x - CX) < neckHw + 0.5 + vOpen(y) * 0.3 ? 0.3 : null), Mat.Shirt);
       for (const side of [-1, 1]) {
         trim((x, y) => {
@@ -863,7 +936,14 @@ function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
           return d > 12 && d < 22 && y > top + 11 && y < top + 19 ? (y < top + 13 ? 0.62 : side < 0 ? 0.5 : 0.25) : null;
         }, Mat.Cloth, Z_TRIM + 1);
       }
-      trim((x, y) => (x > CX + 27 && x < CX + 33 && y > top + 6 && y < top + 11 ? 0.55 : null), Mat.Accent, Z_TRIM + 2);
+      if (f.jitter % 3 === 0) {
+        trim((x, y) => (y > top - 4 && y < top + 6.5 && Math.abs(x - CX) < neckHw + 2.5 - Math.max(0, y - top) * 1.3 ? (x > CX + 1 ? 0.34 : 0.6) : null), Mat.Accent, Z_TRIM + 2);
+      } else if (f.jitter % 3 === 1) {
+        for (const side of [-1, 1]) {
+          const strap = trim((x, y) => (Math.abs(side * (x - CX) - 25) < 2.2 && y > shoulderY(side * (x - CX)) - 0.6 ? (side < 0 ? 0.5 : 0.28) : null), Mat.Gear, Z_TRIM + 2);
+          trim((x, y) => (Math.abs(side * (x - CX) - 25) < 2.2 && y > top + 12 && y < top + 14 ? 0.7 : null), Mat.Metal, Z_TRIM + 2, strap);
+        }
+      } else trim((x, y) => (x > CX + 27 && x < CX + 33 && y > top + 9 && y < top + 14 ? 0.55 : null), Mat.Accent, Z_TRIM + 2);
       break;
     }
     case "flightsuit": {
@@ -906,7 +986,63 @@ function drawBody(c: Canvas, f: PortraitFeatures, s: FaceShape): void {
       trim((x, y) => (((x - (CX + 22)) / 2.4) ** 2 + ((y - (top + 13)) / 2.4) ** 2 <= 1 ? 0.6 : null), Mat.Accent, Z_TRIM + 1);
       break;
     }
+    case "hoodie": {
+      // A hood bunched up behind the neck, a T-shirt's neckline, drawstrings and a print.
+      trim((x, y) => (y >= top - 2 && y < top + 4 && Math.abs(x - CX) < neckHw + 1.5 - Math.max(0, y - top) * 1.1 ? shirtTone(x, y) : null), Mat.Shirt);
+      for (const side of [-1, 1]) {
+        trim((x, y) => {
+          const d = side * (x - CX);
+          return y > top - 8 && y < top + 5 && d > neckHw - 0.5 + Math.max(0, y - top) * 0.5 && d < neckHw + 10 - (top - y) * 0.55 ? (side < 0 ? (y < top - 4 ? 0.8 : 0.62) : 0.3) : null;
+        }, Mat.Cloth, Z_TRIM + 1);
+        // White, whatever the T-shirt's colour.
+        const string = trim((x, y) => (Math.abs(side * (x - CX) - 3.4) < 0.5 && y > top + 3.5 && y < top + 12 ? 1 : null), Mat.Shine, Z_TRIM + 1);
+        trim((x, y) => (Math.abs(side * (x - CX) - 3.4) < 0.7 && y >= top + 12 && y < top + 13.6 ? 0.7 : null), Mat.Metal, Z_TRIM + 1, string);
+      }
+      trim((x, y) => (Math.abs(x - (CX + 21)) + Math.abs(y - (top + 14)) < 3.2 ? 0.6 : null), Mat.Accent, Z_TRIM + 1);
+      break;
+    }
+    case "robe": {
+      // A judge's robe: gathered pleats falling from the yoke, and white bands at the throat.
+      c.relight(0, top, 96, bottom, (x, y, l, i) => (c.part[i] === cloth && y > top + 5 + Math.abs(x - CX) * 0.12 && Math.abs((((x - CX) % 6) + 6) % 6 - 3) < 0.5 ? Math.min(l, 0.2) : null));
+      trim((x, y) => (y > top - 3.5 && y < top + 0.8 && Math.abs(x - CX) < neckHw + 1.4 ? (x > CX + 1 ? 0.5 : 0.85) : null), Mat.Shirt, Z_TRIM + 1);
+      for (const side of [-1, 1]) trim((x, y) => (y >= top + 0.8 && y < top + 10 && side * (x - CX) > 0.3 && side * (x - CX) < 2.6 + (y - top) * 0.12 ? (side < 0 ? 0.85 : 0.55) : null), Mat.Shirt, Z_TRIM + 1);
+      break;
+    }
+    case "vestment": {
+      // A cassock with a band collar and its white tab, under a stole in the faction's colour
+      // edged and barred with gold.
+      const collar = c.newPart();
+      trim((x, y) => (y > top - 4.5 && y < top + 1.2 && Math.abs(x - CX) < neckHw + 1.5 ? (x > CX + 1 ? 0.26 : 0.55) : null), Mat.Cloth, Z_TRIM + 1, collar);
+      trim((x, y) => (y > top - 3.6 && y < top + 0.2 && Math.abs(x - CX) < 1.7 ? 0.9 : null), Mat.Shirt, Z_TRIM + 1, collar);
+      for (const side of [-1, 1]) {
+        const inStole = (d: number, y: number) => d > neckHw + 2 && d < neckHw + 9 && y > shoulderY(d) - 0.4;
+        const stole = trim((x, y) => (inStole(side * (x - CX), y) ? (side < 0 ? 0.62 : 0.36) : null), Mat.Accent, Z_TRIM + 2);
+        trim((x, y) => {
+          const d = side * (x - CX);
+          return inStole(d, y) && (d < neckHw + 2.9 || d > neckHw + 8.1 || Math.abs(y - (top + 14)) < 1) ? 0.72 : null;
+        }, Mat.Metal, Z_TRIM + 2, stole);
+      }
+      break;
+    }
   }
+
+  // The second suit is pinstriped.
+  if (f.clothing === "suit" && f.clothColor === 1) {
+    c.each(0, top, 96, bottom, (px, py) => {
+      const i = py * W + px;
+      if (c.mat[i] === Mat.Cloth && px % 4 === 0) c.light[i] = Math.min(1, c.light[i]! + 0.2);
+    });
+  }
+  // Collars, lapels, straps and pockets cast a short shadow down and to the right on the cloth under them.
+  c.each(0, top - 14, 96, bottom, (px, py) => {
+    const i = py * W + px;
+    if (c.part[i] !== cloth) return;
+    for (let d = 1; d <= 2; d++) {
+      if (px < d || py < d) continue;
+      const j = (py - d) * W + px - d;
+      if (c.mat[j] !== Mat.None && c.z[j]! > Z_BODY) c.light[i] = Math.min(c.light[i]!, 0.22);
+    }
+  });
 }
 
 // --- Hair ---------------------------------------------------------------------------------
@@ -942,12 +1078,12 @@ function hairPlan(f: PortraitFeatures): HairPlan {
   const j = (n: number) => (rand() - 0.5) * 2 * n;
   const dir = f.flip ? -1 : 1;
   type Lock = [Pt, Pt, Pt, Pt, number];
-  /** A fringe lock from a root on the hairline to a tip, swinging `swing` sideways. */
+  /** A fringe lock from a root on the hairline to a tip (anime bangs fall to the brows and eyes), swinging `swing` sideways. */
   const lock = (rx: number, ry: number, tx: number, ty: number, w: number, bend = 0.25): Lock => [
     [rx, ry],
     [rx + (tx - rx) * 0.15, ry + (ty - ry) * 0.35],
     [rx + (tx - rx) * (0.75 + bend * 0.3), ry + (ty - ry) * 0.75],
-    [tx, ty],
+    [tx, ty + 1.5],
     w,
   ];
   const row = (n: number, from: number, to: number, f2: (x: number, i: number) => Lock): Lock[] => {
@@ -1169,8 +1305,11 @@ function capClump(f: PortraitFeatures, x: number, y: number): { id: number; u: n
 
 /** Light for the hair cap: big glossy clumps fanning from the crown, each rounded across. */
 function capLight(f: PortraitFeatures, x: number, y: number): number {
-  const { u, angle } = capClump(f, x, y);
-  const radial: Pt = [Math.cos(angle), Math.sin(angle)];
+  const clump = capClump(f, x, y);
+  const [ox, oy] = crownPoint(f);
+  // The clumps flatten out toward the crown, where they would otherwise crowd into a sunburst.
+  const u = clump.u * clamp((Math.hypot(x - ox, y - oy) - 6) / 12);
+  const radial: Pt = [Math.cos(clump.angle), Math.sin(clump.angle)];
   const across: Vec3 = [-radial[1] * u, radial[0] * u, Math.sqrt(Math.max(0, 1 - u * u))];
   const head = headNormal(x, y);
   const n = normalize([across[0] * 0.5 + head[0] * 0.8, across[1] * 0.5 + head[1] * 0.8, across[2] * 0.5 + head[2] * 0.8]);
@@ -1196,7 +1335,7 @@ function drawFrontHair(c: Canvas, f: PortraitFeatures, s: FaceShape, plan: HairP
   // The cap over the crown: down to the hairline over the forehead, and down beside the face
   // to the temples.
   const inCap = (x: number, y: number) => {
-    const bump = f.hair === "spiky" ? 0.14 : f.hair === "buzz" || f.hair === "slicked" ? 0 : 0.055;
+    const bump = f.hair === "spiky" ? 0.2 : f.hair === "buzz" || f.hair === "slicked" ? 0 : 0.085;
     const r = 1 + bump * capBump(f, x, y) - (f.hair === "buzz" || f.hair === "slicked" ? 0.04 : 0);
     if (((x - CX) / capRx) ** 2 + ((y - capCy) / capRy) ** 2 > r * r) return false;
     if (y < plan.hairline - Math.abs(x - CX) * (short ? 0.06 : 0.12)) return true;
@@ -1238,10 +1377,16 @@ function drawFrontHair(c: Canvas, f: PortraitFeatures, s: FaceShape, plan: HairP
     }, Mat.Hair, Z + 1, bun);
   }
 
-  // Fringe and the locks framing the face.
+  // Fringe and the locks framing the face: broad blades that keep their width, then come to a point.
   for (const [p0, p1, p2, p3, w] of plan.sides) c.stroke([p0, p1, p2, p3], w, 0.6, Mat.Hair, Z, c.newPart(), (u, t, d, x, y) => lockLight(u, t, d, x, y), 0.9);
-  for (const [p0, p1, p2, p3, w] of plan.fringe) c.stroke([p0, p1, p2, p3], w, 0.4, Mat.Hair, Z, c.newPart(), (u, t, d, x, y) => lockLight(u, t, d, x, y), 0.75);
+  plan.fringe.forEach(([p0, p1, p2, p3, w], i) => c.stroke([p0, p1, p2, p3], w * (i % 2 ? 0.85 : 1.15), 0.4, Mat.Hair, Z, c.newPart(), (u, t, d, x, y) => lockLight(u, t, d, x, y), 1.5));
 
+  // An ahoge: one stray lock curling up from the crown, on some heads.
+  const loose = f.hair !== "buzz" && f.hair !== "slicked" && f.hair !== "bun" && f.hair !== "braids" && f.hair !== "tied";
+  if (loose && f.headgear !== "headset" && f.jitter % 3 === 0) {
+    const top = capCy - capRy;
+    c.stroke([[CX - dir * 2, top + 3], [CX - dir * 4, top - 5], [CX + dir * 4, top - 6], [CX + dir * 8, top - 1]], 3.4, 0.5, Mat.Hair, Z, c.newPart(), (u, t, d, x, y) => lockLight(u, t, d, x, y, 0));
+  }
 }
 
 /** Curly hair: a cloud of small, round, separately shaded curls. */
@@ -1463,10 +1608,11 @@ export function paint(f: PortraitFeatures): Canvas {
   if (f.hair === "curly" && f.gender === "female") drawRinglets(c, f);
   drawFace(c, f, s);
   drawFeatures(c, f, s);
-  if (f.glasses) drawGlasses(c);
+  if (f.glasses) drawGlasses(c, f);
   if (f.headgear !== "beanie" && f.headgear !== "beret") drawFrontHair(c, f, s, plan);
   else drawHatHair(c, f, s, plan);
   drawHeadgear(c, f, s, plan);
+  drawBrows(c, f);
   finish(c);
   return c;
 }
