@@ -1,16 +1,20 @@
 // The hab modules' structures in pixel art (decision D18), drawn with pixelKit's painter in a
-// 128-unit design space: one draw function per line of modules. Every module is built the same
-// way, as station modules are: it lies along the cell's horizontal axis (AXIS), its pressurised
-// hulls one diameter per tier, and a berthing adapter runs from each end out to the cell's edge
-// on the axis, ending in a gold collar, so neighbouring modules and the hab's corridors meet it.
-// Structures that aren't pressurised (solar arrays, reactors, colliders) hang off a truss keel
-// along the same axis. Equipment mounts above and below. The hull's finish tells the module's
-// role: white for command and habitation, beige thermal blankets with a band in the field's
-// colour for labs, dark plate for industry and armour for the military. A tier changes the
-// build (a bigger hull, then modules docked upright onto it, rings, more equipment), so each
-// upgrade looks its own. The ground-only base modules (the outpost core, the mining rig) keep
-// their legs. The faction's colour goes on stripes, markings and flags. Each module shows its tier
-// as gold pips in the bottom-right corner, and automated modules a cyan light in the top-left one.
+// 128-unit design space: one draw function per line of modules, each after real hardware (the
+// ISS's laboratories, Zvezda, inflatable habitats, Canadarm, SNAP-10A, tokamaks, Hubble and the
+// James Webb telescope, Phalanx guns…) in the kit's anime cel style. Every module is built as
+// station modules are: it lies along the cell's horizontal axis (AXIS), and a berthing adapter
+// runs from each end out to the cell's edge on the axis, ending in a gold collar, so neighbouring
+// modules and the hab's corridors meet it. Pressurised hulls come in three forms (pod()): a
+// laboratory can with conical ends, a stepped service module with a spherical node and round
+// portholes, and a fat inflatable in restraint straps. Structures that aren't pressurised (solar
+// arrays, reactors, colliders) hang off a truss keel along the same axis. Equipment mounts above
+// and below. The hull's finish tells the module's role: white for command and habitation, beige
+// thermal blankets with a band in the field's colour for labs, dark plate for industry and armour
+// for the military. A tier changes the build (a bigger hull, then modules docked upright onto it,
+// rings, more equipment), so each upgrade looks its own. The ground-only base modules (the
+// outpost core, the mining rig) keep their legs. The faction's colour goes on stripes, markings
+// and flags. Each module shows its tier as gold pips in the bottom-right corner, and automated
+// modules a cyan light in the top-left one.
 
 import { baseContent } from "../../content/index";
 import type { HabModuleDef } from "../../sim/index";
@@ -32,16 +36,16 @@ const FIELD = {
   energy: factionRamp("#3ad0e0"),
   information: factionRamp("#4a7cf0"),
   life: factionRamp("#4cc860"),
-  materials: factionRamp("#e8803a"),
-  military: factionRamp("#d84a3a"),
-  social: factionRamp("#b070e0"),
-  space: factionRamp("#7a6af0"),
-  climate: factionRamp("#30b8a0"),
+  materials: factionRamp("#f0803a"),
+  military: factionRamp("#e04a4a"),
+  social: factionRamp("#b870f0"),
+  space: factionRamp("#7a6af8"),
+  climate: factionRamp("#30c0a8"),
 };
 
-const PLASMA: Ramp = [GLOW.violetHi, GLOW.violet, 0x8a5cc8, 0x5a3a8a, 0x35214f];
-const ENERGY: Ramp = [GLOW.cyanHi, GLOW.cyan, 0x5fc2cc, 0x3e98a3, 0x2b6f78];
-const BIO: Ramp = [0xd8ffe0, 0x8ae6a0, 0x5fc27a, 0x3f9a5c, 0x2b7343, 0x1d4f2e];
+const PLASMA: Ramp = [GLOW.violetHi, GLOW.violet, 0x8a5cd8, 0x5a3a9a, 0x35215f];
+const ENERGY: Ramp = [GLOW.cyanHi, GLOW.cyan, 0x4fc2dc, 0x3e8fb3, 0x2b5f88];
+const BIO: Ramp = [0xd8ffe0, 0x8af0a0, 0x5fcc7a, 0x3fa05c, 0x2b7853, 0x1d4f3e];
 
 /** A hull's box: left edge, length, diameter, and its top and bottom, centred on the axis. */
 interface Hull {
@@ -68,27 +72,87 @@ function berths(P: Painter, left: number, right: number, d = 12): void {
   });
 }
 
-/** A pressurised module lying on its side: banded hull with end rings (in `ring`'s colour, or the hull's from 64 px), panel seams, the faction's stripe, rows of framed windows, handrails. */
-function pod(P: Painter, x: number, y: number, w: number, h: number, o: { seed?: number; rows?: number; stripe?: number; ramp?: Ramp; windows?: boolean; ring?: Ramp } = {}): void {
-  const { seed = 1, rows = 1, stripe = 0.8, ramp = RAMPS.hull, windows = true, ring } = o;
+/**
+ * A pressurised hull's build: "lab" a can with conical ends and framed windows (the ISS's
+ * laboratories), "stepped" a wide compartment, a narrow one and a spherical node, with round
+ * portholes (Zvezda), "soft" a fat inflatable in restraint straps round a rigid core (TransHab).
+ */
+type Form = "lab" | "stepped" | "soft";
+
+interface PodOptions {
+  seed?: number;
+  /** Rows of windows. */
+  rows?: number;
+  /** Where the faction's stripe goes along the hull (0–1); negative for none. */
+  stripe?: number;
+  ramp?: Ramp;
+  windows?: boolean;
+  /** The end rings' colour (the hull's own from 64 px, if not given). */
+  ring?: Ramp;
+  form?: Form;
+}
+
+/** A pressurised module lying on its side: its hull in one of the forms, with rings, panel seams, the faction's stripe, windows and handrails. */
+function pod(P: Painter, x: number, y: number, w: number, h: number, o: PodOptions = {}): void {
+  const { seed = 1, rows = 1, stripe = 0.8, ramp = RAMPS.hull, windows = true, ring, form = "lab" } = o;
+  const cy = y + h / 2;
+  if (form === "soft") {
+    // The straight stretch between the rounded ends.
+    const r = h / 2, a = x + 5 + r, b = x + w - 5 - r;
+    P.part(() => P.hcyl(x, cy - h * 0.27, w, h * 0.54, RAMPS.dark, 0.12));
+    P.part(() => {
+      P.hcyl(x + 5, y, w - 10, h, ramp, 0.5);
+      if (P.medium) {
+        for (let sx = a; sx <= b + 0.5; sx += 10) P.line(sx, y + 1, sx, y + h - 2, ramp[3]!);
+        for (const f of [0.25, 0.77]) P.line(a - r * 0.5, y + h * f, b + r * 0.5, y + h * f, ramp[3]!);
+      }
+      if (stripe >= 0 && b > a) P.stripe(a + (b - a) * stripe - 2, y + h * 0.04, 5, h * 0.92);
+      if (!windows) return;
+      const n = Math.max(1, Math.floor((b - a + 4) / 10)), from = (a + b) / 2 - (n - 1) * 5 - (stripe >= 0 && n > 1 ? 3 : 0);
+      for (let i = 0; i < rows; i++) P.portholes(from, y + h * (rows === 1 ? 0.5 : 0.41 + i * 0.22), n, 10, 2.3, seed + i);
+    });
+    return;
+  }
+  if (form === "stepped") {
+    const big = w * 0.54, small = h * 0.64, node = h * 0.36;
+    P.part(() => {
+      P.hcyl(x + big - 2, cy - small / 2, w - big - node, small, ramp, 0.1);
+      P.sphere(x + w - node, cy, node, node, ramp);
+      P.ring(x + w - node * 2 - 2, cy - small / 2, 3, small, ring ?? ramp);
+      if (windows) P.portholes(x + big + 13, cy - small * 0.1, Math.max(1, Math.floor((w - big - node * 2 - 14) / 9)), 9, 2, seed + 3);
+      P.hatch(x + w - node - 4, cy - 4, 8, 8);
+    });
+    P.part(() => {
+      P.hcone(x + big - 1, cy, 6, h, small + 2, ramp);
+      P.hcyl(x, y, big, h, ramp, 0.14);
+      P.seams(x + 6, y + h * 0.16, big - 10, h * 0.68, 11, ramp[3]!);
+      if (ring || P.medium) P.ring(x + 5, y + 1, ring ? 4 : 3, h - 2, ring ?? ramp);
+      if (stripe >= 0) P.stripe(x + big - 9, y + h * 0.08, 5, h * 0.84);
+      if (windows) for (let i = 0; i < rows; i++) P.portholes(x + 16, y + h * (rows === 1 ? 0.42 : 0.3 + i * 0.26), Math.max(1, Math.floor((big - 28) / 9)), 9, 2.3, seed + i);
+      P.handrail(x + 8, x + big - 4, y + h * 0.17);
+    });
+    return;
+  }
+  const cone = Math.min(h * 0.3, w * 0.12);
   P.part(() => {
-    P.hcyl(x, y, w, h, ramp);
-    P.seams(x + 6, y + h * 0.16, w - 12, h * 0.68, 12);
-    const inset = Math.max(3, h * 0.24);
-    if (ring || P.medium) for (const rx of [x + inset, x + w - inset - 4]) P.ring(rx, y + 1, ring ? 4 : 3, h - 2, ring ?? ramp);
-    const end = stripe >= 0 ? x + w * stripe - 4 : x + w - inset - 6;
-    if (stripe >= 0) P.stripe(x + w * stripe, y + h * 0.1, 5, h * 0.8);
-    const from = x + inset + 7;
+    P.hcone(x, cy, cone, h * 0.6, h, ramp);
+    P.hcone(x + w - cone, cy, cone, h, h * 0.6, ramp);
+    P.hcyl(x + cone, y, w - 2 * cone, h, ramp, 0);
+    P.seams(x + cone + 6, y + h * 0.16, w - 2 * cone - 12, h * 0.68, 12, ramp[3]!);
+    if (ring || P.medium) for (const rx of [x + cone, x + w - cone - 4]) P.ring(rx, y, ring ? 4 : 3, h, ring ?? ramp);
+    const end = stripe >= 0 ? x + w * stripe - 4 : x + w - cone - 8;
+    if (stripe >= 0) P.stripe(x + w * stripe, y + h * 0.08, 5, h * 0.84);
+    const from = x + cone + 8;
     if (windows) for (let r = 0; r < rows; r++) P.windows(from, y + h * (rows === 1 ? 0.36 : 0.28 + r * 0.24), Math.max(1, Math.floor((end - from) / 7)), 7, 3.5, 4.5, seed + r);
-    P.handrail(x + 8, x + w - 8, y + h * 0.17);
-    P.rivets(x + 6, x + w - 6, y + h * 0.86, 5);
+    P.handrail(x + cone + 3, x + w - cone - 3, y + h * 0.17);
+    P.rivets(x + cone + 2, x + w - cone - 2, y + h * 0.86, 5);
   });
 }
 
 /** A module's main hull on the axis, with its berths. */
-function hull(P: Painter, h: Hull, o: { ramp?: Ramp; seed?: number; rows?: number; band?: Ramp; stripe?: number; windows?: boolean } = {}): void {
+function hull(P: Painter, h: Hull, o: PodOptions & { band?: Ramp } = {}): void {
   berths(P, h.x + 4, h.x + h.w - 4);
-  pod(P, h.x, h.top, h.w, h.d, { seed: o.seed, rows: o.rows, stripe: o.stripe, ramp: o.ramp, windows: o.windows, ring: o.band });
+  pod(P, h.x, h.top, h.w, h.d, { ...o, ring: o.band ?? o.ring });
 }
 
 /** A truss keel along the axis from edge to edge, collars at both ends, for the unpressurised structures. */
@@ -140,12 +204,57 @@ function mast(P: Painter, x0: number, y0: number, x1: number, y1: number, w = 3)
   P.part(() => P.pipe(x0, y0, x1, y1, w, RAMPS.dark));
 }
 
-/** A row of finned radiator panels hanging below the axis, from x0 to x1, `h` tall, with their manifold. */
-function radiators(P: Painter, x0: number, x1: number, n: number, h: number): void {
+/** A row of finned radiator panels hanging below the axis, from x0 to x1, `h` tall, with their manifold; `hot` makes them glow from the root. */
+function radiators(P: Painter, x0: number, x1: number, n: number, h: number, hot = 0): void {
   const gap = 3, w = (x1 - x0 - gap * (n - 1)) / n;
   P.part(() => P.pipe(x0, AXIS + 8, x1, AXIS + 8, 3, RAMPS.dark));
   P.part(() => {
-    for (let i = 0; i < n; i++) P.radiator(x0 + i * (w + gap), AXIS + 11, w, h, true, 4);
+    for (let i = 0; i < n; i++) P.radiator(x0 + i * (w + gap), AXIS + 11, w, h, true, 4, hot);
+  });
+}
+
+/**
+ * A crew capsule docked nose-first at (cx, y), above the hull it's docked to or, with `up` false,
+ * below it: a gumdrop cabin on its heat shield, a trunk half covered in solar cells (a Dragon).
+ * Draw it before the hull so the hull covers its nose.
+ */
+function capsule(P: Painter, cx: number, y: number, up = true, s = 1): void {
+  const d = up ? -1 : 1, trunk = up ? y - 26 * s : y + 15 * s;
+  P.part(() => {
+    P.box(cx - 8 * s, trunk, 16 * s, 11 * s, RAMPS.hull);
+    P.fill(cx - 8 * s, trunk, 8 * s, 11 * s, RAMPS.solar[3]!);
+    if (P.medium) P.fill(cx - 8 * s, trunk + 5 * s, 8 * s, 1, RAMPS.solar[1]!);
+  });
+  P.part(() => {
+    P.poly([cx - 4.5 * s, y, cx + 4.5 * s, y, cx + 9 * s, y + d * 14 * s, cx - 9 * s, y + d * 14 * s], { ramp: RAMPS.white, dir: [1, 0], from: 0, to: 0.7 });
+    P.fill(cx - 9 * s, up ? y - 16 * s : y + 13 * s, 18 * s, 3 * s, RAMPS.dark[3]!);
+    P.fill(cx - 3 * s, y + d * 7 * s - 1.5 * s, 3 * s, 3 * s, RAMPS.glass[4]!);
+  });
+}
+
+/** A robot arm (a Canadarm): white booms from a base at (bx, by) by an elbow at (ex, ey) to a hand at (tx, ty), gold joints; `spark` lights a weld at the hand. */
+function arm(P: Painter, bx: number, by: number, ex: number, ey: number, tx: number, ty: number, spark = false): void {
+  P.part(() => {
+    P.box(bx - 5, by - 3, 10, 6, RAMPS.dark);
+    P.pipe(bx, by, ex, ey, 4.5, RAMPS.white);
+    P.pipe(ex, ey, tx, ty, 4, RAMPS.white);
+    P.sphere(ex, ey, 4, 4, RAMPS.gold);
+    P.box(tx - 3, ty - 3, 6, 6, RAMPS.dark, 0.2);
+  });
+  if (!spark) return;
+  P.glow(tx, ty, 7, GLOW.heatHi, 0.9);
+  P.sparkle(tx, ty, 5, GLOW.heatHi);
+}
+
+/** An observation cupola on a hull at (cx, y): a truncated cone of three panes, pointing up or down. */
+function cupola(P: Painter, cx: number, y: number, r: number, up = true): void {
+  const d = up ? -1 : 1, t = y + d * r * 0.75;
+  P.part(() => {
+    P.poly([cx - r, y, cx + r, y, cx + r * 0.5, t, cx - r * 0.5, t], { ramp: RAMPS.dark, dir: [1, 0], from: 0.1, to: 0.7 });
+    const y0 = y + d * 1.5, y1 = t - d * 1.5;
+    P.poly([cx - r + 2.5, y0, cx - r * 0.36, y0, cx - r * 0.3, y1, cx - r * 0.5 + 1.5, y1], RAMPS.glass[1]!);
+    P.poly([cx - r * 0.24, y0, cx + r * 0.24, y0, cx + r * 0.2, y1, cx - r * 0.2, y1], RAMPS.glass[2]!);
+    P.poly([cx + r * 0.36, y0, cx + r - 2.5, y0, cx + r * 0.5 - 1.5, y1, cx + r * 0.3, y1], RAMPS.glass[3]!);
   });
 }
 
@@ -160,40 +269,54 @@ function badges(P: Painter, def: HabModuleDef): void {
 
 // ---------------------------------------------------------------- cores
 
-/** A base's core: a lander on legs, its berths at the axis; a settlement adds side modules, a colony a dome. */
+/** A base's core: a lander on legs (a foil-wrapped descent stage under a white cabin), its berths at the axis; a settlement adds inflatable side modules, a colony a dome. */
 const OutpostCore: Draw = (P, tier) => {
   P.part(() => {
-    for (const [x0, x1] of [[44, 26], [84, 102], [56, 50], [72, 78]] as const) P.pipe(x0, 88, x1, 112, 3.5, RAMPS.dark);
+    for (const [x0, x1] of [[42, 22], [86, 106], [56, 50], [72, 78]] as const) P.pipe(x0, 88, x1, 112, 3.5, RAMPS.gold);
+    for (const [x0, x1] of [[40, 29], [88, 99]] as const) P.pipe(x0, 97, x1, 100, 2, RAMPS.dark);
   });
   P.part(() => {
-    for (const x of [20, 96, 44, 72]) P.box(x, 111, 12, 4, RAMPS.dark);
+    for (const x of [15, 99, 44, 72]) P.box(x, 111, 14, 4, RAMPS.dark);
   });
+  P.part(() => P.poly([58, 98, 70, 98, 76, 110, 52, 110], { ramp: RAMPS.dark, dir: [1, 0], from: 0.2, to: 0.9 }));
   berths(P, 40, 88, 14);
   if (tier >= 2) {
-    pod(P, 8, 52, 28, 24, { seed: 5, stripe: -1 });
-    pod(P, 92, 52, 28, 24, { seed: 6, stripe: -1 });
+    pod(P, 4, 50, 34, 28, { form: "soft", ramp: RAMPS.cloth, seed: 5, stripe: -1 });
+    pod(P, 90, 50, 34, 28, { form: "soft", ramp: RAMPS.cloth, seed: 6, stripe: -1 });
   }
   P.part(() => {
-    P.vcyl(36, 36, 56, 58);
-    P.sphere(64, 44, 28, 14, RAMPS.hull, 44);
-    P.seams(40, 48, 48, 42, 10);
-    P.stripe(37, 80, 54, 6);
-    P.windows(42, 56, 7, 7, 4, 6, 2);
-    if (tier >= 2) P.windows(42, 68, 7, 7, 4, 5, 8);
-    P.hatch(56, 86, 16, 4);
-    P.rivets(40, 88, 52, 5);
+    P.vcyl(38, 34, 52, 52);
+    P.sphere(64, 42, 26, 13, RAMPS.hull, 42);
+    P.seams(42, 46, 44, 32, 11);
+    P.stripe(39, 73, 50, 5);
+    P.windows(43, 52, 6, 7.4, 4.4, 6, 2);
+    if (tier >= 2) P.windows(43, 63, 6, 7.4, 4.4, 5, 8);
+    P.rivets(42, 86, 48, 5);
   });
+  P.part(() => {
+    P.foil(33, 81, 62, 18);
+    P.fill(33, 81, 62, 2, RAMPS.gold[0]!);
+    P.hatch(57, 83, 14, 12);
+  });
+  P.part(() => P.ladder(62, 96, 16), false);
   if (tier === 3) {
-    P.part(() => P.sphere(64, 38, 24, 22, RAMPS.glass, 38));
+    P.part(() => {
+      P.sphere(64, 38, 24, 22, RAMPS.glass, 38);
+      P.gloss(40, 16, 48, 22);
+    });
     P.part(() => {
       P.box(52, 26, 10, 12, RAMPS.hull);
       P.box(64, 22, 10, 16, RAMPS.hull);
       P.windows(54, 29, 2, 4, 2, 2, 4, 1);
       P.windows(66, 25, 2, 4, 2, 2, 7, 1);
+      P.ellipse(48, 34, 3, 3.5, RAMPS.green[2]!);
+      P.ellipse(79, 33, 3.5, 4, RAMPS.green[1]!);
     }, false);
+    P.sparkle(50, 22, 5);
   } else port(P, 64, 31, "up", 8, 16);
-  P.part(() => P.antenna(80, 34, 22, 2));
-  P.part(() => P.flag(48, 34, 12, 8));
+  mast(P, 84, 38, 84, 24, 2);
+  P.part(() => P.dish(84, 20, 8, -60, 0.42));
+  P.part(() => P.flag(46, 34, 12, 8));
 };
 
 /** A station's core: a spherical node with ports all round; an orbital core adds a truss and solar wings, a ring core a habitat ring. */
@@ -206,7 +329,7 @@ const PlatformCore: Draw = (P, tier) => {
       wing(P, x, 76, 24, 40, 3, 6);
     }
     P.part(() => {
-      for (const x of [18, 110]) P.pipe(x, 50, x, 78, 3, RAMPS.dark);
+      for (const x of [18, 110]) P.pipe(x, 50, x, 78, 3, RAMPS.gold);
     });
   }
   berths(P, 64 - r + 4, 64 + r - 4, 16);
@@ -228,54 +351,83 @@ const PlatformCore: Draw = (P, tier) => {
     P.light(64 - r - 4, 56, GLOW.beacon);
     P.light(64 + r + 4, 56, GLOW.beacon);
   }, false);
+  P.sparkle(64 - r * 0.5, 64 - r * 0.55, 4);
 };
 
 // ---------------------------------------------------------------- command and engineering
 
-/** Offices: a white hull; a tower adds an office block docked on top, a complex another hanging below and more masts. */
+/** Offices under a bridge of slanted glass; a tower raises the bridge on an office block as a control tower's cab, a complex hangs another block below and adds masts. */
 const AdministrationNode: Draw = (P, tier) => {
   const h = hullAt(LEN[tier] + 6, BORE[tier]);
-  if (tier >= 2) riser(P, 64, 20, h.top - 18, tier === 3 ? 28 : 24, { seed: 11 });
+  /** A cab `w` wide with its roof at `y`: walls leaning out to the roof, a band of glass all round. */
+  const cab = (y: number, w: number, hgt: number) =>
+    P.part(() => {
+      P.poly([64 - w / 2 + 5, y + hgt, 64 + w / 2 - 5, y + hgt, 64 + w / 2, y + 3, 64 - w / 2, y + 3], { ramp: RAMPS.hull, dir: [1, 0.4], from: 0.05, to: 0.6 });
+      P.poly([64 - w / 2 + 4, y + hgt - 3, 64 + w / 2 - 4, y + hgt - 3, 64 + w / 2 - 1.5, y + 5, 64 - w / 2 + 1.5, y + 5], { ramp: RAMPS.glass, dir: [1, 0.5], from: 0.15, to: 0.8 });
+      P.gloss(64 - w / 2, y + 5, w, hgt - 8, 0.6);
+      if (P.medium) for (let mx = 64 - w / 2 + 8; mx < 64 + w / 2 - 5; mx += 8) P.line(mx, y + 5, mx, y + hgt - 4, RAMPS.hull[3]!);
+      P.box(64 - w / 2 - 1.5, y, w + 3, 4, RAMPS.hull, 0.1);
+      P.stripe(64 - w / 2 + 5, y + hgt - 2, w - 10, 2);
+    });
+  if (tier >= 2) riser(P, 64, tier === 3 ? 26 : 30, h.top - (tier === 3 ? 24 : 28), tier === 3 ? 28 : 24, { seed: 11 });
   if (tier === 3) riser(P, 64, h.bottom - 2, 34, 22, { seed: 13, down: true });
   P.part(() => {
-    P.antenna(h.x + 10, h.top + 1, 14, 2);
-    if (tier >= 2) P.antenna(h.x + h.w - 12, h.top + 1, 18, 3);
-    if (tier === 3) P.antenna(h.x + 22, h.top + 1, 22, 3);
+    P.antenna(h.x + h.w - 12, h.top + 1, 16, 2);
+    if (tier >= 2) P.antenna(h.x + h.w - 22, h.top + 1, 22, 3);
+    if (tier === 3) P.antenna(h.x + 26, h.top + 1, 24, 3);
   });
-  if (tier === 1) mast(P, 64, h.top, 64, h.top - 10);
-  P.part(() => P.dish(64, tier === 1 ? h.top - 14 : 14, tier === 3 ? 9 : 7, -120, 0.4));
+  mast(P, h.x + 14, h.top, h.x + 14, h.top - 12);
+  P.part(() => P.dish(h.x + 14, h.top - 16, tier === 3 ? 9 : 7, -120, 0.4));
   hull(P, h, { seed: 4, rows: tier === 1 ? 1 : 2, stripe: 0.84 });
-  P.part(() => P.flag(h.x + h.w - 18, h.top + 1, 10, 7));
+  if (tier === 1) cab(h.top - 12, 36, 15);
+  else if (tier === 2) cab(15, 38, 17);
+  else cab(9, 48, 19);
+  P.part(() => P.flag(h.x + h.w - 30, tier === 1 ? h.top + 1 : h.top - 6, 10, 7));
+  P.part(() => P.light(64, tier === 1 ? h.top - 14 : tier === 2 ? 13 : 7, GLOW.beacon), false);
 };
 
-/** Mission control: a wide hull with a bay of glowing screens, a radome; a command centre adds a dish and an operations deck below. */
+/** Mission control: a wide hull with a bay of glowing screens, a radome and a phased array; a command centre adds a dish and an operations deck below. */
 const OperationsCenter: Draw = (P, tier) => {
   const h = hullAt(LEN[tier] + 14, BORE[tier] + 6);
   if (tier === 3) riser(P, 64, h.bottom - 2, 30, 26, { seed: 6, down: true, ramp: RAMPS.white });
   mast(P, h.x + 18, h.top, h.x + 18, h.top - 10);
-  P.part(() => P.sphere(h.x + 18, h.top - 20, 11, 11, RAMPS.white));
   P.part(() => {
-    P.antenna(h.x + h.w - 12, h.top + 1, 22, 3);
-    P.antenna(h.x + h.w - 24, h.top + 1, 14, 2);
+    P.sphere(h.x + 18, h.top - 20, 11, 11, RAMPS.white);
+    if (P.medium) {
+      // A geodesic radome's facets.
+      P.line(h.x + 9, h.top - 24, h.x + 27, h.top - 24, RAMPS.white[3]!);
+      P.line(h.x + 8, h.top - 17, h.x + 28, h.top - 17, RAMPS.white[4]!);
+      for (const dx of [-5, 2]) P.line(h.x + 18 + dx, h.top - 30, h.x + 18 + dx + 3, h.top - 11, RAMPS.white[3]!);
+    }
+  });
+  mast(P, h.x + h.w - 22, h.top, h.x + h.w - 22, h.top - 8);
+  P.part(() => {
+    P.poly([h.x + h.w - 36, h.top - 8, h.x + h.w - 10, h.top - 14, h.x + h.w - 10, h.top - 30, h.x + h.w - 36, h.top - 24], { ramp: RAMPS.dark, dir: [1, 0.3], from: 0.3, to: 0.8 });
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) P.dot(h.x + h.w - 32 + i * 6, h.top - 13 - j * 5 - i * 1.4, (i + j) % 2 ? GLOW.cyan : RAMPS.gold[1]!);
+    P.antenna(h.x + h.w - 6, h.top + 1, 18, 2);
   });
   if (tier === 3) {
     mast(P, 64, h.top, 64, h.top - 12);
-    P.part(() => P.dish(64, h.top - 18, 10, -110, 0.42));
+    P.part(() => P.dish(64, h.top - 18, 11, -110, 0.42));
   }
-  hull(P, h, { seed: 5, windows: false, stripe: 0.88 });
+  hull(P, h, { seed: 5, windows: false, stripe: 0.9 });
   P.part(() => {
-    const n = tier === 3 ? 5 : 4, sw = (h.w * 0.72) / n, x0 = h.x + h.w * 0.1;
+    const n = tier === 3 ? 5 : 4, sw = (h.w * 0.66) / n, x0 = h.x + h.w * 0.15;
     P.fill(x0 - 1, AXIS - 9, n * sw + 1, 16, RAMPS.dark[4]!);
     for (let i = 0; i < n; i++) {
       const sx = x0 + i * sw;
-      P.fill(sx, AXIS - 8, sw - 2, 14, RAMPS.glass[4]!);
-      for (let l = 0; l < 3; l++) P.fill(sx + 2, AXIS - 6 + l * 4, 3 + ((i * 5 + l * 7) % (sw - 6)), 1.5, l % 2 ? GLOW.cyan : RAMPS.glass[1]!);
+      P.fill(sx, AXIS - 8, sw - 2, 14, RAMPS.glass[5]!);
+      if (i === 1) {
+        // The ground track on the big board.
+        P.fill(sx, AXIS - 8, sw - 2, 14, 0x16306a);
+        for (let t = 0; t < sw - 3; t += 1) P.dot(sx + 1 + t, AXIS - 1 + Math.sin(t * 0.7) * 4, GLOW.window);
+      } else for (let l = 0; l < 3; l++) P.fill(sx + 2, AXIS - 6 + l * 4, 3 + ((i * 5 + l * 7) % (sw - 6)), 1.5, l % 2 ? GLOW.cyan : i % 2 ? GLOW.green : RAMPS.glass[1]!);
     }
   });
   P.glow(64, AXIS, 18, GLOW.cyan, 0.3);
 };
 
-/** A robotic workshop: a dark hull on a truss keel with arms at work; a nanofactory frames it in trusses over vats, a complex builds a whole new hull. */
+/** A robotic workshop: a dark hull on a truss keel with a robot arm welding; a nanofactory frames it in trusses over vats, a complex builds a whole new hull. */
 const ConstructionModule: Draw = (P, tier) => {
   if (tier >= 2)
     P.part(() => {
@@ -289,43 +441,36 @@ const ConstructionModule: Draw = (P, tier) => {
     P.part(() => {
       P.hcyl(36, 18, 56, 18);
       P.fill(70, 18, 22, 18, RAMPS.dark[4]!);
-      for (let x = 72; x < 92; x += 5) P.line(x, 19, x, 34, RAMPS.dark[2]!);
+      for (let x = 72; x < 92; x += 5) P.line(x, 19, x, 34, RAMPS.gold[3]!);
     });
   if (tier >= 2)
     P.part(() => {
       const n = tier === 3 ? 5 : 3;
       for (let i = 0; i < n; i++) P.sphere(64 + (i - (n - 1) / 2) * 16, 96, 7, 7, RAMPS.gold);
     });
-  const h = hullAt(tier === 1 ? 44 : LEN[tier] - 6, BORE[tier]);
-  hull(P, h, { ramp: RAMPS.dark, seed: 7, rows: 1, stripe: 0.75 });
-  const arm = (bx: number, by: number, ex: number, ey: number, tx: number, ty: number) => {
-    P.part(() => {
-      P.box(bx - 5, by - 3, 10, 6, RAMPS.dark);
-      P.pipe(bx, by, ex, ey, 5, RAMPS.gold);
-      P.pipe(ex, ey, tx, ty, 4, RAMPS.hull);
-      P.sphere(ex, ey, 4, 4, RAMPS.dark);
-      P.line(tx - 3, ty, tx - 4, ty - 4, RAMPS.dark[2]!, 1.5);
-      P.line(tx + 3, ty, tx + 4, ty - 4, RAMPS.dark[2]!, 1.5);
-    });
-    P.glow(tx, ty - 4, 6, GLOW.heatHi, 0.9);
-  };
+  const h = hullAt(tier === 1 ? 46 : LEN[tier] - 6, BORE[tier]);
+  hull(P, h, { ramp: RAMPS.dark, seed: 7, rows: 1, stripe: 0.72 });
+  P.part(() => P.hazard(h.x + 8, h.bottom - 6, h.w - 16, 3));
   if (tier === 1) {
-    P.part(() => P.box(54, 22, 34, 6, RAMPS.hull, 0.2));
-    arm(48, h.top + 2, 40, 36, 58, 30);
+    P.part(() => {
+      P.box(56, 20, 36, 7, RAMPS.hull, 0.2);
+      P.hazard(56, 25, 36, 2);
+    });
+    arm(P, 48, h.top + 2, 38, 34, 58, 28, true);
   } else if (tier === 2) {
-    arm(h.x + 10, h.top + 2, h.x + 4, 30, 30, 24);
-    arm(h.x + h.w - 10, h.top + 2, h.x + h.w - 4, 30, 98, 24);
+    arm(P, h.x + 10, h.top + 2, h.x + 4, 30, 30, 24, true);
+    arm(P, h.x + h.w - 10, h.top + 2, h.x + h.w - 4, 30, 98, 24, true);
   } else {
-    arm(h.x + 10, h.top + 2, h.x + 2, 34, 34, 36);
-    arm(h.x + h.w - 10, h.top + 2, h.x + h.w - 2, 34, 94, 36);
-    arm(64, h.bottom - 2, 50, 82, 40, 96);
+    arm(P, h.x + 10, h.top + 2, h.x + 2, 34, 34, 36, true);
+    arm(P, h.x + h.w - 10, h.top + 2, h.x + h.w - 2, 34, 94, 36, true);
+    arm(P, 64, h.bottom - 2, 50, 82, 40, 96);
   }
   P.part(() => {
     for (const [x, y] of tier === 1 ? ([[10, 58], [118, 58]] as const) : ([[8, 6], [120, 6], [8, 116]] as const)) P.light(x, y, GLOW.beacon);
   }, false);
 };
 
-/** An experimental hangar: a boxy pressurised bay, doors open on a prototype; a foundry adds furnace vents and radiators. */
+/** An experimental hangar: a boxy pressurised bay, doors open on a prototype spaceplane; a foundry adds furnace vents and radiators. */
 const SkunkWorks: Draw = (P, tier) => {
   berths(P, 10, 118, 14);
   if (tier === 3) {
@@ -346,19 +491,22 @@ const SkunkWorks: Draw = (P, tier) => {
   });
   P.part(() => {
     P.fill(30, 40, 68, 56, RAMPS.dark[4]!);
-    P.fill(32, 42, 64, 54, tier === 3 ? 0x6a3a2a : 0xe9c27a);
-    P.fill(32, 42, 64, 4, tier === 3 ? 0xe07a3a : 0xfff0c8);
-    P.fill(32, 80, 64, 16, tier === 3 ? 0x3a2420 : 0x8a6a48);
+    P.fill(32, 42, 64, 54, tier === 3 ? 0x7a3238 : 0xf2c878);
+    P.fill(32, 42, 64, 4, tier === 3 ? 0xf0803a : 0xfff4cc);
+    P.fill(32, 80, 64, 16, tier === 3 ? 0x402030 : 0x9a6a58);
     P.hazard(30, 36, 68, 4);
   });
-  if (tier === 2)
+  if (tier === 2) {
     P.part(() => {
+      // A spaceplane: a white back over a black heat-shield belly, a tail fin.
       P.poly([38, 70, 54, 60, 86, 60, 94, 66, 86, 74, 44, 74], { ramp: RAMPS.white, dir: [0.2, 1] });
-      P.poly([60, 60, 70, 50, 76, 50, 72, 60], { ramp: RAMPS.white, dir: [0.2, 1] });
-      P.stripe(60, 66, 22, 3);
-      P.fill(78, 62, 6, 3, RAMPS.glass[1]!);
+      P.poly([40, 71, 92, 68, 86, 74, 44, 74], RAMPS.dark[4]!);
+      P.poly([40, 62, 50, 48, 56, 48, 56, 61], { ramp: RAMPS.white, dir: [0.2, 1] });
+      P.stripe(60, 64, 20, 2);
+      P.fill(80, 62, 7, 3, RAMPS.glass[1]!);
     });
-  else
+    P.sparkle(74, 60, 4);
+  } else
     P.part(() => {
       P.vcyl(40, 52, 22, 30, RAMPS.dark);
       P.fill(44, 70, 14, 8, GLOW.heat);
@@ -371,7 +519,6 @@ const SkunkWorks: Draw = (P, tier) => {
     P.box(40, 78, 6, 18, RAMPS.dark);
     P.box(82, 78, 6, 18, RAMPS.dark);
   });
-  if (tier === 2) P.glow(52, 76, 7, GLOW.heatHi, 0.9);
   P.part(() => {
     P.light(10, 26, GLOW.beacon);
     P.light(118, 26, GLOW.beacon);
@@ -383,12 +530,15 @@ function dome(P: Painter, cx: number, base: number, r: number, seed: number): vo
   P.part(() => {
     P.box(cx - r - 2, base - 2, 2 * r + 4, 5, RAMPS.dark);
     P.sphere(cx, base, r, r * 0.8, RAMPS.glass, base);
+    P.gloss(cx - r, base - r * 0.8, 2 * r, r * 0.8, 0.45);
   });
   P.part(() => {
     for (let i = 0; i < 4; i++) P.box(cx - r * 0.7 + i * r * 0.36, base - r * (0.25 + (i % 2) * 0.2), r * 0.3, r * (0.25 + (i % 2) * 0.2), RAMPS.hull);
     P.windows(cx - r * 0.6, base - 6, 4, r * 0.36, 2, 2, seed, 0.9);
-    if (P.fine) for (let a = -0.6; a <= 0.6; a += 0.4) P.line(cx + a * r, base - Math.sqrt(1 - a * a) * r * 0.8, cx + a * r, base - 1, RAMPS.glass[0]!);
+    P.ellipse(cx + r * 0.72, base - 4, r * 0.12, r * 0.16, RAMPS.green[2]!);
+    P.ellipse(cx - r * 0.8, base - 3.5, r * 0.1, r * 0.14, RAMPS.green[1]!);
   }, false);
+  if (r >= 18) P.sparkle(cx - r * 0.5, base - r * 0.55, 4);
 }
 
 /** A campus: a long white hull under a glass dome; a university adds a second dome, a lecture hall below and a flag. */
@@ -406,9 +556,9 @@ const ResearchCampus: Draw = (P, tier) => {
 // ---------------------------------------------------------------- science labs
 
 /** A lab's hull: beige blankets, bands in its field's colour; the rest is the field's equipment. */
-function labHull(P: Painter, tier: Tier, band: Ramp, seed: number, ramp: Ramp = RAMPS.cloth): Hull {
+function labHull(P: Painter, tier: Tier, band: Ramp, seed: number, o: PodOptions = {}): Hull {
   const h = hullAt(LEN[tier], BORE[tier]);
-  hull(P, h, { ramp, band, seed, rows: tier === 3 ? 2 : 1, stripe: -1 });
+  hull(P, h, { ramp: RAMPS.cloth, band, seed, rows: tier === 3 ? 2 : 1, stripe: -1, ...o });
   return h;
 }
 
@@ -420,9 +570,16 @@ const EnergyLab: Draw = (P, tier) => {
     P.part(() => P.box(60, Math.min(cy, AXIS), 8, Math.abs(AXIS - cy), RAMPS.dark));
     P.part(() => P.torus(64, cy, A, 11, 8, 4, "front", RAMPS.hull, false));
     P.part(() => {
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2 + 0.4;
+        if (Math.sin(a) > 0.2) P.box(64 + Math.cos(a) * (A - 4) - 2, cy + Math.sin(a) * 8 - 2, 4, 8, RAMPS.gold, 0.2);
+      }
+    });
+    P.part(() => {
       for (let a = 0; a < 6.28; a += 0.02) P.dot(64 + Math.cos(a) * (A - 4.5), cy + Math.sin(a) * 6.5, a % 0.5 < 0.1 ? GLOW.cyanHi : GLOW.cyan);
     }, false);
     P.glow(64, cy, 6, GLOW.cyanHi, 1);
+    P.sparkle(64, cy, 5, GLOW.cyanHi);
   };
   if (tier >= 2)
     P.part(() => {
@@ -433,15 +590,27 @@ const EnergyLab: Draw = (P, tier) => {
   ring(h.top - 20, 26 + tier * 6);
 };
 
-/** Server racks and an antenna farm; a research centre adds a dish, an institute cooling radiators and a second rack hall. */
+/** A quantum computer's gold chandelier in a viewport, server racks and an antenna farm on top; a research centre adds a dish, an institute cooling radiators and a second rack hall. */
 const InformationScienceLab: Draw = (P, tier) => {
   const h = hullAt(LEN[tier], BORE[tier]);
   if (tier === 3) radiators(P, h.x + 4, h.x + h.w - 4, 4, 30);
-  const masts = [[h.x + 6, 22], [h.x + 14, 30], [h.x + h.w - 8, 26], [h.x + h.w - 16, 16]] as const;
+  const masts = [[h.x + 8, 22], [h.x + 16, 30], [h.x + h.w - 10, 26], [h.x + h.w - 18, 16]] as const;
   P.part(() => {
     for (const [x, len] of masts.slice(0, tier + 1)) P.antenna(x, h.top + 1, len, len > 20 ? 3 : 2);
   });
   labHull(P, tier, FIELD.information, 6);
+  P.part(() => {
+    // The dilution refrigerator: gold plates stepping down to the chip.
+    P.fill(52, AXIS - 10, 24, 20, RAMPS.dark[4]!);
+    P.fill(53.5, AXIS - 8.5, 21, 17, 0x101a3c);
+    for (const [w, y] of [[16, -7], [12, -3], [8, 1], [4, 5]] as const) {
+      P.fill(64 - w / 2, AXIS + y, w, 2, RAMPS.gold[1]!);
+      P.fill(64 - w / 2, AXIS + y + 1.2, w, 0.8, RAMPS.gold[3]!);
+    }
+    P.fill(63, AXIS - 7, 2, 13, RAMPS.gold[2]!);
+    P.fill(63, AXIS + 6.5, 2, 1.5, GLOW.cyanHi);
+  });
+  P.glow(64, AXIS + 6, 5, GLOW.cyan, 0.7);
   const racks = (x: number, y: number, n: number) =>
     P.part(() => {
       P.fill(x, y, n * 7.6 + 2, 16, RAMPS.dark[4]!);
@@ -452,41 +621,48 @@ const InformationScienceLab: Draw = (P, tier) => {
     });
   racks(64 - (tier + 2) * 3.8 - 1, h.top - 15, tier + 2);
   if (tier >= 2) {
-    mast(P, h.x + h.w - 24, h.top, h.x + h.w - 24, h.top - 18);
-    P.part(() => P.dish(h.x + h.w - 24, h.top - 24, 9, -100, 0.42));
+    mast(P, h.x + h.w - 26, h.top, h.x + h.w - 26, h.top - 18);
+    P.part(() => P.dish(h.x + h.w - 26, h.top - 24, 9, -100, 0.42));
   }
 };
 
-/** Bio tanks in a lit viewport; a research centre adds a medical bay on top, an institute a greenhouse dome. */
+/** Bio tanks in a lit viewport; a research centre adds a specimen module on top, an institute a greenhouse dome. */
 const LifeScienceLab: Draw = (P, tier) => {
   const h = labHull(P, tier, FIELD.life, 7);
   P.part(() => {
-    const vx = h.x + 12, vw = h.w - 24;
+    const vx = h.x + 14, vw = h.w - 28;
     P.fill(vx, AXIS - h.d * 0.32, vw, h.d * 0.64, RAMPS.dark[4]!);
-    P.fill(vx + 1, AXIS - h.d * 0.32 + 1, vw - 2, h.d * 0.64 - 2, RAMPS.glass[4]!);
+    P.fill(vx + 1, AXIS - h.d * 0.32 + 1, vw - 2, h.d * 0.64 - 2, 0x163a4c);
     const n = Math.floor((vw - 4) / 12);
     for (let i = 0; i < n; i++) {
-      const tx = vx + 4 + i * 12;
+      const tx = vx + 4 + (vw - 4 - n * 12) / 2 + i * 12;
       P.vcyl(tx, AXIS - h.d * 0.26, 8, h.d * 0.48, BIO);
-      if (P.medium) P.dot(tx + 3, AXIS - 2, BIO[0]!);
+      if (P.medium) {
+        P.dot(tx + 3, AXIS - 2, BIO[0]!);
+        P.dot(tx + 5, AXIS + 3, BIO[0]!);
+      }
     }
   });
+  P.glow(64, AXIS, h.d * 0.4, GLOW.green, 0.3);
   if (tier >= 2)
     P.part(() => {
-      P.box(h.x + 8, h.top - 14, 22, 16, RAMPS.white);
-      P.fill(h.x + 17, h.top - 11, 4, 10, RAMPS.red[2]!);
-      P.fill(h.x + 14, h.top - 8, 10, 4, RAMPS.red[2]!);
+      P.box(h.x + 10, h.top - 14, 22, 16, RAMPS.white);
+      P.fill(h.x + 19, h.top - 11, 4, 10, RAMPS.green[3]!);
+      P.fill(h.x + 16, h.top - 8, 10, 4, RAMPS.green[3]!);
     });
   if (tier === 3) {
-    P.part(() => P.sphere(h.x + h.w - 28, h.top + 2, 20, 18, RAMPS.glass, h.top + 2));
     P.part(() => {
-      for (let i = 0; i < 6; i++) P.ellipse(h.x + h.w - 42 + i * 5.6, h.top - 4 - (i % 2) * 3, 3, 3.5, i % 2 ? RAMPS.green[1]! : RAMPS.green[2]!);
+      P.sphere(h.x + h.w - 30, h.top + 2, 20, 18, RAMPS.glass, h.top + 2);
+      P.gloss(h.x + h.w - 50, h.top - 16, 40, 18, 0.45);
+    });
+    P.part(() => {
+      for (let i = 0; i < 6; i++) P.ellipse(h.x + h.w - 44 + i * 5.6, h.top - 4 - (i % 2) * 3, 3, 3.5, i % 2 ? RAMPS.green[1]! : RAMPS.green[2]!);
     }, false);
   }
-  P.part(() => P.antenna(h.x + h.w - 8, h.top + 1, 14, 2));
+  P.part(() => P.antenna(h.x + h.w - 10, h.top + 1, 14, 2));
 };
 
-/** A furnace hanging below with an arm holding a crystal; a research centre adds a vacuum chamber, an institute a second furnace. */
+/** A furnace hanging below with a robot arm holding a crystal; a research centre adds a vacuum chamber, an institute a second furnace. */
 const MaterialsLab: Draw = (P, tier) => {
   const h = hullAt(LEN[tier], BORE[tier]);
   const furnace = (cx: number) => {
@@ -502,19 +678,16 @@ const MaterialsLab: Draw = (P, tier) => {
   furnace(tier === 3 ? 40 : 52);
   if (tier === 3) furnace(84);
   labHull(P, tier, FIELD.materials, 8);
-  P.part(() => {
-    P.box(h.x + h.w - 22, h.top - 6, 10, 8, RAMPS.dark);
-    P.pipe(h.x + h.w - 17, h.top - 4, h.x + h.w - 2, h.top - 20, 5, RAMPS.gold);
-    P.pipe(h.x + h.w - 2, h.top - 20, h.x + h.w + 8, h.top - 12, 4, RAMPS.hull);
-    P.sphere(h.x + h.w - 2, h.top - 20, 3.5, 3.5, RAMPS.dark);
-  });
-  P.part(() => P.poly([h.x + h.w + 8, h.top - 16, h.x + h.w + 12, h.top - 22, h.x + h.w + 16, h.top - 16, h.x + h.w + 12, h.top - 8], { ramp: ENERGY, dir: [1, 1] }));
+  arm(P, h.x + h.w - 18, h.top - 2, h.x + h.w - 4, h.top - 20, h.x + h.w + 7, h.top - 12);
+  P.part(() => P.poly([h.x + h.w + 7, h.top - 18, h.x + h.w + 11, h.top - 26, h.x + h.w + 15, h.top - 18, h.x + h.w + 11, h.top - 8], { ramp: ENERGY, dir: [1, 1] }));
+  P.sparkle(h.x + h.w + 9, h.top - 21, 4);
   if (tier >= 2) {
     mast(P, h.x + 24, h.top, h.x + 24, h.top - 8);
     P.part(() => {
       P.sphere(h.x + 24, h.top - 20, 13, 13, RAMPS.white);
-      P.fill(h.x + 20, h.top - 24, 8, 8, RAMPS.dark[4]!);
-      P.fill(h.x + 21, h.top - 23, 6, 6, RAMPS.glass[2]!);
+      P.ellipse(h.x + 24, h.top - 20, 5.5, 5.5, RAMPS.dark[4]!);
+      P.ellipse(h.x + 24, h.top - 20, 4, 4, GLOW.violet);
+      P.dot(h.x + 23, h.top - 21, GLOW.violetHi);
     });
   }
 };
@@ -527,7 +700,7 @@ const MilitaryScienceLab: Draw = (P, tier) => {
       for (let i = 0; i < 4; i++) P.box(h.x + 12 + i * 18, h.bottom - 2, 14, 20, RAMPS.dark, 0.15);
       P.hazard(h.x + 12, h.bottom + 14, 68, 3);
     });
-  labHull(P, tier, FIELD.military, 9, RAMPS.armor);
+  labHull(P, tier, FIELD.military, 9, { ramp: RAMPS.armor });
   const barrel = (y: number, len: number) => {
     P.part(() => {
       P.box(h.x + 8, y - 2, 22, 14, RAMPS.dark);
@@ -536,6 +709,7 @@ const MilitaryScienceLab: Draw = (P, tier) => {
       for (let x = h.x + 34; x < h.x + 28 + len - 4; x += 11) P.box(x, y - 2, 4, 11, RAMPS.gold);
     });
     P.glow(h.x + 28 + len + 2, y + 3, 6, GLOW.cyan, 0.8);
+    P.sparkle(h.x + 28 + len + 2, y + 3, 4, GLOW.cyanHi);
   };
   barrel(h.top - 14, 50 + tier * 10);
   if (tier === 3) barrel(h.top - 30, 60);
@@ -555,11 +729,11 @@ const SocialScienceLab: Draw = (P, tier) => {
     mast(P, x + w / 2, y + hh, x + w / 2, h.top);
     P.part(() => {
       P.box(x, y, w, hh, RAMPS.dark);
-      P.fill(x + 3, y + 3, w - 6, hh - 6, 0x0e1a24);
+      P.fill(x + 3, y + 3, w - 6, hh - 6, 0x141a44);
       const n = Math.floor((w - 8) / 7);
       for (let i = 0; i < n; i++) {
         const bh = ((i * 7 + seed * 5) % (hh - 12)) + 4;
-        P.fill(x + 5 + i * 7, y + hh - 4 - bh, 5, bh, i % 2 ? GLOW.window : GLOW.violet);
+        P.fill(x + 5 + i * 7, y + hh - 4 - bh, 5, bh, i % 3 === 0 ? GLOW.pink : i % 3 === 1 ? GLOW.window : GLOW.violet);
       }
       P.line(x + 5, y + hh * 0.7, x + w - 5, y + hh * 0.3, RAMPS.white[0]!, 0.8);
     });
@@ -568,16 +742,19 @@ const SocialScienceLab: Draw = (P, tier) => {
   screen(h.x + 4, h.top - 34, 40, 26, 1);
   if (tier === 3) screen(h.x + h.w - 34, h.top - 26, 30, 20, 3);
   if (tier >= 2) {
-    P.part(() => P.sphere(tier === 3 ? 64 : h.x + h.w - 22, h.top + 2, 15, 13, RAMPS.glass, h.top + 2));
+    const cx = tier === 3 ? 64 : h.x + h.w - 22;
     P.part(() => {
-      const cx = tier === 3 ? 64 : h.x + h.w - 22;
-      P.fill(cx - 10, h.top - 4, 20, 5, 0x5c4a3a);
+      P.sphere(cx, h.top + 2, 15, 13, RAMPS.glass, h.top + 2);
+      P.gloss(cx - 15, h.top - 11, 30, 13, 0.45);
+    });
+    P.part(() => {
+      P.fill(cx - 10, h.top - 4, 20, 5, 0x6c4a52);
       P.windows(cx - 9, h.top - 6, 5, 4, 2, 2, 3, 0.9);
     }, false);
   }
 };
 
-/** A telescope on the hull; a research centre lengthens it, an institute adds a dish array. */
+/** A space telescope on the hull (a Hubble: a silver tube, its aperture door open, two solar wings); a research centre has a longer one, an institute a segmented gold mirror over a sunshield (a Webb) and a dish array. */
 const SpaceScienceLab: Draw = (P, tier) => {
   const h = hullAt(LEN[tier], BORE[tier]);
   if (tier === 3) {
@@ -586,61 +763,118 @@ const SpaceScienceLab: Draw = (P, tier) => {
     P.part(() => P.dish(h.x + h.w - 12, h.bottom + 22, 9, 80, 0.42));
   }
   labHull(P, tier, FIELD.space, 11);
-  const len = 24 + tier * 8, a = -Math.PI / 4;
-  const bx = 52, by = h.top - 2, ex = bx + Math.cos(a) * len, ey = by + Math.sin(a) * len;
+  if (tier === 3) {
+    // The sunshield's layers of film, the coldest on top.
+    for (let i = 0; i < 3; i++) P.part(() => P.poly([10, 40 - i * 2.5, 64, 33 - i * 2.5, 118, 40 - i * 2.5, 64, 47 - i * 2.5], { ramp: RAMPS.shield, dir: [1, 0.5], from: 0.3 - i * 0.14, to: 0.9 - i * 0.14 }));
+    P.part(() => {
+      // Eighteen hexagonal segments round the missing middle one.
+      const s = 4.2;
+      for (let q = -2; q <= 2; q++)
+        for (let r = -2; r <= 2; r++) {
+          if (Math.abs(q + r) > 2 || (q === 0 && r === 0)) continue;
+          const hx = 64 + s * Math.sqrt(3) * (q + r / 2), hy = 18 + s * 1.5 * r;
+          const pts: number[] = [];
+          for (let i = 0; i < 6; i++) pts.push(hx + Math.cos(Math.PI / 6 + (i * Math.PI) / 3) * s * 1.04, hy + Math.sin(Math.PI / 6 + (i * Math.PI) / 3) * s * 1.04);
+          P.poly(pts, RAMPS.gold[(((q - r) % 3) + 3) % 3]!);
+        }
+    });
+    P.sparkle(53, 9, 6);
+    P.part(() => P.light(120, 8, RAMPS.white[0]!), false);
+    return;
+  }
+  const len = 30 + tier * 8, d = 13 + tier * 2, a = -Math.PI / 4, ux = Math.cos(a), uy = Math.sin(a);
+  const bx = 48, by = h.top - 10, ex = bx + ux * len, ey = by + uy * len;
+  const mx = bx + ux * len * 0.45, my = by + uy * len * 0.45;
   P.part(() => {
-    P.box(bx - 10, by - 6, 20, 8, RAMPS.dark);
-    P.pipe(bx, by - 2, bx, by - 10, 6, RAMPS.dark);
+    P.box(bx - 10, h.top - 6, 20, 8, RAMPS.dark);
+    P.pipe(bx, h.top - 2, bx, by, 6, RAMPS.dark);
+  });
+  P.part(() => P.pipe(mx + uy * (d / 2 + 6), my - ux * (d / 2 + 6), mx - uy * (d / 2 + 6), my + ux * (d / 2 + 6), 2, RAMPS.dark));
+  P.part(() => {
+    for (const s of [-1, 1]) {
+      const cx = mx - uy * s * (d / 2 + 11), cy = my + ux * s * (d / 2 + 11);
+      P.poly(
+        [cx - ux * 9 + uy * 6, cy - uy * 9 - ux * 6, cx + ux * 9 + uy * 6, cy + uy * 9 - ux * 6, cx + ux * 9 - uy * 6, cy + uy * 9 + ux * 6, cx - ux * 9 - uy * 6, cy - uy * 9 + ux * 6],
+        { ramp: RAMPS.solar, dir: [1, 1], from: 0.1, to: 0.75 },
+      );
+    }
   });
   P.part(() => {
-    P.pipe(bx, by - 8, ex, ey, 14 + tier * 2, RAMPS.white);
-    P.pipe(bx + Math.cos(a) * 8, by - 8 + Math.sin(a) * 8, bx + Math.cos(a) * 20, by - 8 + Math.sin(a) * 20, 15 + tier * 2, RAMPS.gold);
+    P.pipe(bx, by, ex, ey, d, RAMPS.white);
+    P.pipe(bx - ux * 2, by - uy * 2, bx + ux * len * 0.34, by + uy * len * 0.34, d + 3, RAMPS.hull);
+    P.pipe(bx + ux * len * 0.4, by + uy * len * 0.4, bx + ux * len * 0.46, by + uy * len * 0.46, d + 1, RAMPS.gold);
+    P.ellipse(ex + ux * d * 0.12, ey + uy * d * 0.12, d * 0.36, d * 0.36, RAMPS.glass[5]!);
+    P.ellipse(ex + ux * d * 0.12 - 1, ey + uy * d * 0.12 - 1, d * 0.14, d * 0.14, RAMPS.glass[2]!);
+    // The aperture door, open.
+    P.line(ex + uy * d * 0.5, ey - ux * d * 0.5, ex + uy * d * 0.5 + ux * 8, ey - ux * d * 0.5 + uy * 8, RAMPS.white[3]!, 2);
   });
-  P.part(() => P.shaded(ex, ey - 8, 6 + tier, 4 + tier * 0.6, (nx, ny, px, py) => (nx * nx + ny * ny > 0.55 ? RAMPS.white[2]! : P.shade(RAMPS.glass, 0.7 + ny * 0.2, px, py))));
+  P.sparkle(bx + ux * len * 0.2 - 3, by + uy * len * 0.2 - 4, 4);
   P.part(() => {
     P.light(118, 6, RAMPS.white[0]!);
     P.light(122, 22, RAMPS.white[1]!);
   }, false);
 };
 
-/** An Earth-watching lab: a sensor pod scanning below, solar wings; a research centre adds a second pair, an institute instrument booms. */
+/** An Earth-watching lab: a great spinning mesh reflector on a boom, a sensor pod scanning below; a research centre adds radar panels, an institute a second reflector and a lidar. */
 const ClimateLab: Draw = (P, tier) => {
   const h = hullAt(LEN[tier], BORE[tier]);
-  const pairs: [number, number][] = tier === 1 ? [[h.top - 20, 20]] : [[h.top - 24, 20], [h.top - 46, 18]];
-  for (const [y, hh] of pairs) {
-    mast(P, h.x + 6, h.top, h.x + 6, y);
-    mast(P, h.x + h.w - 6, h.top, h.x + h.w - 6, y);
-    wing(P, 4, y, 40, hh, 5, 3);
-    wing(P, 84, y, 40, hh, 5, 3);
-  }
-  if (tier === 3)
+  const reflector = (cx: number, cy: number, rx: number, ry: number, footX: number) => {
     P.part(() => {
-      P.pipe(h.x + 4, h.bottom - 2, 8, h.bottom + 26, 2.5, RAMPS.dark);
-      P.pipe(h.x + h.w - 4, h.bottom - 2, 120, h.bottom + 26, 2.5, RAMPS.dark);
-      P.box(4, h.bottom + 24, 8, 6, RAMPS.gold);
-      P.box(116, h.bottom + 24, 8, 6, RAMPS.gold);
+      P.pipe(footX, h.top, cx - rx * 0.6, cy + ry * 0.4, 2.5, RAMPS.dark);
+      P.pipe(footX + 8, h.top, cx + rx * 0.1, cy + ry * 0.8, 2, RAMPS.dark);
     });
+    P.part(() =>
+      P.shaded(cx, cy, rx, ry, (nx, ny, px, py) => {
+        if (nx * nx + ny * ny > 0.8) return RAMPS.gold[1]!;
+        if (P.medium && (Math.abs(nx) < 1.2 / (rx * P.k) || Math.abs(ny) < 1.2 / (ry * P.k) || Math.abs(Math.abs(nx) - 0.5) < 1 / (rx * P.k))) return RAMPS.gold[1]!;
+        return (px + py) % 2 ? RAMPS.gold[nx + ny < -0.2 ? 2 : 3]! : RAMPS.gold[nx + ny < -0.2 ? 4 : 5]!;
+      }),
+    );
+    P.sparkle(cx - rx * 0.55, cy - ry * 0.5, 4);
+  };
+  if (tier >= 2)
+    for (const x of [6, 82]) {
+      mast(P, x + 20, h.bottom - 2, x + 20, h.bottom + 10);
+      P.part(() => {
+        for (let i = 0; i < 4; i++) P.box(x + i * 10, h.bottom + 9, 9.5, 9, RAMPS.white, 0.15);
+        P.fill(x, h.bottom + 13, 40, 1, RAMPS.gold[2]!);
+      });
+    }
   P.part(() => {
     P.sphere(64, h.bottom + 2, 12, 9, RAMPS.dark);
     P.ellipse(64, h.bottom + 7, 6, 2.5, GLOW.cyan);
   });
   labHull(P, tier, FIELD.climate, 12);
+  if (tier === 3) {
+    reflector(46, 19, 32, 12, h.x + 12);
+    reflector(104, 20, 18, 8, h.x + h.w - 22);
+  } else reflector(58, 20, 34 + tier * 2, 13, h.x + 14);
   P.part(() => {
     for (const dx of [-18, -6, 6, 18]) for (let y = h.bottom + 14; y < 124; y += 3) P.dot(64 + dx * ((y - h.bottom - 6) / 30), y, GLOW.cyan);
+    if (tier === 3) P.line(64, h.bottom + 12, 64, 126, GLOW.green);
   }, false);
   P.glow(64, h.bottom + 7, 8, GLOW.cyan, 0.7);
 };
 
 // ---------------------------------------------------------------- power
 
-/** Solar wings on a keel: two, then four, then six. */
+/** Solar power on a keel: two round fans of cells, then four long blanket wings on gold masts, then six. */
 const SolarCollector: Draw = (P, tier) => {
   keel(P);
-  const cols = tier === 1 ? [[24, 80]] : tier === 2 ? [[6, 56], [66, 56]] : [[4, 38], [45, 38], [86, 38]];
-  for (const [x, w] of cols) {
-    P.part(() => P.pipe(x! + w! / 2, 12, x! + w! / 2, 116, 2.5, RAMPS.dark));
-    wing(P, x!, tier === 3 ? 4 : 8, w!, AXIS - (tier === 3 ? 10 : 14), Math.round(w! / 9), 5);
-    wing(P, x!, AXIS + 6, w!, AXIS - (tier === 3 ? 10 : 14), Math.round(w! / 9), 5);
+  if (tier === 1) {
+    P.part(() => P.pipe(64, 24, 64, 104, 3, RAMPS.gold));
+    P.part(() => P.fan(64, 30, 26));
+    P.part(() => P.fan(64, 98, 26));
+  } else {
+    // Wings as the ISS's: two blankets either side of a mast.
+    const xs = tier === 2 ? [32, 96] : [22, 64, 106], bw = tier === 2 ? 17 : 12;
+    for (const x of xs) {
+      P.part(() => P.pipe(x, 6, x, 122, 2.5, RAMPS.gold));
+      for (const y of [4, AXIS + 9]) {
+        wing(P, x - bw - 2, y, bw, AXIS - 13, 2, 8);
+        wing(P, x + 2, y, bw, AXIS - 13, 2, 8);
+      }
+    }
   }
   P.part(() => {
     P.box(54, AXIS - 10, 20, 20);
@@ -648,26 +882,61 @@ const SolarCollector: Draw = (P, tier) => {
     P.windows(57, AXIS + 2, 3, 5, 3, 3, 2);
     P.light(64, AXIS - 12, GLOW.beacon);
   });
+  P.sparkle(tier === 1 ? 52 : tier === 2 ? 22 : 14, tier === 1 ? 18 : 14, 5);
 };
 
-/** Mirror sheets on booms off a keel: one, two, then the four great sheets of a soletta. */
+/** Mirrors on booms off a keel: a round spoked reflector, two square sails, then the four great sheets of a soletta. */
 const SolarMirror: Draw = (P, tier) => {
   keel(P, 7);
+  /** A round reflector of film wedges between spokes (a Znamya). */
+  const disc = (cx: number, cy: number, rx: number, ry: number) =>
+    P.part(() =>
+      P.shaded(cx, cy, rx, ry, (nx, ny) => {
+        const d = Math.hypot(nx, ny), a = Math.atan2(ny, nx) + Math.PI, g = Math.floor(a / (Math.PI / 6));
+        if (d < 0.1) return RAMPS.dark[2]!;
+        if (d > 0.94) return RAMPS.mirror[5]!;
+        if (P.medium && Math.abs(a - Math.round(a / (Math.PI / 6)) * (Math.PI / 6)) * d * rx * P.k < 0.6) return RAMPS.mirror[4]!;
+        return P.shade(RAMPS.mirror, Math.abs(nx - ny * 0.6 + 0.3) < 0.14 ? 0 : 0.3 + (nx + ny) * 0.2 + (g % 2 ? 0.16 : 0));
+      }),
+    );
+  /** A square sail on diagonal booms (an IKAROS). */
+  const sail = (cx: number, cy: number, rx: number, ry: number) =>
+    P.part(() => {
+      P.poly([cx, cy - ry, cx + rx, cy, cx, cy + ry, cx - rx, cy], { ramp: RAMPS.mirror, dir: [0.6, 1], from: 0.05, to: 0.75 });
+      P.gloss(cx - rx, cy - ry, 2 * rx, 2 * ry, 0.7);
+      if (P.medium) for (const [sx, sy] of [[1, 1], [1, -1], [-1, 1], [-1, -1]] as const) P.line(cx + (sx * rx) / 2, cy, cx, cy + (sy * ry) / 2, RAMPS.mirror[4]!);
+      P.line(cx - rx, cy, cx + rx, cy, RAMPS.mirror[5]!);
+      P.line(cx, cy - ry, cx, cy + ry, RAMPS.mirror[5]!);
+      P.fill(cx - 2.5, cy - 2.5, 5, 5, RAMPS.dark[2]!);
+    });
   const sheet = (cx: number, cy: number, w: number, h: number) =>
     P.part(() => {
       P.poly([cx - w / 2, cy - h / 2 + 8, cx + w / 2, cy - h / 2, cx + w / 2 - 6, cy + h / 2 - 8, cx - w / 2 - 6, cy + h / 2], { ramp: RAMPS.mirror, dir: [0.8, 1], from: 0.05, to: 0.75 });
+      P.gloss(cx - w / 2 - 6, cy - h / 2, w + 6, h, 0.7);
       if (P.medium)
         for (let i = 1; i < 4; i++) {
           const t = i / 4;
-          P.line(cx - w / 2 + w * t, cy - h / 2 + 8 - 8 * t, cx - w / 2 - 6 + w * t, cy + h / 2 - 8 * t, RAMPS.mirror[4]!);
+          P.line(cx - w / 2 + w * t, cy - h / 2 + 8 - 8 * t, cx - w / 2 - 6 + w * t, cy + h / 2 - 8 * t, RAMPS.mirror[5]!);
         }
     });
-  const sheets: [number, number, number, number][] =
-    tier === 1 ? [[64, 28, 80, 44]] : tier === 2 ? [[64, 26, 96, 42], [64, 102, 96, 34]] : [[36, 28, 52, 46], [94, 28, 52, 46], [36, 100, 52, 38], [94, 100, 52, 38]];
-  P.part(() => {
-    for (const [cx, cy] of sheets) P.pipe(cx, AXIS, cx, cy, 3, RAMPS.dark);
-  });
-  for (const [cx, cy, w, h] of sheets) sheet(cx, cy, w, h);
+  if (tier === 1) {
+    mast(P, 64, AXIS, 64, 36);
+    disc(64, 31, 52, 26);
+    P.sparkle(38, 18, 6);
+  } else if (tier === 2) {
+    P.part(() => P.pipe(64, 28, 64, 102, 3, RAMPS.dark));
+    sail(64, 29, 56, 25);
+    sail(64, 101, 46, 21);
+    P.sparkle(44, 22, 6);
+  } else {
+    const sheets = [[36, 28, 52, 46], [94, 28, 52, 46], [36, 100, 52, 38], [94, 100, 52, 38]] as const;
+    P.part(() => {
+      for (const [cx, cy] of sheets) P.pipe(cx, AXIS, cx, cy, 3, RAMPS.dark);
+    });
+    for (const [cx, cy, w, hh] of sheets) sheet(cx, cy, w, hh);
+    P.sparkle(26, 18, 6);
+    P.sparkle(88, 92, 4);
+  }
   P.part(() => {
     P.box(52, AXIS - 8, 24, 16);
     P.stripe(52, AXIS - 4, 24, 4);
@@ -675,30 +944,44 @@ const SolarMirror: Draw = (P, tier) => {
   });
 };
 
-/** A reactor vessel standing on the keel: a vertical cylinder under a domed head, hazard banding, the faction's band. */
-function vessel(P: Painter, x: number, y: number, w: number, h: number, ramp: Ramp = RAMPS.gold): void {
+/** A space reactor standing on the keel (a SNAP-10A): a foil-wrapped core over its shadow shield, at the apex of a cone of radiator, glowing where the coolant comes in. */
+function reactor(P: Painter, cx: number, base: number, s: number): void {
+  const top = base - 40 * s;
   P.part(() => {
-    P.vcyl(x, y + w * 0.3, w, h - w * 0.3, ramp, false);
-    P.sphere(x + w / 2, y + w * 0.32, w / 2, w * 0.32, ramp, y + w * 0.34);
-    P.hazard(x + 1, y + h * 0.62, w - 2, 4);
-    P.stripe(x + 1, y + h - 10, w - 2, 4);
-    P.seams(x + 3, y + w * 0.4, w - 6, h * 0.5, 7, ramp[4]!);
+    P.poly([cx - 8 * s, top + 12 * s, cx + 8 * s, top + 12 * s, cx + 21 * s, base, cx - 21 * s, base], { ramp: RAMPS.white, dir: [1, 0], from: 0, to: 0.75 });
+    if (P.medium) for (let i = -2; i <= 2; i++) P.line(cx + i * 3 * s, top + 13 * s, cx + i * 8 * s, base - 1, RAMPS.white[4]!);
+    P.stripe(cx - 15 * s, base - 12 * s, 30 * s, 3 * s);
+    P.hazard(cx - 17.5 * s, base - 6 * s, 35 * s, 3 * s);
   });
+  P.part(() => {
+    P.box(cx - 9.5 * s, top + 8.5 * s, 19 * s, 4.5 * s, RAMPS.dark);
+    P.foil(cx - 6 * s, top, 12 * s, 9 * s);
+    P.fill(cx - 6 * s, top, 12 * s, 1.5, RAMPS.gold[0]!);
+  });
+  P.glow(cx, top + 15 * s, 9 * s, GLOW.heat, 0.6);
 }
 
-/** Foil-wrapped fission vessels on a keel over finned radiators: one, two, three. */
+/** Space reactors on a keel over glowing radiator panels: one, two, three. */
 const FissionPile: Draw = (P, tier) => {
   keel(P);
-  radiators(P, 12, 116, tier + 1, 40);
-  const w = tier === 1 ? 32 : tier === 2 ? 26 : 22;
-  for (let i = 0; i < tier; i++) vessel(P, 64 - (tier * (w + 4)) / 2 + i * (w + 4) + 2, 8 + (i % 2) * 4, w, AXIS - 2);
+  radiators(P, 12, 116, tier + 1, 40, 0.7);
+  if (tier === 1) reactor(P, 64, AXIS - 3, 1.3);
+  else if (tier === 2) for (const cx of [42, 86]) reactor(P, cx, AXIS - 3, 1.1);
+  else {
+    reactor(P, 26, AXIS - 3, 0.95);
+    reactor(P, 102, AXIS - 3, 0.95);
+    reactor(P, 64, AXIS - 3, 1.2);
+  }
 };
 
-/** Armoured heavy reactors glowing blue through their ports, over a fan of radiator panels. */
+/** Armoured heavy reactors glowing blue through their ports, over a fan of radiator panels hot at the root. */
 const HeavyFissionPile: Draw = (P, tier) => {
   keel(P);
   P.part(() => {
     P.poly([10, AXIS + 8, 118, AXIS + 8, 124, 120, 4, 120], { ramp: RAMPS.white, dir: [0, 1], from: 0.05, to: 0.55 });
+    P.poly([10, AXIS + 8, 118, AXIS + 8, 119, AXIS + 14, 9, AXIS + 14], GLOW.heatHi);
+    P.poly([9, AXIS + 14, 119, AXIS + 14, 120, AXIS + 22, 8, AXIS + 22], GLOW.heat);
+    P.poly([8, AXIS + 22, 120, AXIS + 22, 121, AXIS + 30, 7, AXIS + 30], 0xf6c8a8);
   });
   P.part(() => {
     if (!P.medium) return;
@@ -715,33 +998,40 @@ const HeavyFissionPile: Draw = (P, tier) => {
       P.hazard(cx - w / 2 + 2, 48, w - 4, 3);
       P.stripe(cx - w / 2 + 2, 54, w - 4, 4);
     });
-  for (const cx of units) P.glow(cx, 33, w * 0.6, GLOW.cyan, 0.5);
+  for (const cx of units) {
+    P.glow(cx, 33, w * 0.6, GLOW.cyan, 0.5);
+    P.sparkle(cx - w / 2 + 9, 27, 3, GLOW.cyanHi);
+  }
 };
 
-/** A fusion torus over a control module: a bigger torus, then two, over radiators. */
+/** A tokamak over a control module: gold field coils round a torus of pink plasma; a bigger torus, then two, over radiators. */
 const FusionPile: Draw = (P, tier) => {
   keel(P);
-  if (tier >= 2) radiators(P, 20, 108, tier + 1, 34);
+  if (tier >= 2) radiators(P, 20, 108, tier + 1, 34, 0.5);
   const torus = (cx: number, A: number) => {
     P.part(() => P.torus(cx, 34, A, 18, 12, 10, "back"));
-    P.part(() => P.ellipse(cx, 34, A - 16, 5, 0x2a1740), false);
+    P.part(() => P.ellipse(cx, 34, A - 16, 5, 0x3a1750), false);
     P.part(() => P.torus(cx, 34, A, 18, 12, 10, "front", RAMPS.hull, false));
     P.part(() => {
       for (const t of [-0.75, -0.25, 0.25, 0.75]) P.box(cx + t * (A - 6) - 2.5, 34 + Math.sqrt(1 - t * t) * 14 - 4, 5, 12, RAMPS.gold, 0.2);
     });
     P.part(() => {
-      for (let a = Math.PI; a < Math.PI * 2; a += 0.06) P.dot(cx + Math.cos(a) * (A - 7), 34 + Math.sin(a) * 12, GLOW.violetHi);
+      for (let a = Math.PI; a < Math.PI * 2; a += 0.04) {
+        P.dot(cx + Math.cos(a) * (A - 7), 34 + Math.sin(a) * 12, GLOW.pinkHi);
+        P.dot(cx + Math.cos(a) * (A - 7), 35 + Math.sin(a) * 12, GLOW.pink);
+      }
     }, false);
-    P.glow(cx, 28, A * 0.7, GLOW.violet, 0.45);
+    P.glow(cx, 28, A * 0.7, GLOW.pink, 0.4);
+    P.sparkle(cx - (A - 7) * 0.7, 34 - 12 * 0.7, 4, GLOW.pinkHi);
   };
-  pod(P, 40, AXIS - 10, 48, 20, { seed: 3, stripe: 0.75 });
+  pod(P, 40, AXIS - 10, 48, 20, { seed: 3, stripe: 0.72 });
   if (tier === 3) {
     torus(36, 30);
     torus(92, 30);
   } else torus(64, tier === 1 ? 36 : 46);
 };
 
-/** A spherical heavy fusion reactor braced to radiators above and below: four struts, six, then a bigger core. */
+/** A laser fusion chamber (after the National Ignition Facility's): a sphere studded with beam ports, its beamlines braced to radiators above and below, a star at its heart: four beamlines, six, then a bigger chamber. */
 const HeavyFusionPile: Draw = (P, tier) => {
   const r = tier === 3 ? 28 : 24;
   P.part(() => {
@@ -755,16 +1045,24 @@ const HeavyFusionPile: Draw = (P, tier) => {
       const a = (d * Math.PI) / 180;
       // Out to the radiators above and below.
       const reach = Math.min(64, Math.abs(46 / Math.sin(a)));
-      P.pipe(64 + Math.cos(a) * r, 64 + Math.sin(a) * r, 64 + Math.cos(a) * reach, 64 + Math.sin(a) * reach, 6, RAMPS.hull);
+      P.pipe(64 + Math.cos(a) * r, 64 + Math.sin(a) * r, 64 + Math.cos(a) * reach, 64 + Math.sin(a) * reach, 6, RAMPS.white);
+      P.box(64 + Math.cos(a) * (r + 8) - 4, 64 + Math.sin(a) * (r + 8) - 4, 8, 8, RAMPS.gold, 0.2);
     }
   });
   P.part(() => {
-    P.sphere(64, 64, r, r, RAMPS.gold);
-    P.stripe(64 - r + 3, 74, 2 * r - 6, 4);
-    P.fill(58, 56, 12, 12, RAMPS.dark[5]!);
-    P.fill(60, 58, 8, 8, GLOW.cyanHi);
+    P.sphere(64, 64, r, r, RAMPS.hull);
+    P.stripe(64 - r + 3, 64 + r * 0.56, 2 * r - 14, 3);
+    for (let i = 0; i < 8; i++) {
+      const a = (i / 8) * Math.PI * 2 + 0.39;
+      P.ellipse(64 + Math.cos(a) * r * 0.72, 64 + Math.sin(a) * r * 0.72, 3, 3, RAMPS.hull[5]!);
+      P.ellipse(64 + Math.cos(a) * r * 0.72, 64 + Math.sin(a) * r * 0.72, 1.6, 1.6, RAMPS.red[2]!);
+    }
+    P.ellipse(64, 64, r * 0.42, r * 0.42, RAMPS.gold[3]!);
+    P.ellipse(64, 64, r * 0.34, r * 0.34, 0x2a1a4a);
+    P.ellipse(64, 64, r * 0.16, r * 0.16, GLOW.heatHi);
   });
-  P.glow(64, 62, 16, GLOW.cyan, 0.6);
+  P.glow(64, 64, r * 0.5, GLOW.heat, 0.7);
+  P.sparkle(64, 64, 9, 0xffffff);
 };
 
 // ---------------------------------------------------------------- exotic
@@ -787,10 +1085,10 @@ const AntimatterTrap: Draw = (P, tier) => {
   const xs = Array.from({ length: rings }, (_, i) => 20 + (i * 88) / (rings - 1));
   for (const x of xs) {
     P.part(() =>
-      P.shaded(x, AXIS, 10, 30, (nx, ny, px, py) => {
+      P.shaded(x, AXIS, 10, 30, (nx, ny) => {
         const d = nx * nx + ny * ny;
-        if (d < 0.42) return P.shade(PLASMA, 0.35 + d * 1.6, px, py);
-        return nx < 0 ? P.shade(RAMPS.hull, 0.2 + ny * 0.2, px, py) : P.shade(RAMPS.hull, 0.6 + ny * 0.15, px, py);
+        if (d < 0.42) return P.shade(PLASMA, 0.35 + d * 1.6);
+        return nx < 0 ? P.shade(RAMPS.hull, 0.2 + ny * 0.2) : P.shade(RAMPS.hull, 0.6 + ny * 0.15);
       }),
     );
     P.part(() => {
@@ -804,21 +1102,28 @@ const AntimatterTrap: Draw = (P, tier) => {
     }
   }, false);
   for (const x of xs) P.glow(x, AXIS, 10, GLOW.violet, 0.7);
+  P.sparkle(xs[1]!, AXIS, 6, GLOW.violetHi);
 };
 
-/** A collider ring round the keel with its detector at the centre: wider and taller at each tier. */
+/** A collider ring round the keel with its detector at the centre, seen end on (red yoke, gold calorimeter, the beam at its heart): wider and taller at each tier. */
 const ParticleCollider: Draw = (P, tier) => {
   const A = 46 + tier * 6, B = 22 + tier * 6;
   P.part(() => P.torus(64, AXIS, A, B, 9, 8, "back", RAMPS.hull, false));
   keel(P, 7);
   P.part(() => {
-    P.box(46, AXIS - 18, 36, 36);
-    P.fill(52, AXIS - 12, 24, 24, RAMPS.dark[5]!);
-    P.ellipse(64, AXIS, 10, 10, RAMPS.dark[3]!);
-    P.ellipse(64, AXIS, 6, 6, GLOW.cyan);
-    P.stripe(46, AXIS + 12, 36, 4);
+    P.box(42, AXIS + 14, 44, 8, RAMPS.dark);
+    P.shaded(64, AXIS, 20, 20, (nx, ny) => {
+      const d = Math.hypot(nx, ny), a = Math.atan2(ny, nx) + Math.PI, seg = (a / (Math.PI / 6)) % 1;
+      const lit = (nx + ny) * 0.22;
+      if (d < 0.14) return GLOW.cyanHi;
+      if (d < 0.26) return RAMPS.dark[5]!;
+      if (d < 0.48) return P.shade(RAMPS.gold, 0.3 + lit);
+      if (d < 0.58) return P.shade(RAMPS.white, 0.3 + lit);
+      if (d < 0.64 || seg < 0.1 || seg > 0.9) return RAMPS.dark[4]!;
+      return P.shade(RAMPS.red, 0.4 + lit + (d > 0.84 ? 0.15 : 0));
+    });
   });
-  P.glow(64, AXIS, 10, GLOW.cyanHi, 0.9);
+  P.glow(64, AXIS, 7, GLOW.cyanHi, 0.9);
   P.part(() => P.torus(64, AXIS, A, B, 9, 8, "front", RAMPS.hull, false));
   P.part(() => {
     for (let i = 0; i < 16; i++) {
@@ -831,6 +1136,7 @@ const ParticleCollider: Draw = (P, tier) => {
   P.part(() => {
     for (let a = 0; a < Math.PI * 2; a += 0.04) P.dot(64 + Math.cos(a) * (A - 4.5), AXIS - 1 + Math.sin(a) * (B - 3), GLOW.cyan);
   }, false);
+  P.sparkle(64, AXIS, 6, GLOW.cyanHi);
 };
 
 /** A gas scoop on the axis: a ramscoop intake, a processing hull, fins. */
@@ -846,12 +1152,13 @@ const Helium3Mine: Draw = (P, tier) => {
     P.windows(64, AXIS - 12, 5, 7, 4, 4, 3);
     P.stripe(38, AXIS + 6, 60, 5);
   });
-  if (tier >= 2) P.part(() => P.hcyl(40, AXIS + 20, 50, 14));
+  if (tier >= 2) P.part(() => P.hcyl(40, AXIS + 20, 50, 14, RAMPS.gold));
   P.part(() => {
     P.poly([4, AXIS - 40, 30, AXIS - 24, 30, AXIS + 24, 4, AXIS + 40], { ramp: RAMPS.dark, dir: [1, 0.3], from: 0.15, to: 0.8 });
     P.poly([6, AXIS - 30, 26, AXIS - 18, 26, AXIS + 18, 6, AXIS + 30], RAMPS.dark[5]!);
   });
   P.glow(6, AXIS, 22, GLOW.heat, 0.7);
+  P.sparkle(10, AXIS, 6, GLOW.heatHi);
 };
 
 /** A base's mining rig on the ground: a derrick, a conveyor up to ore hoppers, a pressurised control hut. */
@@ -868,18 +1175,18 @@ const OutpostMiningComplex: Draw = (P, tier) => {
       P.box(112, 24, 12, 12, RAMPS.gold);
     });
   P.part(() => {
-    P.pipe(10, 104, 22, top, 3, RAMPS.dark);
-    P.pipe(38, 104, 26, top, 3, RAMPS.dark);
+    P.pipe(10, 104, 22, top, 3, RAMPS.gold);
+    P.pipe(38, 104, 26, top, 3, RAMPS.gold);
     for (let y = top + 10; y < 100; y += 12) {
       const t = (y - top) / (104 - top);
-      P.line(22 - t * 12, y, 26 + t * 12, y, RAMPS.dark[2]!, 1.5);
-      P.line(22 - t * 12, y, 26 + (t + 0.11) * 12, y + 12, RAMPS.dark[3]!, 1);
+      P.line(22 - t * 12, y, 26 + t * 12, y, RAMPS.gold[3]!, 1.5);
+      P.line(22 - t * 12, y, 26 + (t + 0.11) * 12, y + 12, RAMPS.gold[4]!, 1);
     }
     P.box(18, top - 4, 12, 6, RAMPS.dark);
   });
   P.part(() => {
     P.pipe(24, top, 24, 112, 2.5, RAMPS.hull);
-    P.box(20, 84, 8, 10, RAMPS.gold);
+    P.box(20, 84, 8, 10, RAMPS.red);
     P.light(24, top - 6, GLOW.beacon);
   });
   P.part(() => P.truss(36, 96, 80, 44, 7, RAMPS.dark));
@@ -889,12 +1196,13 @@ const OutpostMiningComplex: Draw = (P, tier) => {
   const hopper = (x: number, y: number, s: number) => {
     P.part(() => {
       P.poly([x, y, x + 34 * s, y, x + 22 * s, y + 24 * s, x + 12 * s, y + 24 * s], { ramp: RAMPS.hull, dir: [1, 0], from: 0.1, to: 0.7 });
+      P.hazard(x + 2 * s, y + 2, 30 * s, 3);
       P.box(x + 12 * s, y + 24 * s, 10 * s, 6, RAMPS.dark);
       P.pipe(x + 4 * s, y + 10, x + 4 * s, 104, 3, RAMPS.dark);
       P.pipe(x + 30 * s, y + 10, x + 30 * s, 104, 3, RAMPS.dark);
     });
     P.part(() => {
-      P.shaded(x + 17 * s, y, 16 * s, 6 * s, (nx, ny, px, py) => (ny > 0.2 ? -1 : P.shade(RAMPS.ore, 0.3 + nx * 0.3 + ny * 0.2, px, py)));
+      P.shaded(x + 17 * s, y, 16 * s, 6 * s, (nx, ny) => (ny > 0.2 ? -1 : P.shade(RAMPS.ore, 0.3 + nx * 0.3 + ny * 0.2)));
     });
   };
   hopper(76, 44, 1);
@@ -910,24 +1218,37 @@ const OutpostMiningComplex: Draw = (P, tier) => {
 
 // ---------------------------------------------------------------- living and services
 
-/** Crew quarters: a white hull of windows; residences dock a block above and below, a civilian complex turns a habitat ring round it. */
+/** Crew quarters: a stepped service module with portholes and its own solar wings (a Zvezda); a residential module is a fat inflatable with a crew capsule docked, a civilian complex turns a habitat ring round its hull. */
 const Quarters: Draw = (P, tier) => {
-  const h = hullAt(LEN[tier] + 8, BORE[tier] + 4);
-  if (tier === 3) P.part(() => P.torus(64, AXIS, 56, 22, 8, 6, "back"));
-  if (tier === 2) {
-    riser(P, 46, 14, h.top - 12, 22, { seed: 12 });
-    riser(P, 82, h.bottom - 2, 40, 22, { seed: 14, down: true });
+  if (tier === 1) {
+    const h = hullAt(LEN[1] + 16, BORE[1] + 4);
+    const wx = h.x + h.w * 0.7;
+    mast(P, wx, AXIS - 36, wx, AXIS + 36, 2.5);
+    wing(P, wx - 10, 10, 20, 32, 2, 6);
+    wing(P, wx - 10, 86, 20, 32, 2, 6);
+    hull(P, h, { form: "stepped", seed: 2, rows: 2 });
+    P.part(() => P.greebles(h.x + 10, h.top - 5, h.w * 0.4, 6, 7));
+    return;
   }
-  if (tier === 3)
-    P.part(() => {
-      for (const y of [AXIS - 22, AXIS + 22]) P.pipe(64, AXIS, 64, y, 4, RAMPS.dark);
-    });
-  hull(P, h, { seed: 2, rows: tier === 1 ? 2 : 3, stripe: 0.86 });
+  if (tier === 2) {
+    const h = hullAt(LEN[2] + 14, BORE[2] + 16);
+    capsule(P, 44, h.top + 4);
+    riser(P, 80, h.bottom - 3, 26, 22, { seed: 14, down: true });
+    hull(P, h, { form: "soft", ramp: RAMPS.white, seed: 2, rows: 2, stripe: 0.92 });
+    return;
+  }
+  const h = hullAt(LEN[3] + 8, BORE[3] + 4);
+  P.part(() => P.torus(64, AXIS, 56, 22, 8, 6, "back"));
+  P.part(() => {
+    for (const y of [AXIS - 22, AXIS + 22]) P.pipe(64, AXIS, 64, y, 4, RAMPS.dark);
+  });
+  hull(P, h, { seed: 2, rows: 3, stripe: 0.86 });
   P.part(() => P.greebles(h.x + 20, h.top - 6, h.w - 40, 6, 7));
-  if (tier === 3) P.part(() => P.torus(64, AXIS, 56, 22, 8, 6, "front"));
+  P.part(() => P.torus(64, AXIS, 56, 22, 8, 6, "front"));
+  P.sparkle(22, AXIS + 12, 4);
 };
 
-/** Plants growing in glass: a greenhouse window along the hull; a farm adds a garden dome, an agriculture complex glass tubes of crops above and below. */
+/** Plants under magenta grow lights: a greenhouse window along the hull; a farm adds a garden dome, an agriculture complex glass tubes of crops above and below. */
 const HydroponicsBay: Draw = (P, tier) => {
   const h = hullAt(LEN[tier] + 6, BORE[tier] + 4);
   const crops = (x: number, y: number, w: number, hh: number) =>
@@ -937,13 +1258,18 @@ const HydroponicsBay: Draw = (P, tier) => {
         P.fill(px - 0.5, y + hh - ph, 1.5, ph, RAMPS.green[4]!);
         P.ellipse(px, y + hh - ph + 2, 2.5, 3, i % 8 ? RAMPS.green[2]! : RAMPS.green[1]!);
         if (P.medium) P.dot(px - 1, y + hh - ph, RAMPS.green[0]!);
+        if (P.medium && i % 12 === 8) P.dot(px + 1, y + hh - ph + 3, RAMPS.red[1]!);
       }
-      P.fill(x + 1, y + hh - 2, w - 2, 2, 0x5c4a3a);
-      if (P.medium) for (let gx = x + 6; gx < x + w - 6; gx += 12) P.fill(gx, y + 1, 5, 1.5, 0xff8ad8);
+      P.fill(x + 1, y + hh - 2, w - 2, 2, 0x6c4a52);
+      for (let gx = x + 4; gx < x + w - 7; gx += 10) P.fill(gx, y + 1, 6, 1.5, GLOW.pinkHi);
     }, false);
   const tube = (y: number, w: number, d: number) => {
-    P.part(() => P.hcyl(64 - w / 2, y, w, d, RAMPS.glass));
-    crops(64 - w / 2 + 4, y + 2, w - 8, d - 4);
+    P.part(() => {
+      P.hcyl(64 - w / 2, y, w, d, RAMPS.glass);
+      P.fill(64 - w / 2 + 6, y + 3, w - 12, d - 6, 0x6a2a8a);
+      P.gloss(64 - w / 2, y, w, d, 0.3);
+    });
+    crops(64 - w / 2 + 6, y + 3, w - 12, d - 6);
   };
   if (tier === 3) {
     P.part(() => {
@@ -953,19 +1279,25 @@ const HydroponicsBay: Draw = (P, tier) => {
     tube(100, 92, 22);
   }
   hull(P, h, { seed: 4, windows: false, stripe: 0.88 });
-  const gx = h.x + 10, gw = h.w * 0.78 - 14;
+  const gx = h.x + 12, gw = h.w * 0.78 - 16;
   P.part(() => {
-    P.fill(gx - 1, AXIS - h.d * 0.3 - 1, gw + 2, h.d * 0.6 + 2, RAMPS.hull[4]!);
-    P.fill(gx, AXIS - h.d * 0.3, gw, h.d * 0.6, RAMPS.glass[3]!);
+    P.fill(gx - 1, AXIS - h.d * 0.3 - 1, gw + 2, h.d * 0.6 + 2, RAMPS.hull[5]!);
+    P.fill(gx, AXIS - h.d * 0.3, gw, h.d * 0.6, 0x6a2a8a);
+    P.fill(gx, AXIS - h.d * 0.3, gw, h.d * 0.2, 0x9a3aa8);
   });
   crops(gx, AXIS - h.d * 0.3, gw, h.d * 0.6);
+  P.glow(gx + gw / 2, AXIS - h.d * 0.2, gw * 0.45, GLOW.pink, 0.3);
   if (tier === 2) {
-    P.part(() => P.sphere(64, h.top + 2, 28, 22, RAMPS.glass, h.top + 2));
+    P.part(() => {
+      P.sphere(64, h.top + 2, 28, 22, RAMPS.glass, h.top + 2);
+      P.gloss(36, h.top - 20, 56, 22, 0.45);
+    });
     crops(40, h.top - 18, 48, 18);
+    P.sparkle(50, h.top - 12, 4);
   }
 };
 
-/** A white hospital hull with a red cross; a geriatrics facility adds a care block on top and a garden dome below. */
+/** A white hospital hull with a red cross and an ambulance capsule docked; a geriatrics facility adds a care block on top and a garden module below. */
 const OrbitalHospital: Draw = (P, tier) => {
   const h = hullAt(LEN[tier] + 14, BORE[tier] + 8);
   const cross = (cx: number, cy: number, s: number) =>
@@ -979,46 +1311,75 @@ const OrbitalHospital: Draw = (P, tier) => {
     riser(P, 40, 10, h.top - 8, 26, { seed: 8, ramp: RAMPS.white, band: RAMPS.red });
     riser(P, 88, h.bottom - 2, 28, 24, { seed: 9, ramp: RAMPS.white, band: RAMPS.green, down: true });
   }
+  capsule(P, tier === 3 ? 86 : 36, h.top + 3, true, 0.9);
   hull(P, h, { seed: 3, rows: 2, ramp: RAMPS.white, stripe: 0.88 });
+  P.part(() => P.ellipse(64, AXIS, 15, 15, RAMPS.white[0]!));
   cross(64, AXIS, 8);
   if (tier === 3) cross(40, 26, 4);
   P.part(() => P.antenna(h.x + h.w - 18, h.top + 1, 14, 2));
-  P.light(h.x + 6, h.top + 2, GLOW.beacon);
+  P.part(() => {
+    P.light(h.x + 8, h.top + 2, GLOW.beacon);
+    P.light(h.x + 14, h.top + 1, GLOW.cyan);
+  }, false);
 };
 
-/** A lounge of panorama windows; a hotel adds an observation dome, a resort a great glass sphere. */
+/** A lounge of panorama windows under neon, a cupola on top and the guests' capsule docked below; a hotel adds an observation dome, a resort a great glass sphere. */
 const TouristBerth: Draw = (P, tier) => {
   const h = hullAt(LEN[tier] + 18, BORE[tier] + 14);
   if (tier === 3) {
     P.part(() => P.box(56, h.top - 10, 16, 12, RAMPS.dark));
-    P.part(() => P.sphere(64, h.top - 26, 26, 22, RAMPS.glass));
+    P.part(() => {
+      P.sphere(64, h.top - 26, 26, 22, RAMPS.glass);
+      P.gloss(38, h.top - 48, 52, 44, 0.4);
+    });
     P.part(() => {
       P.ellipse(64, h.top - 18, 18, 4, RAMPS.green[2]!);
       P.fill(50, h.top - 30, 28, 2, RAMPS.hull[2]!);
       P.windows(52, h.top - 36, 5, 5, 2.5, 2.5, 7, 0.9);
+      P.ellipse(52, h.top - 21, 3, 4, RAMPS.green[1]!);
+      P.ellipse(77, h.top - 21, 3, 4, RAMPS.green[1]!);
     }, false);
+    P.sparkle(50, h.top - 38, 6);
   }
+  capsule(P, h.x + h.w - 24, h.bottom - 3, false, 0.85);
   hull(P, h, { seed: 9, windows: false, stripe: -1 });
+  const x = h.x + 14, w = h.w - 28, y = AXIS - h.d * 0.3, hh = h.d * 0.55;
   P.part(() => {
-    const x = h.x + 10, w = h.w - 20, y = AXIS - h.d * 0.3, hh = h.d * 0.55;
     P.fill(x - 1, y - 1, w + 2, hh + 2, RAMPS.dark[4]!);
-    P.fill(x, y, w, hh, RAMPS.glass[3]!);
-    P.fill(x, y + hh * 0.55, w, hh * 0.45, 0xe9c27a);
-    P.fill(x, y + hh * 0.55, w, 2, 0xfff0c8);
-    for (let i = x + 10; i < x + w - 10; i += 18) {
-      P.fill(i, y + hh * 0.6, 8, 5, RAMPS.red[3]!);
+    P.fill(x, y, w, hh, 0x2c2a78);
+    P.fill(x, y + hh * 0.3, w, hh * 0.25, 0x6a3a9c);
+    P.fill(x, y + hh * 0.55, w, hh * 0.45, 0xf2c878);
+    P.fill(x, y + hh * 0.55, w, 2, 0xfff4cc);
+    for (let i = x + 8; i < x + w - 12; i += 18) {
+      P.fill(i, y + hh * 0.6, 8, 5, RAMPS.red[2]!);
       P.ellipse(i + 12, y + hh * 0.45, 3, 4, RAMPS.green[2]!);
       P.fill(i + 11.5, y + hh * 0.5, 1, 6, RAMPS.green[4]!);
     }
     for (let i = x; i < x + w; i += 14) P.fill(i, y, 1.5, hh, RAMPS.hull[3]!);
-    if (P.medium) for (let i = x + 4; i < x + w - 10; i += 23) P.line(i, y + 1, i + 8, y + 9, RAMPS.glass[0]!);
-    P.stripe(h.x + 6, AXIS + h.d * 0.32, h.w - 12, 3);
+    P.gloss(x, y, w, hh * 0.55, 0.35);
+    P.stripe(h.x + 10, AXIS + h.d * 0.32, h.w - 20, 3);
   });
-  if (tier === 2) P.part(() => P.sphere(64, h.top + 2, 20, 14, RAMPS.glass, h.top + 2));
   P.part(() => {
-    P.light(h.x + 4, AXIS, GLOW.beacon);
-    P.light(h.x + h.w - 5, AXIS, GLOW.beacon);
-  });
+    // Neon along the lounge's brow.
+    for (let i = 0; i < w - 3; i += 6) P.fill(x + i, y - 5, 4, 2, (i / 6) % 2 ? GLOW.cyan : GLOW.pink);
+  }, false);
+  P.glow(64, y - 4, w * 0.5, GLOW.pink, 0.25);
+  if (tier === 1) cupola(P, 44, h.top + 3, 15);
+  if (tier === 2) {
+    P.part(() => {
+      P.sphere(64, h.top + 2, 22, 16, RAMPS.glass, h.top + 2);
+      P.gloss(42, h.top - 14, 44, 16, 0.45);
+    });
+    P.part(() => {
+      P.ellipse(58, h.top - 2, 3, 4, RAMPS.green[1]!);
+      P.ellipse(72, h.top - 3, 4, 5, RAMPS.green[2]!);
+    }, false);
+    P.sparkle(54, h.top - 9, 4);
+  }
+  P.part(() => {
+    P.light(h.x + 6, AXIS, GLOW.beacon);
+    P.light(h.x + h.w - 7, AXIS, GLOW.beacon);
+  }, false);
 };
 
 /** A broadcast mast of dishes over the hull; a communications hub adds dishes hanging below, a media centre a big screen. */
@@ -1031,7 +1392,7 @@ const BroadcastOutlet: Draw = (P, tier) => {
   if (tier >= 2) dishes.push([30, h.bottom + 22, 11, 150, 30, h.bottom], [98, h.bottom + 22, 11, 30, 98, h.bottom]);
   if (tier === 3) dishes.push([64, 10, 9, -90, 64, 16]);
   P.part(() => {
-    P.pipe(64, h.top, 64, 12, 4, RAMPS.hull);
+    P.truss(64, h.top, 64, 12, 6);
     P.line(52, 30, 76, 30, RAMPS.dark[2]!, 2);
     for (const [x, y, , , ax, ay] of dishes) P.pipe(ax, ay, x, y, 2.5, RAMPS.dark);
   });
@@ -1039,22 +1400,24 @@ const BroadcastOutlet: Draw = (P, tier) => {
   hull(P, h, { seed: 6, rows: 1 });
   if (tier === 3)
     P.part(() => {
-      P.box(h.x + 6, AXIS - 9, 30, 18, RAMPS.dark);
-      P.fill(h.x + 8, AXIS - 7, 26, 14, RAMPS.glass[4]!);
-      P.fill(h.x + 10, AXIS - 5, 10, 10, P.faction[1]!);
-      P.fill(h.x + 22, AXIS - 4, 10, 2, GLOW.window);
-      P.fill(h.x + 22, AXIS, 8, 2, GLOW.cyan);
+      P.box(h.x + 12, AXIS - 9, 30, 18, RAMPS.dark);
+      P.fill(h.x + 14, AXIS - 7, 26, 14, 0x16306a);
+      P.fill(h.x + 16, AXIS - 5, 10, 10, P.faction[1]!);
+      P.fill(h.x + 28, AXIS - 4, 10, 2, GLOW.window);
+      P.fill(h.x + 28, AXIS, 8, 2, GLOW.cyan);
+      P.fill(h.x + 28, AXIS + 3, 5, 1.5, GLOW.pink);
     });
   P.part(() => {
+    // The signal going out, in arcs.
     for (const [x, y, , a] of dishes) {
       const fx = Math.cos((a * Math.PI) / 180), fy = Math.sin((a * Math.PI) / 180);
-      for (let i = 1; i <= 2; i++) P.dot(x + fx * (10 + i * 6), y + fy * (10 + i * 6), GLOW.cyan);
+      for (let i = 1; i <= 2; i++) for (const t of [-0.5, 0, 0.5]) P.dot(x + fx * (9 + i * 6) - fy * t * (3 + i * 3) - fx * Math.abs(t) * 2, y + fy * (9 + i * 6) + fx * t * (3 + i * 3) - fy * Math.abs(t) * 2, GLOW.cyan);
     }
   }, false);
-  P.light(64, 9, GLOW.beacon);
+  P.part(() => P.light(64, 9, GLOW.beacon), false);
 };
 
-/** A great listening dish on the hull; a reconnaissance array adds a row of small dishes below, Argus a second great dish and an antenna lattice. */
+/** A great gold mesh dish on the hull; a reconnaissance array adds a row of small dishes below, Argus a second great dish and an antenna lattice. */
 const ListeningPost: Draw = (P, tier) => {
   const h = hullAt(LEN[tier], BORE[tier]);
   if (tier >= 2) {
@@ -1072,18 +1435,19 @@ const ListeningPost: Draw = (P, tier) => {
         for (let y = 12; y < h.top; y += 6) P.line(x - 4, y, x + 4, y, RAMPS.dark[2]!);
       }
     });
-  hull(P, h, { seed: 8, ramp: RAMPS.dark, stripe: 0.86 });
+  hull(P, h, { ramp: RAMPS.dark, seed: 8, stripe: 0.84 });
   const big = (cx: number, r: number, a: number) => {
     P.part(() => {
       P.box(cx - 8, h.top - 6, 16, 8, RAMPS.dark);
       P.pipe(cx, h.top - 4, cx, h.top - 12, 6, RAMPS.dark);
     });
-    P.part(() => P.dish(cx, h.top - 12 - r * 0.6, r, a, 0.4));
+    P.part(() => P.dish(cx, h.top - 12 - r * 0.6, r, a, 0.4, RAMPS.gold, true));
   };
   if (tier === 3) {
     big(44, 24, -60);
     big(92, 18, -110);
   } else big(64, 26 + tier * 4, -70);
+  P.sparkle(tier === 3 ? 30 : 46, tier === 3 ? 14 : 16, 4);
 };
 
 /** Armoured troop quarters with a boarding hatch; a company docks drop pods below, a battalion a second hull above. */
@@ -1105,46 +1469,62 @@ const MarinePlatoonBarracks: Draw = (P, tier) => {
     });
     pod(P, h.x + 6, 8, h.w - 12, 22, { ramp: RAMPS.armor, seed: 21, stripe: 0.2 });
   }
-  hull(P, h, { ramp: RAMPS.armor, seed: 5, windows: false, stripe: 0.12 });
+  hull(P, h, { ramp: RAMPS.armor, seed: 5, windows: false, stripe: 0.14 });
   P.part(() => {
-    for (let i = 0; i < Math.floor((h.w - 30) / 14); i++) P.box(h.x + 22 + i * 14, AXIS - h.d * 0.32, 12, h.d * 0.3, RAMPS.armor, 0.15);
-    for (let i = 0; i < Math.floor((h.w - 30) / 14); i++) P.fill(h.x + 24 + i * 14, AXIS - h.d * 0.32 + 3, 8, 2, GLOW.window);
-    P.hazard(h.x + 22, AXIS + h.d * 0.2, h.w - 34, 3);
+    for (let i = 0; i < Math.floor((h.w - 44) / 14); i++) P.box(h.x + 28 + i * 14, AXIS - h.d * 0.32, 12, h.d * 0.3, RAMPS.armor, 0.15);
+    for (let i = 0; i < Math.floor((h.w - 44) / 14); i++) P.fill(h.x + 30 + i * 14, AXIS - h.d * 0.32 + 3, 8, 2, GLOW.window);
+    P.hazard(h.x + 28, AXIS + h.d * 0.2, h.w - 48, 3);
   });
-  P.part(() => P.hatch(h.x + h.w - 26, AXIS - 6, 14, 14));
+  P.part(() => P.hatch(h.x + h.w - 30, AXIS - 6, 14, 14));
 };
 
-/** Gun turrets on an armoured hull: one, two, then three and a fire-control radar. */
+/** Close-in guns on an armoured hull (Phalanx mounts: a white radome over a rotary cannon); a layered array adds a laser turret, battlestations a third mount and a fire-control radar. */
 const PointDefenseArray: Draw = (P, tier) => {
   const h = hullAt(LEN[tier], BORE[tier]);
   hull(P, h, { ramp: RAMPS.armor, seed: 4, windows: false, stripe: 0.5 });
-  const turret = (cx: number, base: number, s: number) => {
+  const gun = (cx: number, base: number, s: number) => {
     P.part(() => {
-      P.pipe(cx + 2 * s, base - 14 * s, cx + 30 * s, base - 40 * s, 4 * s, RAMPS.dark);
-      P.pipe(cx + 7 * s, base - 11 * s, cx + 35 * s, base - 37 * s, 4 * s, RAMPS.dark);
+      P.pipe(cx + 4 * s, base - 13 * s, cx + 30 * s, base - 33 * s, 5 * s, RAMPS.dark);
+      P.pipe(cx + 10 * s, base - 17.5 * s, cx + 16 * s, base - 22 * s, 7 * s, RAMPS.dark);
     });
     P.part(() => {
-      P.box(cx - 16 * s, base - 4 * s, 32 * s, 6 * s, RAMPS.dark);
-      P.sphere(cx, base - 6 * s, 16 * s, 14 * s, RAMPS.armor, base - 2 * s);
-      P.fill(cx - 10 * s, base - 14 * s, 7 * s, 3 * s, GLOW.cyan);
+      P.box(cx - 13 * s, base - 5 * s, 26 * s, 7 * s, RAMPS.dark);
+      P.box(cx - 9 * s, base - 17 * s, 18 * s, 13 * s, RAMPS.armor);
     });
-    P.glow(cx + 33 * s, base - 39 * s, 5 * s, GLOW.heat, 0.7);
+    P.part(() => {
+      P.vcyl(cx - 9 * s, base - 36 * s, 14 * s, 22 * s, RAMPS.white, false);
+      P.sphere(cx - 2 * s, base - 33 * s, 7 * s, 8 * s, RAMPS.white, base - 32 * s);
+      P.stripe(cx - 8.5 * s, base - 20 * s, 13 * s, 2.5 * s);
+    });
+    P.glow(cx + 31 * s, base - 34 * s, 5 * s, GLOW.heat, 0.8);
+    P.sparkle(cx + 31 * s, base - 34 * s, 3, GLOW.heatHi);
+  };
+  const laser = (cx: number, base: number, s: number) => {
+    P.part(() => {
+      P.box(cx - 12 * s, base - 5 * s, 24 * s, 7 * s, RAMPS.dark);
+      P.sphere(cx, base - 15 * s, 12 * s, 12 * s, RAMPS.armor);
+      P.ellipse(cx + 4 * s, base - 19 * s, 5.5 * s, 5.5 * s, RAMPS.dark[4]!);
+      P.ellipse(cx + 4 * s, base - 19 * s, 3.6 * s, 3.6 * s, GLOW.cyan);
+    });
+    P.part(() => P.line(cx + 7 * s, base - 22 * s, cx + 7 * s + 60, base - 22 * s - 60, GLOW.cyanHi), false);
+    P.glow(cx + 4 * s, base - 19 * s, 8 * s, GLOW.cyan, 0.8);
+    P.sparkle(cx + 4 * s, base - 19 * s, 4, GLOW.cyanHi);
   };
   const base = h.top + 2;
-  if (tier === 1) turret(54, base, 1);
+  if (tier === 1) gun(56, base, 1.1);
   else if (tier === 2) {
-    turret(h.x + 18, base, 0.8);
-    turret(h.x + h.w - 34, base, 0.8);
+    gun(h.x + 20, base, 0.9);
+    laser(h.x + h.w - 24, base, 0.9);
   } else {
-    turret(h.x + 14, base, 0.75);
-    turret(64, base, 0.75);
-    turret(h.x + h.w - 26, base, 0.75);
+    gun(h.x + 14, base, 0.8);
+    laser(60, base, 0.8);
+    gun(h.x + h.w - 28, base, 0.8);
   }
   if (tier === 3) {
     mast(P, 64, h.bottom, 64, h.bottom + 12);
     P.part(() => {
       P.box(48, h.bottom + 12, 32, 8, RAMPS.dark);
-      for (let x = 50; x < 78; x += 4) P.fill(x, h.bottom + 14, 2, 4, RAMPS.dark[1]!);
+      for (let x = 50; x < 78; x += 4) P.fill(x, h.bottom + 14, 2, 4, GLOW.green);
     });
   }
 };
@@ -1167,22 +1547,24 @@ const SpaceDock: Draw = (P, tier) => {
   }, true);
   const ship = (x: number, cy: number, l: number, hh: number, engines: number) => {
     P.part(() => {
+      P.poly([x + 4, cy - hh / 2, x + 20, cy - hh / 2 - 7, x + 26, cy - hh / 2 - 7, x + 30, cy - hh / 2], { ramp: RAMPS.hull, dir: [1, 0] });
       P.poly([x, cy - hh / 2 + 2, x + l - 18, cy - hh / 2, x + l, cy, x + l - 18, cy + hh / 2, x, cy + hh / 2 - 2], { ramp: RAMPS.hull, dir: [0, 1], from: 0.05, to: 0.75 });
       for (let i = 0; i < engines; i++) P.box(x - 6, cy - hh / 2 + 3 + (i * (hh - 6)) / engines, 7, (hh - 6) / engines - 1, RAMPS.dark);
       P.seams(x + 6, cy - hh / 2 + 2, l - 26, hh - 4, 10);
-      P.windows(x + 12, cy - hh * 0.2, Math.floor((l - 34) / 7), 7, 3.5, 4, 6);
+      P.windows(x + 12, cy - hh * 0.2, Math.floor((l - 40) / 7), 7, 3.5, 4, 6);
+      P.poly([x + l - 20, cy - hh * 0.3, x + l - 12, cy - hh * 0.12, x + l - 20, cy - hh * 0.02], RAMPS.glass[1]!);
       P.stripe(x + 8, cy + hh * 0.12, l - 30, 4);
     });
     P.part(() => {
-      for (let i = 0; i < engines; i++) P.fill(x - 8, cy - hh / 2 + 4 + (i * (hh - 6)) / engines, 2, (hh - 6) / engines - 3, GLOW.heat);
+      for (let i = 0; i < engines; i++) P.fill(x - 8, cy - hh / 2 + 4 + (i * (hh - 6)) / engines, 2, (hh - 6) / engines - 3, GLOW.cyan);
     }, false);
-    P.glow(x - 8, cy, hh * 0.4, GLOW.heat, 0.4);
+    P.glow(x - 8, cy, hh * 0.4, GLOW.cyan, 0.4);
   };
   if (tier === 1) ship(32, AXIS, 64, 26, 1);
   else if (tier === 2) ship(24, AXIS, 90, 34, 2);
   else {
     ship(22, AXIS + 10, 96, 38, 3);
-    ship(72, 32, 40, 14, 1);
+    ship(72, 34, 40, 14, 1);
   }
   P.part(() => {
     for (const x of [44, 84]) {
@@ -1193,9 +1575,10 @@ const SpaceDock: Draw = (P, tier) => {
   P.part(() => {
     for (const [x, y] of [[4, 12], [124, 12], [4, 116], [124, 116], [64, 12], [64, 116]] as const) P.light(x, y, GLOW.beacon);
   }, false);
+  P.sparkle(tier === 1 ? 86 : 104, AXIS - (tier === 3 ? -4 : 4), 4, GLOW.heatHi);
 };
 
-/** A depot on the keel: water and propellant spheres above and below, cargo containers clamped alongside. */
+/** A depot on the keel: a water sphere above and a foil-wrapped propellant sphere below, cargo containers clamped alongside. */
 const SupplyDepot: Draw = (P) => {
   keel(P);
   P.part(() => {
@@ -1209,15 +1592,18 @@ const SupplyDepot: Draw = (P) => {
     P.part(() => P.stripe(x - 20, y - 2, 40, 4), false);
   }
   P.part(() => {
-    P.box(72, 22, 40, 18);
-    P.box(80, 6, 28, 16);
+    P.box(72, 22, 40, 18, RAMPS.red);
+    P.box(80, 6, 28, 16, RAMPS.solar);
     P.box(72, 88, 40, 18);
-    P.stripe(74, 26, 36, 3);
-    P.stripe(82, 10, 24, 3);
+    P.fill(74, 26, 36, 3, RAMPS.white[1]!);
+    P.fill(82, 10, 24, 3, RAMPS.white[1]!);
     P.hazard(72, 102, 40, 3);
     P.seams(74, 92, 36, 10, 8);
+    P.seams(74, 30, 36, 8, 8, RAMPS.red[4]!);
   });
-  P.light(34, 6, GLOW.beacon);
+  P.part(() => P.light(34, 6, GLOW.beacon), false);
+  P.sparkle(24, 20, 5);
+  P.sparkle(26, 88, 4, GLOW.heatHi);
 };
 
 const LINES: Record<string, Draw> = {
@@ -1286,19 +1672,4 @@ export function paintModule(moduleId: string, factionColor: string, size: 32 | 6
   draw(P, def.tier);
   badges(P, def);
   return P.finish();
-}
-
-const cache = new Map<string, HTMLCanvasElement>();
-
-/** A module's picture on a canvas, `size` pixels square, cached. */
-export function drawModule(moduleId: string, factionColor: string, size: 32 | 64 | 128): HTMLCanvasElement {
-  const key = `${moduleId}|${factionColor}|${size}`;
-  let canvas = cache.get(key);
-  if (!canvas) {
-    canvas = document.createElement("canvas");
-    canvas.width = canvas.height = size;
-    canvas.getContext("2d")!.putImageData(new ImageData(paintModule(moduleId, factionColor, size), size, size), 0, 0);
-    cache.set(key, canvas);
-  }
-  return canvas;
 }

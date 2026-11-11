@@ -1,58 +1,61 @@
 // A small pixel-art painter over an RGBA buffer, for the hab modules' structures (moduleArt.ts).
 // Drawing happens in a 128-unit design space scaled to the target size (32, 64 or 128 pixels),
-// rounded to whole pixels so everything stays crisp. The style is built into the primitives:
-// light from the upper left in a few stepped shades from hue-shifted ramps (cool shadows, warm
-// highlights), ordered (Bayer) dithering only in a narrow band where one shade steps to the next,
-// and a reflected (bounce) light along the shadowed edge of curved hulls. Parts are drawn one at
-// a time (part()): what's drawn inside lands on a layer that is outlined and then laid over
-// what's already there, so a part in front gets an outline against the parts behind it and casts
-// a short shadow down and to the right onto them. From 64 px the outline is selective: each
-// outline pixel is a dark shade of the part it borders, lighter on the lit upper-left side;
-// 32 px keeps a plain dark outline to stay readable. Fine detail (rivets, panel lines, greebles)
-// is skipped at small sizes.
+// rounded to whole pixels so everything stays crisp. The style is built into the primitives, after
+// anime cel painting: light from the upper left in a few flat bands from saturated, hue-shifted
+// ramps (white hulls fall through periwinkle to indigo, gold foil to red-brown; highlights lean
+// warm), no dithering, a hard specular streak along cylinders, a spot on spheres, reflected
+// (bounce) light along the shadowed edge of curved hulls, diagonal streaks of gloss on glass
+// (gloss()) and four-point glints (sparkle()). Parts are drawn one at a time (part()): what's drawn
+// inside lands on a layer that is outlined and then laid over what's already there, so a part in
+// front gets an outline against the parts behind it and casts a short shadow down and to the right
+// onto them. From 64 px the outline is selective: each outline pixel is a dark shade of the part it
+// borders, lighter on the lit upper-left side; 32 px keeps a plain dark outline to stay readable.
+// Fine detail (rivets, panel lines, greebles, foil crinkles) is skipped at small sizes.
 
 /** Colours as 0xRRGGBB. */
 export type Ramp = readonly number[];
 
 /** The outline. */
-export const INK = 0x0b0f15;
+export const INK = 0x0d0b1e;
 
-/** Shade ramps, lightest first: highlights lean warm, shadows lean cool. */
+/** Shade ramps, lightest first: highlights lean warm, shadows shift hue (towards blue-violet, mostly) and stay saturated. */
 export const RAMPS = {
-  hull: [0xfbf8f0, 0xdadee5, 0xb2bac9, 0x8b93a9, 0x646a88, 0x444764],
-  dark: [0xa3aab6, 0x7d8598, 0x5d647a, 0x454a5f, 0x31344a, 0x222437],
-  gold: [0xfbe9b4, 0xefc97a, 0xdba852, 0xb8863b, 0x8c6127, 0x5f4119],
-  glass: [0xd6f3fb, 0x9fd8ea, 0x62b2d2, 0x3f8fb5, 0x2a6688, 0x1b4560],
-  solar: [0x9cc0f0, 0x5f93dc, 0x3f78c8, 0x2b5aa0, 0x1c3a6e, 0x12264a],
-  white: [0xffffff, 0xf0f4f7, 0xdce3ea, 0xc1cbd5, 0x9ea9b5, 0x7a8592],
-  green: [0xc4f58a, 0x92d85e, 0x63b445, 0x418d33, 0x2c6727, 0x1b431a],
-  ore: [0xcdbba2, 0xab9881, 0x887763, 0x685a4c, 0x4b4138, 0x342d27],
-  mirror: [0xffffff, 0xe9f6fb, 0xc9e4ef, 0xa5c8d9, 0x80a8bd, 0x5f879d],
-  red: [0xffb3aa, 0xff7d70, 0xe54a3e, 0xb8332b, 0x8a231d, 0x5e1712],
+  hull: [0xffffff, 0xe9edfb, 0xbfc9ee, 0x929cd6, 0x676bb0, 0x43437f],
+  dark: [0xb0bbd8, 0x7f8bb4, 0x5a6391, 0x40456f, 0x2c2d52, 0x1c1c39],
+  /** Gold foil (multi-layer insulation), reactor vessels, joints. */
+  gold: [0xfff5b4, 0xffd75e, 0xf7ab33, 0xd47c26, 0x9e5026, 0x6b2f27],
+  glass: [0xeafdff, 0xa8f1fb, 0x5dcff1, 0x3a9adf, 0x2c63b6, 0x1f3c82],
+  solar: [0xaadeff, 0x5baaf9, 0x3479e6, 0x2451c2, 0x1c3192, 0x141c5e],
+  white: [0xffffff, 0xf3f7ff, 0xd9e1f8, 0xb5c0e6, 0x8d97ca, 0x676da6],
+  green: [0xdaff9c, 0xa0ea5d, 0x5dca49, 0x34a24b, 0x1f7649, 0x144b3d],
+  ore: [0xe0c8a4, 0xbfa07e, 0x9a7a64, 0x765a54, 0x544046, 0x382c38],
+  mirror: [0xffffff, 0xe6faff, 0xbfe9f9, 0x93cdee, 0x6ea6dc, 0x5480bf],
+  red: [0xffc2aa, 0xff8269, 0xf14949, 0xc22d49, 0x8e1d45, 0x5a153d],
   /** Beige thermal blankets, as on the ISS's laboratory modules. */
-  cloth: [0xfdf6e4, 0xece0c4, 0xd4c3a0, 0xb19d7a, 0x867458, 0x5d4f3c],
-  /** Olive-grey armour plate. */
-  armor: [0xb4b8a2, 0x8e937c, 0x6c725e, 0x515647, 0x3a3e34, 0x272a24],
+  cloth: [0xfffbe9, 0xf9e9c5, 0xe9cda1, 0xc9a585, 0x9d7971, 0x6d5161],
+  /** Olive armour plate. */
+  armor: [0xd2daaa, 0xa6b282, 0x7a8a66, 0x5a6a52, 0x3d4b46, 0x29313a],
+  /** Silvered sunshield film, pink where it catches the light. */
+  shield: [0xfff1fb, 0xf5d2f1, 0xd9aae5, 0xb186d1, 0x8566b5, 0x5d4a91],
 } satisfies Record<string, Ramp>;
 
 /** Lights and glows. */
 export const GLOW = {
-  window: 0xffd37a,
-  windowHi: 0xfff2c8,
-  beacon: 0xff4a3a,
-  cyan: 0x8fe0e6,
-  cyanHi: 0xe4fcff,
-  heat: 0xff9a3c,
-  heatHi: 0xffe39a,
-  violet: 0xc58cff,
-  violetHi: 0xf0dcff,
-  green: 0x8dff9e,
+  window: 0xffd86a,
+  windowHi: 0xfff6cc,
+  beacon: 0xff4a4a,
+  cyan: 0x7cecf4,
+  cyanHi: 0xe6fdff,
+  heat: 0xff9438,
+  heatHi: 0xffe89c,
+  violet: 0xc68cff,
+  violetHi: 0xf2deff,
+  green: 0x8dffa0,
+  pink: 0xff6ad5,
+  pinkHi: 0xffd2f3,
 };
 
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + 0.5) / 16 - 0.5);
-const bayer = (x: number, y: number) => BAYER[(y & 3) * 4 + (x & 3)]!;
-/** How much of a shade step the dither spreads over: shades stay flat bands, checkered only near each step. */
-const DITHER_BAND = 0.4;
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 /** The light's direction (towards the light) in view space: from the upper left, a little in front. */
 const LIGHT: [number, number, number] = (() => {
@@ -72,12 +75,24 @@ function mix(a: number, b: number, t: number): number {
   return (ch(16) << 16) | (ch(8) << 8) | ch(0);
 }
 
+/**
+ * The shade across a cylinder, `n` from -1 (the lit edge) to 1 (the shadowed one): a specular
+ * streak near the lit edge, bands falling to a core shadow, and with `bounce` light reflected
+ * back along the shadowed edge.
+ */
+function curve(n: number, bounce: boolean): number {
+  if (Math.abs(n + 0.52) < 0.1) return 0;
+  const v = 0.28 + 0.5 * n + 0.22 * n * n;
+  return n > 0.8 && bounce ? v - 0.3 : v;
+}
+
 /** A faction's colour as a ramp like RAMPS', lightest first; a neutral grey-blue if it isn't "#rgb" or "#rrggbb". */
 export function factionRamp(color: string): Ramp {
   const hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(color)?.[1];
   const full = hex ? (hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex) : "8fa4b8";
   const c = parseInt(full, 16);
-  return [mix(c, 0xffffff, 0.5), mix(c, 0xffffff, 0.22), c, mix(c, 0, 0.24), mix(c, 0, 0.44), mix(c, 0, 0.6)];
+  // Shadows lean towards indigo rather than black, as the other ramps' do.
+  return [mix(c, 0xffffff, 0.55), mix(c, 0xffffff, 0.25), c, mix(c, 0x241a52, 0.3), mix(c, 0x1c1446, 0.52), mix(c, 0x140e36, 0.7)];
 }
 
 export class Painter {
@@ -157,7 +172,7 @@ export class Painter {
           if (this.data[o + 3] === 0 || inLayer(x, y) || edge(x, y)) continue;
           let shadow = false;
           for (let d = 2; d <= reach + 1 && !shadow; d++) shadow = inLayer(x - d, y - d) || inLayer(x - d + 1, y - d) || inLayer(x - d, y - d + 1);
-          if (shadow) this.write(x, y, mix(this.under(o), INK, 0.38));
+          if (shadow) this.write(x, y, mix(this.under(o), INK, 0.4));
         }
     const x0 = Math.max(0, this.minX - 1), x1 = Math.min(s - 1, this.maxX + 1);
     const y0 = Math.max(0, this.minY - 1), y1 = Math.min(s - 1, this.maxY + 1);
@@ -173,7 +188,7 @@ export class Painter {
           // the part's own colour, elsewhere nearly ink.
           const lit = inLayer(x + 1, y) || inLayer(x, y + 1);
           const c = this.layerAt(x + 1, y) >= 0 ? this.layerAt(x + 1, y) : this.layerAt(x, y + 1) >= 0 ? this.layerAt(x, y + 1) : this.layerAt(x - 1, y) >= 0 ? this.layerAt(x - 1, y) : this.layerAt(x, y - 1);
-          this.write(x, y, mix(c, INK, lit ? 0.62 : 0.84));
+          this.write(x, y, mix(c, INK, lit ? 0.66 : 0.88));
         }
     for (let y = y0; y <= y1; y++)
       for (let x = x0; x <= x1; x++) {
@@ -198,10 +213,9 @@ export class Painter {
     return this.data;
   }
 
-  /** A shade from a ramp: `v` 0 is the lightest, 1 the darkest, dithered in a narrow band at each step (`dither` 0 for none). */
-  shade(ramp: Ramp, v: number, x: number, y: number, dither = 0.85): number {
-    const i = Math.round(clamp01(v) * (ramp.length - 1) + bayer(x, y) * dither * DITHER_BAND);
-    return ramp[i < 0 ? 0 : i >= ramp.length ? ramp.length - 1 : i]!;
+  /** A shade from a ramp: `v` 0 is the lightest, 1 the darkest, in flat bands. */
+  shade(ramp: Ramp, v: number): number {
+    return ramp[Math.round(clamp01(v) * (ramp.length - 1))]!;
   }
 
   /** Pixel bounds of a design-space box, at least a pixel each way. */
@@ -223,7 +237,7 @@ export class Painter {
     this.set(this.p(x), this.p(y), c);
   }
 
-  /** A slab of hull lit from the upper left: highlight on top and left, shadow on right and bottom, a dithered fall-off between. */
+  /** A slab of hull lit from the upper left: highlight on top and left, shadow on right and bottom, banded between. */
   box(x: number, y: number, w: number, h: number, ramp: Ramp = RAMPS.hull, light = 0.3): void {
     const [x0, y0, x1, y1] = this.span(x, y, w, h);
     const e = this.size >= 128 ? 2 : 1;
@@ -235,28 +249,38 @@ export class Painter {
         else if (py >= y1 - e && y1 - y0 > 2 * e) c = ramp[Math.min(n, 4)]!;
         else if (px < x0 + e && x1 - x0 > 2 * e) c = ramp[1]!;
         else if (px >= x1 - e && x1 - x0 > 2 * e) c = ramp[Math.min(n, 3)]!;
-        else c = this.shade(ramp, light + ((py - y0) / (y1 - y0)) * 0.3, px, py, 0.7);
+        else c = this.shade(ramp, light + ((py - y0) / (y1 - y0)) * 0.3);
         this.set(px, py, c);
       }
   }
 
-  /** A horizontal cylinder: bands from a highlight near the top to shadow underneath, rounded ends. */
-  hcyl(x: number, y: number, w: number, h: number, ramp: Ramp = RAMPS.hull): void {
+  /**
+   * A horizontal cylinder: bands from a specular streak near the top to shadow underneath. `round`
+   * is how far its ends are rounded, as a share of its height: 0 square, 0.5 hemispheres.
+   */
+  hcyl(x: number, y: number, w: number, h: number, ramp: Ramp = RAMPS.hull, round = 0.22): void {
     const [x0, y0, x1, y1] = this.span(x, y, w, h);
-    const hh = y1 - y0, cap = Math.max(1, Math.round(Math.min(hh * 0.22, (x1 - x0) / 4)));
+    const hh = y1 - y0, cap = round > 0 ? Math.max(1, Math.round(Math.min(hh * round, (x1 - x0) / 2))) : 0;
     for (let px = x0; px < x1; px++) {
       const d = px < x0 + cap ? (x0 + cap - px - 0.5) / cap : px >= x1 - cap ? (px - (x1 - cap) + 0.5) / cap : 0;
       const half = Math.sqrt(Math.max(0, 1 - d * d));
       for (let py = y0; py < y1; py++) {
         const n = ((py + 0.5 - y0) / hh) * 2 - 1;
         if (Math.abs(n) > half + 0.02) continue;
-        let v = 0.28 + 0.5 * n + 0.22 * n * n;
-        if (Math.abs(n + 0.52) < 0.1) v = 0;
-        // Light bounced back along the underside.
-        else if (n > 0.8 && hh >= 8) v -= 0.3;
-        if (px >= x1 - cap) v += 0.15;
-        this.set(px, py, this.shade(ramp, v, px, py));
+        this.set(px, py, this.shade(ramp, curve(n, hh >= 8) + (px >= x1 - cap ? 0.15 : 0)));
       }
+    }
+  }
+
+  /** A cone section on its side, centred on `cy`: from diameter `d0` at `x` to `d1` at `x + w`, banded like a cylinder. */
+  hcone(x: number, cy: number, w: number, d0: number, d1: number, ramp: Ramp = RAMPS.hull): void {
+    const x0 = this.p(x), x1 = Math.max(x0 + 1, this.p(x + w)), mid = cy * this.k;
+    for (let px = x0; px < x1; px++) {
+      const t = (px + 0.5 - x0) / (x1 - x0);
+      const half = Math.max(0.5, ((d0 + (d1 - d0) * t) * this.k) / 2);
+      // Facing away from the light where it narrows to the right.
+      const turn = d1 < d0 ? 0.12 : -0.04;
+      for (let py = Math.round(mid - half); py < Math.round(mid + half); py++) this.set(px, py, this.shade(ramp, curve((py + 0.5 - mid) / half, half >= 4) + turn));
     }
   }
 
@@ -267,13 +291,10 @@ export class Painter {
     for (let px = x0; px < x1; px++) {
       const n = ((px + 0.5 - x0) / ww) * 2 - 1;
       const bulge = Math.round(cap * Math.sqrt(Math.max(0, 1 - n * n)));
-      let v = 0.3 + 0.5 * n + 0.2 * n * n;
-      if (Math.abs(n + 0.5) < 0.1) v = 0;
-      // Light bounced back along the shaded side.
-      else if (n > 0.8 && ww >= 8) v -= 0.3;
-      for (let py = y0 + cap; py < y1 - cap + bulge; py++) this.set(px, py, this.shade(ramp, v, px, py));
-      if (lid) for (let py = y0 + cap - bulge; py < y0 + cap + bulge; py++) this.set(px, py, this.shade(ramp, 0.12 + 0.25 * (n + 1) * 0.5, px, py));
-      else for (let py = y0 + cap - bulge; py < y0 + cap; py++) this.set(px, py, this.shade(ramp, v, px, py));
+      const v = curve(n, ww >= 8);
+      for (let py = y0 + cap; py < y1 - cap + bulge; py++) this.set(px, py, this.shade(ramp, v));
+      if (lid) for (let py = y0 + cap - bulge; py < y0 + cap + bulge; py++) this.set(px, py, this.shade(ramp, 0.12 + 0.25 * (n + 1) * 0.5));
+      else for (let py = y0 + cap - bulge; py < y0 + cap; py++) this.set(px, py, this.shade(ramp, v));
     }
   }
 
@@ -282,17 +303,17 @@ export class Painter {
     this.shaded(cx, cy, rx, ry, () => c);
   }
 
-  /** A sphere (or, with `clipBelow`, a dome cut off at that height), dithered from a highlight at the upper left. */
+  /** A sphere (or, with `clipBelow`, a dome cut off at that height), banded from a spot highlight at the upper left. */
   sphere(cx: number, cy: number, rx: number, ry: number, ramp: Ramp = RAMPS.hull, clipBelow = Infinity): void {
     const cut = this.p(clipBelow);
-    this.shaded(cx, cy, rx, ry, (nx, ny, px, py) => {
+    this.shaded(cx, cy, rx, ry, (nx, ny, _px, py) => {
       if (py >= cut) return -1;
       const nz = Math.sqrt(Math.max(0, 1 - nx * nx - ny * ny));
       const l = nx * LIGHT[0] + ny * LIGHT[1] + nz * LIGHT[2];
       if (l > 0.94) return ramp[0]!;
       // A rim of bounced light on the lower right.
       const rim = nx * 0.6 + ny * 0.8 > 0.78 && rx * this.k >= 5 ? 0.25 : 0;
-      return this.shade(ramp, 0.95 - l * 0.85 - rim, px, py);
+      return this.shade(ramp, 0.95 - l * 0.85 - rim);
     });
   }
 
@@ -336,7 +357,7 @@ export class Painter {
           else {
             const t = hi > lo ? ((px + 0.5) * fill.dir[0] + cy * fill.dir[1] - lo) / (hi - lo) : 0;
             const from = fill.from ?? 0.1, to = fill.to ?? 0.8;
-            this.set(px, py, this.shade(fill.ramp, from + (to - from) * t, px, py));
+            this.set(px, py, this.shade(fill.ramp, from + (to - from) * t));
           }
         }
     }
@@ -377,7 +398,7 @@ export class Painter {
         const qx = cx - (ax + t * dx), qy = cy - (ay + t * dy);
         if (qx * qx + qy * qy > r * r) continue;
         const s = (qx * nx + qy * ny) / r;
-        this.set(px, py, this.shade(ramp, 0.35 + 0.45 * s, px, py, 0.6));
+        this.set(px, py, this.shade(ramp, 0.35 + 0.45 * s));
       }
   }
 
@@ -403,8 +424,11 @@ export class Painter {
     this.pipe(x0 - nx, y0 - ny, x1 - nx, y1 - ny, chord, ramp);
   }
 
-  /** A radiator panel: fins along its length (vertical or horizontal), a header pipe at its root. */
-  radiator(x: number, y: number, w: number, h: number, vertical = true, fin = 4): void {
+  /**
+   * A radiator panel: fins along its length (vertical or horizontal), a header pipe at its root.
+   * `hot` (0–1) makes it glow from its root (its top, or its left if horizontal), cooling in steps.
+   */
+  radiator(x: number, y: number, w: number, h: number, vertical = true, fin = 4, hot = 0): void {
     const [x0, y0, x1, y1] = this.span(x, y, w, h);
     const f = Math.max(2, Math.round(fin * this.k));
     for (let py = y0; py < y1; py++)
@@ -412,12 +436,14 @@ export class Painter {
         const along = vertical ? px - x0 : py - y0;
         const edge = along % f === f - 1;
         const across = vertical ? (py - y0) / (y1 - y0) : (px - x0) / (x1 - x0);
-        this.set(px, py, edge ? RAMPS.white[4]! : this.shade(RAMPS.white, 0.1 + across * 0.35 + (along % f === 0 ? -0.1 : 0.1), px, py, 0.5));
+        const c = edge ? RAMPS.white[4]! : this.shade(RAMPS.white, 0.1 + across * 0.35 + (along % f === 0 ? -0.1 : 0.1));
+        const heat = Math.round(clamp01(1 - across * 1.7) * hot * 4) / 4;
+        this.set(px, py, heat > 0 ? mix(c, heat > 0.7 ? GLOW.heatHi : GLOW.heat, Math.min(0.85, heat)) : c);
       }
   }
 
   /** A grid of solar cells: dark frame, cell gaps, a diagonal glint. */
-  solar(x: number, y: number, w: number, h: number, cols: number, rows: number): void {
+  solar(x: number, y: number, w: number, h: number, cols: number, rows: number, ramp: Ramp = RAMPS.solar): void {
     const [x0, y0, x1, y1] = this.span(x, y, w, h);
     const pw = x1 - x0, ph = y1 - y0;
     const lines = pw / cols >= 3 && ph / rows >= 3;
@@ -426,31 +452,71 @@ export class Painter {
         const u = (px - x0) / pw, v = (py - y0) / ph;
         const frame = px === x0 || py === y0 || px === x1 - 1 || py === y1 - 1;
         const gap = lines && (Math.floor((px - x0) * cols / pw) !== Math.floor((px + 1 - x0) * cols / pw) || Math.floor((py - y0) * rows / ph) !== Math.floor((py + 1 - y0) * rows / ph));
-        const glint = Math.abs(((u - v) * 3 + 0.4) % 1.6) < 0.12;
-        this.set(px, py, frame ? RAMPS.dark[3]! : gap ? RAMPS.solar[5]! : this.shade(RAMPS.solar, (glint ? 0.05 : 0.3) + (u + v) * 0.22, px, py, 0.6));
+        const glint = Math.abs(((u - v) * 3 + 0.4) % 1.6) < 0.14;
+        this.set(px, py, frame ? RAMPS.dark[3]! : gap ? ramp[5]! : this.shade(ramp, (glint ? 0 : 0.34) + (u + v) * 0.2));
       }
   }
 
-  /** A row of `n` windows `step` apart: lit ones warm (a brighter corner), a few dark (by `seed`); framed in dark hull from 64 px. */
+  /** A round fan of solar gores (as an UltraFlex array): a polygon of `gores` wedges round a gold hub. */
+  fan(cx: number, cy: number, r: number, gores = 10, ramp: Ramp = RAMPS.solar): void {
+    const step = (Math.PI * 2) / gores;
+    const pr = r * this.k;
+    this.shaded(cx, cy, r, r, (nx, ny) => {
+      const d = Math.hypot(nx, ny), a = Math.atan2(ny, nx) + Math.PI;
+      const g = Math.floor(a / step), off = a - (g + 0.5) * step;
+      const edge = (d * Math.cos(off)) / Math.cos(step / 2);
+      if (edge > 1) return -1;
+      if (d * pr < Math.max(1.2, pr * 0.14)) return RAMPS.gold[2]!;
+      if ((1 - edge) * pr < 1 || (step / 2 - Math.abs(off)) * d * pr < 0.55) return RAMPS.dark[3]!;
+      if (this.medium && pr >= 12 && Math.abs(((edge * 3.5) % 1) - 0.5) > 0.5 - 0.6 / pr * 3.5) return ramp[5]!;
+      return this.shade(ramp, 0.3 + (nx + ny) * 0.16 + (g % 2 ? 0.14 : 0) - (edge > 0.45 && edge < 0.62 && g % 3 === 0 ? 0.3 : 0));
+    });
+  }
+
+  /** Crinkled foil (multi-layer insulation) over a rectangle: facets catching the light at odds with their neighbours. */
+  foil(x: number, y: number, w: number, h: number, ramp: Ramp = RAMPS.gold): void {
+    const [x0, y0, x1, y1] = this.span(x, y, w, h);
+    const s = Math.max(2, Math.round(5 * this.k));
+    for (let py = y0; py < y1; py++)
+      for (let px = x0; px < x1; px++) {
+        const base = 0.22 + ((py - y0) / (y1 - y0)) * 0.3;
+        const r = this.medium ? hash(Math.floor((px + py * 0.6) / s), Math.floor((py - px * 0.4) / s)) : 0.5;
+        this.set(px, py, this.shade(ramp, base + (r < 0.28 ? -0.22 : r > 0.74 ? 0.26 : 0)));
+      }
+  }
+
+  /** A row of `n` windows `step` apart: lit ones warm (a brighter corner), the odd one a screen's cyan, a few dark (by `seed`); framed in dark hull from 64 px. */
   windows(x: number, y: number, n: number, step: number, w: number, h: number, seed = 0, lit = 0.8): void {
     for (let i = 0; i < n; i++) {
       const [x0, y0, x1, y1] = this.span(x + i * step, y, w, h);
       const on = hash(i + seed * 31, seed) < lit;
+      const screen = hash(i * 13 + seed, 7) < 0.14;
       if (this.medium) {
         for (let px = x0 - 1; px <= x1; px++) {
-          this.set(px, y0 - 1, RAMPS.hull[4]!);
-          this.set(px, y1, RAMPS.hull[2]!);
+          this.set(px, y0 - 1, RAMPS.hull[5]!);
+          this.set(px, y1, RAMPS.hull[3]!);
         }
         for (let py = y0; py < y1; py++) {
-          this.set(x0 - 1, py, RAMPS.hull[4]!);
-          this.set(x1, py, RAMPS.hull[3]!);
+          this.set(x0 - 1, py, RAMPS.hull[5]!);
+          this.set(x1, py, RAMPS.hull[4]!);
         }
       }
       for (let py = y0; py < y1; py++)
         for (let px = x0; px < x1; px++) {
           const corner = px === x0 && py === y0 && x1 - x0 > 1;
-          this.set(px, py, on ? (corner ? GLOW.windowHi : py === y1 - 1 && y1 - y0 > 2 ? 0xe0a84c : GLOW.window) : corner ? RAMPS.glass[2]! : RAMPS.glass[5]!);
+          const low = py === y1 - 1 && y1 - y0 > 2;
+          this.set(px, py, !on ? (corner ? RAMPS.glass[2]! : RAMPS.glass[5]!) : screen ? (corner ? GLOW.cyanHi : low ? RAMPS.glass[3]! : GLOW.cyan) : corner ? GLOW.windowHi : low ? 0xf09a3c : GLOW.window);
         }
+    }
+  }
+
+  /** A row of `n` round portholes `step` apart, radius `r`, as on Russian modules: lit or dark as windows(). */
+  portholes(x: number, y: number, n: number, step: number, r: number, seed = 0, lit = 0.8): void {
+    for (let i = 0; i < n; i++) {
+      const cx = x + i * step, on = hash(i + seed * 31, seed) < lit;
+      if (this.medium) this.ellipse(cx, y, r + 1 / this.k, r + 1 / this.k, RAMPS.hull[5]!);
+      this.ellipse(cx, y, r, r, on ? GLOW.window : RAMPS.glass[5]!);
+      if (this.medium) this.set(this.p(cx - r * 0.4), this.p(y - r * 0.4), on ? GLOW.windowHi : RAMPS.glass[2]!);
     }
   }
 
@@ -463,12 +529,12 @@ export class Painter {
         const n = ((py + 0.5 - y0) / hh) * 2 - 1;
         const body = 0.5 + 0.38 * n + 0.12 * n * n;
         const v = px === x0 ? body - 0.4 : px === x1 - 1 ? body + 0.25 : body;
-        this.set(px, py, this.shade(ramp, v, px, py));
+        this.set(px, py, this.shade(ramp, v));
       }
   }
 
-  /** A parabolic dish facing `angle` (degrees, 0 = right, -90 = up): rim, concave bowl, feed on struts. */
-  dish(cx: number, cy: number, r: number, angle: number, depth = 0.42, ramp: Ramp = RAMPS.white): void {
+  /** A parabolic dish facing `angle` (degrees, 0 = right, -90 = up): rim, concave bowl, feed on struts. With `mesh`, an open mesh reflector. */
+  dish(cx: number, cy: number, r: number, angle: number, depth = 0.42, ramp: Ramp = RAMPS.white, mesh = false): void {
     const a = (angle * Math.PI) / 180;
     const fx = Math.cos(a), fy = Math.sin(a), qx = -fy, qy = fx;
     const bx = cx - fx * r * 0.22, by = cy - fy * r * 0.22;
@@ -485,8 +551,9 @@ export class Painter {
           const [u, w] = front;
           const rim = u * u + w * w > 0.78;
           const lit = 0.55 - 0.35 * (u * (qx * LIGHT[0] + qy * LIGHT[1]) + w * 0.2);
-          this.set(px, py, rim ? ramp[1]! : this.shade(ramp, lit, px, py));
-        } else if (inside(px + 0.5, py + 0.5, bx, by, r * 0.98)) this.set(px, py, this.shade(ramp, 0.85, px, py));
+          const rib = mesh && this.medium && Math.abs(((u * 2.5 + 8) % 1) - 0.5) < 0.05;
+          this.set(px, py, rim || rib ? ramp[1]! : mesh ? ((px + py) % 2 ? RAMPS.dark[4]! : ramp[u + w < -0.2 ? 2 : 3]!) : this.shade(ramp, lit));
+        } else if (inside(px + 0.5, py + 0.5, bx, by, r * 0.98)) this.set(px, py, this.shade(ramp, 0.85));
       }
     const hx = cx + fx * r * 0.85, hy = cy + fy * r * 0.85;
     if (this.size >= 64) {
@@ -528,16 +595,16 @@ export class Painter {
         const x = (px + 0.5) / this.k, y = (py + 0.5) / this.k;
         const deck = ins(x, y, A, B) && !ins(x, y, a, b);
         if (half === "back") {
-          if (deck && y < cy) this.set(px, py, this.shade(ramp, 0.42 + ((cy - y) / B) * 0.2, px, py));
+          if (deck && y < cy) this.set(px, py, this.shade(ramp, 0.42 + ((cy - y) / B) * 0.2));
           else if (y < cy + 1 && ins(x, y, a, b) && !ins(x, y, a, b, wall)) {
             const mid = ins(x, y, a, b, wall * 0.5) !== ins(x, y, a, b, wall * 0.5 + 1 / this.k);
-            this.set(px, py, windows && mid && px % win === 0 ? GLOW.window : this.shade(ramp, 0.82, px, py));
+            this.set(px, py, windows && mid && px % win === 0 ? GLOW.window : this.shade(ramp, 0.82));
           }
         } else {
-          if (deck && y >= cy) this.set(px, py, this.shade(ramp, 0.08 + ((y - cy) / B) * 0.3, px, py));
+          if (deck && y >= cy) this.set(px, py, this.shade(ramp, 0.08 + ((y - cy) / B) * 0.3));
           else if (y >= cy - 1 && ins(x, y, A, B, wall) && !ins(x, y, A, B)) {
             const mid = ins(x, y, A, B, wall * 0.55) !== ins(x, y, A, B, wall * 0.55 - 1 / this.k);
-            this.set(px, py, windows && mid && px % win === 1 ? GLOW.window : this.shade(ramp, 0.5 + Math.abs(x - cx) / A * 0.3, px, py));
+            this.set(px, py, windows && mid && px % win === 1 ? GLOW.window : this.shade(ramp, 0.5 + (Math.abs(x - cx) / A) * 0.3));
           }
         }
       }
@@ -570,7 +637,7 @@ export class Painter {
   }
 
   /** Panel seams every `step` units across a hull area, darker than the hull. */
-  seams(x: number, y: number, w: number, h: number, step: number, c = RAMPS.hull[4]!): void {
+  seams(x: number, y: number, w: number, h: number, step: number, c = RAMPS.hull[3]!): void {
     if (!this.medium) return;
     for (let sx = x + step; sx < x + w - 1; sx += step) this.line(sx, y, sx, y + h - 1, c);
   }
@@ -597,7 +664,7 @@ export class Painter {
   stripe(x: number, y: number, w: number, h: number): void {
     const [x0, y0, x1, y1] = this.span(x, y, w, h);
     for (let py = y0; py < y1; py++)
-      for (let px = x0; px < x1; px++) this.set(px, py, this.shade(this.faction, 0.2 + ((py - y0) / Math.max(1, y1 - y0 - 1)) * 0.5, px, py, 0.5));
+      for (let px = x0; px < x1; px++) this.set(px, py, this.shade(this.faction, 0.2 + ((py - y0) / Math.max(1, y1 - y0 - 1)) * 0.5));
   }
 
   /** Yellow-and-black hazard stripes. */
@@ -617,8 +684,50 @@ export class Painter {
   }
 
   /**
+   * Streaks of gloss over what the open part has drawn inside a box (glass, mostly): a broad and a
+   * narrow diagonal band, lightened towards `c`.
+   */
+  gloss(x: number, y: number, w: number, h: number, strength = 0.5, c = 0xffffff): void {
+    const [x0, y0, x1, y1] = this.span(x, y, w, h);
+    const period = x1 - x0 + (y1 - y0);
+    for (let py = Math.max(0, y0); py < Math.min(this.size, y1); py++)
+      for (let px = Math.max(0, x0); px < Math.min(this.size, x1); px++) {
+        const under = this.layer[py * this.size + px]!;
+        if (under < 0) continue;
+        const s = (px - x0 + (y1 - 1 - py)) / period;
+        if ((s > 0.3 && s < 0.42) || (s > 0.47 && s < 0.51)) this.layer[py * this.size + px] = mix(under, c, strength);
+      }
+  }
+
+  /**
+   * A four-point glint straight onto the image (whatever part is open is committed first), its
+   * arms `r` long, fading; a single pixel at 32 px.
+   */
+  sparkle(x: number, y: number, r: number, c = 0xffffff): void {
+    this.commit(true);
+    const px = this.p(x), py = this.p(y);
+    const put = (dx: number, dy: number, t: number) => {
+      const X = px + dx, Y = py + dy;
+      if (X < 0 || Y < 0 || X >= this.size || Y >= this.size) return;
+      const o = (Y * this.size + X) * 4;
+      this.write(X, Y, this.data[o + 3] ? mix(this.under(o), c, t) : mix(INK, c, t * 0.85));
+    };
+    put(0, 0, 1);
+    if (!this.medium) return;
+    const arm = Math.max(1, Math.round(r * this.k));
+    for (let i = 1; i <= arm; i++) {
+      const t = 1 - (i / (arm + 1)) * 0.75;
+      put(i, 0, t);
+      put(-i, 0, t);
+      put(0, i, t);
+      put(0, -i, t);
+    }
+    if (this.fine && arm >= 3) for (const [dx, dy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]] as const) put(dx, dy, 0.45);
+  }
+
+  /**
    * A glow straight onto the image (whatever part is open is committed first): `c` blended in
-   * over the opaque pixels, fading from the centre; over clear pixels, dithered in.
+   * over the opaque pixels, fading from the centre in steps; over clear pixels, dithered in.
    */
   glow(cx: number, cy: number, r: number, c: number, strength = 0.8): void {
     this.commit(true);
@@ -628,15 +737,13 @@ export class Painter {
       for (let px = Math.max(0, x0); px <= Math.min(this.size - 1, x1); px++) {
         const d = Math.hypot(px + 0.5 - cx * this.k, py + 0.5 - cy * this.k) / pr;
         if (d >= 1) continue;
-        const t = Math.round((1 - d) * strength * 4 + bayer(px, py)) / 4;
-        if (t <= 0) continue;
         const o = (py * this.size + px) * 4;
         if (this.data[o + 3] === 0) {
-          if (t >= 0.5) this.write(px, py, mix(c, 0, 0.35));
+          if (Math.round((1 - d) * strength * 4 + BAYER[(py & 3) * 4 + (px & 3)]!) / 4 >= 0.5) this.write(px, py, mix(c, INK, 0.4));
           continue;
         }
-        const under = this.under(o);
-        this.write(px, py, mix(under, c, Math.min(1, t)));
+        const t = Math.round((1 - d) * strength * 4) / 4;
+        if (t > 0) this.write(px, py, mix(this.under(o), c, Math.min(1, t)));
       }
   }
 }

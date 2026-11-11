@@ -127,10 +127,10 @@
       }
     };
     const station = kind === "station";
-    // A station's links are pressurised tubes in the modules' hull colours (pixelKit's hull ramp), a base's corridors darker.
+    // A station's links are pressurised tubes in the modules' hull colours (pixelKit's hull ramp), a base's corridors darker (its dark ramp).
     pass(1, 1, thick + 1, "rgba(0, 0, 0, 0.45)");
-    pass(0, 0, thick, station ? "#8b93a9" : "#4a5059");
-    pass(-Math.floor(thick / 3), -Math.floor(thick / 3), Math.max(1, Math.floor(thick / 3)), station ? "#dadee5" : "#7f8792");
+    pass(0, 0, thick, station ? "#929cd6" : "#40456f");
+    pass(-Math.floor(thick / 3), -Math.floor(thick / 3), Math.max(1, Math.floor(thick / 3)), station ? "#e9edfb" : "#7f8bb4");
   }
 
   function hover(slot: number | null, event: MouseEvent) {

@@ -13,6 +13,7 @@ Three.js, TypeScript, Svelte 5 and Vite, packaged with Tauri (SPEC 2.3).
 | `src/worker/` | Runs the simulation in a Web Worker and streams snapshots to the UI. |
 | `src/app/` | Svelte UI and the Three.js globe. |
 | `tools/selfplay.ts` | Headless all-AI runs for balance testing. |
+| `tools/module-sheet.ts` | Writes a contact sheet of the hab modules' pixel art as a PNG. |
 | `src-tauri/` | The desktop shell. |
 | `docs/formulas.md` | Every derived formula and its tunables. |
 | `tools/data/` | Fetches real-world data and generates nations, regions and the pixel-art map (`docs/data-sources.md`). |
