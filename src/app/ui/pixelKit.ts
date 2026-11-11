@@ -1,11 +1,15 @@
 // A small pixel-art painter over an RGBA buffer, for the hab modules' structures (moduleArt.ts).
 // Drawing happens in a 128-unit design space scaled to the target size (32, 64 or 128 pixels),
 // rounded to whole pixels so everything stays crisp. The style is built into the primitives:
-// light from the upper left in a few stepped shades from limited ramps, ordered (Bayer)
-// dithering between them, and a dark outline round each part. Parts are drawn one at a time
-// (part()): what's drawn inside lands on a layer that is outlined and then laid over what's
-// already there, so a part in front gets an outline against the parts behind it. Fine detail
-// (rivets, panel lines, greebles) is skipped at small sizes so 32 px stays readable.
+// light from the upper left in a few stepped shades from hue-shifted ramps (cool shadows, warm
+// highlights), ordered (Bayer) dithering only in a narrow band where one shade steps to the next,
+// and a reflected (bounce) light along the shadowed edge of curved hulls. Parts are drawn one at
+// a time (part()): what's drawn inside lands on a layer that is outlined and then laid over
+// what's already there, so a part in front gets an outline against the parts behind it and casts
+// a short shadow down and to the right onto them. From 64 px the outline is selective: each
+// outline pixel is a dark shade of the part it borders, lighter on the lit upper-left side;
+// 32 px keeps a plain dark outline to stay readable. Fine detail (rivets, panel lines, greebles)
+// is skipped at small sizes.
 
 /** Colours as 0xRRGGBB. */
 export type Ramp = readonly number[];
@@ -13,10 +17,10 @@ export type Ramp = readonly number[];
 /** The outline. */
 export const INK = 0x0b0f15;
 
-/** Shade ramps, lightest first. */
+/** Shade ramps, lightest first: highlights lean warm, shadows lean cool. */
 export const RAMPS = {
-  hull: [0xf2f5f8, 0xd2dbe3, 0xaeb9c5, 0x8a97a5, 0x65717e, 0x46505b],
-  dark: [0x9aa5b1, 0x788491, 0x5c6774, 0x454e59, 0x323942, 0x232930],
+  hull: [0xfbf8f0, 0xdadee5, 0xb2bac9, 0x8b93a9, 0x646a88, 0x444764],
+  dark: [0xa3aab6, 0x7d8598, 0x5d647a, 0x454a5f, 0x31344a, 0x222437],
   gold: [0xfbe9b4, 0xefc97a, 0xdba852, 0xb8863b, 0x8c6127, 0x5f4119],
   glass: [0xd6f3fb, 0x9fd8ea, 0x62b2d2, 0x3f8fb5, 0x2a6688, 0x1b4560],
   solar: [0x9cc0f0, 0x5f93dc, 0x3f78c8, 0x2b5aa0, 0x1c3a6e, 0x12264a],
@@ -25,6 +29,10 @@ export const RAMPS = {
   ore: [0xcdbba2, 0xab9881, 0x887763, 0x685a4c, 0x4b4138, 0x342d27],
   mirror: [0xffffff, 0xe9f6fb, 0xc9e4ef, 0xa5c8d9, 0x80a8bd, 0x5f879d],
   red: [0xffb3aa, 0xff7d70, 0xe54a3e, 0xb8332b, 0x8a231d, 0x5e1712],
+  /** Beige thermal blankets, as on the ISS's laboratory modules. */
+  cloth: [0xfdf6e4, 0xece0c4, 0xd4c3a0, 0xb19d7a, 0x867458, 0x5d4f3c],
+  /** Olive-grey armour plate. */
+  armor: [0xb4b8a2, 0x8e937c, 0x6c725e, 0x515647, 0x3a3e34, 0x272a24],
 } satisfies Record<string, Ramp>;
 
 /** Lights and glows. */
@@ -43,6 +51,8 @@ export const GLOW = {
 
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map((v) => (v + 0.5) / 16 - 0.5);
 const bayer = (x: number, y: number) => BAYER[(y & 3) * 4 + (x & 3)]!;
+/** How much of a shade step the dither spreads over: shades stay flat bands, checkered only near each step. */
+const DITHER_BAND = 0.4;
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 /** The light's direction (towards the light) in view space: from the upper left, a little in front. */
 const LIGHT: [number, number, number] = (() => {
@@ -136,13 +146,35 @@ export class Painter {
   private commit(outline: boolean): void {
     if (this.minX > this.maxX) return;
     const s = this.size;
+    const inLayer = (x: number, y: number) => this.layerAt(x, y) >= 0;
+    const edge = (x: number, y: number) => !inLayer(x, y) && (inLayer(x - 1, y) || inLayer(x + 1, y) || inLayer(x, y - 1) || inLayer(x, y + 1));
+    // The part's shadow on what's behind it, before the part and its outline cover their own pixels.
+    const reach = this.fine ? 2 : 1;
+    if (outline && this.medium)
+      for (let y = Math.max(0, this.minY + 1); y <= Math.min(s - 1, this.maxY + reach + 1); y++)
+        for (let x = Math.max(0, this.minX + 1); x <= Math.min(s - 1, this.maxX + reach + 1); x++) {
+          const o = (y * s + x) * 4;
+          if (this.data[o + 3] === 0 || inLayer(x, y) || edge(x, y)) continue;
+          let shadow = false;
+          for (let d = 2; d <= reach + 1 && !shadow; d++) shadow = inLayer(x - d, y - d) || inLayer(x - d + 1, y - d) || inLayer(x - d, y - d + 1);
+          if (shadow) this.write(x, y, mix(this.under(o), INK, 0.38));
+        }
     const x0 = Math.max(0, this.minX - 1), x1 = Math.min(s - 1, this.maxX + 1);
     const y0 = Math.max(0, this.minY - 1), y1 = Math.min(s - 1, this.maxY + 1);
     if (outline)
       for (let y = y0; y <= y1; y++)
-        for (let x = x0; x <= x1; x++)
-          if (this.layer[y * s + x]! < 0 && (this.layerAt(x - 1, y) >= 0 || this.layerAt(x + 1, y) >= 0 || this.layerAt(x, y - 1) >= 0 || this.layerAt(x, y + 1) >= 0))
+        for (let x = x0; x <= x1; x++) {
+          if (!edge(x, y)) continue;
+          if (!this.medium) {
             this.write(x, y, INK);
+            continue;
+          }
+          // Selective outline: on the lit side (the part lies below or to the right) a dark shade of
+          // the part's own colour, elsewhere nearly ink.
+          const lit = inLayer(x + 1, y) || inLayer(x, y + 1);
+          const c = this.layerAt(x + 1, y) >= 0 ? this.layerAt(x + 1, y) : this.layerAt(x, y + 1) >= 0 ? this.layerAt(x, y + 1) : this.layerAt(x - 1, y) >= 0 ? this.layerAt(x - 1, y) : this.layerAt(x, y - 1);
+          this.write(x, y, mix(c, INK, lit ? 0.62 : 0.84));
+        }
     for (let y = y0; y <= y1; y++)
       for (let x = x0; x <= x1; x++) {
         const c = this.layer[y * s + x]!;
@@ -155,15 +187,20 @@ export class Painter {
     this.maxX = this.maxY = -Infinity;
   }
 
+  /** The colour already on the image at byte offset `o`. */
+  private under(o: number): number {
+    return (this.data[o]! << 16) | (this.data[o + 1]! << 8) | this.data[o + 2]!;
+  }
+
   /** The finished image (any part still open is committed, outlined). */
   finish(): Uint8ClampedArray<ArrayBuffer> {
     this.commit(true);
     return this.data;
   }
 
-  /** A shade from a ramp: `v` 0 is the lightest, 1 the darkest, dithered between steps. */
+  /** A shade from a ramp: `v` 0 is the lightest, 1 the darkest, dithered in a narrow band at each step (`dither` 0 for none). */
   shade(ramp: Ramp, v: number, x: number, y: number, dither = 0.85): number {
-    const i = Math.round(clamp01(v) * (ramp.length - 1) + bayer(x, y) * dither);
+    const i = Math.round(clamp01(v) * (ramp.length - 1) + bayer(x, y) * dither * DITHER_BAND);
     return ramp[i < 0 ? 0 : i >= ramp.length ? ramp.length - 1 : i]!;
   }
 
@@ -215,6 +252,8 @@ export class Painter {
         if (Math.abs(n) > half + 0.02) continue;
         let v = 0.28 + 0.5 * n + 0.22 * n * n;
         if (Math.abs(n + 0.52) < 0.1) v = 0;
+        // Light bounced back along the underside.
+        else if (n > 0.8 && hh >= 8) v -= 0.3;
         if (px >= x1 - cap) v += 0.15;
         this.set(px, py, this.shade(ramp, v, px, py));
       }
@@ -230,6 +269,8 @@ export class Painter {
       const bulge = Math.round(cap * Math.sqrt(Math.max(0, 1 - n * n)));
       let v = 0.3 + 0.5 * n + 0.2 * n * n;
       if (Math.abs(n + 0.5) < 0.1) v = 0;
+      // Light bounced back along the shaded side.
+      else if (n > 0.8 && ww >= 8) v -= 0.3;
       for (let py = y0 + cap; py < y1 - cap + bulge; py++) this.set(px, py, this.shade(ramp, v, px, py));
       if (lid) for (let py = y0 + cap - bulge; py < y0 + cap + bulge; py++) this.set(px, py, this.shade(ramp, 0.12 + 0.25 * (n + 1) * 0.5, px, py));
       else for (let py = y0 + cap - bulge; py < y0 + cap; py++) this.set(px, py, this.shade(ramp, v, px, py));
@@ -248,7 +289,10 @@ export class Painter {
       if (py >= cut) return -1;
       const nz = Math.sqrt(Math.max(0, 1 - nx * nx - ny * ny));
       const l = nx * LIGHT[0] + ny * LIGHT[1] + nz * LIGHT[2];
-      return l > 0.94 ? ramp[0]! : this.shade(ramp, 0.95 - l * 0.85, px, py);
+      if (l > 0.94) return ramp[0]!;
+      // A rim of bounced light on the lower right.
+      const rim = nx * 0.6 + ny * 0.8 > 0.78 && rx * this.k >= 5 ? 0.25 : 0;
+      return this.shade(ramp, 0.95 - l * 0.85 - rim, px, py);
     });
   }
 
@@ -387,17 +431,40 @@ export class Painter {
       }
   }
 
-  /** A row of `n` windows `step` apart: lit ones warm (a brighter corner), a few dark (by `seed`). */
+  /** A row of `n` windows `step` apart: lit ones warm (a brighter corner), a few dark (by `seed`); framed in dark hull from 64 px. */
   windows(x: number, y: number, n: number, step: number, w: number, h: number, seed = 0, lit = 0.8): void {
     for (let i = 0; i < n; i++) {
       const [x0, y0, x1, y1] = this.span(x + i * step, y, w, h);
       const on = hash(i + seed * 31, seed) < lit;
+      if (this.medium) {
+        for (let px = x0 - 1; px <= x1; px++) {
+          this.set(px, y0 - 1, RAMPS.hull[4]!);
+          this.set(px, y1, RAMPS.hull[2]!);
+        }
+        for (let py = y0; py < y1; py++) {
+          this.set(x0 - 1, py, RAMPS.hull[4]!);
+          this.set(x1, py, RAMPS.hull[3]!);
+        }
+      }
       for (let py = y0; py < y1; py++)
         for (let px = x0; px < x1; px++) {
           const corner = px === x0 && py === y0 && x1 - x0 > 1;
           this.set(px, py, on ? (corner ? GLOW.windowHi : py === y1 - 1 && y1 - y0 > 2 ? 0xe0a84c : GLOW.window) : corner ? RAMPS.glass[2]! : RAMPS.glass[5]!);
         }
     }
+  }
+
+  /** A band round a horizontal hull (a reinforcing ring, or a colour band): `w` wide, shaded like the hull's curve but darker, a bright lip on its left and a groove on its right. */
+  ring(x: number, y: number, w: number, h: number, ramp: Ramp = RAMPS.hull): void {
+    const [x0, y0, x1, y1] = this.span(x, y, w, h);
+    const hh = y1 - y0;
+    for (let px = x0; px < x1; px++)
+      for (let py = y0; py < y1; py++) {
+        const n = ((py + 0.5 - y0) / hh) * 2 - 1;
+        const body = 0.5 + 0.38 * n + 0.12 * n * n;
+        const v = px === x0 ? body - 0.4 : px === x1 - 1 ? body + 0.25 : body;
+        this.set(px, py, this.shade(ramp, v, px, py));
+      }
   }
 
   /** A parabolic dish facing `angle` (degrees, 0 = right, -90 = up): rim, concave bowl, feed on struts. */
@@ -568,7 +635,7 @@ export class Painter {
           if (t >= 0.5) this.write(px, py, mix(c, 0, 0.35));
           continue;
         }
-        const under = (this.data[o]! << 16) | (this.data[o + 1]! << 8) | this.data[o + 2]!;
+        const under = this.under(o);
         this.write(px, py, mix(under, c, Math.min(1, t)));
       }
   }
